@@ -4,7 +4,7 @@
 
 <!-- 	//預設使用Tomcat的連線池DBCP -->
     <Resource name="jdbc/javaFramework" type="javax.sql.DataSource"
-        url="jdbc:mysql://localhost:3306/JAVA_FRAMEWORK"
+        url="jdbc:mysql://localhost:3306/flyday"
         username="root"
         password="821213"
         driverClassName="com.mysql.cj.jdbc.Driver"
@@ -16,7 +16,7 @@
 <!--     //HikariCP連線池的設定 -->
 <!--     <Resource name="jdbc/javaFramework" type="javax.sql.DataSource" -->
 <!-- 	    driverClassName="com.mysql.cj.jdbc.Driver" -->
-<!-- 	    jdbcUrl="jdbc:mysql://localhost:3306/JAVA_FRAMEWORK" -->
+<!-- 	    jdbcUrl="jdbc:mysql://localhost:3306/flyday" -->
 <!-- 	    username="root" -->
 <!-- 	    password="821213" -->
 <!-- 	    factory="com.zaxxer.hikari.HikariJNDIFactory" -->
