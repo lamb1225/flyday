@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 <!--  測試Spring 註冊檔是否成功 (DL做法)-->
-	<bean id="mem" class="web.mem.dao.impl.MemberDaoImpl" />	
+<!-- 	<bean id="mem" class="web.mem.dao.impl.MemberDaoImpl" />	 -->
 
 <!--  //測試XML與常數檔設定 -->
 	

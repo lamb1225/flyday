@@ -28,7 +28,7 @@ public class AppConfig {
         throws IllegalArgumentException, NamingException {
         JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
         bean.setResourceRef(true);
-        bean.setJndiName("jdbc/javaFramework");
+        bean.setJndiName("jdbc/flyday");
         bean.afterPropertiesSet();
         return (DataSource) bean.getObject();
     }

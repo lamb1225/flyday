@@ -14,7 +14,7 @@
 <!--     /> -->
     
 <!--     //HikariCP連線池的設定 -->
-    <Resource name="jdbc/javaFramework" type="javax.sql.DataSource"
+    <Resource name="jdbc/flyday" type="javax.sql.DataSource"
 	    driverClassName="com.mysql.cj.jdbc.Driver"
 	    jdbcUrl="jdbc:mysql://localhost:3306/flyday"
 	    username="root"
