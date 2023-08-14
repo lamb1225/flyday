@@ -121,20 +121,20 @@ Main Content START -->
 		
 								<!-- Form START -->
 								<form class="mt-4 text-start">
+									<!-- 帳號 -->
+									<div class="mb-3">
+										<label class="form-label">帳號</label>
+										<input type="text" class="form-control" id="acc-input">
+									</div>
 									<!-- Email -->
 									<div class="mb-3">
 										<label class="form-label">電子信箱</label>
-										<input type="email" class="form-control">
-									</div>
-									<!-- 姓名 -->
-									<div class="mb-3">
-										<label class="form-label">姓名</label>
-										<input type="text" class="form-control">
+										<input type="email" class="form-control" id="email-input">
 									</div>
 									<!-- 手機號碼 -->
 									<div class="mb-3">
 										<label class="form-label">手機號碼</label>
-										<input type="tel" class="form-control">
+										<input type="tel" class="form-control" id="mobile-input">
 									</div>
 									<!-- Password -->
 									<div class="mb-3 position-relative">
@@ -147,11 +147,16 @@ Main Content START -->
 									<!-- Confirm Password -->
 									<div class="mb-3">
 										<label class="form-label">確認密碼</label>
-										<input type="password" class="form-control">
+										<input type="password" class="form-control" id="psw-input-confirm">
 									</div>
 
+									<!--錯誤訊息-->
+									<div id="errMsg" class="error text-danger">
+										
+									</div>
+									
 									<!-- Button -->
-									<div><button type="submit" class="btn btn-primary w-100 mb-0 mt-3">註冊</button></div>
+									<div><button type="button" class="btn btn-primary w-100 mb-0 mt-3" id="btn-register">註冊</button></div>
 		
 									<!-- Copyright -->
 									<div class="text-primary-hover mt-3 text-center"> 註冊或登入即表示您同意Flyday服務條款與隱私權政策</a>. </div>
@@ -179,6 +184,8 @@ Main Content END -->
 
 <!-- ThemeFunctions -->
 <script src="assets/js/functions.js"></script>
+
+<script src="myassets/js/sign-up.js"></script>
 
 </body>
 </html>

@@ -120,15 +120,15 @@ Main Content START -->
 								<p class="mb-0">還沒有帳戶?<a href="sign-up.html"> 註冊帳號</a></p>
 		
 								<!-- Form START -->
-								<form method="post" action=""  class="mt-4 text-start">
-									<!-- Email -->
+								<form class="mt-4 text-start">
+									<!-- 帳號 -->
 									<div class="mb-3">
-										<label class="form-label">電子信箱</label>
-										<input type="email" class="form-control">
+										<label class="form-label">帳號</label>
+										<input type="text" class="form-control" id="acc-input">
 									</div>
 									<!-- Password -->
 									<div class="mb-3 position-relative">
-										<label class="form-label">輸入密碼</label>
+										<label class="form-label">密碼</label>
 										<input class="form-control fakepassword" type="password" id="psw-input">
 										<span class="position-absolute top-50 end-0 translate-middle-y p-0 mt-3">
 											<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
@@ -136,14 +136,14 @@ Main Content START -->
 									</div>
 									<!-- Remember me -->
 									<div class="mb-3 d-sm-flex justify-content-between">
-										<div>
-											<input type="checkbox" class="form-check-input" id="rememberCheck">
-											<label class="form-check-label" for="rememberCheck">記住我</label>
-										</div>
 										<a href="forgot-password.html">忘記密碼?</a>
+										<!--錯誤訊息-->
+										<div id="errMsg" class="error text-danger">
+											
+										</div>
 									</div>
 									<!-- Button -->
-									<div><button type="submit" class="btn btn-primary w-100 mb-0">登入</button></div>
+									<div><button type="button" class="btn btn-primary w-100 mb-0" id="sign-in">登入</button></div>
 		
 									<!-- Copyright -->
 									<div class="text-primary-hover mt-3 text-center"> 註冊或登入即表示您同意Flyday服務條款與隱私權政策</div>
@@ -171,6 +171,9 @@ Main Content END -->
 
 <!-- ThemeFunctions -->
 <script src="assets/js/functions.js"></script>
+
+<!--自訂操作相關JS-->
+<script src="myassets/js/sign-in.js"></script>
 
 </body>
 </html>
