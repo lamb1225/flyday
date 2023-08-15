@@ -18,7 +18,7 @@
 	    driverClassName="com.mysql.cj.jdbc.Driver"
 	    jdbcUrl="jdbc:mysql://localhost:3306/flyday"
 	    username="root"
-	    password="821213"
+	    password="123456"
 	    factory="com.zaxxer.hikari.HikariJNDIFactory"
 	    minimumIdle="5"
 	    maximumPoolSize="10"
