@@ -18,11 +18,11 @@ values
 
 create table MEM (
 	MEM_NO int primary key not null auto_increment,
-    MEM_LEVEL_NO int not null,
+    MEM_LEVEL_NO int default 1 not null,
     MEM_ACC varchar(20) not null,
     MEM_PWD varchar(12) not null,
     MEM_ACC_STATUS tinyint default 0 not null,
-    MEM_NAME varchar(20) not null,
+    MEM_NAME varchar(20),
     MEM_GENDER tinyint,
     MEM_BDAY date,
     MEM_EMAIL varchar(40) not null,

@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="mem" class="web.mem.dao.MemberDaoImpl" />	
+<!--  測試Spring 註冊檔是否成功 (DL做法)-->
+<!-- 	<bean id="mem" class="web.mem.dao.impl.MemberDaoImpl" />	 -->
+
+<!--  //測試XML與常數檔設定 -->
+	
+<!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" > -->
+<!-- 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/flyday" /> -->
+<!-- 		<property name="username" value="root" /> -->
+<!-- 		<property name="password" value="821213" /> -->
+<!-- 	</bean>	 -->
+
+<!--  //測試annotation設定	 -->	
+<!-- 	<context:component-scan base-package="web.*.*.impl" />	 -->
 	
 	
 </beans>
