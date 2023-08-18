@@ -1,8 +1,8 @@
-package web.mem.dao;
+package web.mem.meminfo.dao;
 
 import java.util.List;
 
-import web.mem.entity.Mem;
+import web.mem.meminfo.entity.Mem;
 
 public interface MemDao {
 	

@@ -1,6 +1,6 @@
-package web.mem.service;
+package web.mem.meminfo.service;
 
-import web.mem.entity.Mem;
+import web.mem.meminfo.entity.Mem;
 
 public interface MemService {
 

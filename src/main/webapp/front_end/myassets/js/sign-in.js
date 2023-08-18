@@ -3,6 +3,7 @@ const pwd = document.getElementById("psw-input");
 const errMsg = document.getElementById("errMsg");
 const signIn = document.getElementById("sign-in");
 
+
 signIn.addEventListener("click", function(){
 	fetch("/flyday/mem/login", {
 		method: "POST",
