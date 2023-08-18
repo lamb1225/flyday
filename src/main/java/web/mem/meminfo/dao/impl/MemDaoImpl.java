@@ -1,4 +1,4 @@
-package web.mem.dao.impl;
+package web.mem.meminfo.dao.impl;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import web.mem.dao.MemDao;
-import web.mem.entity.Mem;
+import web.mem.meminfo.dao.MemDao;
+import web.mem.meminfo.entity.Mem;
 
 @Repository
 public class MemDaoImpl implements MemDao {

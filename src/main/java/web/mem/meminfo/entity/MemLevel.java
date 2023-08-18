@@ -1,4 +1,4 @@
-package web.mem.entity;
+package web.mem.meminfo.entity;
 
 public class MemLevel {
 

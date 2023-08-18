@@ -1,4 +1,4 @@
-package web.mem.entity;
+package web.mem.meminfo.entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -15,6 +15,8 @@ import lombok.Data;
 
 @Entity
 public class Mem extends Core {
+	
+	private static final long serialVersionUID = 3675030587216693949L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
