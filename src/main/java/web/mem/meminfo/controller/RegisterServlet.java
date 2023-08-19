@@ -1,4 +1,4 @@
-package web.mem.controller;
+package web.mem.meminfo.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
 
-import web.mem.entity.Mem;
-import web.mem.service.MemService;
+import web.mem.meminfo.entity.Mem;
+import web.mem.meminfo.service.MemService;
 
 @WebServlet("/mem/register")
 

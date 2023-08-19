@@ -1,4 +1,4 @@
-package web.mem.service.impl;
+package web.mem.meminfo.service.impl;
 
 
 import javax.transaction.Transactional;
@@ -7,9 +7,9 @@ import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import web.mem.dao.MemDao;
-import web.mem.entity.Mem;
-import web.mem.service.MemService;
+import web.mem.meminfo.dao.MemDao;
+import web.mem.meminfo.entity.Mem;
+import web.mem.meminfo.service.MemService;
 
 @Service
 @Transactional
