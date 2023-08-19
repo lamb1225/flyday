@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static core.util.CommonUtil.writePojo2Json;
 
-@WebServlet("/select")
+@WebServlet("/Act/select")
 public class SelectActServlet extends HttpServlet {
     private ActService service;
 

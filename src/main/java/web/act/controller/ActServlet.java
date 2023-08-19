@@ -14,7 +14,7 @@ import java.io.IOException;
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 
-@WebServlet("/create")
+@WebServlet("/Act/create")
 public class ActServlet extends HttpServlet {
     private static final long serialVersionUID = 8457165354645958854L;
     private ActService service;

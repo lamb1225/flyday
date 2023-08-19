@@ -15,7 +15,7 @@ import java.io.IOException;
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 
-@WebServlet("/remove")
+@WebServlet("/Act/remove")
 public class removeAct extends HttpServlet {
     private ActService service;
 
