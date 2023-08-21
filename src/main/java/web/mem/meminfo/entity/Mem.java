@@ -1,17 +1,16 @@
 package web.mem.meminfo.entity;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Arrays;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import core.entity.Core;
-import lombok.Data;
 
 @Entity
 public class Mem extends Core {
@@ -35,7 +34,7 @@ public class Mem extends Core {
 	@Column(name = "MEM_GENDER")
 	private Integer memGender;
 	@Column(name = "MEM_BDAY")
-	private Date memBday;
+	private String memBday;
 	@Column(name = "MEM_EMAIL")
 	private String memEmail;
 	@Column(name = "MEM_MOBILE")
@@ -47,13 +46,25 @@ public class Mem extends Core {
 	@Column(name = "MEM_ADDR")
 	private String memAddr;
 	@Column(name = "MEM_REG_DATE")
-	private Timestamp memRegDate;
+	private Date memRegDate;
 	@Column(name = "MEM_PIC")
 	private byte[] memPic;
 	@Column(name = "MEM_ACT_STATUS")
 	private Integer memActStatus;
 	
+	@ManyToOne
+	@JoinColumn(name = "MEM_LEVEL_NO", insertable = false, updatable = false)
+	private MemLevel memLevel;
 	
+	
+	public MemLevel getMemLevel() {
+		return memLevel;
+	}
+
+	public void setMemLevel(MemLevel memLevel) {
+		this.memLevel = memLevel;
+	}
+
 	public Mem() {
 	}
 
@@ -113,11 +124,11 @@ public class Mem extends Core {
 		this.memGender = memGender;
 	}
 
-	public Date getMemBday() {
+	public String getMemBday() {
 		return memBday;
 	}
 
-	public void setMemBday(Date memBday) {
+	public void setMemBday(String memBday) {
 		this.memBday = memBday;
 	}
 
@@ -161,11 +172,11 @@ public class Mem extends Core {
 		this.memAddr = memAddr;
 	}
 
-	public Timestamp getMemRegDate() {
+	public Date getMemRegDate() {
 		return memRegDate;
 	}
 
-	public void setMemRegDate(Timestamp memRegDate) {
+	public void setMemRegDate(Date memRegDate) {
 		this.memRegDate = memRegDate;
 	}
 
@@ -184,6 +195,29 @@ public class Mem extends Core {
 	public void setMemActStatus(Integer memActStatus) {
 		this.memActStatus = memActStatus;
 	}
+
+	public Mem(Integer memNo, Integer memLevelNo, String memAcc, Integer memAccStatus, String memName,
+			Integer memGender, String memBday, String memEmail, String memMobile, String memCity, String memDist,
+			String memAddr, Date memRegDate, byte[] memPic, Integer memActStatus) {
+		super();
+		this.memNo = memNo;
+		this.memLevelNo = memLevelNo;
+		this.memAcc = memAcc;
+		this.memAccStatus = memAccStatus;
+		this.memName = memName;
+		this.memGender = memGender;
+		this.memBday = memBday;
+		this.memEmail = memEmail;
+		this.memMobile = memMobile;
+		this.memCity = memCity;
+		this.memDist = memDist;
+		this.memAddr = memAddr;
+		this.memRegDate = memRegDate;
+		this.memPic = memPic;
+		this.memActStatus = memActStatus;
+	}
+
+	
 
 	
 	

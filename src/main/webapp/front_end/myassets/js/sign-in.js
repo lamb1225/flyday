@@ -19,7 +19,7 @@ signIn.addEventListener("click", function(){
 		if(successful){
 			const{memAcc} = jsonObject;
 			sessionStorage.setItem("memAcc", memAcc);
-			location = "index.html";
+			location = "account-profile.html";
 		}else{
 			errMsg.textContent = message;
 		}

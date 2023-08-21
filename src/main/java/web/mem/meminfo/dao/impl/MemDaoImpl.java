@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
+import web.mem.meminfo.entity.MemLevel;
 
 @Repository
 public class MemDaoImpl implements MemDao {
@@ -81,11 +82,19 @@ public class MemDaoImpl implements MemDao {
 
 	@Override
 	public Mem selectAccAndPwd(String memAcc, String memPwd) {
-		final String hql = "FROM Mem WHERE memAcc = :memAcc AND memPwd = :memPwd";		
-		return session.createQuery(hql, Mem.class)
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memAcc = :memAcc AND memPwd = :memPwd";		
+		
+		Mem mem = session.createQuery(hql, Mem.class)
 				.setParameter("memAcc", memAcc)
 				.setParameter("memPwd", memPwd)
 				.uniqueResult();
+		
+		Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+		MemLevel memLevel = memGetMemLevel.getMemLevel();
+		
+		mem.setMemLevel(memLevel);
+		
+		return mem;
 	}
 
 	@Override
