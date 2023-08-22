@@ -3,6 +3,7 @@ const pwd = document.getElementById("psw-input");
 const errMsg = document.getElementById("errMsg");
 const signIn = document.getElementById("sign-in");
 
+
 signIn.addEventListener("click", function(){
 	fetch("/flyday/mem/login", {
 		method: "POST",
@@ -18,7 +19,7 @@ signIn.addEventListener("click", function(){
 		if(successful){
 			const{memAcc} = jsonObject;
 			sessionStorage.setItem("memAcc", memAcc);
-			location = "index.html";
+			location = "account-profile.html";
 		}else{
 			errMsg.textContent = message;
 		}
