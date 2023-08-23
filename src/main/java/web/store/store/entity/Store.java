@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreMember extends Core{
+public class Store extends Core{
 	private static final long serialVersionUID = 1062017833925367218L;
 	
 	@Id
@@ -48,4 +48,6 @@ public class StoreMember extends Core{
 	private Integer storeReview;
 	@Column(name = "STORE_NOTE")
 	private String storeNote;
+	@Column(name = "STORE_PIC")
+	private byte[] storePic;
 }

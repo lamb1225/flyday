@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.entity.Core;
 import core.util.CommonUtil;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @WebServlet("/store/save")
@@ -26,13 +26,13 @@ public class SaveServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		final StoreMember storeMember = json2Pojo(request, StoreMember.class);
+		final Store store = json2Pojo(request, Store.class);
 		final Core core = new Core();
-		if (storeMember == null) {
+		if (store == null) {
 			core.setMessage("無會員資訊");
 			core.setSuccessful(false);
 		} else {
-			core.setSuccessful(service.save(storeMember));
+			core.setSuccessful(service.save(store));
 		}
 		writePojo2Json(response, core);
 	}

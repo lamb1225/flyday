@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 
 @WebServlet("/store/getinfo")
 public class GetInfoServlet extends HttpServlet {
@@ -15,16 +15,16 @@ public class GetInfoServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		StoreMember storeMember = (StoreMember)request.getAttribute("storeMember");
+		Store store = (Store)request.getAttribute("store");
 		
-		if (storeMember == null) {
-			storeMember = new StoreMember();
-			storeMember.setMessage("無會員資訊");
-			storeMember.setSuccessful(false);
+		if (store == null) {
+			store = new Store();
+			store.setMessage("無會員資訊");
+			store.setSuccessful(false);
 		} else {
-			storeMember.setSuccessful(true);
+			store.setSuccessful(true);
 		}
-		writePojo2Json(response, storeMember);
+		writePojo2Json(response, store);
 		
 	}
 }

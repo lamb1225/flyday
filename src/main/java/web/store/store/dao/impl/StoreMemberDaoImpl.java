@@ -3,16 +3,17 @@ package web.store.store.dao.impl;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+//import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import web.store.store.dao.StoreMemberDao;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 
 @Repository
 public class StoreMemberDaoImpl implements StoreMemberDao {
@@ -21,23 +22,23 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 	private Session session;
 
 	@Override
-	public int insert(StoreMember storeMember) {
-		session.persist(storeMember);
+	public int insert(Store store) {
+		session.persist(store);
 		return 1;
 	}
 
 	@Override
 	public int deleteById(Integer storeNo) {
-		StoreMember storeMember = session.get(StoreMember.class, storeNo);
-		session.remove(storeMember);
+		Store store = session.get(Store.class, storeNo);
+		session.remove(store);
 		return 1;
 	}
 
 	@Override
-	public int update(StoreMember storeMember) {
+	public int update(Store store) {
 		final StringBuilder hql = new StringBuilder()
-				.append("UPDATE StoreMember SET ");
-		final String storePwd = storeMember.getStorePwd();
+				.append("UPDATE Store SET ");
+		final String storePwd = store.getStorePwd();
 		if (storePwd != null && !storePwd.isEmpty()) {
 			hql.append("storePwd = :storePwd,");
 		}
@@ -49,49 +50,48 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 			.append("storeReply = :storeReply,")
 			.append("storeReview = :storeReview,")
 			.append("storeNote = :storeNote,")
+			.append("storePic = :storePic ")			
 			.append("WHERE storeAcc = :storeAcc");
-		Query query = session.createQuery(hql.toString());
+		Query<?> query = session.createQuery(hql.toString());
 		if (storePwd != null && !storePwd.isEmpty()) {
-			query.setParameter("storePwd", storeMember.getStorePwd());
+			query.setParameter("storePwd", store.getStorePwd());
 		}
-		return query.setParameter("accStatus", storeMember.getAccStatus())
-				.setParameter("storeName", storeMember.getStoreName())
-				.setParameter("storeTel", storeMember.getStoreTel())
-				.setParameter("storeAdd", storeMember.getStoreAdd())
-				.setParameter("storeEmail", storeMember.getStoreEmail())
-				.setParameter("storeReply", storeMember.getStoreReply())
-				.setParameter("storeReview", storeMember.getStoreReview())
-				.setParameter("storeNote", storeMember.getStoreNote())
+		return query.setParameter("accStatus", store.getAccStatus())
+				.setParameter("storeName", store.getStoreName())
+				.setParameter("storeTel", store.getStoreTel())
+				.setParameter("storeAdd", store.getStoreAdd())
+				.setParameter("storeEmail", store.getStoreEmail())
+				.setParameter("storeReply", store.getStoreReply())
+				.setParameter("storeReview", store.getStoreReview())
+				.setParameter("storeNote", store.getStoreNote())
+				.setParameter("storePic", store.getStorePic())
+				.setParameter("storeAcc", store.getStoreAcc())
 				.executeUpdate();
 	}
 
 	@Override
-	public StoreMember selectById(Integer storeNo) {
-		return session.get(StoreMember.class, storeNo);
+	public Store selectById(Integer storeNo) {
+		return session.get(Store.class, storeNo);
 	}
 
 	@Override
-	public List<StoreMember> selectAll() {
-		final String hql = "FROM StoreMember ORDER BY storeno";
-		return session.createQuery(hql, StoreMember.class).getResultList();
+	public List<Store> selectAll() {
+		final String hql = "FROM Store ORDER BY storeno";
+		return session.createQuery(hql, Store.class).getResultList();
 	}
 
 	@Override
-	public StoreMember selectByStoreAcc(String storeacc) {
-		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		CriteriaQuery<StoreMember> criteriaQuery = criteriaBuilder.createQuery(StoreMember.class);
-		Root<StoreMember> root = criteriaQuery.from(StoreMember.class);
-		criteriaQuery.where(criteriaBuilder.equal(root.get("storename"), storeacc));
-		
-		return session.createQuery(criteriaQuery).uniqueResult();
+	public Store selectByStoreAcc(String storeAcc) {
+		final String sql = "select * from STORE " + "where STORE_ACC = :storeAcc";
+		return session.createNativeQuery(sql, Store.class).setParameter("storeAcc", storeAcc).uniqueResult();
 	}
 
 	@Override
-	public StoreMember selectForLogin(String username, String password) {
-		final String sql = "select * from STOREMEMBER" + "where STORE_ACC = :storeacc and STORE_PWD = :storepwd";
-		return session.createNamedQuery(sql, StoreMember.class)
-				.setParameter("storeacc", username)
-				.setParameter("storepwd", password)
+	public Store selectForLogin(String storeAcc, String storePwd) {
+		final String sql = "select * from STORE " + "where STORE_ACC = :storeAcc and STORE_PWD = :storePwd";
+		return session.createNativeQuery(sql, Store.class)
+				.setParameter("storeAcc", storeAcc)
+				.setParameter("storePwd", storePwd)
 				.uniqueResult();
 	}
 

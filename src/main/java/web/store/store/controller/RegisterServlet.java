@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import core.util.CommonUtil;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @WebServlet("/store/register")
@@ -26,18 +26,18 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 
-		StoreMember storeMember = json2Pojo(request, StoreMember.class);
+		Store store = json2Pojo(request, Store.class);
 
-		if (storeMember == null) {
-			storeMember = new StoreMember();
-			storeMember.setMessage("無會員資訊");
-			storeMember.setSuccessful(false);
-			writePojo2Json(response, storeMember);
+		if (store == null) {
+			store = new Store();
+			store.setMessage("無會員資訊");
+			store.setSuccessful(false);
+			writePojo2Json(response, store);
 			return;
 		}
 
-		storeMember = service.register(storeMember);
-		writePojo2Json(response, storeMember);
+		store = service.register(store);
+		writePojo2Json(response, store);
 		
 	}
 }

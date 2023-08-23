@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import core.util.CommonUtil;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @WebServlet("/store/login")
@@ -25,26 +25,26 @@ public class LoginServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-		StoreMember storeMember = json2Pojo(request, StoreMember.class);
+		Store store = json2Pojo(request, Store.class);
 			
-		if (storeMember == null) {
-			storeMember = new StoreMember();
-			storeMember.setMessage("無會員資料");
-			storeMember.setSuccessful(false);
+		if (store == null) {
+			store = new Store();
+			store.setMessage("無會員資料");
+			store.setSuccessful(false);
 			response.setContentType("application/json");
-			writePojo2Json(response, storeMember);
+			writePojo2Json(response, store);
 			return;
 		}
-		storeMember = service.login(storeMember);
-		if (storeMember.isSuccessful()) {
+		store = service.login(store);
+		if (store.isSuccessful()) {
 			if (request.getSession(false) != null) {
 				request.changeSessionId();
 			}
 			final HttpSession session = request.getSession();
 			session.setAttribute("loggedin", true);
-			session.setAttribute("storeMember", storeMember);
+			session.setAttribute("store", store);
 		}
-		writePojo2Json(response, storeMember);
+		writePojo2Json(response, store);
 		 
 	}
 }

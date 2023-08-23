@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.entity.Core;
 import core.util.CommonUtil;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @WebServlet("/store/remove")
@@ -28,7 +28,7 @@ public class RemoveServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException {
-		final Integer storeno = json2Pojo(request, StoreMember.class).getStoreNo();
+		final Integer storeno = json2Pojo(request, Store.class).getStoreNo();
 		final Core core = new Core();
 		if (storeno == null) {
 			core.setMessage("無id");

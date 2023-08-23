@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.store.store.dao.StoreMemberDao;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @Service
@@ -19,101 +19,73 @@ public class StoreMemberServiceImpl implements StoreMemberService{
 	private StoreMemberDao dao;
 
 	@Override
-	public StoreMember register(StoreMember storeMember) {
-		if (storeMember.getStoreAcc() == null) {
-			storeMember.setMessage("帳號未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}
+	public Store register(Store store) {
+		
 
-		if (storeMember.getStorePwd() == null) {
-			storeMember.setMessage("密碼未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}
-
-		if (storeMember.getStoreName() == null) {
-			storeMember.setMessage("廠商名稱未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}
-		
-		if (storeMember.getStoreTel() == null) {
-			storeMember.setMessage("公司電話未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}
-		
-		if (storeMember.getStoreAdd() == null) {
-			storeMember.setMessage("公司地址未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}
-		
-		if (storeMember.getStoreEmail() == null) {
-			storeMember.setMessage("公司信箱未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
+		if (dao.selectByStoreAcc(store.getStoreAcc()) != null) {
+			store.setMessage("帳號重複");
+			store.setSuccessful(false);
+			return store;
 		}		
+		
+		store.setAccStatus(0);
+		store.setStoreReply(null);
+		store.setStoreReview(0);
+		store.setStoreNote(null);
+		dao.insert(store);
+		
 
-		if (dao.selectByStoreAcc(storeMember.getStoreAcc()) != null) {
-			storeMember.setMessage("帳號重複");
-			storeMember.setSuccessful(false);
-			return storeMember;
-		}		
+		store.setMessage("註冊成功");
+		store.setSuccessful(true);
 
-		storeMember.setMessage("註冊成功");
-		storeMember.setSuccessful(true);
-
-		return storeMember;
+		return store;
 	}
 
 	@Override
-	public StoreMember login(StoreMember storeMember) {
-		final String storeacc = storeMember.getStoreAcc();
-		final String storepwd = storeMember.getStorePwd();
+	public Store login(Store store) {
+		final String storeAcc = store.getStoreAcc();
+		final String storePwd = store.getStorePwd();
 
-		if (storeacc == null) {
-			storeMember.setMessage("使用者名稱未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
+		if (storeAcc == null || storeAcc.trim().isEmpty()) {
+			store.setMessage("帳號未輸入");
+			store.setSuccessful(false);
+			return store;
 		}
 
-		if (storepwd == null) {
-			storeMember.setMessage("密碼未輸入");
-			storeMember.setSuccessful(false);
-			return storeMember;
+		if (storePwd == null || storePwd.trim().isEmpty()) {
+			store.setMessage("密碼未輸入");
+			store.setSuccessful(false);
+			return store;
 		}
 
-		storeMember = dao.selectForLogin(storeacc, storepwd);
-		if (storeMember == null) {
-			storeMember = new StoreMember();
-			storeMember.setMessage("使用者名稱或密碼錯誤");
-			storeMember.setSuccessful(false);
-			return storeMember;
+		store = dao.selectForLogin(storeAcc, storePwd);
+		if (store == null) {
+			store = new Store();
+			store.setMessage("使用者名稱或密碼錯誤");
+			store.setSuccessful(false);
+			return store;
 		}
 
-		storeMember.setMessage("登入成功");
-		storeMember.setSuccessful(true);
-		return storeMember;
+		store.setMessage("登入成功");
+		store.setSuccessful(true);
+		return store;
 	}
 
 	@Override
-	public StoreMember edit(StoreMember storeMember) {
-		final StoreMember oMember = dao.selectByStoreAcc(storeMember.getStoreAcc());
-		storeMember.setAccStatus(oMember.getAccStatus());
-		storeMember.setStoreReply(oMember.getStoreReply());
-		storeMember.setStoreReview(oMember.getStoreReview());
-		storeMember.setStoreNote(oMember.getStoreNote());
-		storeMember.setStoreAcc(storeMember.getStoreAcc());
-		final int resultCount = dao.update(storeMember);
-		storeMember.setSuccessful(resultCount > 0);
-		storeMember.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
-		return storeMember;
+	public Store edit(Store store) {
+		final Store oStore = dao.selectByStoreAcc(store.getStoreAcc());
+		store.setAccStatus(oStore.getAccStatus());
+		store.setStoreReview(oStore.getStoreReview());
+		store.setStoreNote(oStore.getStoreNote());
+		store.setStoreAcc(store.getStoreAcc());
+		final int resultCount = dao.update(store);
+		store.setSuccessful(resultCount > 0);
+		store.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
+		return store;
 	}
 
 	@Override
-	public List<StoreMember> findAll() {
+	public List<Store> findAll() {
 		return dao.selectAll();
 	}
 
@@ -123,8 +95,8 @@ public class StoreMemberServiceImpl implements StoreMemberService{
 	}
 
 	@Override
-	public boolean save(StoreMember storeMember) {
-		return dao.update(storeMember) > 0;
+	public boolean save(Store store) {
+		return dao.update(store) > 0;
 	}
 
 	

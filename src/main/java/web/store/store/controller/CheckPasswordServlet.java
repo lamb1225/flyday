@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import core.entity.Core;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 
 @WebServlet("/store/checkpassword")
 public class CheckPasswordServlet extends HttpServlet {
@@ -19,14 +19,14 @@ public class CheckPasswordServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		final String password = json2Pojo(request, StoreMember.class).getStorePwd();
-		final StoreMember storeMember = (StoreMember) request.getSession().getAttribute("storeMember");
+		final String password = json2Pojo(request, Store.class).getStorePwd();
+		final Store store = (Store) request.getSession().getAttribute("store");
 		final Core core = new Core();
-		if (storeMember == null) {
+		if (store == null) {
 			core.setMessage("無會員資訊");
 			core.setSuccessful(false);
 		} else {
-			final String currentPassword = storeMember.getStorePwd();
+			final String currentPassword = store.getStorePwd();
 			if (Objects.equals(password, currentPassword)) {
 				core.setSuccessful(true);
 			} else {

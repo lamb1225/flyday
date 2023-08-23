@@ -2,18 +2,18 @@ package web.store.store.service;
 
 import java.util.List;
 
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 
 public interface StoreMemberService {
-	StoreMember register(StoreMember storeMember);
+	Store register(Store store);
 
-	StoreMember login(StoreMember storeMember);
+	Store login(Store store);
 	
-	StoreMember edit(StoreMember storeMember);
+	Store edit(Store store);
 	
-	List<StoreMember> findAll();
+	List<Store> findAll();
 	
 	boolean remove(Integer storeNo);
 	
-	boolean save(StoreMember storeMember);
+	boolean save(Store store);
 }

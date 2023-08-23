@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import core.util.CommonUtil;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 import web.store.store.service.StoreMemberService;
 
 @WebServlet("/store/edit")
@@ -27,9 +27,9 @@ public class EditServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		final HttpSession session = request.getSession();
-		final String storeacc = ((StoreMember) session.getAttribute("storeMember")).getStoreAcc();
-		StoreMember storeMember = json2Pojo(request, StoreMember.class);
-		storeMember.setStoreAcc(storeacc);
-		writePojo2Json(response, service.edit(storeMember));
+		final String storeacc = ((Store) session.getAttribute("store")).getStoreAcc();
+		Store store = json2Pojo(request, Store.class);
+		store.setStoreAcc(storeacc);
+		writePojo2Json(response, service.edit(store));
 	}
 }

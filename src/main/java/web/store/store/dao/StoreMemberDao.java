@@ -1,10 +1,10 @@
 package web.store.store.dao;
 
 import core.dao.CoreDao;
-import web.store.store.entity.StoreMember;
+import web.store.store.entity.Store;
 
-public interface StoreMemberDao extends CoreDao<StoreMember, Integer> {
-	StoreMember selectByStoreAcc(String storeacc);
+public interface StoreMemberDao extends CoreDao<Store, Integer> {
+	Store selectByStoreAcc(String storeacc);
 	
-	StoreMember selectForLogin(String storeacc, String storepwd);
+	Store selectForLogin(String storeacc, String storepwd);
 }
