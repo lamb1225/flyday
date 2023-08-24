@@ -8,4 +8,6 @@ public interface MemService {
 	
 	Mem register(Mem mem);
 	
+	Mem updatePersonalInfo(Mem mem);
+	
 }

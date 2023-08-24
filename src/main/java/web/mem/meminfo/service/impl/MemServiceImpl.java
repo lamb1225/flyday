@@ -84,4 +84,29 @@ public class MemServiceImpl implements MemService {
 		return mem;
 	}
 
+	
+	@Override
+	public Mem updatePersonalInfo(Mem mem) {
+		
+		if(dao.selectByMemMobile(mem.getMemMobile()) != null 
+				&& dao.selectByMemMobile(mem.getMemMobile()).getMemNo() !=  mem.getMemNo() ) {
+			mem.setMessage("手機號碼重複");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		if(dao.updateMemInfo(mem) < 1) {
+			mem.setMessage("變更失敗，請聯絡管理員");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("修改成功");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
+	
+	
+
 }

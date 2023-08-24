@@ -10,7 +10,9 @@ public interface MemDao {
 
 	int delectByMemNo(Integer memNo);
 	
-	int update(Mem mem);
+	int updateAll(Mem mem);
+	
+	int updateMemInfo(Mem mem);
 	
 	Mem selectByMemNo(Integer memNo);
 	

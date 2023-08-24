@@ -1,5 +1,6 @@
 package web.mem.meminfo.dao.impl;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -32,7 +33,7 @@ public class MemDaoImpl implements MemDao {
 	}
 
 	@Override
-	public int update(Mem mem) {
+	public int updateAll(Mem mem) {
 		final String hql = "UPDATE Mem SET memLevelNo = :memLevelNo, memAcc = :memAcc ,"
 				+ " memPwd = :memPwd, memAccStatus = :memAccStatus, memName = :memName, memGender = :memGender,"
 				+ " memBday = :memBday, memEmail = :memEmail, memMobile = :memMobile, memCity = :memCity, memDist = :memDist,"
@@ -52,6 +53,24 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memDist", mem.getMemDist())
 				.setParameter("memAddr", mem.getMemAddr())
 				.setParameter("memActStatus", mem.getMemActStatus())
+				.setParameter("memNo", mem.getMemNo())
+				.executeUpdate();	
+	}
+	
+	@Override
+	public int updateMemInfo(Mem mem) {
+		final String hql = "UPDATE Mem SET memName = :memName, memGender = :memGender, "
+				+ "memBday = :memBday, memMobile = :memMobile, memCity = :memCity, memDist = :memDist,"
+				+ " memAddr = :memAddr WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memName", mem.getMemName())
+				.setParameter("memGender", mem.getMemGender())
+				.setParameter("memBday", mem.getMemBday())
+				.setParameter("memMobile", mem.getMemMobile())
+				.setParameter("memCity", mem.getMemCity())
+				.setParameter("memDist", mem.getMemDist())
+				.setParameter("memAddr", mem.getMemAddr())
 				.setParameter("memNo", mem.getMemNo())
 				.executeUpdate();	
 	}
@@ -89,12 +108,21 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memPwd", memPwd)
 				.uniqueResult();
 		
-		Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
-		MemLevel memLevel = memGetMemLevel.getMemLevel();
-		
-		mem.setMemLevel(memLevel);
-		
-		return mem;
+		if(mem == null) {
+			return mem;
+		}else {
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);  
+			}
+			return mem;
+		}	
 	}
 
 	@Override

@@ -11,6 +11,8 @@ const pwdRegex = /^\w{6,12}$/
 const mobileRegex = /^09[0-9]{8}$/
 const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
 
+const contextPath = window.location.pathname.split('/')[1]
+
 register.addEventListener("click", function(){
     errMsg.textContent = ""
     if(acc.value === null || acc.value.trim().length === 0 
@@ -31,22 +33,20 @@ register.addEventListener("click", function(){
     }else if(pwdConfirm.value !== pwd.value){
         errMsg.textContent = "確認密碼欄位與輸入密碼不相符"
     }else{
-        fetch("/flyday/mem/register", {
-        method: "POST",
-        headers:  { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            memAcc: acc.value,
-            memEmail: email.value,
-            memMobile: mobile.value,
-            memPwd: pwd.value,
+        fetch(`/${contextPath}/mem/register`, {
+            method: "POST",
+            headers:  { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                memAcc: acc.value,
+                memEmail: email.value,
+                memMobile: mobile.value,
+                memPwd: pwd.value,
             })
         }).then(function(response){
             return response.json();
         }).then(function(jsonObject){
             const{successful, message} = jsonObject;
             if(successful){
-                const{memAcc} = jsonObject;
-                sessionStorage.setItem("memAcc", memAcc);
                 location = "index.html";
             }else{
                 errMsg.textContent = message;

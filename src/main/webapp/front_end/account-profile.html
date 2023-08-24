@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 
 <head>
-  <title>Booking - Multipurpose Online Booking Theme</title>
+  <title>Flyday - 會員中心</title>
 
   <!-- Meta Tags -->
   <meta charset="utf-8">
@@ -71,7 +71,7 @@
   </script>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="shortcut icon" href="myassets/logo_noliteral.png">
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -325,7 +325,7 @@
             <!-- Avatar -->
             <a class="avatar avatar-xs p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside"
               data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg" alt="avatar">
+              <img class="avatar-img rounded-circle my-mem-pic" src="myassets/graybackground.png" alt="avatar">
             </a>
 
             <!-- Profile dropdown START -->
@@ -336,7 +336,7 @@
                 <div class="d-flex align-items-center">
                   <!-- Avatar -->
                   <div class="avatar me-3">
-                    <img class="avatar-img rounded-circle shadow" src="assets/images/avatar/01.jpg" alt="avatar">
+                    <img class="avatar-img rounded-circle shadow my-mem-pic" src="myassets/graybackground.png" alt="avatar">
                   </div>
                   <div>
                     <a class="h6 mt-2 mt-sm-0 my-acc" href="#">testacc01</a>
@@ -627,7 +627,7 @@
                     <div class="text-center mb-3">
                       <!-- Avatar -->
                       <div class="avatar avatar-xl mb-2 change-img-div">
-                        <img class="avatar-img rounded-circle border border-2 border-white change-img" src="assets/images/avatar/01.jpg">
+                        <img class="avatar-img rounded-circle border border-2 border-white change-img my-mem-pic" src="myassets/graybackground.png">
                         <label class="btn btn-sm btn-secondary-soft mb-0 change-img-btn" for="uploadfile-1"><i class="bi bi-camera"></i></label>
 									    	<input id="uploadfile-1" class="form-control d-none" type="file">
                       </div>
@@ -737,6 +737,11 @@
 
           <!-- Main content START -->
           <div class="col-lg-8 col-xl-9">
+
+            <div class="alert alert-success alert-dismissible fade show" id="show-view" style="display: none;" role="alert">
+              <strong>個人資料修改成功!</strong> 
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
             <!-- Offcanvas menu button -->
             <div class="d-grid mb-0 d-lg-none w-100">
@@ -849,10 +854,15 @@
                           </label>
                         </div>
                       </div>
-                    </div>                   
+                    </div>    
 
+                    <!--錯誤訊息-->
+										<div id="errMsg" class="error text-danger col-6">
+											
+										</div>
+                    
                     <!-- Button -->
-                    <div class="col-12 text-end align-self-end">
+                    <div class="col-6 text-end align-self-end">
                       <button type="button" class="btn btn-primary mb-0" id="save-changes" disabled>儲存變更</button>
                     </div>
                   </form>
@@ -967,8 +977,7 @@ Footer END -->
 
   <script>
 
-
-//動態生成地區下拉式選單
+    //動態生成地區下拉式選單
     const dists = {
       '臺北市': ['中正區', '大同區', '中山區', '萬華區', '信義區', '松山區', '大安區', '南港區', '北投區', '內湖區', '士林區', '文山區'],
       '新北市': ['板橋區', '新莊區', '泰山區', '林口區', '淡水區', '金山區', '八里區', '萬里區', '石門區', '三芝區', '瑞芳區', '汐止區', '平溪區', '貢寮區', '雙溪區', '深坑區', '石碇區', '新店區', '坪林區', '烏來區', '中和區', '永和區', '土城區', '三峽區', '樹林區', '鶯歌區', '三重區', '蘆洲區', '五股區'],
@@ -1033,9 +1042,9 @@ Footer END -->
     });
 
 
-//購物車icon功能
+    //購物車icon功能
 
-    //切換購物車種類，改變按鈕形式
+    //--切換購物車種類，改變按鈕形式
     const pkgCart = document.getElementById("my_pkg_cart");
     const tktCart = document.getElementById("my_tkt_cart");
     const btnCart = document.getElementById("btn_cart");
@@ -1066,7 +1075,7 @@ Footer END -->
       }
     });
 
-    //切換購物車數量
+    //--切換購物車數量
     const minusBtns = document.getElementsByClassName("my-minus-btn");
     const plusBtns = document.getElementsByClassName("my-plus-btn");
     const cartQuantity = document.getElementsByClassName("my-cart-quantity");
@@ -1082,8 +1091,7 @@ Footer END -->
       });
     };
 
-    //設計全選
-
+    //--設計全選
     checkAll.addEventListener("click",function(){
       if(checkAllContent.textContent === "全選行程"){
         for(let pkgCheck of pkgChecks){
@@ -1130,8 +1138,7 @@ Footer END -->
       });
     }
 
-// 滑鼠移動到頭像更換照片
-
+    //滑鼠移動到頭像更換照片
     const changeImgBtn = document.getElementsByClassName("change-img-btn")[0];
     const changeImg = document.getElementsByClassName("change-img")[0];
     const changeImgDiv = document.getElementsByClassName("change-img-div")[0];
@@ -1147,13 +1154,15 @@ Footer END -->
     });
   
 
-//更改欄位資料才可以按送出按鈕
+    //更改欄位資料才可以按送出按鈕
+    const showView = document.getElementById("show-view");  //調整修改成功框
 
     const personalInfo = document.getElementById("personal-info");
     const saveChanges = document.getElementById("save-changes");
 
     personalInfo.addEventListener("change", function(){
       saveChanges.removeAttribute("disabled");
+      showView.setAttribute("style", "display: none;");
     });
 
     const updateEmail = document.getElementById("update-email");
@@ -1163,7 +1172,7 @@ Footer END -->
       sendEmail.removeAttribute("disabled");
     });
 
-//登入成功後抓存在session裡的會員資料顯示在頁面需要呈現的地方
+    //登入成功後抓存在session裡的會員資料顯示在頁面需要呈現的地方
 
     const myAccs = document.getElementsByClassName("my-acc");
     const myEmails = document.getElementsByClassName("my-email");
@@ -1178,74 +1187,156 @@ Footer END -->
 
     const myMemLevels = document.getElementsByClassName("my-mem-level");
 
+    const myMemPics = document.getElementsByClassName("my-mem-pic");
+
+    const contextPath = window.location.pathname.split('/')[1]
+    //用一個陣列來存載入網頁時從後端拿來需要重複使用的資料
+    let getOneInfoObj = [];
+
     document.addEventListener("DOMContentLoaded",function(){
-      fetch("/flyday/mem/getOneInfo",{
+      fetch(`/${contextPath}/mem/getOneInfo`,{
         method: "POST"
       }).then(function(response){
         return response.json();
       }).then(function(jsonObject){
-        const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel} = jsonObject;
+        const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
         const {memLevelName, memLevelDisc} = memLevel;  //上面回傳的東西只有memLevel是物件，針對其再解構
+        
         //填入帳號
         for(let myAcc of myAccs){
           myAcc.textContent = memAcc;
         }
+        
         //填入Email
         for(let myEmail of myEmails){
           myEmail.textContent = memEmail;
         }
+        
         //填入姓名、手機、地址、生日
-        myNameInput.value = memName;
+        if(typeof memName !== "undefined"){  
+          myNameInput.value = memName;
+        }  
+        
         myMobileInput.value = memMobile;
-        myAddrInput.value = memAddr;
-        myBdayInput.value = memBday;
+        
+        if(typeof memName !== "undefined"){  
+          myAddrInput.value = memAddr;
+        }
+        
+        if(typeof memName !== "undefined"){  
+          myBdayInput.value = memBday;
+        }
+        
         //填入性別
-        for(let myGender of myGenders){
-          if(parseInt(myGender.value) === parseInt(memGender)){
-            myGender.setAttribute("checked", true);
+        if(typeof memName !== "undefined"){  
+          for(let myGender of myGenders){
+            if(parseInt(myGender.value) === parseInt(memGender)){
+              myGender.setAttribute("checked", true);
+            }
           }
         }
+
         //填入會員等級
         for(let myMemLevel of myMemLevels){
           myMemLevel.textContent = memLevelName;
         }
+        
         //填入居住縣市
-        for(let myCityOption of myCityOptions){
-          if(myCityOption.value === memCity){
-            myCityOption.setAttribute("selected", true);
-          }else{
-            myCityOption.removeAttribute("selected");
-          }
-        }
-        //如果頁面載入有取得縣市，則動態生成地區的選單
-        if(memCity !== null){
-          const distList2 = dists[myMemCity.value];
-          myMemDist.innerHTML= `<option value="0" class="text-secondary">選擇居住地區</option>`;
-          for(let dist of distList2){
-            myMemDist.insertAdjacentHTML("beforeend", `<option value=${dist} class="text-secondary">${dist}</option>`);   
-          }
-
-          //填入居住地區
-          const myDistOptions = document.querySelectorAll("#my-mem-dist > option");
-
-          for(let myDistOption of myDistOptions){
-            if(myDistOption.value === memDist){
-              myDistOption.setAttribute("selected", true);
+        if(typeof memName !== "undefined"){  
+          for(let myCityOption of myCityOptions){
+            if(myCityOption.value === memCity){
+              myCityOption.setAttribute("selected", true);
             }else{
-              myDistOption.removeAttribute("selected");
+              myCityOption.removeAttribute("selected");
             }
           }
-          //如果居住縣市與地區皆已填入，取消灰階的顯示
-          myMemCity.classList.remove("text-secondary");
-          myMemDist.classList.remove("text-secondary");
+        } 
+
+        //如果頁面載入有取得縣市，則動態生成地區的選單
+        if(typeof memName !== "undefined"){  
+          if(memCity !== null){
+            const distList2 = dists[myMemCity.value];
+            myMemDist.innerHTML= `<option value="0" class="text-secondary">選擇居住地區</option>`;
+            for(let dist of distList2){
+              myMemDist.insertAdjacentHTML("beforeend", `<option value=${dist} class="text-secondary">${dist}</option>`);   
+            }
+
+            //填入居住地區
+            const myDistOptions = document.querySelectorAll("#my-mem-dist > option");
+
+            for(let myDistOption of myDistOptions){
+              if(myDistOption.value === memDist){
+                myDistOption.setAttribute("selected", true);
+              }else{
+                myDistOption.removeAttribute("selected");
+              }
+            }
+            //如果居住縣市與地區皆已填入，取消灰階的顯示
+            myMemCity.classList.remove("text-secondary");
+            myMemDist.classList.remove("text-secondary");
+          }
         }
 
+        //顯示從資料庫顯示圖片
+        if(typeof memPicBase64 !== "undefined"){  
+          for(let myMemPic of myMemPics){
+            const picBase64Url = memPicBase64;
+            myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+          }
+        }
 
-
+        getOneInfoObj = [memNo];
       })
     });
     
+
+    //個人資料變更   
+    const errMsg = document.getElementById("errMsg");
     
+    saveChanges.addEventListener("click", function(){
+      
+      errMsg.textContent = "";
+      
+      let selectedValue = "";
+      for(const myGender of myGenders){
+        if(myGender.checked){
+          selectedValue = myGender.value;
+          break;
+        }
+      };
+      
+      if(myMobileInput.value === null || myMobileInput.value.trim().length === 0){
+        errMsg.textContent = "手機號碼為必填";
+      }else{
+        fetch(`/${contextPath}/mem/updateMemInfo`,{
+          method: "POST",
+          headers:  { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            memName: myNameInput.value,
+            memGender: selectedValue,
+            memBday: myBdayInput.value,
+            memMobile: myMobileInput.value,
+            memCity: myMemCity.value,
+            memDist: myMemDist.value,
+            memAddr: myAddrInput.value,
+            memNo: getOneInfoObj[0]
+          })
+        }).then(function(response){
+          return response.json();
+        }).then(function(jsonObject){
+          const{successful, message} = jsonObject;
+          if(successful){
+            showView.removeAttribute("style");
+            saveChanges.setAttribute("disabled", true);
+          }else{
+            errMsg.textContent = message;
+          }
+        })
+      }
+    });
+  
+
+
   </script>
 
 </body>
