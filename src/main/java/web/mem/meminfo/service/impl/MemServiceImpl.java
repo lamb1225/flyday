@@ -1,6 +1,7 @@
 package web.mem.meminfo.service.impl;
 
 
+import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 
 import org.apache.regexp.recompile;
@@ -106,6 +107,25 @@ public class MemServiceImpl implements MemService {
 		return mem;
 		
 	}
+
+	@Override
+	public Mem changePersonalImage(byte[] memPic, Integer memNo) {
+		
+		Mem mem = new Mem();
+
+		if(dao.updateMemImage(memPic, memNo) < 1) {
+			mem.setMessage("圖片變更失敗，請聯絡管理員");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("圖片修改成功");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
+	
+	
 	
 	
 

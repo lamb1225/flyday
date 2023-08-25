@@ -74,7 +74,18 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memNo", mem.getMemNo())
 				.executeUpdate();	
 	}
+	
+	@Override
+	public int updateMemImage(byte[] memPic, Integer memNo) {
+		final String hql = "UPDATE Mem SET memPic = :memPic WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memPic", memPic)
+				.setParameter("memNo", memNo)
+				.executeUpdate();
+	}
 
+	
 	@Override
 	public Mem selectByMemNo(Integer memNo) {
 		return session.get(Mem.class, memNo);
