@@ -1286,6 +1286,9 @@ Footer END -->
         }
         //把會員編號存到陣列中
         getOneInfoObj = [memNo];
+      }).catch(function(){
+        alert("請先登入");
+        location = "sign-in.html";
       })
     });
     
