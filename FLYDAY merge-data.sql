@@ -19,14 +19,14 @@ values
 create table MEM (
 	MEM_NO int primary key not null auto_increment,
     MEM_LEVEL_NO int default 1 not null,
-    MEM_ACC varchar(12) not null,
+    MEM_ACC varchar(12) not null unique,
     MEM_PWD varchar(12) not null,
     MEM_ACC_STATUS tinyint default 0 not null,
     MEM_NAME varchar(20),
     MEM_GENDER tinyint default 0 ,
     MEM_BDAY date,
-    MEM_EMAIL varchar(40) not null,
-    MEM_MOBILE char(10) not null,
+    MEM_EMAIL varchar(40) not null unique,
+    MEM_MOBILE char(10) not null unique,
     MEM_CITY varchar(5),
     MEM_DIST varchar(5),
     MEM_ADDR varchar(40),
@@ -61,7 +61,7 @@ CREATE TABLE STORE(
     STORE_TEL VARCHAR(10) NOT NULL,
     STORE_ADD VARCHAR(50) NOT NULL,
     STORE_EMAIL VARCHAR(40) NOT NULL,
-    STORE_REG_DATE DATETIME,
+    STORE_REG_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
     STORE_REPLY VARCHAR(100),
     STORE_REVIEW TINYINT DEFAULT(0) COMMENT '0:未審核, 1:未過審, 2:已過審',
     STORE_NOTE VARCHAR(800)
@@ -194,13 +194,13 @@ INSERT INTO PKG(
 CREATE TABLE PKG_PIC(
     PKG_PIC_NO INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     PKG_NO INT NOT NULL,
-    PKG_PIC LONGBLOB,
+    PKG_IMG LONGBLOB,
     CONSTRAINT fk_PKGPIC_PKG FOREIGN KEY(PKG_NO) REFERENCES PKG(PKG_NO)
 );
 
  INSERT INTO PKG_PIC(
      PKG_NO,
-     PKG_PIC
+     PKG_IMG
  ) VALUES('1',null),
  ('1',null),
  ('2',null);
@@ -226,6 +226,12 @@ CREATE TABLE PKG_PLAN(
  ('1','花蓮家庭方案，可以體驗瑞穗牧場的動物世界','4',null,'0'),
  ('2','高雄三日遊，盤子之旅','1','1000','1');
 
+create table PKG_PLAN_PIC (
+	PKG_PLAN_PIC_NO int primary key not null auto_increment,
+    PKG_PLAN_NO int not null,
+    PKG_PLAN_IMG LONGBLOB,
+    CONSTRAINT fk_PKGPLANPIC_PKGPLAN FOREIGN KEY(PKG_PLAN_NO) REFERENCES PKG_PLAN(PKG_PLAN_NO)
+);
 
 CREATE TABLE PKG_PLAN_DETAILS(
     PKG_DETAILS_NO INT AUTO_INCREMENT NOT NULL PRIMARY KEY,

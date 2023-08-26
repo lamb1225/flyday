@@ -10,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import core.entity.Core;
 
 @Entity
-public class Mem extends Core {
+public class Mem extends MemSuper {
 	
 	private static final long serialVersionUID = 3675030587216693949L;
 	
@@ -55,7 +54,10 @@ public class Mem extends Core {
 	@ManyToOne
 	@JoinColumn(name = "MEM_LEVEL_NO", insertable = false, updatable = false)
 	private MemLevel memLevel;
+
 	
+	public Mem() {
+	}
 	
 	public MemLevel getMemLevel() {
 		return memLevel;
@@ -63,9 +65,6 @@ public class Mem extends Core {
 
 	public void setMemLevel(MemLevel memLevel) {
 		this.memLevel = memLevel;
-	}
-
-	public Mem() {
 	}
 
 	public Integer getMemNo() {
