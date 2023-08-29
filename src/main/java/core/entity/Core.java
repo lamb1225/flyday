@@ -23,6 +23,4 @@ public class Core implements Serializable{
 		this.message = message;
 	}
 	
-	
-	
 }

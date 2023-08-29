@@ -1,9 +1,23 @@
 package web.mem.meminfo.entity;
 
-public class MemLevel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "MEM_LEVEL")
+public class MemLevel {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "MEM_LEVEL_NO")
 	private Integer memLevelNo;
+	@Column(name = "MEM_LEVEL_NAME")
 	private String memLevelName;
+	@Column(name = "MEM_LEVEL_DISC")
 	private Double memLevelDisc;
 	
 	public MemLevel() {
