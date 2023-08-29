@@ -628,8 +628,8 @@
                       <!-- Avatar -->
                       <div class="avatar avatar-xl mb-2 change-img-div">
                         <img class="avatar-img rounded-circle border border-2 border-white change-img my-mem-pic" src="myassets/graybackground.png">
-                        <label class="btn btn-sm btn-secondary-soft mb-0 change-img-btn" for="uploadfile-1"><i class="bi bi-camera"></i></label>
-									    	<input id="uploadfile-1" class="form-control d-none" type="file">
+                        <label class="btn btn-sm btn-secondary-soft mb-0 change-img-btn" for="upload-image"><i class="bi bi-camera"></i></label>
+									    	<input id="upload-image" class="form-control d-none" type="file">
                       </div>
                       <h6 class="mb-0 my-acc">testacc01</h6>
                         <div class="mt-1"><span class="my-email">hello@gmail.com</span></div>
@@ -857,7 +857,7 @@
                     </div>    
 
                     <!--錯誤訊息-->
-										<div id="errMsg" class="error text-danger col-6">
+										<div id="err-msg-info" class="error text-danger col-6">
 											
 										</div>
                     
@@ -1284,18 +1284,21 @@ Footer END -->
             myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
           }
         }
-
+        //把會員編號存到陣列中
         getOneInfoObj = [memNo];
+      }).catch(function(){
+        alert("請先登入");
+        location = "sign-in.html";
       })
     });
     
 
     //個人資料變更   
-    const errMsg = document.getElementById("errMsg");
+    const errMsgInfo = document.getElementById("err-msg-info");
     
     saveChanges.addEventListener("click", function(){
       
-      errMsg.textContent = "";
+      errMsgInfo.textContent = "";
       
       let selectedValue = "";
       for(const myGender of myGenders){
@@ -1306,7 +1309,7 @@ Footer END -->
       };
       
       if(myMobileInput.value === null || myMobileInput.value.trim().length === 0){
-        errMsg.textContent = "手機號碼為必填";
+        errMsgInfo.textContent = "手機號碼為必填";
       }else{
         fetch(`/${contextPath}/mem/updateMemInfo`,{
           method: "POST",
@@ -1319,7 +1322,7 @@ Footer END -->
             memCity: myMemCity.value,
             memDist: myMemDist.value,
             memAddr: myAddrInput.value,
-            memNo: getOneInfoObj[0]
+            memNo: getOneInfoObj[0],
           })
         }).then(function(response){
           return response.json();
@@ -1329,13 +1332,39 @@ Footer END -->
             showView.removeAttribute("style");
             saveChanges.setAttribute("disabled", true);
           }else{
-            errMsg.textContent = message;
+            errMsgInfo.textContent = message;
           }
-        })
+        });
       }
     });
-  
 
+    // 上傳照片
+  
+    const uploadImage = document.getElementById("upload-image");
+
+    uploadImage.addEventListener("change", function(){
+
+      const formData = new FormData();
+      formData.append("image", uploadImage.files[0]);
+      formData.append("memNo", getOneInfoObj[0]);
+
+      fetch(`/${contextPath}/mem/updateImage`,{
+          method: "POST",
+          body: formData
+      }).then(function(response){
+        return response.json();
+      }).then(function(jsonObject){
+        const{successful, message, memPicBase64} = jsonObject;
+        if(successful){
+          for(let myMemPic of myMemPics){
+            const picBase64Url = memPicBase64;
+            myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+          }
+        }
+      });
+
+
+    });
 
   </script>
 

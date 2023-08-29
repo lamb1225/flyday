@@ -14,6 +14,8 @@ public interface MemDao {
 	
 	int updateMemInfo(Mem mem);
 	
+	int updateMemImage(byte[] memPic, Integer memNo);
+	
 	Mem selectByMemNo(Integer memNo);
 	
 	Mem selectByMemAcc(String memAcc);

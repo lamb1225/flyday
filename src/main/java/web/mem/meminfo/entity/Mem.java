@@ -56,7 +56,6 @@ public class Mem extends MemSuper {
 	private MemLevel memLevel;
 
 	
-	
 	public Mem() {
 	}
 	

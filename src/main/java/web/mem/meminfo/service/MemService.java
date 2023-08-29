@@ -1,5 +1,7 @@
 package web.mem.meminfo.service;
 
+import javax.servlet.http.Part;
+
 import web.mem.meminfo.entity.Mem;
 
 public interface MemService {
@@ -9,5 +11,7 @@ public interface MemService {
 	Mem register(Mem mem);
 	
 	Mem updatePersonalInfo(Mem mem);
+	
+	Mem changePersonalImage(byte[] memPic, Integer memNo);
 	
 }
