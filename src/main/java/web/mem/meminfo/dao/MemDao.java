@@ -10,7 +10,13 @@ public interface MemDao {
 
 	int delectByMemNo(Integer memNo);
 	
-	int update(Mem mem);
+	int updateAll(Mem mem);
+	
+	int updateMemInfo(Mem mem);
+	
+	int updateMemImage(byte[] memPic, Integer memNo);
+	
+	int updateMemEmail(String memEmail, Integer memNo);
 	
 	Mem selectByMemNo(Integer memNo);
 	

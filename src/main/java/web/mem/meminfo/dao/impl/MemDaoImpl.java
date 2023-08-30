@@ -1,5 +1,6 @@
 package web.mem.meminfo.dao.impl;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
+import web.mem.meminfo.entity.MemLevel;
 
 @Repository
 public class MemDaoImpl implements MemDao {
@@ -31,7 +33,7 @@ public class MemDaoImpl implements MemDao {
 	}
 
 	@Override
-	public int update(Mem mem) {
+	public int updateAll(Mem mem) {
 		final String hql = "UPDATE Mem SET memLevelNo = :memLevelNo, memAcc = :memAcc ,"
 				+ " memPwd = :memPwd, memAccStatus = :memAccStatus, memName = :memName, memGender = :memGender,"
 				+ " memBday = :memBday, memEmail = :memEmail, memMobile = :memMobile, memCity = :memCity, memDist = :memDist,"
@@ -53,6 +55,45 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memActStatus", mem.getMemActStatus())
 				.setParameter("memNo", mem.getMemNo())
 				.executeUpdate();	
+	}
+	
+	@Override
+	public int updateMemInfo(Mem mem) {
+		final String hql = "UPDATE Mem SET memName = :memName, memGender = :memGender, "
+				+ "memBday = :memBday, memMobile = :memMobile, memCity = :memCity, memDist = :memDist,"
+				+ " memAddr = :memAddr WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memName", mem.getMemName())
+				.setParameter("memGender", mem.getMemGender())
+				.setParameter("memBday", mem.getMemBday())
+				.setParameter("memMobile", mem.getMemMobile())
+				.setParameter("memCity", mem.getMemCity())
+				.setParameter("memDist", mem.getMemDist())
+				.setParameter("memAddr", mem.getMemAddr())
+				.setParameter("memNo", mem.getMemNo())
+				.executeUpdate();	
+	}
+	
+	@Override
+	public int updateMemImage(byte[] memPic, Integer memNo) {
+		final String hql = "UPDATE Mem SET memPic = :memPic WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memPic", memPic)
+				.setParameter("memNo", memNo)
+				.executeUpdate();
+	}
+	
+	
+	@Override
+	public int updateMemEmail(String memEmail, Integer memNo) {
+		final String hql = "UPDATE Mem SET memEmail = :memEmail WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memEmail", memEmail)
+				.setParameter("memNo", memNo)
+				.executeUpdate();
 	}
 
 	@Override
@@ -81,11 +122,28 @@ public class MemDaoImpl implements MemDao {
 
 	@Override
 	public Mem selectAccAndPwd(String memAcc, String memPwd) {
-		final String hql = "FROM Mem WHERE memAcc = :memAcc AND memPwd = :memPwd";		
-		return session.createQuery(hql, Mem.class)
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memAcc = :memAcc AND memPwd = :memPwd";		
+		
+		Mem mem = session.createQuery(hql, Mem.class)
 				.setParameter("memAcc", memAcc)
 				.setParameter("memPwd", memPwd)
 				.uniqueResult();
+		
+		if(mem == null) {
+			return mem;
+		}else {
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);  
+			}
+			return mem;
+		}	
 	}
 
 	@Override

@@ -52,7 +52,6 @@ public class LoginServlet extends HttpServlet {
 					request.changeSessionId();
 				}
 				final HttpSession session = request.getSession();
-				session.setAttribute("loggedin", true);
 				session.setAttribute("mem", mem);
 			}
 			response.setContentType("application/json");

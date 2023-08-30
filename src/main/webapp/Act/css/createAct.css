@@ -1,0 +1,25 @@
+[x-cloak] {
+    display: none;
+}
+
+#content {
+    width: 200px;
+    min-height: 100px;
+    padding: 0;
+    
+}
+
+#btn {
+    background-color: #FFF;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    font-size: 1rem;
+}
+
+#btn:hover {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #FFF;
+}

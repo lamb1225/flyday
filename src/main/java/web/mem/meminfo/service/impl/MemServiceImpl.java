@@ -1,12 +1,14 @@
 package web.mem.meminfo.service.impl;
 
 
+import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 
 import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import redis.clients.jedis.Jedis;
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
 import web.mem.meminfo.service.MemService;
@@ -83,5 +85,86 @@ public class MemServiceImpl implements MemService {
 		mem.setSuccessful(true);
 		return mem;
 	}
+
+	
+	@Override
+	public Mem updatePersonalInfo(Mem mem) {
+		
+		if(dao.selectByMemMobile(mem.getMemMobile()) != null 
+				&& dao.selectByMemMobile(mem.getMemMobile()).getMemNo() !=  mem.getMemNo() ) {
+			mem.setMessage("手機號碼重複");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		if(dao.updateMemInfo(mem) < 1) {
+			mem.setMessage("變更失敗，請聯絡管理員");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("修改成功");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
+
+	@Override
+	public Mem changePersonalImage(byte[] memPic, Integer memNo) {
+		
+		Mem mem = new Mem();
+
+		if(dao.updateMemImage(memPic, memNo) < 1) {
+			mem.setMessage("圖片變更失敗，請聯絡管理員");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("圖片修改成功");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
+
+	@Override
+	public Mem checkEmail(Mem mem) {
+		if(dao.selectByMemEmail(mem.getMemEmail()) != null){
+			
+			mem.setMessage("此Email信箱已註冊！");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("Email可使用！");
+		mem.setSuccessful(true);
+		return mem;
+	}
+
+	@Override
+	public Mem renewEmail(String verificationInput, String myNewEmail, Integer memNo) {
+		
+		Mem mem = new Mem();
+		
+		try(Jedis jedis = new Jedis();){
+			if(verificationInput.equals(jedis.get(myNewEmail))) {
+				int result = dao.updateMemEmail(myNewEmail, memNo);
+				if(result < 1) {
+					mem.setMessage("信箱更新失敗，請聯絡管理員");
+					mem.setSuccessful(false);
+					return mem;
+				};
+			}else {
+				mem.setMessage("驗證碼輸入錯誤或驗證碼已失效");
+				mem.setSuccessful(false);
+				return mem;
+			}
+		}
+		mem.setMessage("信箱變更成功！");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
+	
+	
 
 }
