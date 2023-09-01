@@ -68,7 +68,7 @@ public class EmpDaoImpl implements EmpDao {
 	
 	@Override
 	public List<Emp> selectAll() {
-		final String hql = "FROM emp ORDER BY id";
+		final String hql = "FROM Emp ORDER BY id";
 		return session.createQuery(hql, Emp.class).getResultList();
 	}
 	
