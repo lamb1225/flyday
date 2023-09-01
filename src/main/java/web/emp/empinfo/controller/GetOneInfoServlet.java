@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import web.emp.empinfo.dao.EmpDao;
 import web.emp.empinfo.entity.Emp;
 
-@WebServlet("/emp/getOneInfo")
+@WebServlet("/emp/getInfo")
 public class GetOneInfoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -66,5 +67,28 @@ public class GetOneInfoServlet extends HttpServlet {
 
 		}
 	}
+	
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)// 複製自login，指示程式碼do when 接到Post請求
+			throws ServletException, IOException {
 
+		try {
+			Gson gson = new Gson();
+			List<Emp> empList = dao.selectAll(); // 獲取所有員工列表
+
+			// 將員工列表轉換為JSON格式並返回給客戶端
+			response.setContentType("application/json");
+			try (PrintWriter pw = response.getWriter();) {
+				pw.print(gson.toJson(empList));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 處理錯誤情況
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().print("Error retrieving employee data.");
+		}
+	}
+	
+	
 }
