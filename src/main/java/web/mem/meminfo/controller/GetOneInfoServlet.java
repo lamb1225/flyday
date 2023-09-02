@@ -13,9 +13,6 @@ import com.google.gson.Gson;
 
 import web.mem.meminfo.entity.Mem;
 
-
-
-
 @WebServlet("/mem/getOneInfo")
 public class GetOneInfoServlet extends HttpServlet {
 

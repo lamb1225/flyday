@@ -8,6 +8,7 @@ import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import redis.clients.jedis.Jedis;
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
 import web.mem.meminfo.service.MemService;
@@ -124,8 +125,45 @@ public class MemServiceImpl implements MemService {
 		return mem;
 		
 	}
-	
-	
+
+	@Override
+	public Mem checkEmail(Mem mem) {
+		if(dao.selectByMemEmail(mem.getMemEmail()) != null){
+			
+			mem.setMessage("此Email信箱已註冊！");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setMessage("Email可使用！");
+		mem.setSuccessful(true);
+		return mem;
+	}
+
+	@Override
+	public Mem renewEmail(String verificationInput, String myNewEmail, Integer memNo) {
+		
+		Mem mem = new Mem();
+		
+		try(Jedis jedis = new Jedis();){
+			if(verificationInput.equals(jedis.get(myNewEmail))) {
+				int result = dao.updateMemEmail(myNewEmail, memNo);
+				if(result < 1) {
+					mem.setMessage("信箱更新失敗，請聯絡管理員");
+					mem.setSuccessful(false);
+					return mem;
+				};
+			}else {
+				mem.setMessage("驗證碼輸入錯誤或驗證碼已失效");
+				mem.setSuccessful(false);
+				return mem;
+			}
+		}
+		mem.setMessage("信箱變更成功！");
+		mem.setSuccessful(true);
+		return mem;
+		
+	}
 	
 	
 

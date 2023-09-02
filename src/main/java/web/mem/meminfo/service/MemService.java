@@ -14,4 +14,8 @@ public interface MemService {
 	
 	Mem changePersonalImage(byte[] memPic, Integer memNo);
 	
+	Mem checkEmail(Mem mem);
+	
+	Mem renewEmail(String verificationInput, String myNewEmail, Integer memNo);
+	
 }
