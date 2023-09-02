@@ -1,11 +1,12 @@
-
+let mem = 4;
 let acts;
+let join;
 function $id(id) {
     return document.getElementById(id);
-  }
-window.addEventListener("load", function() {
+}
+window.addEventListener("load", function () {
 
-    fetch('select')
+    fetch(`select`)
         .then(function (resp) {
 
             return resp.json()
@@ -29,7 +30,6 @@ function showAct() {
                 <tr>
                 <td>${acts[i].actno}</td>
                 <td>${acts[i].memno}</td>
-                <td>${acts[i].pkgno}</td>
                 <td>${acts[i].acttitle}</td>
                 <td>${acts[i].actcontent}</td>
                 <td>${acts[i].actmaxcount}</td>
@@ -45,16 +45,28 @@ function showAct() {
             } else if (acts[i].actstatus === 2) {
                 html += `<td>已取消</td>`;
             }
-            html +=`
+            if (mem === acts[i].memno) {
+                html += `
+                <td>
+                <button type="button" disabled="disabled" class="btn" onclick='JoinActClick(${acts[i].actno})'>加入揪團</button>
+                </td>`;
+            } else {
+                html += `
+                <td>
+                <button type="button" class="btn" onclick='JoinActClick(${acts[i].actno})'>加入揪團</button>
+                </td>`;
+            }
+
+            html += `
                 <td>
                 <button type="button" class="btn" onclick='onRemoveClick(${acts[i].actno})'>移除</button>
                 </td>`;
-                html +=`
+            html += `
                 <td>
                 <button type="button" class="btn" onclick='onReviseClick(${acts[i].actno})'>修改</button>
-                </td>`;  
+                </td>`;
             html += `</tr>`;
-            
+
         }
     }
     $id("showPanel").innerHTML = html;
@@ -64,10 +76,10 @@ function onRemoveClick(id) {
     if (!confirm('確定刪除?')) {
         return;
     }
-    fetch('remove', {
+    fetch('removejoin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({actno: id})
+        body: JSON.stringify({ actno: id })
     })
         .then(resp => resp.json())
         .then(body => {
@@ -76,7 +88,65 @@ function onRemoveClick(id) {
             }
         });
 }
-function onReviseClick(id){
-    sessionStorage.setItem("actno",id);
-    location.href=`http://localhost:8080/flydaytest/reviseAct.html`;
+function onReviseClick(id) {
+    sessionStorage.setItem("actno", id);
+    location.href = `http://localhost:8080/flydaytest/Act/reviseAct.html`;
+}
+function JoinActClick(id) {
+    let memid = mem;
+    if (!confirm('確定加入?')) {
+        return;
+    }
+    fetch('Join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            actno: id,
+            memno: memid
+        })
+    })
+        .then(resp => resp.json())
+        .then(body => {
+            const { successful } = body;
+            if (successful) {
+                join1(id);
+                alert('加入成功');
+
+                // setTimeout("location.href='http://localhost:8080/flydaytest/Act/selectAct.html'", 1000);
+            } else {
+
+                alert('加入失敗');
+            }
+        });
+}
+
+async function join1(id) {
+    fetch('joinid', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ actno: id })
+    })
+        .then(resp => resp.json())
+        .then(body1 => {
+            join = body1;
+            fetch('revise', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    actno: id,
+                    actcurrentcount: join.length
+        
+                })
+            }).then(resp => resp.json())
+                .then(body => {
+                    const { successful, message } = body;
+                    if (successful) {
+                        console.log('更新成功!');
+                    } else {
+                        console.log(message ?? '存檔失敗');
+                    }
+                });
+        })
+
+
 }
