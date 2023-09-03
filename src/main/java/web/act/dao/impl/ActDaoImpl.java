@@ -41,6 +41,7 @@ public class ActDaoImpl implements ActDAO {
 
     @Override
     public int insert(Act act) { // 新增揪團資訊
+
         session.persist(act); // 將實體物件新增⾄對應資料表中
         return 1;
     }
@@ -69,4 +70,12 @@ public class ActDaoImpl implements ActDAO {
     }
 
 
+    @Override
+    public List<Act> selectBymember(Integer memno) {
+        final String sql = "select * from ACT where MEM_NO= :memno order by ACT_NO"; //sql查詢寫法
+        return session
+                .createNativeQuery(sql, Act.class)
+                .setParameter("memno", memno)
+                .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
+    }
 }

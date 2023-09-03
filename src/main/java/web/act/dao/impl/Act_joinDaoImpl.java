@@ -1,14 +1,14 @@
 package web.act.dao.impl;
 
+import core.dao.CoreDao;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import web.act.dao.Act_JoinDAO;
 import web.act.entity.Act_Join;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
 @Repository
-public class Act_joinDaoImpl implements Act_JoinDAO {
+public class Act_joinDaoImpl implements CoreDao<Act_Join, Integer> {
     @PersistenceContext
     private Session session;
     @Override
