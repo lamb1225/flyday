@@ -11,5 +11,6 @@ public interface ActService {
     boolean deleteAct(Integer id);
     List<Act> selectAll();
     boolean revise(Act act);
+    List<Act> memAct(Integer memid);
 
 }
