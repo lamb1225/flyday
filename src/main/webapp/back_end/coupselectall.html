@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+
+        table,
+        th,
+        td {
+            padding: 5px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+    <p>COUPON</p>
+    <button class="btn btn-dark mb-0 float-end" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add" id="selectbtn">查詢全部</button>
+    <label class="form-label">*優惠券編號</label> <input type="text" class="form-control2" id="rcoupno">
+
+    <button class="btn btn-dark mb-0 float-end" type="button" data-bs-toggle="modal" data-bs-target="#add"
+    id="removebtn">刪除</button>                                
+   
+   
+    <table>
+        <tr>
+            <th>Coupon No:</th>
+            <th>Coupon Name:</th>
+            <th>Introduction:</th>
+            <th>Discount:</th>
+            <th>Start Date:</th>
+            <th>End Date:</th>
+            <th>Use Start Date:</th>
+            <th>Use End Date:</th>
+            <th>Minimum Charge:</th>
+            <th>State:</th>
+        </tr>
+       
+    </table>
+     <table id="coup">
+    </table>
+
+    <div id="msg"></div>
+		    <script src="myassets/js/coupselectall.js"></script>
+		    <script src="myassets/js/coupremove.js"></script>
+
+</body>
+
+</html>
