@@ -1,9 +1,9 @@
 package web.act.dao;
 
 
-import core.dao.Coredao;
+import core.dao.CoreDao;
 import web.act.entity.Act_Reply;
 
-public interface ActReplyDAO extends Coredao<Act_Reply, Integer> {
+public interface ActReplyDAO extends CoreDao<Act_Reply, Integer> {
 
 }

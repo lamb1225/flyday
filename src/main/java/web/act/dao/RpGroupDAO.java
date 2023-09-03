@@ -1,9 +1,9 @@
 package web.act.dao;
 
 
-import core.dao.Coredao;
+import core.dao.CoreDao;
 import web.act.entity.Rp_Group;
 
-public interface RpGroupDAO extends Coredao<Rp_Group,Integer> {
+public interface RpGroupDAO extends CoreDao<Rp_Group,Integer> {
 
 }
