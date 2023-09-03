@@ -2,13 +2,13 @@ package web.act.dao.impl;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import web.act.dao.Act_ReplyDAO;
+import web.act.dao.ActReplyDAO;
 import web.act.entity.Act_Reply;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
 @Repository
-public class Act_ReplyDaoImpl implements Act_ReplyDAO {
+public class Act_ReplyDaoImpl implements ActReplyDAO {
     @PersistenceContext
     private Session session;
     @Override
