@@ -4,6 +4,11 @@ public class TktCore {
 	private boolean successful;
 	private String message;
 	
+	@Override
+	public String toString() {
+		return "TktCore [successful=" + successful + ", message=" + message + "]";
+	}
+
 	public TktCore() {
 	}
 
