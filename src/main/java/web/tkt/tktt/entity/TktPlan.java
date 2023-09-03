@@ -9,9 +9,10 @@ public class TktPlan extends TktCore{
 //	private String planname;
 //	private String plancontent;
 	private Integer soldamount;
-	private Integer planstat;
+//	private Integer planstat;
 	private List<String> planname;
 	private List<String> plancontent;
+	private List<Integer> planstat;
 
     public List<String> getPlanname() {
         return planname;
@@ -29,6 +30,13 @@ public class TktPlan extends TktCore{
 		this.plancontent = plancontent;
 	}
 	
+	public List<Integer> getPlanstat() {
+		return planstat;
+	}
+
+	public void setPlanstat(List<Integer> planstat) {
+		this.planstat = planstat;
+	}
 
 	@Override
 	public String toString() {
@@ -41,7 +49,7 @@ public class TktPlan extends TktCore{
 	}
 
 	public TktPlan(Integer tktplanno, Integer tktno, List<String> planname, List<String> plancontent, Integer soldamount,
-			Integer planstat) {
+			List<Integer> planstat) {
 		super();
 		this.tktplanno = tktplanno;
 		this.tktno = tktno;
@@ -91,13 +99,13 @@ public class TktPlan extends TktCore{
 		this.soldamount = soldamount;
 	}
 
-	public Integer getPlanstat() {
-		return planstat;
-	}
-
-	public void setPlanstat(Integer planstat) {
-		this.planstat = planstat;
-	}
+//	public Integer getPlanstat() {
+//		return planstat;
+//	}
+//
+//	public void setPlanstat(Integer planstat) {
+//		this.planstat = planstat;
+//	}
 	
 
 }

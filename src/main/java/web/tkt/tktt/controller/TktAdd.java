@@ -44,6 +44,7 @@ public class TktAdd extends HttpServlet{
 		
 		String requestBody = request.getReader().lines().collect(Collectors.joining());
 		
+		// 商品(驗證+傳入TktServiceImpl)
 		if(requestBody.contains("tktname")) {
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -146,8 +147,8 @@ public class TktAdd extends HttpServlet{
 		
 //		==================================================================================================
 		
+		// 方案(驗證+傳入TktServiceImpl)
 		if (requestBody.contains("planname")) {
-			
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			Map<String,String> okMsgs = new LinkedHashMap<String,String>();
@@ -158,13 +159,8 @@ public class TktAdd extends HttpServlet{
 			List<String> plancontent = tktplan.getPlancontent();
 			
 			System.out.println("進入plan");
-			System.out.println("tktplan="+tktplan);
-			System.out.println("planname="+planname);
-			System.out.println("plancontent="+plancontent);
-			System.out.println(planname.size());
-			System.out.println( planname.isEmpty());
 
-
+			
 			for (String plannamelist : planname) {
 				int length = plannamelist.length();
 				if(length == 0) {
@@ -184,13 +180,6 @@ public class TktAdd extends HttpServlet{
 					errorMsgs.put("plancontentMsgs", "方案內容需介於2~500個字之間");
 				}
 			}
-			
-			System.out.println("errorMsgs="+errorMsgs);
-			
-			
-			
-//			tktplan = service.addtktplan(tktplan);
-//			writePojo2Json(response, tktplan);
 			
 			if(!errorMsgs.isEmpty()) {
 				errorMsgs.put("msg", "尚有資料未填寫");

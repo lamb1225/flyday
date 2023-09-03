@@ -36,14 +36,14 @@ $(function () {
                             <div class="d-flex">
                                 <!-- Radio -->
                                 <div class="form-check radio-bg-light me-4">
-                                    <input class="form-check-input" type="radio" name="planstat${plan_number}" id="planstatRadio0" value="0" checked>
+                                    <input class="form-check-input" type="radio" name="planstat${plan_number}" id="planstatRadio" value="1" checked>
                                     <label class="form-check-label" for="planstatRadio0">
                                         上架
                                     </label>
                                 </div>
                                 <!-- Radio -->
                                 <div class="form-check radio-bg-light me-4">
-                                    <input class="form-check-input" type="radio" name="planstat${plan_number}" id="planstatRadio1" value="1">
+                                    <input class="form-check-input" type="radio" name="planstat${plan_number}" id="planstatRadio" value="0">
                                     <label class="form-check-label" for="planstatRadio1">
                                         保留但不上架
                                     </label>
@@ -53,7 +53,7 @@ $(function () {
 
                         <!-- Plan Content -->												
                         <div class="col-12">
-                            <label class="form-label">方案內容 *</label>&ensp;<small name="plancontentMsgs" id="plancontentMsgs"></small>
+                            <label class="form-label">方案內容 *</label>&ensp;<small class="tkt-error-color" name="plancontentMsgs" id="plancontentMsgs"></small>
                             <textarea class="form-control" rows="2" name="plancontent" id="plancontent" placeholder="描述方案內容"></textarea>
                         </div>
                         

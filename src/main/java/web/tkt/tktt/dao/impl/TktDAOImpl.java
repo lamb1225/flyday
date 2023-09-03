@@ -44,7 +44,7 @@ public class TktDAOImpl implements TktDAO{
 	private static final String findMaxTktno_STMT = 
 			"SELECT MAX(TKT_NO) TKT_NO FROM tkt";
 	private static final String INSERTPLAN_STMT = 
-			"INSERT INTO tkt_plan(TKT_NO,PLAN_NAME,PLAN_CONTENT) VALUES (?, ?, ?)";
+			"INSERT INTO tkt_plan(TKT_NO,PLAN_NAME,PLAN_CONTENT,SOLD_AMOUNT,PLAN_STAT) VALUES (?, ?, ?, ? ,?)";
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME FROM tkt WHERE TKT_NO = ?";
 	private static final String getAll_STMT = 
@@ -124,6 +124,7 @@ public class TktDAOImpl implements TktDAO{
 		
 		List<String> plannameList = tktplan.getPlanname();
 		List<String> plancontentList = tktplan.getPlancontent();
+		List<Integer> planstatList = tktplan.getPlanstat();
 
 		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 				PreparedStatement pstmtno = con.prepareStatement(findMaxTktno_STMT);
@@ -133,8 +134,6 @@ public class TktDAOImpl implements TktDAO{
 //				PreparedStatement pstmtno = con.prepareStatement(findMaxTktno_STMT);
 //				PreparedStatement pstmt = con.prepareStatement(INSERTPLAN_STMT);){
 			
-			 
-			
 			try(ResultSet rsno = pstmtno.executeQuery();){
 				while (rsno.next()) {
 					pstmt.setInt(1, rsno.getInt("TKT_NO"));
@@ -142,16 +141,15 @@ public class TktDAOImpl implements TktDAO{
 				for (int i = 0; i < plannameList.size(); i++) {
 	                String planname = plannameList.get(i);
 	                String planconten = plancontentList.get(i);
+	                Integer planstat = planstatList.get(i);
+	                
 	                pstmt.setString(2, planname);
 	                pstmt.setString(3, planconten);
+	                pstmt.setInt(4, tktplan.getSoldamount());
+	                pstmt.setInt(5, planstat);
 	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
 				}
-
-//				for (String planname : plannameList) {
-//					pstmt.setString(2, planname);
-//					pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
-//					System.out.println("新增成功="+tktplan);
-//				}				
+				
 			}
 			pstmt.executeBatch(); // 執行批量插入
 		} catch (Exception e) {

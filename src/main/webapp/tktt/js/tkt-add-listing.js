@@ -69,6 +69,7 @@ $(function () {
         //     }, 1000); // 1000 是滚动动画的持续时间（以毫秒为单位）
         // }
 
+        // 景點簡介(驗證)
         $("#proddescMsgs").text('');
         const proddescLength = $("#proddesc div").text().length;
 		if (proddescLength == '') {
@@ -86,7 +87,7 @@ $(function () {
             $("#proddescMsgs").text('景點介紹需介於2~5000字元');
         }
 
-
+        // 購買須知(驗證)
         $("#noticeMsgs").text('');
         const noticeLength = $("#notice div").text().length;
 		if (noticeLength == '') {
@@ -96,6 +97,7 @@ $(function () {
 
         }
 
+        // 如何使用(驗證)
         $("#howuseMsgs").text('');
         const howuseLength = $("#howuse div").text().length;
 		if (howuseLength == '') {
@@ -152,13 +154,13 @@ $(function () {
 		// 	return;
 		// }
 
-
+        // 方案(存入+驗證)
         const plannameInputs = document.querySelectorAll('[name="planname"]');
         const plannameValues = [];
         plannameInputs.forEach(function(input) {
             plannameValues.push(input.value);
         });        
-        console.log(plannameValues);
+        // console.log(plannameValues);
         $("small[id^='plannameMsg']").text('');
         $("input[id^='planname']").each(function() {
             const value = $(this).val();
@@ -170,12 +172,31 @@ $(function () {
             }
         });
 
+        // 方案內容(存入+驗證)
         const plancontentInputs = document.querySelectorAll('[name="plancontent"]');
         const plancontentValues = [];
         plancontentInputs.forEach(function(input) {
             plancontentValues.push(input.value);
         });     
-        console.log(plancontentValues);
+        // console.log(plancontentValues);
+        $("small[id^='plancontentMsgs']").text('');
+        $("textarea[id^='plancontent']").each(function() {
+            const value = $(this).val();
+            const length = $(this).val().length; 
+            if (value === '') {
+                $(this).prev().text('方案內容請勿空白');
+            } else if (length < 2 || length > 500) {
+                $(this).prev().text('方案內容需介於2~500個字之間');
+            }
+        });
+
+        // 方案狀態(存入)
+        const planstatInputs = document.querySelectorAll('input[id="planstatRadio"]:checked');
+        const planstatValues = [];
+        planstatInputs.forEach(function(input) {
+            planstatValues.push(input.value);
+        });  
+        // console.log(planstatValues);
         
 
 		// msg.textContent = '';
@@ -253,6 +274,8 @@ $(function () {
                 body: JSON.stringify({
                     planname: plannameValues,
                     plancontent: plancontentValues,
+                    soldamount: 0,
+                    planstat: planstatValues,
                     
                 }),
             })
