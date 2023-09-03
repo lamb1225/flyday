@@ -35,7 +35,7 @@ public class PkgPlanPicServiceImpl implements PkgPlanPicService{
 	}
 
 	@Override
-	public List<PkgPlanPic> findall(String pkgPlanNo) {
+	public List<PkgPlanPic> findall(Integer pkgPlanNo) {
 		return dao.selectByPkgPlanNo(pkgPlanNo);
 	}
 

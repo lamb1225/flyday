@@ -9,6 +9,8 @@ public interface PkgPlanService {
 	
 	PkgPlan edit(PkgPlan pkgPlan);
 	
-	List<PkgPlan> findall(String pkgNo); //單一行程的全部方案
+	List<PkgPlan> findall(Integer pkgNo); //單一行程的全部方案
+	
+	PkgPlan select(Integer pkgPlanNo);
 
 }

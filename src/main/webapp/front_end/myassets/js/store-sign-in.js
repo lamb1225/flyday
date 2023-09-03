@@ -16,9 +16,10 @@ signIn.addEventListener("click", function(){
     }).then(function(jsonObject){
         const{successful, message} = jsonObject;
         if(successful){
-            const{storeNo, storeName} = jsonObject;
+            const{storeNo, storeName, storePicBase64} = jsonObject;
             sessionStorage.setItem("storeNo", storeNo);
             sessionStorage.setItem("storeName", storeName);
+            sessionStorage.setItem("storePicBase64", storePicBase64);
             location = "/flyday/front_end/store-edit.html";
         }else{
             errMsg.textContent = message;

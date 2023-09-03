@@ -6,5 +6,5 @@ import core.dao.CoreDao;
 import web.pkg.pkgmanage.entity.PkgPlanDetails;
 
 public interface PkgPlanDetailsDao extends CoreDao<PkgPlanDetails, Integer>{
-	List<PkgPlanDetails> selectByPkgPlanNo(String pkgPlanNo);
+	List<PkgPlanDetails> selectByPkgPlanNo(Integer pkgPlanNo);
 }

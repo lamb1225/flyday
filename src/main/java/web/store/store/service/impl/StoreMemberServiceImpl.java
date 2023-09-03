@@ -99,6 +99,17 @@ public class StoreMemberServiceImpl implements StoreMemberService{
 		return dao.update(store) > 0;
 	}
 
+	@Override
+	public Store editpic(byte[] storePic, Integer storeNo) {
+		Store store = new Store();
+		dao.updatePic(storePic, storeNo);
+		store.setMessage("新增成功");
+		store.setSuccessful(true);
+//		store.setSuccessful(resultCount > 0);
+//		store.setMessage(resultCount > 0 ? "修改成功" : "修改失敗");
+		return store;
+	}
+
 	
 
 	

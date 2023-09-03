@@ -35,8 +35,13 @@ public class PkgPlanDetailsServiceImpl implements PkgPlanDetailsService{
 	}
 
 	@Override
-	public List<PkgPlanDetails> findall(String pkgPlanNo) {
+	public List<PkgPlanDetails> findall(Integer pkgPlanNo) {
 		return dao.selectByPkgPlanNo(pkgPlanNo);
+	}
+
+	@Override
+	public PkgPlanDetails select(Integer pkgPlanDetailsNo) {
+		return dao.selectById(pkgPlanDetailsNo);
 	}
 
 }

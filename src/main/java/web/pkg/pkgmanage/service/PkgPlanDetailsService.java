@@ -9,5 +9,7 @@ public interface PkgPlanDetailsService {
 	
 	PkgPlanDetails edit(PkgPlanDetails pkgPlanDetails);
 	
-	List<PkgPlanDetails> findall(String pkgPlanNo); //單筆方案的所有時間
+	List<PkgPlanDetails> findall(Integer pkgPlanNo); //單筆方案的所有時間
+	
+	PkgPlanDetails select(Integer pkgPlanDetailsNo);
 }

@@ -9,7 +9,7 @@ public interface PkgPicService {
 	
 	PkgPic edit(PkgPic pkgPic);
 	
-	List<PkgPic> findall(String pkgNo); // 單筆行程的所有圖片
+	List<PkgPic> findall(Integer pkgNo); // 單筆行程的所有圖片
 	
 	boolean remove(Integer pkgPicNo);
 }

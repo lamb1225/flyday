@@ -5,10 +5,12 @@ import java.util.List;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import web.pkg.pkgmanage.dao.PkgPlanPicDao;
 import web.pkg.pkgmanage.entity.PkgPlanPic;
 
+@Repository
 public class PkgPlanPicDaoImpl implements PkgPlanPicDao{
 
 	@PersistenceContext
@@ -40,12 +42,12 @@ public class PkgPlanPicDaoImpl implements PkgPlanPicDao{
 
 	@Override
 	public List<PkgPlanPic> selectAll() {
-		final String hql = "FROM PkgPlanPic OVDER BY pkgPlanPicNo";
+		final String hql = "FROM PkgPlanPic ORDER BY pkgPlanPicNo";
 		return session.createQuery(hql, PkgPlanPic.class).getResultList();
 	}
 
 	@Override
-	public List<PkgPlanPic> selectByPkgPlanNo(String pkgPlanNo) {
+	public List<PkgPlanPic> selectByPkgPlanNo(Integer pkgPlanNo) {
 		final String hql = "FROM PkgPlanPic WHERE pkgPlanNo = :pkgPlanNo";
 		return session.createQuery(hql).setParameter("pkgPlanNo", pkgPlanNo).getResultList();
 	}

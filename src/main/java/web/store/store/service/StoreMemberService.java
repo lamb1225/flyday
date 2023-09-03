@@ -16,4 +16,6 @@ public interface StoreMemberService {
 	boolean remove(Integer storeNo);
 	
 	boolean save(Store store);
+	
+	Store editpic(byte[] storePic, Integer storeNo);
 }

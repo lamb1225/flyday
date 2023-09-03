@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import core.entity.Core;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "PKG_PLAN_PIC")
 public class PkgPlanPic extends Core{
 	private static final long serialVersionUID = 1062017833925367218L;
 	
@@ -28,5 +31,6 @@ public class PkgPlanPic extends Core{
 	@Column(name = "PKG_PLAN_NO")
 	private Integer pkgPlanNo;
 	@Column(name = "PKG_PLAN_IMG")
-	private byte[] pkgPlanImg;
+	private String pkgPlanImg;
+
 }

@@ -6,5 +6,5 @@ import core.dao.CoreDao;
 import web.pkg.pkgmanage.entity.PkgPic;
 
 public interface PkgPicDao extends CoreDao<PkgPic, Integer>{
-	List<PkgPic> selectByPkgNo(String pkgNo);
+	List<PkgPic> selectByPkgNo(Integer pkgNo);
 }

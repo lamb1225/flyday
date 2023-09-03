@@ -22,7 +22,7 @@ public class GetInfoAllServlet extends HttpServlet {
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		writePojo2Json(response, service.findAll());
 	}
 }

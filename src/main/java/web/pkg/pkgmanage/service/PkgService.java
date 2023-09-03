@@ -11,6 +11,8 @@ public interface PkgService {
 	
 	List<Pkg> findAll();
 	
-	List<Pkg> findmyPkg(String storeNo);
+	List<Pkg> findmyPkg(Integer storeNo);
+	
+	Pkg select(Integer pkgNo);
 	
 }

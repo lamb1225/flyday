@@ -6,8 +6,10 @@
     const reply =  document.getElementById("reply");
     const bt =  document.getElementById("change");
     
+    
     const pwd =  document.getElementById("psw-input")
     const pwdConfirm =  document.getElementById("psw-input-confirm")
+    
 
   
 
@@ -65,10 +67,41 @@
             })
         }
     })
+    
+    
+    const storePics = document.getElementsByClassName("store-pic");
+    const updatepic = document.getElementById("uploadfile-1");
+    updatepic.addEventListener("change", function() {
+        const formData = new FormData();
+  		formData.append("image", updatepic.files[0]);
+  		formData.append("storeNo", sessionStorage.getItem("storeNo"));
+       	
+       	fetch("/flyday/store/editpic", {
+        	method: "POST",
+            body: formData
+        }).then(function(response){
+    		return response.json();
+  		}).then(function(jsonObject){
+    		const{successful, message, storePicBase64} = jsonObject;
+    		if(successful){
+      			for(let storePic of storePics){
+        			const picBase64Url = storePicBase64;
+        			storePic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+      			}
+    		}
+    		sessionStorage.setItem("storePicBase64", storePicBase64);
+  		});
+    });
+    
+    
 
     function storename(){
         document.getElementById("storename1").textContent = sessionStorage.getItem("storeName");
         document.getElementById("storename2").textContent = sessionStorage.getItem("storeName");
+        for(let storePic of storePics){
+        			const picBase64Url = sessionStorage.getItem("storePicBase64");
+        			storePic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+      	}
     }
 
     storename();
@@ -77,6 +110,7 @@
     logout.addEventListener("click", function(){
         sessionStorage.removeItem("storeNo");
         sessionStorage.removeItem("storeName");
+        sessionStorage.removeItem("storePicBase64");
         fetch("/flyday/store/logout")
         location = "/flyday/front_end/store-sign-in.html";
     })

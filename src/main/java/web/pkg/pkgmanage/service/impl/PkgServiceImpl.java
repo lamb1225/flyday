@@ -39,8 +39,13 @@ public class PkgServiceImpl implements PkgService{
 		return dao.selectAll();
 	}
 
-	public List<Pkg> findmyPkg(String storeNo) {
+	public List<Pkg> findmyPkg(Integer storeNo) {
 		return dao.selectByStoreNo(storeNo);
+	}
+
+	@Override
+	public Pkg select(Integer pkgNo) {
+		return dao.selectByPkgNo(pkgNo);
 	}
 
 }

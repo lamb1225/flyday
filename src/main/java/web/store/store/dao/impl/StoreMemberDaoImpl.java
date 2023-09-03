@@ -1,5 +1,6 @@
 package web.store.store.dao.impl;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import web.mem.meminfo.entity.Mem;
+import web.mem.meminfo.entity.MemLevel;
 import web.store.store.dao.StoreMemberDao;
 import web.store.store.entity.Store;
 
@@ -76,7 +79,7 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 
 	@Override
 	public List<Store> selectAll() {
-		final String hql = "FROM Store ORDER BY storeno";
+		final String hql = "FROM Store ORDER BY storeNo";
 		return session.createQuery(hql, Store.class).getResultList();
 	}
 
@@ -89,10 +92,29 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 	@Override
 	public Store selectForLogin(String storeAcc, String storePwd) {
 		final String sql = "select * from STORE " + "where STORE_ACC = :storeAcc and STORE_PWD = :storePwd";
-		return session.createNativeQuery(sql, Store.class)
+		Store store = session.createNativeQuery(sql, Store.class)
 				.setParameter("storeAcc", storeAcc)
 				.setParameter("storePwd", storePwd)
 				.uniqueResult();
+		if(store == null) {
+			return store;
+		}else {
+			
+			if(store.getStorePic() != null) {
+				byte[] storePic = store.getStorePic();
+				String storePicBase64 = Base64.getEncoder().encodeToString(storePic); 
+				store.setStorePicBase64(storePicBase64);  
+			}
+			return store;
+		}
+		
+	}
+
+	@Override
+	public int updatePic(byte[] storePic, Integer storeNo) {
+		final String hql = "UPDATE Store SET storePic = :storePic WHERE storeNo = :storeNo"; 
+		return session.createQuery(hql).setParameter("storePic", storePic)
+				.setParameter("storeNo", storeNo).executeUpdate();
 	}
 
 }

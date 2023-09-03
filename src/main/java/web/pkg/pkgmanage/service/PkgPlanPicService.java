@@ -9,7 +9,7 @@ public interface PkgPlanPicService {
 
 	PkgPlanPic edit(PkgPlanPic pkgPlanPic);
 
-	List<PkgPlanPic> findall(String pkgPlanNo); //單一方案的所有圖片
+	List<PkgPlanPic> findall(Integer pkgPlanNo); //單一方案的所有圖片
 	
 	boolean remove(Integer pkgPlanPicNo);
 }

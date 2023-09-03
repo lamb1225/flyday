@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import core.entity.Core;
 import lombok.AllArgsConstructor;
@@ -46,15 +47,15 @@ public class Pkg extends Core{
 	private Integer pkgSort;
 	@Column(name = "PKG_CONTENT")
 	private String pkgContent;
-	@Column(name = "PKG_NOTE")
-	private String pkgNote;
+	@Column(name = "PKG_NOTICE")
+	private String pkgNotice;
 	@Column(name = "PKG_REVIEW")
 	private Integer pkgReview;
 	@Column(name = "PKG_STARTDATE")
 	private Date pkgStartdate;
-	@Column(name = "PKG_NOT_RREASON")
+	@Column(name = "PKG_NOT_REASON")
 	private String pkgNotReason;
-	@Column(name = "PKG_RATETOTL", insertable = false)
+	@Column(name = "PKG_RATETOTAL", insertable = false)
 	private Integer pkgRatetotal;
 	@Column(name = "PKG_COMMENT_NUM", insertable = false)
 	private Integer pkgCommentNum;
@@ -62,4 +63,7 @@ public class Pkg extends Core{
 	private String pkgRefpolicy;
 	@Column(name = "PKG_ONE_PIC")
 	private byte[] pkgOnePic;
+	
+	@Transient
+	private String pkgPicBase64;
 }

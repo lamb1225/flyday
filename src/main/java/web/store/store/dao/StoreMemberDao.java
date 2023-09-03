@@ -7,4 +7,6 @@ public interface StoreMemberDao extends CoreDao<Store, Integer> {
 	Store selectByStoreAcc(String storeacc);
 	
 	Store selectForLogin(String storeacc, String storepwd);
+	
+	int updatePic(byte[] storePic, Integer storeNo);
 }

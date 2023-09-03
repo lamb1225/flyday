@@ -5,10 +5,12 @@ import java.util.List;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import web.pkg.pkgmanage.dao.PkgPlanDetailsDao;
 import web.pkg.pkgmanage.entity.PkgPlanDetails;
 
+@Repository
 public class PkgPlanDetailsDaoImpl implements PkgPlanDetailsDao{
 
 	@PersistenceContext
@@ -48,7 +50,7 @@ public class PkgPlanDetailsDaoImpl implements PkgPlanDetailsDao{
 	}
 
 	@Override
-	public List<PkgPlanDetails> selectByPkgPlanNo(String pkgPlanNo) {
+	public List<PkgPlanDetails> selectByPkgPlanNo(Integer pkgPlanNo) {
 		final String hql = "FROM PkgPlanDetails WHERE pkgPlanNo = :pkgPlanNo";
 		return session.createQuery(hql).setParameter("pkgPlanNo", pkgPlanNo).getResultList();
 	}

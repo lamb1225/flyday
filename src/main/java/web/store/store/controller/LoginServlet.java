@@ -44,6 +44,8 @@ public class LoginServlet extends HttpServlet{
 			session.setAttribute("loggedin", true);
 			session.setAttribute("store", store);
 		}
+		
+		
 		writePojo2Json(response, store);
 		 
 	}
