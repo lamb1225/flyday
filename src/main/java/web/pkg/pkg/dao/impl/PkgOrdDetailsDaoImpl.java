@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mysql.cj.xdevapi.SessionFactory;
 
-import core.util.HibernateUtil;
 
 @Repository
 public class PkgOrdDetailsDaoImpl implements PkgOrdDetailsDao{
@@ -29,8 +28,9 @@ public class PkgOrdDetailsDaoImpl implements PkgOrdDetailsDao{
 
 	@Override
 	public int update(PkgOrdDetails pkgOrdDetails) {
-		final String hql="UPDATE PkgOrdDetails SET pkgOrdNo=:pkgOrdNo, pkgOrdDetailsNo=:pkgOrdDetailsNo"
-				+"pkgOrdQty=:pkgOrdQty, pkgUnitPrice=:pkgUnitPrice, orderNote=:orderNote";
+		final String hql="UPDATE PkgOrdDetails SET "
+				+"pkgOrdQty=:pkgOrdQty, pkgUnitPrice=:pkgUnitPrice, orderNote=:orderNote "
+				+"WHERE pkgOrdNo=:pkgOrdNo AND pkgOrdDetailsNo=:pkgOrdDetailsNo";
 		
 		Query<?> query = session.createQuery(hql);
 
@@ -52,13 +52,13 @@ public class PkgOrdDetailsDaoImpl implements PkgOrdDetailsDao{
 	
 	@Override
 	public List<PkgOrdDetails> selectAll() {
-		session =  HibernateUtil.getSessionFactory().openSession();
+//		session =  HibernateUtil.getSessionFactory().openSession();
 		final String hql = "FROM PkgOrdDetails";
 		return session.createQuery(hql, PkgOrdDetails.class).getResultList();
 	}
 	
-	public PkgOrdDetailsDaoImpl(Session session) {
-		this.session=session;
-	}
+//	public PkgOrdDetailsDaoImpl(Session session) {
+//		this.session=session;
+//	}
 	
 }

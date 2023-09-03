@@ -37,11 +37,12 @@ public class PkgOrdDaoImpl implements PkgOrdDao {
 
 	@Override
 	public int update(PkgOrd pkgOrd) {
-		final String hql ="UPDATE PkgOrd SET pkgOrdNo=:pkgOrdNo, memNo=:memNo"
-				+"memPkgCoupNo=:memPkgCoupNo, pkgOrgPrice=:pkgOrgPrice, pkgDiscPrice=:pkgDiscPrice "
-				+"pkgPayPrice=:pkgPayPrice, conName=:conName, conPhone=:conPhone"
-				+"conEmail=:conEmail, pkgOrderDate=:pkgOrderDate, pkgRefundDate=:pkgRefundDate"
-				+"orderState=:orderState";
+		final String hql ="UPDATE PkgOrd SET memNo=:memNo, "
+				+"memPkgCoupNo=:memPkgCoupNo, pkgOrgPrice=:pkgOrgPrice, pkgDiscPrice=:pkgDiscPrice, "
+				+"pkgPayPrice=:pkgPayPrice, conName=:conName, conPhone=:conPhone, "
+				+"conEmail=:conEmail, pkgOrderDate=:pkgOrderDate, pkgRefundDate=:pkgRefundDate, "
+				+"orderState=:orderState "
+				+"WHERE pkgOrdNo=:pkgOrdNo";
 		
 		Query<?> query = session.createQuery(hql);
 
@@ -69,7 +70,7 @@ public class PkgOrdDaoImpl implements PkgOrdDao {
 
 	@Override
 	public List<PkgOrd> selectAll() {
-		final String hql = "FROM PkgOrd ORDER BY pkgOrdNo";
+		final String hql = "FROM PkgOrd";
 		return session.createQuery(hql, PkgOrd.class).getResultList();
 	}
 	

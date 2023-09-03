@@ -7,10 +7,13 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import web.pkg.pkg.dao.PkgCoupDao;
 import web.pkg.pkg.entity.PkgCoup;
 
+//請注意，使用 @Repository 註解不僅僅是將類別標記為數據訪問層，同時也利用了 Spring 的一些功能，例如自動裝配和異常轉譯。
+@Repository
 public class PkgCoupDaoImpl implements PkgCoupDao {
 
 	@PersistenceContext
@@ -33,12 +36,13 @@ public class PkgCoupDaoImpl implements PkgCoupDao {
 
 	@Override
 	public int update(PkgCoup pkgCoup) {
-		final String hql = "UPDATE PkgCoup SET pkgCoupNo=:pkgCoupNo"
-				+ "pkgCoupName=:pkgCoupName, pkgCoupIntroduce=:pkgCoupIntroduce"
-				+ "pkgCoupDiscount=:pkgCoupDiscount, pkgCoupStartDate=:pkgCoupStartDate"
-				+ "pkgCoupEndDate=:pkgCoupEndDate, pkgCoupUseStartDate=:pkgCoupUseStartDate"
-				+ "pkgCoupUseEndDate=:pkgCoupUseEndDate, pkgCoupMiniCharge=:pkgCoupMiniCharge"
-				+ "pkgCoupState=:pkgCoupState";
+		final String hql = "UPDATE PkgCoup SET "
+				+ "pkgCoupName=:pkgCoupName, pkgCoupIntroduce=:pkgCoupIntroduce, "
+				+ "pkgCoupDiscount=:pkgCoupDiscount, pkgCoupStartDate=:pkgCoupStartDate, "
+				+ "pkgCoupEndDate=:pkgCoupEndDate, pkgCoupUseStartDate=:pkgCoupUseStartDate, "
+				+ "pkgCoupUseEndDate=:pkgCoupUseEndDate, pkgCoupMinicharge=:pkgCoupMinicharge, "
+				+ "pkgCoupState=:pkgCoupState "
+				+ "WHERE pkgCoupNo=:pkgCoupNo";
 
 		Query<?> query = session.createQuery(hql);
 
@@ -50,7 +54,7 @@ public class PkgCoupDaoImpl implements PkgCoupDao {
 				.setParameter("pkgCoupEndDate", pkgCoup.getPkgCoupEndDate())
 				.setParameter("pkgCoupUseStartDate", pkgCoup.getPkgCoupUseStartDate())
 				.setParameter("pkgCoupUseEndDate", pkgCoup.getPkgCoupUseEndDate())
-				.setParameter("pkgCoupMiniCharge", pkgCoup.getPkgCoupMinicharge())
+				.setParameter("pkgCoupMinicharge", pkgCoup.getPkgCoupMinicharge())
 				.setParameter("pkgCoupState", pkgCoup.getPkgCoupState())
 				.executeUpdate();
 
@@ -64,7 +68,7 @@ public class PkgCoupDaoImpl implements PkgCoupDao {
 
 	@Override
 	public List<PkgCoup> selectAll() {
-		final String hql = "FROM pkgCoup ORDER BY pkgCoupNO";
+		final String hql = "FROM PkgCoup";
 		return session.createQuery(hql, PkgCoup.class).getResultList();
 	}
 }

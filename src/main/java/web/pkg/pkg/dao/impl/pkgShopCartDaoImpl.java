@@ -32,8 +32,8 @@ public class pkgShopCartDaoImpl implements PkgShopCartDao{
 
 	@Override
 	public int update(PkgShopCart pkgShopCart) {
-		final String hql= "UPDATE PkgShopCart SET memNo=:memNo"
-				+"pkgDetailsNo=:pkgDetailsNo, pkgQty=:pkgQty";
+		final String hql= "UPDATE PkgShopCart SET pkgQty=:pkgQty "
+				+"WHERE memNo=:memNo AND pkgDetailsNo=:pkgDetailsNo";
 		
 		Query<?> query = session.createQuery(hql);
 		return query.setParameter("memNo", pkgShopCart.getPkgShopCartid().getMemNo())
@@ -50,7 +50,7 @@ public class pkgShopCartDaoImpl implements PkgShopCartDao{
 
 	@Override
 	public List<PkgShopCart> selectAll() {
-		final String hql="FROM PkgShopCart WHERE memNo AND pkgDetailsNo ORDER BY memNo, pkgDetailsNo";
+		final String hql="FROM PkgShopCart";
 		return session.createQuery(hql, PkgShopCart.class).getResultList();
 	}
 	

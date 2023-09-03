@@ -25,10 +25,11 @@ public class PkgCommentDaoImpl implements PkgCommentDao {
 
 	@Override
 	public int update(PkgComment pkgComment) {
-		final String hql = "UPDATE PkgComment SET pkgCommentNo=:pkgCommentNo"
-				+"pkgNo=:pkgNo, memNo=:memNo"
-				+"pkgComments=:pkgComments, pkgCommentImg=:pkgCommentImg"
-				+"pkgCommentRate=:pkgCommentRate, pkgCommentDate=:pkgCommentDate";
+		final String hql = "UPDATE PkgComment SET "
+				+"pkgNo=:pkgNo, memNo=:memNo, "
+				+"pkgComments=:pkgComments, pkgCommentImg=:pkgCommentImg, "
+				+"pkgCommentRate=:pkgCommentRate, pkgCommentDate=:pkgCommentDate, "
+				+"WHERE pkgCommentNo=:pkgCommentNo";
 
 			Query<?> query = session.createQuery(hql);
 			
@@ -51,7 +52,7 @@ public class PkgCommentDaoImpl implements PkgCommentDao {
 
 	@Override
 	public List<PkgComment> selectAll() {
-		final String hql="FROM pkgComment ORDER BY pkgCommentNo";
+		final String hql="FROM PpkgComment";
 		return session.createQuery(hql,PkgComment.class).getResultList();
 //		使用 Hibernate 的 createQuery 方法執行一個 HQL（Hibernate Query Language）查詢，並返回符合查詢條件的 PkgComment 對象列表。
 	}
