@@ -70,6 +70,9 @@ public class EmpServiceImpl implements EmpService {
 		return emp;
 	}
 
-
+	@Override
+	 public int deleteEmp(Integer empno) {
+		return dao.deleteByEmpNo(empno);
+    }
 
 }

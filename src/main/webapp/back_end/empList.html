@@ -266,7 +266,8 @@
 						<ul class="nav nav-pills-shadow nav-responsive">
 							<li class="nav-item">
 								<button class="nav-link mb-0 active" data-bs-toggle="tab"
-									href="#tab-1" type="button" id="empListAll">所有登錄員工</button>
+									href="#tab-1" type="button" name="action" vaule="empListAll"
+									id="empListAll">所有登錄員工</button>
 							</li>
 							<li class="nav-item">
 								<!-- 篩選EMP_STATUS == 0 --> <a class="nav-link mb-0"
@@ -290,7 +291,7 @@
 								placeholder="搜尋員工編號" aria-label="Search" id="empsearch_input">
 							<button
 								class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
-								type="submit" >
+								type="submit">
 								<i class="fas fa-search fs-6"></i>
 							</button>
 						</form>
@@ -309,7 +310,7 @@
 					<div class="card-body">
 						<!-- Table head -->
 						<div class="bg-light rounded p-3 d-none d-lg-block">
-							<div class="row row-cols-7 g-4" >
+							<div class="row row-cols-7 g-4">
 								<div class="col-2">
 									<h6 class="mb-0">員工編號</h6>
 								</div>
@@ -327,7 +328,7 @@
 								</div>
 								<div class="col-2">
 									<h6 class="mb-0">員工資料更動</h6>
-								</div>		
+								</div>
 							</div>
 						</div>
 
@@ -338,7 +339,8 @@
 						<!-- ============================================ -->
 						<!-- Table data -->
 						<div
-							class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4" id="allEmployeesTable">
+							class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4"
+							id="allEmployeesTable">
 							<!-- Data item -->
 							<div class="col-6 col-lg-2">
 								<small class="d-block d-lg-none">員工編號:</small>
@@ -388,14 +390,14 @@
 
 							<!-- Data item -->
 							<!-- 連接fun -->
-<!-- 							<div class="col-6 col-lg-2"> -->
-<!-- 								<a href="admin-guest-detail.html" -->
-<!-- 									class="btn btn-sm btn-light mb-0">修改</a><a -->
-<!-- 									href="admin-guest-detail.html" -->
-<!-- 									class="btn btn-sm btn-light mb-0">刪除</a> <a -->
-<!-- 									href="admin-guest-detail.html" -->
-<!-- 									class="btn btn-sm btn-light mb-0">員工權限</a> -->
-<!-- 							</div> -->
+							<!-- 							<div class="col-6 col-lg-2"> -->
+							<!-- 								<a href="admin-guest-detail.html" -->
+							<!-- 									class="btn btn-sm btn-light mb-0">修改</a><a -->
+							<!-- 									href="admin-guest-detail.html" -->
+							<!-- 									class="btn btn-sm btn-light mb-0">刪除</a> <a -->
+							<!-- 									href="admin-guest-detail.html" -->
+							<!-- 									class="btn btn-sm btn-light mb-0">員工權限</a> -->
+							<!-- 							</div> -->
 						</div>
 						<!-- =============================================================== -->
 
@@ -451,7 +453,8 @@ const empSearch_input = document.getElementById('empsearch_input');
 const empSearchForm = document.getElementById('empsearch'); // 假設empsearch是form的ID
 const container = document.querySelector('.row');
 const allEmployeesTable = document.getElementById('allEmployeesTable');
-
+const ela = document.getElementById('empListAll');
+// 單一員工查詢
 empSearchForm.addEventListener("submit", async function (event) {
 	event.preventDefault();  // 阻止表單的預設提交行為
   
@@ -483,15 +486,15 @@ empSearchForm.addEventListener("submit", async function (event) {
         empRow.classList.add('row', 'row-cols-7', 'g-4', 'employee-row');
       
         empRow.innerHTML = `
-            <div class="col-2">${data.empNo}</div>
+            <div class="col-2 empNo">${data.empNo}</div>
             <div class="col-2">${data.empName}</div>
             <div class="col-2">${data.empAcc}</div>
             <div class="col-2">${data.empPwd}</div>
             <div class="col-2">${data.empStatus}</div>
             <div class="col-2">
-                <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">修改</a>
-                <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">刪除</a>
-                <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">員工權限</a>
+            	<a href="#" class="btn btn-sm btn-light mb-0" name="action" value="btn-edit">修改</a>
+            	<a href="#" class="btn btn-sm btn-light mb-0" name="action" value="btn-delete">刪除</a>
+            	<a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0 btn-funtion">員工權限</a>
             </div>
         `;
 		allEmployeesTable.appendChild(empRow);
@@ -503,8 +506,9 @@ empSearchForm.addEventListener("submit", async function (event) {
       console.error('There was a problem with the fetch operation:', error.message);
     });
 });
+// 員工清單查詢
 
-document.getElementById('empListAll').addEventListener('click', function() {
+ela.addEventListener("click", async function (event) {
 	// 在發送 fetch 請求之前清空 allEmployeesTable 的內容
     allEmployeesTable.innerHTML = '';
 	fetch("/flyday/emp/getInfo")
@@ -523,15 +527,15 @@ document.getElementById('empListAll').addEventListener('click', function() {
             empRow.classList.add('row', 'row-cols-7', 'g-4', 'employee-row'); // 可以自行增減class來適應你的CSS需求
 
             empRow.innerHTML = `
-                <div class="col-2">${emp.empNo}</div>
+                <div class="col-2 empNo">${emp.empNo}</div>
                 <div class="col-2">${emp.empName}</div>
                 <div class="col-2">${emp.empAcc}</div>
                 <div class="col-2">${emp.empPwd}</div>
                 <div class="col-2">${emp.empStatus}</div>
                 <div class="col-2">
-                    <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">修改</a>
-                    <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">刪除</a>
-                    <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0">員工權限</a>
+                    <a href="#" class="btn btn-sm btn-light mb-0" name="action" value="btn-edit">修改</a>
+                    <a href="#" class="btn btn-sm btn-light mb-0" name="action" value="btn-delete">刪除</a>
+                    <a href="admin-guest-detail.html" class="btn btn-sm btn-light mb-0 btn-funtion">員工權限</a>
                 </div>
             `;
             
@@ -542,13 +546,42 @@ document.getElementById('empListAll').addEventListener('click', function() {
         console.error('There was a problem with the fetch operation:', error.message);
     });
 });
-</script>
 
-	<!-- 	所有員工列表查詢 -->
-	<script>
-
-	  
-
+//使用事件代理來捕獲 btn-delete 的點擊事件
+allEmployeesTable.addEventListener("click", function (event){
+	//記得標註辨識btn-delete的類別value
+	if (event.target.getAttribute('value')==="btn-delete") {
+        event.preventDefault();
+        
+        const empNo = event.target.closest('.employee-row').querySelector('.empNo').textContent;
+        if (confirm('確定要刪除該員工嗎？')) {
+        	//此段為關鍵，對應的位置與關鍵詞需再三確認
+        	fetch("/flyday/emp/getInfo", {
+                method: 'POST',
+                headers: {
+                	"Content-Type": "application/x-www-form-urlencoded",
+                  },
+                  body: `empNo=${empNo}&action=btn-delete`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("刪除操作出現異常");
+                }
+            return response.json();
+        })
+            .then(data => {
+                if (data.success) {
+                    alert('員工已刪除！');
+                    // 从页面中移除该员工的行
+                    event.target.closest('.employee-row').remove();
+                } else {
+                    alert('刪除失敗！');
+                }
+            })
+            .catch(error => console.error('刪除錯誤:', error));
+        }
+    }
+});
 </script>
 
 </body>

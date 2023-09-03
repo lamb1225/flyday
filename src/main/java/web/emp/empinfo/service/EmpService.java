@@ -8,5 +8,9 @@ public interface EmpService {
 	Emp login(Emp emp);
 	
 	Emp register(Emp emp);
+
+
+	int deleteEmp(Integer empno);
+
 	
 }
