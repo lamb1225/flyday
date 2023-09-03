@@ -1,4 +1,4 @@
-let acts
+let acts;
 let show = document.querySelector("#show");
 var id = sessionStorage.getItem("actno");
 window.addEventListener("load", () => {
@@ -26,7 +26,6 @@ function getAct(id) {
 }
 function showAct() {
     let html = '';
-    console.log(acts.actno);
     if (acts.length === 0) {
         html = "<tr><td colspan='4' align='center'>尚無員工資料</td></tr>";
     } else {
@@ -83,7 +82,7 @@ function onSaveClick(id) {
             const { successful, message } = body;
             if (successful) {
                 alert('存檔成功!');
-                location.href = `http://localhost:8080/flydaytest/selectAct.html`;
+                location.href = `http://localhost:8080/flydaytest/Act/selectAct.html`;
             } else {
                 alert(message ?? '存檔失敗');
             }
