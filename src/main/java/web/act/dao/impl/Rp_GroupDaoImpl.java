@@ -1,14 +1,14 @@
 package web.act.dao.impl;
 
+import core.dao.CoreDao;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import web.act.dao.Rp_GroupDAO;
 import web.act.entity.Rp_Group;
 
 import javax.persistence.PersistenceContext;
 import java.util.List;
 @Repository
-public class Rp_GroupDaoImpl implements Rp_GroupDAO {
+public class Rp_GroupDaoImpl implements CoreDao<Rp_Group, Integer> {
     @PersistenceContext
     private Session session;
     @Override
