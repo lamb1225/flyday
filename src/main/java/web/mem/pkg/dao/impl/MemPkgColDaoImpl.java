@@ -31,14 +31,16 @@ public class MemPkgColDaoImpl implements MemPkgColDao {
 
 	@Override
 	public int update(MemPkgCol memPkgCol) {
-		final String hql="UPDATE MemPkgCol SET memNo=:memNo"
-				+"pkgNo=:pkgNo";
-		
-		Query<?> query = session.createQuery(hql);
-		
-		return query.setParameter("memNo", memPkgCol.getMemPkgColId().getMemNo())
-				.setParameter("pkgNo", memPkgCol.getMemPkgColId().getPkgNo())
-				.executeUpdate();
+//		final String hql="UPDATE MemPkgCol SET memNo=:memNo"
+//				+"pkgNo=:pkgNo";
+//		final String hql="";
+//		
+//		Query<?> query = session.createQuery(hql);
+//		
+//		return query.setParameter("memNo", memPkgCol.getMemPkgColId().getMemNo())
+//				.setParameter("pkgNo", memPkgCol.getMemPkgColId().getPkgNo())
+//				.executeUpdate();
+		return 0;
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class MemPkgColDaoImpl implements MemPkgColDao {
 
 	@Override
 	public List<MemPkgCol> selectAll() {
-		final String hql = "FROM memPkgCol";
+		final String hql = "FROM MemPkgCol";
 		return session.createQuery(hql, MemPkgCol.class).getResultList();
 	}
 

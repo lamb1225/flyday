@@ -30,9 +30,10 @@ public class MemPkgCoupDaoImpl implements MemPkgCoupDao{
 
 	@Override
 	public int update(MemPkgCoup memPkgCoup) {
-		final String hql = "UPDATE MemPkgCoup SET memPkgCoupNo=:memPkgCoupNo"
-				+"pkgCoupNo=:pkgCoupNo, memNo=:memNo"
-				+"memPkgCoupState=:memPkgCoupState";
+		final String hql = "UPDATE MemPkgCoup SET "
+				+"pkgCoupNo=:pkgCoupNo, memNo=:memNo, "
+				+"memPkgCoupState=:memPkgCoupState "
+				+"WHERE memPkgCoupNo=:memPkgCoupNo";
 		
 		Query<?> query = session.createQuery(hql);
 		
@@ -50,7 +51,7 @@ public class MemPkgCoupDaoImpl implements MemPkgCoupDao{
 
 	@Override
 	public List<MemPkgCoup> selectAll() {
-		final String hql= "FROM memPkgCoup ORDER BY memPkgCoupNo";
+		final String hql= "FROM MemPkgCoup";
 		return session.createQuery(hql, MemPkgCoup.class).getResultList();
 	}
 

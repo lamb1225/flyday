@@ -6,6 +6,7 @@ import static core.util.CommonUtil.writePojo2Json;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import core.util.CommonUtil;
 import web.pkg.pkg.entity.PkgCoup;
 import web.pkg.pkg.service.PkgCoupService;
 import static core.util.CommonUtil.writePojo2Json;
-
+@WebServlet("/pkg/PkgCoupFind")
 public class FindByPkgCoupNoServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private PkgCoupService service;
