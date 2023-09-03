@@ -1,4 +1,4 @@
-(() => {
+$(function () {
     const btn1 = document.querySelector('#btn1');
     const msg = document.querySelector('#msg');
 	const tktname = document.querySelector('#tktname');
@@ -22,9 +22,11 @@
     const tktsort = document.querySelector('#tktsort');
 
     const planname = document.querySelector('#planname');
-    const inputs = document.querySelectorAll('input');
     
-    btn1.addEventListener('click', () => {
+    const inputs = document.querySelectorAll('input');
+
+    
+    btn1.addEventListener('click', async function() {
 		// const tktnameLength = tktname.value.length;
 		// if (tktnameLength < 2 || tktnameLength > 40) {
 		// 	msg.textContent = '標題長度需介於2~40字元';
@@ -51,23 +53,56 @@
 
         // console.log($("#proddesc div").html());
         // console.log($("#proddesc div").text());
-        // const proddescLength = $("#proddesc div").text();
-		// if (proddescLength < 2 || proddescLength > 5000) {
-		// 	msg.textContent = '景點介紹需介於2~5000字元';
-		// 	return;
-		// }
 
-        // const noticeLength = $("#notice div").text();
-		// if (noticeLength < 2 || noticeLength > 500) {
-		// 	msg.textContent = '購買須知需介於2~500字元';
-		// 	return;
-		// }
+        // let currentPage = $(".content.fade:visible");
+        // console.log(currentPage);
+        // let prevPage = currentPage.prev(".content.fade");
+        // console.log(prevPage);
 
-        // const howuseLength = $("#howuse div").text();
-		// if (howuseLength < 2 || howuseLength > 500) {
-		// 	msg.textContent = '如何使用的介紹需介於2~500字元';
-		// 	return;
-		// }
+        // if (prevPage.length === 0) {
+        //     $("html, body").animate({ scrollTop: 0 }, 1000);
+        // } else {
+        //     // 否则，滚动到前一个分页的顶部
+        //     $("html, body").animate({
+        //         scrollTop: prevPage.offset().top
+                
+        //     }, 1000); // 1000 是滚动动画的持续时间（以毫秒为单位）
+        // }
+
+        $("#proddescMsgs").text('');
+        const proddescLength = $("#proddesc div").text().length;
+		if (proddescLength == '') {
+			$("#proddescMsgs").text('景點簡介請勿空白');
+
+            // $("#step-2").attr("aria-labelledby", "true");
+            // $("#step-3").attr("aria-labelledby", "false");
+            
+            // $('html, body').animate({          
+    
+            //     scrollTop: $("#proddescMsgs").offset().top
+            // }, 1000);
+
+		} else if (proddescLength < 2 || proddescLength > 5000){
+            $("#proddescMsgs").text('景點介紹需介於2~5000字元');
+        }
+
+
+        $("#noticeMsgs").text('');
+        const noticeLength = $("#notice div").text().length;
+		if (noticeLength == '') {
+            $("#noticeMsgs").text('購買須知請勿空白');
+		} else if (noticeLength < 2 || noticeLength > 500){
+            $("#noticeMsgs").text('購買須知需介於2~500字元');
+
+        }
+
+        $("#howuseMsgs").text('');
+        const howuseLength = $("#howuse div").text().length;
+		if (howuseLength == '') {
+			$("#howuseMsgs").text('如何使用的介紹請勿空白');
+		} else if (howuseLength < 2 || howuseLength > 500){
+			$("#howuseMsgs").text('如何使用的介紹需介於2~500字元');
+        }
 
         // const locationLength = location.value.length;
 		// if (locationLength < 2 || locationLength > 40) {
@@ -111,28 +146,51 @@
 		// 	return;
 		// }
 
-        const tktsortLength = tktsort.value;
-		if (tktsortLength == '') {
-			msg.textContent = '請選擇票券類型';
-			return;
-		}
-
-        // const plannameLength = planname.value.length;
-		// if (plannameLength < 2 || plannameLength > 40) {
-		// 	msg.textContent = '方案名稱需介於2~40字元';
+        // const tktsortLength = tktsort.value;
+		// if (tktsortLength == '') {
+		// 	msg.textContent = '請選擇票券類型';
 		// 	return;
 		// }
 
-		msg.textContent = '';
-		fetch('addtkt', {
+
+        const plannameInputs = document.querySelectorAll('[name="planname"]');
+        const plannameValues = [];
+        plannameInputs.forEach(function(input) {
+            plannameValues.push(input.value);
+        });        
+        console.log(plannameValues);
+        $("small[id^='plannameMsg']").text('');
+        $("input[id^='planname']").each(function() {
+            const value = $(this).val();
+            const length = $(this).val().length; 
+            if (value === '') {
+                $(this).prev().text('方案名稱請勿空白');
+            } else if (length < 2 || length > 40) {
+                $(this).prev().text('方案名稱需介於2~40個字之間');
+            }
+        });
+
+        const plancontentInputs = document.querySelectorAll('[name="plancontent"]');
+        const plancontentValues = [];
+        plancontentInputs.forEach(function(input) {
+            plancontentValues.push(input.value);
+        });     
+        console.log(plancontentValues);
+        
+
+		// msg.textContent = '';
+        
+ 
+       
+		await fetch('addtkt', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 			    tktname: tktname.value,
-                tktstartdate: new Date(tktstartdate.value),
-                tktenddate: new Date(tktenddate.value),
+                tktstartdate: tktstartdate.value,
+                tktenddate: tktenddate.value,
                 tktinstruction: tktinstruction.value,
                 proddesc: $("#proddesc div").html(),
                 notice: $("#notice div").html(),
@@ -166,24 +224,120 @@
             // .then(obj => console.log(obj))
             // .catch(({ message }) => msg.textContent = message);
                       
-			.then(body => {
-                console.log(body)
-				const { successful } = body;
-				if (successful) {
-					for (let input of inputs) {
-						input.disabled = true;
-					}
-					btn1.disabled = true;
-					msg.className = 'info';
-					msg.textContent = '新增成功';
-                    window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
-				} else {
-					msg.className = 'error';
-					msg.textContent = '新增失敗';
-				}
+			.then(data => {
+                console.log(data)
+                errorMsgs = data;
+                showTkterrorMegs(); // 將Tkt錯誤訊息顯示在畫面上
+                
+				// const { successful } = data;
+              
+				// if (successful) {
+				// 	for (let input of inputs) {
+				// 		input.disabled = true;
+				// 	}
+				// 	btn1.disabled = true;
+				// 	msg.className = 'info';
+				// 	msg.textContent = '新增成功';
+                //     window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
+				// } else {
+				// 	msg.className = 'error';
+				// 	msg.textContent = '新增失敗';
+				// }
 			})
             .then(data => console.log(data));
+            await fetch('addtkt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    planname: plannameValues,
+                    plancontent: plancontentValues,
+                    
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    const { status, statusText } = response;
+                    throw Error(`${status}: ${statusText}`);
+                }
+            })
+            .then(data => {
+                console.log(data)
+                errorMsgs = data;
+                showPlanerrorMegs(); // 將Tktplan錯誤訊息顯示在畫面上
+            })
+            .then(data => console.log(data));
+
+
 	});
+});
+
+function showTkterrorMegs(){
+    $("#msg").html('');
+    $("#tktnameMsgs").html('');
+    $("#tktstartdateMsgs").html('');
+    $("#tktenddateMsgs").html(''); 
+    $("#tktinstructionMsgs").html('');
+
+    $("#locationMsgs").html('');
+    $("#countycityMsgs").html('');
+    $("#addressMsgs").html('');
+
+    $("#tktsortMsgs").html('');
+
+    if (errorMsgs.hasOwnProperty('msg')){
+        $("#msg").html(`${errorMsgs.msg}`);
+    }
+
+    if (errorMsgs.hasOwnProperty('tktnameMsgs')){
+        $("#tktnameMsgs").html(`${errorMsgs.tktnameMsgs}`);
+    }
+    
+    if (errorMsgs.hasOwnProperty('tktstartdateMsgs')){
+        $("#tktstartdateMsgs").html(`${errorMsgs.tktstartdateMsgs}`);
+    }
+
+    if (errorMsgs.hasOwnProperty('tktenddateMsgs')){
+        $("#tktenddateMsgs").html(`${errorMsgs.tktenddateMsgs}`);
+    }
 
 
-})();
+    if (errorMsgs.hasOwnProperty('tktinstructionMsgs')){
+        $("#tktinstructionMsgs").html(`${errorMsgs.tktinstructionMsgs}`);
+    }
+
+    if (errorMsgs.hasOwnProperty('locationMsgs')){
+        $("#locationMsgs").html(`${errorMsgs.locationMsgs}`);
+    }
+    if (errorMsgs.hasOwnProperty('countycityMsgs')){
+        $("#countycityMsgs").html(`${errorMsgs.countycityMsgs}`);
+    }
+    if (errorMsgs.hasOwnProperty('addressMsgs')){
+        $("#addressMsgs").html(`${errorMsgs.addressMsgs}`);
+    }
+
+    if (errorMsgs.hasOwnProperty('tktsortMsgs')){
+        $("#tktsortMsgs").html(`${errorMsgs.tktsortMsgs}`);
+    }
+}
+
+function showPlanerrorMegs(){
+    $("#msg").html('');
+    // $("#plannameMsgs").html('');
+
+    if (errorMsgs.hasOwnProperty('msg')){
+        $("#msg").html(`${errorMsgs.msg}`);
+        if($("#msg").text() === "tktplan新增成功"){
+        //    window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
+        }
+    }
+
+    // if (errorMsgs.hasOwnProperty('plannameMsgs')){
+    //     $("#plannameMsgs").html(`${errorMsgs.plannameMsgs}`);
+    // }
+}
+
+    

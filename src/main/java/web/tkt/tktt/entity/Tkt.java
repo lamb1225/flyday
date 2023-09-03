@@ -7,8 +7,8 @@ public class Tkt extends TktCore{
 
 	private Integer tktno;
 	private String tktname;
-	private Timestamp tktstartdate;
-	private Timestamp tktenddate;
+	private String tktstartdate;
+	private String tktenddate;
 	private String tktinstruction;
 	private String proddesc;
 	private String notice;
@@ -43,7 +43,7 @@ public class Tkt extends TktCore{
 		super();
 	}
 		
-	public Tkt(Integer tktno, String tktname, Timestamp tktstartdate, Timestamp tktenddate, String tktinstruction,
+	public Tkt(Integer tktno, String tktname, String tktstartdate, String tktenddate, String tktinstruction,
 			String proddesc, String notice, String howuse, String location, String countycity, String address,
 			Double sclatitude, Double sclongitude, String schowarrival, String scservicehr, Integer tktstat,
 			Integer tktsort, Integer ratetotal, Integer rateqty) {
@@ -84,19 +84,19 @@ public class Tkt extends TktCore{
 	}
 	
 	
-	public Timestamp getTktstartdate() {
+	public String getTktstartdate() {
 		return tktstartdate;
 	}
 
-	public void setTktstartdate(Timestamp tktstartdate) {
+	public void setTktstartdate(String tktstartdate) {
 		this.tktstartdate = tktstartdate;
 	}
 
-	public Timestamp getTktenddate() {
+	public String getTktenddate() {
 		return tktenddate;
 	}
 
-	public void setTktenddate(Timestamp tktenddate) {
+	public void setTktenddate(String tktenddate) {
 		this.tktenddate = tktenddate;
 	}
 

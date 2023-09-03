@@ -558,7 +558,7 @@ Steps START -->
 						<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger3" aria-controls="step-3">
 							<span class="bs-stepper-circle">3</span>
 						</button>
-						<h6 class="bs-stepper-label d-none d-md-block">價格與政策</h6>
+						<h6 class="bs-stepper-label d-none d-md-block">購買規則</h6>
 					</div>
 				</div>
 			</div>
@@ -599,9 +599,9 @@ Steps START -->
 											<div class="row g-4">
 												<!-- Choose type -->
 												<div class="col-12">
-													<label class="form-label">選擇票券類型 *</label>
+													<label class="form-label">選擇票券類型 *</label>&ensp;<small class="tkt-error-color" name="tktsortMsgs" id="tktsortMsgs"></small>
 													<select class="form-select js-choice" name="tktsort" id="tktsort">
-														<option value="">選擇類型</option>
+														<option value="-1">選擇類型</option>
 														<option value="0">主題樂園</option>
 														<option value="1">景點門票</option>
 														<option value="2">水族館</option>
@@ -615,7 +615,7 @@ Steps START -->
 
 												<!-- Listing Name -->
 												<div class="col-md-6">
-													<label class="form-label">標題名稱 *</label>
+													<label class="form-label">標題名稱 *</label>&ensp;<small class="tkt-error-color" name="tktnameMsgs" id="tktnameMsgs"></small>
 													<input class="form-control" type="text" name="tktname" id="tktname" placeholder="輸入標題名稱">
 													<small>標題名稱通常包括：景點縣市 - 景點名稱 - 門票<br>例：台北市立木柵動物園門票、台南｜奇美博物館門票</small>
 												</div>
@@ -628,33 +628,33 @@ Steps START -->
 
 												<!-- Check in -->
 												<div class="col-md-6">
-													<label class="small">商品開始日期 *</label>
+													<label class="small">商品開始日期 *</label>&ensp;<small class="tkt-error-color" name="tktstartdateMsgs" id="tktstartdateMsgs"></small>
 													<div class="form-border-bottom form-control-transparent d-flex align-items-center">
 														<!-- Icon -->
 														<i class="bi bi-calendar text-secondary d-block me-2"></i>
 														<!-- Cities -->
 														<div class="form-fs-lg">
-															<input type="text" name="tktstartdate" id="tktstartdate" class="form-control flatpickr" data-date-format="yy-m-d" placeholder="選擇開始日期">
+															<input type="text" name="tktstartdate" id="tktstartdate" class="form-control flatpickr" data-date-format="Y-m-d" placeholder="選擇開始日期">
 														</div>
 													</div>
 												</div>
 												
 												<!-- Check Out -->
 												<div class="col-md-6">
-													<label class="small">商品結束日期 *</label>
+													<label class="small">商品結束日期 *</label>&ensp;<small class="tkt-error-color" name="tktenddateMsgs" id="tktenddateMsgs"></small>
 													<div class="form-border-bottom form-control-transparent d-flex align-items-center">
 														<!-- Icon -->
 														<i class="bi bi-calendar text-secondary d-block me-2"></i>
 														<!-- Cities -->
 														<div class="form-fs-lg">
-															<input type="text" name="tktenddate" id="tktenddate" class="form-control flatpickr" data-date-format="yy-m-d" placeholder="選擇結束日期">
+															<input type="text" name="tktenddate" id="tktenddate" class="form-control flatpickr" data-date-format="Y-m-d" placeholder="選擇結束日期">
 														</div>	
 													</div>
 												</div>
 
 												<!-- Short description -->
 												<div class="col-12">
-													<label class="form-label">簡短介紹 *</label>
+													<label class="form-label">簡短介紹 *</label>&ensp;<small class="tkt-error-color" name="tktinstructionMsgs" id="tktinstructionMsgs"></small>
 													<textarea class="form-control" rows="2" name="tktinstruction" id="tktinstruction" placeholder="輸入簡介"></textarea>
 												</div>	
 																								
@@ -677,7 +677,7 @@ Steps START -->
 
 												<!-- Postal number -->
 												<div class="col-12">
-													<label class="form-label">景點名稱 *</label>
+													<label class="form-label">景點名稱 *</label>&ensp;<small class="tkt-error-color" name="locationMsgs" id="locationMsgs"></small>
 													<input class="form-control" type="text" name="location" id="location" placeholder="輸入景點名稱">
 													<small>例：台北市立木柵動物園、奇美博物館</small>
 												</div>
@@ -690,13 +690,13 @@ Steps START -->
 																						
 												<!-- County OR City -->
 												<div class="col-md-6">
-													<label class="form-label">縣市 *</label>
+													<label class="form-label">縣市 *</label>&ensp;<small class="tkt-error-color" name="countycityMsgs" id="countycityMsgs"></small>
 													<input class="form-control" type="text" name="countycity" id="countycity" placeholder="輸入縣市">
 												</div>						
 												
 												<!-- Urban Area And Street -->
 												<div class="col-12">
-													<label class="form-label">鄉鎮市區, 街道, 巷弄, 門號, 樓層 *</label>
+													<label class="form-label">鄉鎮市區, 街道, 巷弄, 門號, 樓層 *</label>&ensp;<small class="tkt-error-color" name="addressMsgs" id="addressMsgs"></small>
 													<input class="form-control" type="text" name="address" id="address" placeholder="輸入鄉鎮市區, 街道, 巷弄, 門號, 樓層">
 												</div>
 
@@ -806,7 +806,7 @@ Steps START -->
 									<div class="card shadow">
 										<!-- Card header -->
 										<div class="card-header border-bottom">
-											<h5 class="mb-0">景點介紹 *</h5>
+											<h5 class="mb-0">景點介紹 *&ensp;<small class="tkt-error-color" name="proddescMsgs" id="proddescMsgs"></small></h5>
 										</div>
 			
 										<!-- Card body START -->
@@ -882,7 +882,7 @@ Steps START -->
 
 												<!-- Plan name -->
 												<div class="col-md-6">
-													<label class="form-label">方案名稱 *</label>
+													<label class="form-label">方案名稱 *</label>&ensp;<small class="tkt-error-color" name="plannameMsgs" id="plannameMsgs"></small>
 													<input type="text" class="form-control" name="planname" id="planname" placeholder="輸入名稱">
 												</div>										
 
@@ -909,8 +909,8 @@ Steps START -->
 
 												<!-- Plan Content -->												
 												<div class="col-12">
-													<label class="form-label">方案內容 *</label>
-													<textarea class="form-control" rows="2" placeholder="描述方案內容"></textarea>
+													<label class="form-label">方案內容 *</label>&ensp;<small name="plancontentMsgs" id="plancontentMsgs"></small>
+													<textarea class="form-control" rows="2" name="plancontent" id="plancontent" placeholder="描述方案內容"></textarea>
 												</div>
 												
 												<div class="border-bottom"></div>										
@@ -967,7 +967,7 @@ Steps START -->
 									<div class="card shadow">
 										<!-- Card header -->
 										<div class="card-header border-bottom">
-											<h5 class="mb-0">購買須知 *</h5>
+											<h5 class="mb-0">購買須知 *&ensp;<small class="tkt-error-color" name="noticeMsgs" id="noticeMsgs"></small></h5>
 										</div>
 			
 										<!-- Card body START -->
@@ -1023,7 +1023,7 @@ Steps START -->
 									<div class="card shadow">
 										<!-- Card header -->
 										<div class="card-header border-bottom">
-											<h5 class="mb-0">如何使用 *</h5>
+											<h5 class="mb-0">如何使用 *&ensp;<small class="tkt-error-color" name="howuseMsgs" id="howuseMsgs"></small></h5>
 										</div>
 			
 										<!-- Card body START -->

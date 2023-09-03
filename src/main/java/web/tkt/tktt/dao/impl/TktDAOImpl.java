@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import web.tkt.tktt.dao.TktDAO;
 import web.tkt.tktt.entity.Tkt;
+import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.util.Util;
 
 public class TktDAOImpl implements TktDAO{
@@ -40,6 +41,10 @@ public class TktDAOImpl implements TktDAO{
 	private static final String INSERT_STMT = 
 			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, HOWUSE, LOCATION, COUNTYCITY, ADDRESS, SC_LATITUDE, SC_LONGITUDE, SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String findMaxTktno_STMT = 
+			"SELECT MAX(TKT_NO) TKT_NO FROM tkt";
+	private static final String INSERTPLAN_STMT = 
+			"INSERT INTO tkt_plan(TKT_NO,PLAN_NAME,PLAN_CONTENT) VALUES (?, ?, ?)";
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME FROM tkt WHERE TKT_NO = ?";
 	private static final String getAll_STMT = 
@@ -47,7 +52,7 @@ public class TktDAOImpl implements TktDAO{
 	
 	// 新增商品
 	@Override
-	public int insert(Tkt tkt) {
+	public void insertTkt(Tkt tkt) {
 		System.out.println("有到insert()");
 		
 		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
@@ -57,8 +62,8 @@ public class TktDAOImpl implements TktDAO{
 //				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);){
 			
 			pstmt.setString(1, tkt.getTktname());
-			pstmt.setTimestamp(2, tkt.getTktstartdate());
-			pstmt.setTimestamp(3, tkt.getTktenddate());			
+			pstmt.setString(2, tkt.getTktstartdate());
+			pstmt.setString(3, tkt.getTktenddate());			
 			pstmt.setString(4, tkt.getTktinstruction());
 			pstmt.setString(5, tkt.getProddesc());			
 			pstmt.setString(6, tkt.getNotice());
@@ -75,15 +80,86 @@ public class TktDAOImpl implements TktDAO{
 			pstmt.setInt(17, tkt.getRatetotal());
 			pstmt.setInt(18, tkt.getRateqty());			
 			
-			System.out.println("新增成功");
+			System.out.println("新增成功222");
 
-			return pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1;
+//		return -1;
 	}
 	
+	// 查詢最大Tkt_NO
+//	@Override
+//	public void findMaxTktno(Integer tktno) {
+//		TktPlan tktplan = null;
+//		
+//		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+//				PreparedStatement pstmt = con.prepareStatement(findMaxTktno_STMT);){
+//		
+////		try (	Connection con = ds.getConnection();
+////				PreparedStatement pstmt = con.prepareStatement(findByPK_STMT);){
+//			
+////			pstmt.setInt(1, tktno);
+//			
+//			try(ResultSet rs = pstmt.executeQuery();){
+//				while (rs.next()) {
+//					tktplan = new TktPlan();
+//					tktplan.setTktno(rs.getInt("TKT_NO"));				
+//				}
+//			}
+//						
+//			System.out.println("查詢成功="+tktplan);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+
+	// 新增方案
+	@Override
+	public void insertPlan(TktPlan tktplan) {
+		System.out.println("有到insertplan()");
+		
+		List<String> plannameList = tktplan.getPlanname();
+		List<String> plancontentList = tktplan.getPlancontent();
+
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmtno = con.prepareStatement(findMaxTktno_STMT);
+				PreparedStatement pstmt = con.prepareStatement(INSERTPLAN_STMT);){
+		
+//		try (	Connection con = ds.getConnection();
+//				PreparedStatement pstmtno = con.prepareStatement(findMaxTktno_STMT);
+//				PreparedStatement pstmt = con.prepareStatement(INSERTPLAN_STMT);){
+			
+			 
+			
+			try(ResultSet rsno = pstmtno.executeQuery();){
+				while (rsno.next()) {
+					pstmt.setInt(1, rsno.getInt("TKT_NO"));
+				}
+				for (int i = 0; i < plannameList.size(); i++) {
+	                String planname = plannameList.get(i);
+	                String planconten = plancontentList.get(i);
+	                pstmt.setString(2, planname);
+	                pstmt.setString(3, planconten);
+	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
+				}
+
+//				for (String planname : plannameList) {
+//					pstmt.setString(2, planname);
+//					pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
+//					System.out.println("新增成功="+tktplan);
+//				}				
+			}
+			pstmt.executeBatch(); // 執行批量插入
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	// 單筆查詢
 	@Override
@@ -135,8 +211,8 @@ public class TktDAOImpl implements TktDAO{
 					tkt = new Tkt();
 					tkt.setTktno(rs.getInt("TKT_NO"));
 					tkt.setTktname(rs.getString("TKT_NAME"));
-					tkt.setTktstartdate(rs.getTimestamp("TKT_STARTDATE"));
-					tkt.setTktenddate(rs.getTimestamp("TKT_ENDDATE"));
+					tkt.setTktstartdate(rs.getString("TKT_STARTDATE"));
+					tkt.setTktenddate(rs.getString("TKT_ENDDATE"));
 					tkt.setTktstat(rs.getInt("TKT_STAT"));
 					tkt.setTktsort(rs.getInt("TKT_SORT"));
 					
@@ -151,6 +227,12 @@ public class TktDAOImpl implements TktDAO{
 		}
 		return list;
 	}
+
+
+
+
+
+
 	
 	
 

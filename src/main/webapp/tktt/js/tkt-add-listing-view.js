@@ -1,8 +1,4 @@
-(() => {
-    
-
-
-
+$(function () {
 
     // 新增方案
     $("button#btn_add_plan").on("click", function () {
@@ -30,8 +26,8 @@
 
                         <!-- Plan name -->
                         <div class="col-md-6">
-                            <label class="form-label">方案名稱 *</label>
-                            <input type="text" class="form-control" placeholder="輸入名稱">
+                            <label class="form-label">方案名稱 *</label>&ensp;<small class="tkt-error-color" name="plannameMsgs" id="plannameMsgs"></small>
+                            <input type="text" class="form-control" name="planname" id="planname" placeholder="輸入名稱">
                         </div>										
 
                         <!-- Plan Status -->
@@ -57,8 +53,8 @@
 
                         <!-- Plan Content -->												
                         <div class="col-12">
-                            <label class="form-label">方案內容 *</label>
-                            <textarea class="form-control" rows="2" placeholder="描述方案內容"></textarea>
+                            <label class="form-label">方案內容 *</label>&ensp;<small name="plancontentMsgs" id="plancontentMsgs"></small>
+                            <textarea class="form-control" rows="2" name="plancontent" id="plancontent" placeholder="描述方案內容"></textarea>
                         </div>
                         
                         <div class="border-bottom"></div>										
@@ -182,4 +178,4 @@
     });
 
 
-})();
+});
