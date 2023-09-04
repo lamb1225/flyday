@@ -13,6 +13,8 @@ public class TktPlan extends TktCore{
 	private List<String> planname;
 	private List<String> plancontent;
 	private List<Integer> planstat;
+	
+	
 
     public List<String> getPlanname() {
         return planname;
