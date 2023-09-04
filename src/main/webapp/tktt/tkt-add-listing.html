@@ -859,7 +859,7 @@ Steps START -->
 									<!-- Overview END -->
 									
 									<!-- Ticket Plans START -->
-									<div class="card shadow" value="1">
+									<div class="card shadow" name="planpoint" value="1">
 										<!-- Card header and Add Plan Button-->
 										<div class="d-flex justify-content-between card-header border-bottom">
 											<h5 class="mb-0 tkt-add-plan">票券方案</h5>											
@@ -917,14 +917,14 @@ Steps START -->
 												
 												<!-- Ticket Type Star -->
 												<div class="col-md-5 tkt-add-label-width">
-													<label class="form-label">票種 *</label>
-													<input type="text" class="form-control" placeholder="輸入票種 例：每人、成人票、學生票...">
+													<label class="form-label">票種 *</label>&ensp;<small class="tkt-error-color" name="tkttypeMsgs" id="tkttypeMsgs"></small>
+													<input type="text" class="form-control" name="tkttype" id="tkttype" placeholder="輸入票種 例：每人、成人票、學生票...">
 												</div>
 
 												<!-- Room Price -->
 												<div class="col-md-5 tkt-add-label-width" value="1">
-													<label class="form-label">票種價格 ( 台幣 ) *</label>																										
-													<input type="text" class="form-control" placeholder="輸入價格">													
+													<label class="form-label">票價 ( 台幣 ) *</label>&ensp;<small class="tkt-error-color" name="priceMsgs" id="priceMsgs"></small>																										
+													<input type="text" class="form-control" name="price" id="price" placeholder="輸入價格">													
 												</div>
 
 												<!-- Delete Button -->

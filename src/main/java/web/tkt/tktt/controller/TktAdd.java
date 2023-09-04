@@ -28,6 +28,7 @@ import web.tkt.tktt.dao.impl.TktDAOImpl;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktCore;
 import web.tkt.tktt.entity.TktPlan;
+import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.service.TktService;
 import web.tkt.tktt.service.impl.TktServiceImpl;
 
@@ -38,6 +39,7 @@ public class TktAdd extends HttpServlet{
 	public static final TktService service = new TktServiceImpl();
 	int tktin = 0;
 	int tktplanin = 0;
+	int tkttypein = 0;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -129,7 +131,7 @@ public class TktAdd extends HttpServlet{
 			System.out.println("errorMsgs="+errorMsgs);
 	
 			if(!errorMsgs.isEmpty()) {
-				errorMsgs.put("msg", "尚有資料未填寫");
+				errorMsgs.put("msg", "尚有資料未完成");
 				writePojo2Json(response, errorMsgs);
 				System.out.println("tktin1="+tktin);
 			} else if(tktin == 0) {
@@ -169,7 +171,7 @@ public class TktAdd extends HttpServlet{
 				} else if (length < 2 || length > 40) {
 					errorMsgs.put("plannameMsgs", "方案名稱需介於2~40個字之間");
 				}
-			}
+			}			
 			
 			for (String plancontentlist : plancontent) {
 				int length = plancontentlist.length();
@@ -180,9 +182,10 @@ public class TktAdd extends HttpServlet{
 					errorMsgs.put("plancontentMsgs", "方案內容需介於2~500個字之間");
 				}
 			}
+			System.out.println("errorMsgs="+errorMsgs);
 			
 			if(!errorMsgs.isEmpty()) {
-				errorMsgs.put("msg", "尚有資料未填寫");
+				errorMsgs.put("msg", "尚有資料未完成");
 				writePojo2Json(response, errorMsgs);
 				System.out.println("tktplanin1="+tktplanin);
 			} else if(tktplanin == 0 && tktin == 1) {
@@ -196,19 +199,80 @@ public class TktAdd extends HttpServlet{
 				System.out.println("tktplanin3="+tktplanin);
 			}
 			
+			System.out.println("tktplan="+tktplan);
+			
+		}
+		
+//		==================================================================================================
+		
+		// 票種(驗證+傳入TktServiceImpl)
+		if (requestBody.contains("tkttype")) {
+
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			Map<String,String> okMsgs = new LinkedHashMap<String,String>();
+			
+			TktType tkttype = json2Pojo(requestBody, TktType.class);
+			
+			List<String> tkttypeList = tkttype.getTkttype();
+			List<String> priceList = tkttype.getPrice();
+			
+			System.out.println("進入type");
+
+			
+			for (String tkttypeString : tkttypeList) {
+                String[] tkttypeArray = tkttypeString.split("\\|", -1);
+                for (String tkttypeName : tkttypeArray) {
+//                    System.out.println("Tkttype: " + tkttypeName);
+                    int length = tkttypeName.length();           
+					if(length == 0) {
+						errorMsgs.put("tkttypeMsgs", "票種請勿空白");						
+					} else if (length < 2 || length > 10) {
+						errorMsgs.put("tkttypeMsgs", "票種長度需介於2~10個字之間");
+					}
+                }
+			}
+
+			for (String priceString : priceList) {
+				String[] priceArray = priceString.split("\\|", -1);
+                for (String priceName : priceArray) {
+                    System.out.println("price: " + priceName);
+                    int length = priceName.length();           
+					if(length == 0) {
+						errorMsgs.put("priceMsgs", "票價請勿空白");						
+					}
+                }
+			}
+			System.out.println("errorMsgs="+errorMsgs);
+			
+			
+			if(!errorMsgs.isEmpty()) {
+				errorMsgs.put("msg", "尚有資料未完成");
+				writePojo2Json(response, errorMsgs);
+				System.out.println("tkttypein1="+tkttypein);
+			} else if(tkttypein == 0 && tktplanin == 1 && tktin == 1) {
+				tkttypein = 1;
+				tkttype = service.addtkttype(tkttype);
+				okMsgs.put("msg", "tkttype新增成功");
+				writePojo2Json(response, okMsgs);
+				System.out.println("tkttypein2="+tkttypein);
+			} else {
+				writePojo2Json(response, tkttype);
+				System.out.println("tkttypein3="+tkttypein);
+			}
+
+			System.out.println("tkttype="+tkttype);
 		}
 		
 //		==================================================================================================
 
-		if(tktin == 1 && tktplanin == 1) {
+		if(tktin == 1 && tktplanin == 1 && tkttypein == 1) {
 			tktin = 0;
 			tktplanin = 0;
+			tkttypein = 0;
 		}
-			
+		
 		System.out.println("有資料");
 
-
-		
 	}
 	
 	//自定義的json2Pojo方法，用於將JSON字符串轉換為Java對象

@@ -6,6 +6,7 @@ import web.tkt.tktt.dao.TktDAO;
 import web.tkt.tktt.dao.impl.TktDAOImpl;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktPlan;
+import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.service.TktService;
 
 public class TktServiceImpl implements TktService{
@@ -15,15 +16,6 @@ public class TktServiceImpl implements TktService{
 	// 新增商品
 	@Override
 	public Tkt addtkt(Tkt tkt) {
-
-//		if(dao.insert(tkt) < 1) {
-//			tkt.setMessage("新增失敗111");
-//			tkt.setSuccessful(false);
-//			return tkt;
-//		}
-//				
-//		tkt.setMessage("新增成功111");
-//		tkt.setSuccessful(true);
 		System.out.println("有來到addtkt()");
 		dao.insertTkt(tkt);
 		return tkt;		
@@ -33,15 +25,26 @@ public class TktServiceImpl implements TktService{
 	@Override
 	public TktPlan addtktplan(TktPlan tktplan) {
 		System.out.println("有來到addtktplan()");
-		dao.insertPlan(tktplan);;
+		dao.insertPlan(tktplan);
 		return tktplan;	
 	}
 	
+	// 新增票種
+	@Override
+	public TktType addtkttype(TktType tkttype) {
+		System.out.println("有來到addtkttype()");
+		dao.insertType(tkttype);
+		return tkttype;
+	}
+	
+	// 查詢全部Tkt
 	@Override
 	public List<Tkt> findAll() {
 		System.out.println("有來到findAll()");
 		return dao.getAll();
 	}
+
+
 
 	
 

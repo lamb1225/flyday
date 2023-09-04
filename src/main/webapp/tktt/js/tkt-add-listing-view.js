@@ -9,7 +9,7 @@ $(function () {
 
         let plan_list =`
             <!-- Ticket Plans START -->
-            <div class="card shadow" id="plan${plan_number}" value="${plan_number}">
+            <div class="card shadow" name="planpoint" id="plan${plan_number}" value="${plan_number}">
                 <!-- Card body START -->
                 <div class="card-body">
                     <div class="row g-4">
@@ -61,14 +61,14 @@ $(function () {
                         
                         <!-- Ticket Type -->
                         <div class="col-md-5 tkt-add-label-width">
-                            <label class="form-label">票種 *</label>
-                            <input type="text" class="form-control" placeholder="輸入票種 例：每人、成人票、學生票...">
+                            <label class="form-label">票種 *</label>&ensp;<small class="tkt-error-color" name="tkttypeMsgs" id="tkttypeMsgs"></small>
+                            <input type="text" class="form-control" name="tkttype" id="tkttype" placeholder="輸入票種 例：每人、成人票、學生票...">
                         </div>
 
                         <!-- Room Price -->
                         <div class="col-md-5 tkt-add-label-width" value="1">
-                            <label class="form-label">票種價格 ( 台幣 ) *</label>																										
-                            <input type="text" class="form-control" placeholder="輸入價格">													
+                            <label class="form-label">票價 ( 台幣 ) *</label>&ensp;<small class="tkt-error-color" name="priceMsgs" id="priceMsgs"></small>																										
+                            <input type="text" class="form-control" name="price" id="price" placeholder="輸入價格">													
                         </div>
 
                         
@@ -100,14 +100,14 @@ $(function () {
             let type_list =`
                 <!-- Ticket Type -->
                 <div class="col-md-5 tkt-add-label-width">
-                    <label class="form-label">票種 *</label>
-                    <input type="text" class="form-control" placeholder="輸入票種 例：每人、成人票、學生票...">
+                    <label class="form-label">票種 *</label>&ensp;<small class="tkt-error-color" name="tkttypeMsgs" id="tkttypeMsgs"></small>
+                    <input type="text" class="form-control" name="tkttype" id="tkttype" placeholder="輸入票種 例：每人、成人票、學生票...">
                 </div>
 
                 <!-- Room Price -->
                 <div class="col-md-5 tkt-add-label-width">
-                    <label class="form-label">票種價格 ( 台幣 ) *</label>																										
-                    <input type="text" class="form-control" placeholder="輸入價格">													
+                    <label class="form-label">票價 ( 台幣 ) *</label>&ensp;<small class="tkt-error-color" name="priceMsgs" id="priceMsgs"></small>																										
+                    <input type="text" class="form-control" name="price" id="price" placeholder="輸入價格">													
                 </div>
 
                 <!-- Delete Button -->

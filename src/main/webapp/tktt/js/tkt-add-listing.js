@@ -17,8 +17,6 @@ $(function () {
 
     const schowarrival = document.querySelector('#schowarrival');
     const scservicehr = document.querySelector('#scservicehr');
-
-    // const tktstat = document.querySelector('#tktstat');
     const tktsort = document.querySelector('#tktsort');
 
     const planname = document.querySelector('#planname');
@@ -154,8 +152,8 @@ $(function () {
 		// 	return;
 		// }
 
-        // 方案(存入+驗證)
-        const plannameInputs = document.querySelectorAll('[name="planname"]');
+        // 方案名稱(存入+驗證)
+        const plannameInputs = document.querySelectorAll('input[name="planname"]');
         const plannameValues = [];
         plannameInputs.forEach(function(input) {
             plannameValues.push(input.value);
@@ -173,7 +171,7 @@ $(function () {
         });
 
         // 方案內容(存入+驗證)
-        const plancontentInputs = document.querySelectorAll('[name="plancontent"]');
+        const plancontentInputs = document.querySelectorAll('textarea[name="plancontent"]');
         const plancontentValues = [];
         plancontentInputs.forEach(function(input) {
             plancontentValues.push(input.value);
@@ -197,6 +195,52 @@ $(function () {
             planstatValues.push(input.value);
         });  
         // console.log(planstatValues);
+
+
+         // 票種(存入+驗證)
+         const tkttypeAll = [];
+         $("div[name='planpoint']").each(function(){
+            const tkttypeValues = [];
+            $(this).find("input[name='tkttype']").each(function() {
+               tkttypeValues.push($(this).val());
+            });            
+            tkttypeAll.push(tkttypeValues.join('|'));
+         });
+        //  console.log(tkttypeAll);
+         $("small[id^='tkttypeMsgs']").text('');
+         $("div[name='planpoint']").each(function(){            
+            $(this).find("input[name='tkttype']").each(function() {
+               const value = $(this).val();
+               const length = $(this).val().length; 
+               if (value === '') {
+                   $(this).prev().text('票種請勿空白');
+               } else if (length < 2 || length > 10) {
+                   $(this).prev().text('票種需介於2~10個字之間');
+               }
+           });
+         });
+
+          // 票價(存入+驗證)
+          const priceAll = [];
+          $("div[name='planpoint']").each(function(){
+             const priceValues = [];
+             $(this).find("input[name='price']").each(function() {
+                priceValues.push($(this).val());
+             });            
+             priceAll.push(priceValues.join('|'));
+          });
+        //   console.log(priceAll);
+          $("small[id^='priceMsgs']").text('');
+          $("div[name='planpoint']").each(function(){            
+             $(this).find("input[name='price']").each(function() {
+                const value = $(this).val();
+                const length = $(this).val().length; 
+                if (value === '') {
+                    $(this).prev().text('票價請勿空白');
+                }
+            });
+          });
+        
         
 
 		// msg.textContent = '';
@@ -293,6 +337,31 @@ $(function () {
                 showPlanerrorMegs(); // 將Tktplan錯誤訊息顯示在畫面上
             })
             .then(data => console.log(data));
+            await fetch('addtkt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tkttype: tkttypeAll,
+                    price: priceAll,           
+                    
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    const { status, statusText } = response;
+                    throw Error(`${status}: ${statusText}`);
+                }
+            })
+            .then(data => {
+                console.log(data)
+                errorMsgs = data;
+                showTypeerrorMegs(); // 將Tkttype錯誤訊息顯示在畫面上
+            })
+            .then(data => console.log(data));
 
 
 	});
@@ -348,19 +417,22 @@ function showTkterrorMegs(){
 }
 
 function showPlanerrorMegs(){
-    $("#msg").html('');
-    // $("#plannameMsgs").html('');
-
+    // $("#msg").html('');
     if (errorMsgs.hasOwnProperty('msg')){
         $("#msg").html(`${errorMsgs.msg}`);
-        if($("#msg").text() === "tktplan新增成功"){
+    }
+
+}
+
+function showTypeerrorMegs(){
+    // $("#msg").html('');
+    if (errorMsgs.hasOwnProperty('msg')){
+        $("#msg").html(`${errorMsgs.msg}`);
+        if($("#msg").text() === "tkttype新增成功"){
         //    window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
         }
     }
 
-    // if (errorMsgs.hasOwnProperty('plannameMsgs')){
-    //     $("#plannameMsgs").html(`${errorMsgs.plannameMsgs}`);
-    // }
 }
 
     
