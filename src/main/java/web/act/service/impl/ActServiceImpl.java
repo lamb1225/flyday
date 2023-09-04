@@ -39,7 +39,7 @@ public class ActServiceImpl implements ActService {
             act.setMessage("請輸入可參加最高人數");
             act.setSuccessful(false);
         }
-        if (act.getActmincount() == null || act.getActmincount()  < 2) {
+        if (act.getActmincount() == null || act.getActmincount() < 2) {
             act.setMessage("請輸入可參加最低人數");
             act.setSuccessful(false);
             return act;
@@ -64,12 +64,12 @@ public class ActServiceImpl implements ActService {
             act.setSuccessful(false);
             return act;
         }
-        act.setMemno(2);
-        act.setPkgno(2);
+//        act.setMemno(2);
+//        act.setPkgno(2);
         final int result = dao.insert(act);
         if (result < 1) {
             act.setMessage("建立失敗");
-            act.setSuccessful((false));
+            act.setSuccessful(false);
             return act;
         }
         act.setMessage("建立成功");
@@ -79,12 +79,6 @@ public class ActServiceImpl implements ActService {
 
     @Override
     public Act selectAct(Integer id) {
-        Act act = new Act();
-        if(id == null){
-            act.setMessage("無揪團編號");
-            act.setSuccessful(false);
-            return act;
-        }
         return dao.selectById(id);
     }
 
@@ -101,5 +95,11 @@ public class ActServiceImpl implements ActService {
     @Override
     public boolean revise(Act act) {
         return dao.update(act) > 0;
+    }
+
+    @Override
+    public List<Act> memAct(Integer memid) {
+
+        return dao.selectBymember(memid);
     }
 }

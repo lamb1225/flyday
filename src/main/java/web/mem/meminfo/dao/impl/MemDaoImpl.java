@@ -95,6 +95,16 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memNo", memNo)
 				.executeUpdate();
 	}
+	
+	@Override
+	public int updateMemPassword(String newMemPwd, Integer memNo) {
+		final String hql = "UPDATE Mem SET memPwd = :memPwd WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memPwd", newMemPwd)
+				.setParameter("memNo", memNo)
+				.executeUpdate();
+	}
 
 	@Override
 	public Mem selectByMemNo(Integer memNo) {
@@ -103,19 +113,19 @@ public class MemDaoImpl implements MemDao {
 	
 	@Override
 	public Mem selectByMemAcc(String memAcc) {
-		final String hql = "FROM Mem WHERE memAcc = :memAcc";	
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memAcc = :memAcc";	
 		return session.createQuery(hql, Mem.class).setParameter("memAcc", memAcc).uniqueResult();
 	}
 	
 	@Override
 	public Mem selectByMemEmail(String memEmail) {
-		final String hql = "FROM Mem WHERE memEmail = :memEmail";	
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memEmail = :memEmail";	
 		return session.createQuery(hql, Mem.class).setParameter("memEmail", memEmail).uniqueResult();
 	}
 	
 	@Override
 	public Mem selectByMemMobile(String memMobile) {
-		final String hql = "FROM Mem WHERE memMobile = :memMobile";	
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memMobile = :memMobile";	
 		return session.createQuery(hql, Mem.class).setParameter("memMobile", memMobile).uniqueResult();
 	}
 	

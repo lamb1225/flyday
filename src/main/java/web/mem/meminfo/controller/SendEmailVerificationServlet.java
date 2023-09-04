@@ -38,7 +38,7 @@ public class SendEmailVerificationServlet extends HttpServlet {
 			Gson gson = new Gson();
 			Mem mem = gson.fromJson(br, Mem.class);
 			
-			mem = service.checkEmail(mem);
+			mem = service.isEmailDuplicated(mem);
 			
 			try(Jedis jedis = new Jedis("localhost", 6379);){
 				if(mem.isSuccessful()) {

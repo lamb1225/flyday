@@ -127,7 +127,7 @@ public class MemServiceImpl implements MemService {
 	}
 
 	@Override
-	public Mem checkEmail(Mem mem) {
+	public Mem isEmailDuplicated(Mem mem) {
 		if(dao.selectByMemEmail(mem.getMemEmail()) != null){
 			
 			mem.setMessage("此Email信箱已註冊！");
@@ -138,6 +138,11 @@ public class MemServiceImpl implements MemService {
 		mem.setMessage("Email可使用！");
 		mem.setSuccessful(true);
 		return mem;
+	}
+	
+	@Override
+	public Mem checkEmailExists(String memEmail) {
+		return dao.selectByMemEmail(memEmail);
 	}
 
 	@Override
@@ -163,6 +168,16 @@ public class MemServiceImpl implements MemService {
 		mem.setSuccessful(true);
 		return mem;
 		
+	}
+
+	@Override
+	public int renewPwd(String newMemPwd, Integer memNo) {
+		return dao.updateMemPassword(newMemPwd, memNo);
+	}
+
+	@Override
+	public Mem checkMemInfoByMemNo(Integer memNo) {
+		return dao.selectByMemNo(memNo);
 	}
 	
 	

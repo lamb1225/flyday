@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/rpely.css">
+</head>
+
+<body>
+    <article class="task_container">
+        <button type="button" class="btn_empty">清空</button>
+        
+        <h1 class="title1">留言板</h1>
+
+        <div class="task_add_block">
+            <input type="text" class="task_name" id="actroom" placeholder="輸入待辦事項…">
+            <button type="button" class="task_add">新增</button>
+        </div>
+
+        <div class="task_list_parent">
+            <ul class="task_list">
+
+            </ul>
+            <ul id="biddingRoom" class="list-group bid-record">
+                <li id="statusOutput" class="list-group-item list-group-item-action" >競標中</li>
+            </ul>
+        </div>
+    </article>
+    <script src="./js/jquery-3.7.0.min.js"></script>
+    <script src="./js/reply.js"></script>
+    <script src="./js/message.js"></script>
+    <!-- 載入 Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+</body>
+
+</html>
