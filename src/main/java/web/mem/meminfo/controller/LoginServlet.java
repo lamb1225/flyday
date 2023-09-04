@@ -33,6 +33,10 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		if(request.getSession(false) != null) {
+			request.getSession().invalidate(); 		//用來刪除在忘記密碼操作時存放的session memNo、memAcc資料
+		}
+		
 		try(BufferedReader br = request.getReader();){
 			Gson gson = new Gson();
 			Mem mem = gson.fromJson(br, Mem.class);

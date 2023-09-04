@@ -14,8 +14,14 @@ public interface MemService {
 	
 	Mem changePersonalImage(byte[] memPic, Integer memNo);
 	
-	Mem checkEmail(Mem mem);
+	Mem isEmailDuplicated(Mem mem);
+	
+	Mem checkEmailExists(String memEmail);
 	
 	Mem renewEmail(String verificationInput, String myNewEmail, Integer memNo);
+	
+	int renewPwd(String newMemPwd, Integer memNo);
+	
+	Mem checkMemInfoByMemNo(Integer memNo);
 	
 }

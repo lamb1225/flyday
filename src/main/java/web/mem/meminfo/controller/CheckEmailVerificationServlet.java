@@ -36,7 +36,7 @@ public class CheckEmailVerificationServlet extends HttpServlet {
 		String verificationInput = "";
 		String myNewEmail = "";
 		
-		try(BufferedReader br = req.getReader();){
+		try(BufferedReader br = req.getReader();){		//取得非entity的Json物件內容
 			JsonObject jsonObject = JsonParser.parseReader(br).getAsJsonObject();
 			verificationInput = jsonObject.get("verificationInput").getAsString();
 			myNewEmail = jsonObject.get("myNewEmail").getAsString();
