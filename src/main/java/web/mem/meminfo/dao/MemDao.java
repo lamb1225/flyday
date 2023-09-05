@@ -20,6 +20,8 @@ public interface MemDao {
 	
 	int updateMemPassword(String newMemPwd, Integer memNo);
 	
+	int updateMemAccStatus(Integer memAccStatus, Integer memNo);
+	
 	Mem selectByMemNo(Integer memNo);
 	
 	Mem selectByMemAcc(String memAcc);

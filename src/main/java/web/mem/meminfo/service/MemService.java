@@ -24,4 +24,6 @@ public interface MemService {
 	
 	Mem checkMemInfoByMemNo(Integer memNo);
 	
+	int activateAccStatus(Integer memNo);
+	
 }
