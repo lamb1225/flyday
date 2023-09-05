@@ -37,7 +37,10 @@ document.addEventListener("DOMContentLoaded",function(){
                 
                 <!-- Price -->
                 <div class="mt-3 mt-sm-0">
-                    <a class="btn btn-sm btn-dark w-100 mb-0 pkgno" id="${data.pkgNo}">查看/修改</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=addplan(${data.pkgNo}) id="${data.pkgNo}">新增方案</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=edit(${data.pkgNo}) id="${data.pkgNo}">查看/修改</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=editpic(${data.pkgNo}) id="${data.pkgNo}">查看/修改(圖片)</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=findplan(${data.pkgNo}) id="${data.pkgNo}">查看所有方案</a>    
                 </div>                  
             </div>
         </div>
@@ -47,18 +50,7 @@ document.addEventListener("DOMContentLoaded",function(){
             });
         })
 
-	console.log("1");
-	const bt2Elements = document.getElementsByClassName("pkgno");
-	console.log("2");
-	console.log(bt2Elements);
 	
-	for(let bt2 of bt2Elements){
-		console.log("3");
-		bt2.addEventListener("click", function(){
-			console.log("4");
-	   		console.log(bt2.id);
-	   	})
-	}
 	
 
 	
@@ -81,3 +73,20 @@ document.addEventListener("DOMContentLoaded",function(){
 	storename();
 })
 
+
+	function edit(pkgNo){
+		sessionStorage.setItem("pkgNo", pkgNo);
+		location = "pkgedit.html";
+	}
+	function addplan(pkgNo){
+		sessionStorage.setItem("pkgNo", pkgNo);
+		location = "pkgplanadd.html";
+	}
+	function editpic(pkgNo){
+		sessionStorage.setItem("pkgNo", pkgNo);
+		location = "";
+	}
+	function findplan(pkgNo){
+		sessionStorage.setItem("pkgNo", pkgNo);
+		location = "";
+	}
