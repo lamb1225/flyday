@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Modal START -->
+    <div class="modal-2 fade" id="map360" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content2">
+                <!-- Title -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="map360label"><i class="fa-solid fa-tag"></i> 新增優惠券</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        data-bs-toggle="modal" data-bs-target="#map360"></button>
+                </div>
+
+
+               <div class="card-2-body-2 p-0">
+						<form class="row g-4-2">
+							
+							<!-- NAME -->
+							<div class="col-md-10">
+								<label class="form-label">*優惠券名稱</label> <input type="text"
+									class="form-control2" id="coupname">
+							</div>
+							<!-- INTRODUCTION -->
+							<div class="col-12-2" >
+								<label class="form-label">*優惠券介紹</label>
+								<textarea class="form-control2" rows="3" id="introduction"></textarea>
+							</div>
+							<div>
+								<br>
+							</div>
+							<!-- DISCOUNT -->
+							<div class="col-6">
+								<label class="form-label">*優惠券折扣金額</label> <input
+									type="text" class="form-control2" id="discount">
+							</div>
+							<!-- MINICHARGE -->
+							<div class="col-6">
+								<label class="form-label">*能使用的最低消費金額</label> <input
+									type="text" class="form-control2" id="minicharge">
+							</div>
+
+
+
+							<!-- USESTART -->
+							<div class="col-3">
+								<label class="form-label">*發放起始日 (上架)</label> <input
+									type="date" class="form-control2 flatpickr"
+									value="2023-08-29" placeholder="Enter your birth-date"
+									id="startdate">
+							</div>
+							<!-- USEEND -->
+							<div class="col-3">
+								<label class="form-label">*發放結束日 (下架)</label> <input
+									type="date" class="form-control2 flatpickr"
+									value="2023-08-28" placeholder="Enter your birth-date"
+									 id="enddate">
+							</div>
+							<!-- USESTART -->
+							<div class="col-3">
+								<label class="form-label">*使用起始日</label> <input
+									type="date" class="form-control2 flatpickr"
+									value="2023-08-28" placeholder="Enter your birth-date"
+									 id="usestartdate">
+							</div>
+							<!-- USEEND -->
+							<div class="col-3">
+								<label class="form-label">*使用結束日</label> <input
+									type="date" class="form-control2 flatpickr"
+									value="2023-08-28" placeholder="Enter your birth-date"
+									 id="useenddate">
+							</div>
+							
+							<!-- STATE -->
+							<div class="col-6">
+								<label class="form-label">*優惠券狀態</label> <input
+									type="text" class="form-control2" id="state">
+							</div>
+
+							
+
+
+                        <div class="col-12-2">
+
+                            <button class="btn btn-dark mb-0 float-end" type="button" data-bs-toggle="modal"
+                                data-bs-target="#add" id="btn">新增</button>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Contact form END -->
+
+    </div>
+    
+    <!-- Modal END -->
+
+    <!-- 新增成功或失敗 -->
+    <div class="modal fade" id="add" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h1>新增成功</h1>
+            </div>
+      </div>
+      </div>   
+			<div id="msg"></div>
+			
+            <script>
+            (() => {
+                const btn = document.querySelector('#btn');
+            	const coupname = document.querySelector('#coupname');
+            	const introduction = document.querySelector('#introduction');
+            	const discount = document.querySelector('#discount');
+            	const startdate = document.querySelector('#startdate');
+            	const enddate = document.querySelector('#enddate');
+            	const usestartdate = document.querySelector('#usestartdate');
+            	const useenddate = document.querySelector('#useenddate');
+            	const minicharge = document.querySelector('#minicharge');
+            	const state = document.querySelector('#state');
+
+            	btn.addEventListener('click', () => {
+        			console.log("111");
+        			console.log(startdate.value);
+					
+        			const coupnameLength = coupname.value.length;
+        			if (coupnameLength < 2 || coupnameLength > 40) {
+        				msg.textContent = '優惠券名稱長度須介於2~40字元';
+        				return;//停止後續的程式執行
+        			}
+
+        			//可以
+        			if (discount.value.trim().length===0) {
+        				msg.textContent = '折扣金額不可為空';
+        				return;
+        			}
+
+					//可以
+//         			if (discount.value==='') {
+//         				msg.textContent = '長度為3';
+//         				return;//停止後續的程式執行
+//         			}
+
+					//不行
+//         			if (discount==='') {
+//         				msg.textContent = '長度為3';
+//         				return;//停止後續的程式執行
+//         			}
+					//可以
+// 					if (discount.value.length===0) {
+//         				msg.textContent = '長度為0';
+//         				return;//停止後續的程式執行
+//         			}
+        			        			
+            		fetch('/flyday/pkg/PkgCoup1', {
+            			method: 'POST',
+            			headers: {
+            				'Content-Type': 'application/json',
+            			},
+            			body: JSON.stringify({		
+            				pkgCoupName: coupname.value,
+            				pkgCoupIntroduce: introduction.value,
+            				pkgCoupDiscount: discount.value,
+            				pkgCoupStartDate: startdate.value,
+            				pkgCoupEndDate: enddate.value,
+            				pkgCoupUseStartDate: usestartdate.value,
+            				pkgCoupUseEndDate: useenddate.value,
+            				pkgCoupMinicharge: minicharge.value,
+            				pkgCoupState: state.value
+            			})
+            		}).then(function(response){
+                        return response.json();
+            		}).then(body => {
+        				const { successful, message} = body;
+        				if (successful) {
+        					console.log("ya");
+        					msg.textContent = message;
+        				} else {
+        					console.log("no");
+        					msg.textContent = message;
+        				}
+        			});
+            			
+            			
+            	});
+
+            })();
+            </script>
+
+</body>
+
+</html>
