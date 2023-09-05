@@ -278,8 +278,8 @@
 								data-bs-toggle="tab" href="#tab-4">離職員工</a>
 							</li>
 							<li class="nav-item">
-								<!-- 篩選EMP_STATUS == 1 --> <a class="nav-link mb-0"
-								data-bs-toggle="tab" href="#tab-4">新增員工</a>
+								<a class="nav-link mb-0 navbar-brand"  href="empsign-up.html"
+								data-bs-toggle="tab" href="#tab-4" id="addemp">新增員工</a>
 							</li>
 						</ul>
 					</div>
@@ -387,17 +387,6 @@
 								<!-- EMP_STATUS -->
 								<span id="displayEmpStatus"></span>
 							</div>
-
-							<!-- Data item -->
-							<!-- 連接fun -->
-							<!-- 							<div class="col-6 col-lg-2"> -->
-							<!-- 								<a href="admin-guest-detail.html" -->
-							<!-- 									class="btn btn-sm btn-light mb-0">修改</a><a -->
-							<!-- 									href="admin-guest-detail.html" -->
-							<!-- 									class="btn btn-sm btn-light mb-0">刪除</a> <a -->
-							<!-- 									href="admin-guest-detail.html" -->
-							<!-- 									class="btn btn-sm btn-light mb-0">員工權限</a> -->
-							<!-- 							</div> -->
 						</div>
 						<!-- =============================================================== -->
 
@@ -450,21 +439,27 @@
 	<!-- 	單一員工查詢 -->
 	<script>
 const empSearch_input = document.getElementById('empsearch_input');
-const empSearchForm = document.getElementById('empsearch'); // 假設empsearch是form的ID
+const empSearchForm = document.getElementById('empsearch'); 
 const container = document.querySelector('.row');
 const allEmployeesTable = document.getElementById('allEmployeesTable');
 const ela = document.getElementById('empListAll');
+const addEmp = document.getElementById('addemp');
+
+//跳轉至新增員工頁面
+addEmp.addEventListener("click", function(){
+	location = "empsign-up.html";
+});
+
 // 單一員工查詢
 empSearchForm.addEventListener("submit", async function (event) {
 	event.preventDefault();  // 阻止表單的預設提交行為
-  
 //在發送 fetch 請求之前清空 allEmployeesTable 的內容
   allEmployeesTable.innerHTML = '';
   const empNo = empSearch_input.value;
 
   sessionStorage.setItem('empSearch_input', empNo); // 儲存empNo而不是DOM元素
 
-  fetch("/flyday/emp/getInfo", {
+  fetch("/flyday/emp/controller", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -511,7 +506,7 @@ empSearchForm.addEventListener("submit", async function (event) {
 ela.addEventListener("click", async function (event) {
 	// 在發送 fetch 請求之前清空 allEmployeesTable 的內容
     allEmployeesTable.innerHTML = '';
-	fetch("/flyday/emp/getInfo")
+	fetch("/flyday/emp/controller")
     .then(response => {
         if (!response.ok) {
             throw new Error('網路連線異常，請確認網路通暢');
@@ -547,6 +542,7 @@ ela.addEventListener("click", async function (event) {
     });
 });
 
+//刪除員工
 //使用事件代理來捕獲 btn-delete 的點擊事件
 allEmployeesTable.addEventListener("click", function (event){
 	//記得標註辨識btn-delete的類別value
@@ -555,13 +551,19 @@ allEmployeesTable.addEventListener("click", function (event){
         
         const empNo = event.target.closest('.employee-row').querySelector('.empNo').textContent;
         if (confirm('確定要刪除該員工嗎？')) {
+        	const formData = new FormData()
+        	formData.append("empNo", empNo)
+        	formData.append("action", 'btn-delete')
         	//此段為關鍵，對應的位置與關鍵詞需再三確認
-        	fetch("/flyday/emp/getInfo", {
+        	fetch("/flyday/emp/controller", {
                 method: 'POST',
                 headers: {
-                	"Content-Type": "application/x-www-form-urlencoded",
+                	"Content-Type": "application/json",
                   },
-                  body: `empNo=${empNo}&action=btn-delete`
+                  body:JSON.stringify({
+                	  empNo: empNo,
+					 action: "btn-delete"
+                  })
             })
             .then(response => {
                 if (!response.ok) {

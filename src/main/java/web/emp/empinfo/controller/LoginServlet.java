@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
 	public void init() throws ServletException{
 		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		service = applicationContext.getBean(EmpService.class);	
+		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				final HttpSession session = request.getSession();
 				session.setAttribute("loggedin", true);
-				session.setAttribute("mem", emp);
+				session.setAttribute("emp", emp);
 			}
 			response.setContentType("application/json");
 			try(PrintWriter pw = response.getWriter();){

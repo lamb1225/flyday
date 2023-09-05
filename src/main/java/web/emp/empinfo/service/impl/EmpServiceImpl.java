@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import web.emp.empinfo.dao.EmpDao;
 import web.emp.empinfo.entity.Emp;
 import web.emp.empinfo.service.EmpService;
+//import web.mem.meminfo.entity.Mem;
 
 @Service
 @Transactional
@@ -22,6 +23,7 @@ public class EmpServiceImpl implements EmpService {
 
 		final String empAcc = emp.getEmpAcc();
 		final String empPwd = emp.getEmpPwd();
+//		final Integer empStatus = emp.getEmpStatus();
 		
 		if(empAcc == null || empAcc.trim().isEmpty()) {
 			emp.setMessage("請輸入帳號");
@@ -43,9 +45,17 @@ public class EmpServiceImpl implements EmpService {
 			return emp;
 		}
 		
+//		emp = dao.selectByEmpStatus(empStatus);
+//		if(emp.equals(1)) {
+//			emp.setMessage("您的資料顯示未在職，如有錯誤請聯繫人事負責人");
+//			emp.setSuccessful(false);
+//			return emp;
+//		};
+		
 		emp.setMessage("登入成功");
 		emp.setSuccessful(true);
 		return emp;
+		
 	}
 
 	@Override
@@ -57,7 +67,7 @@ public class EmpServiceImpl implements EmpService {
 		}
 		
 		emp.setEmpStatus(0);
-		emp.setEmpStatus(1);
+		
 		
 		if(dao.insert(emp) == 1) {
 			emp.setMessage("您的資料顯示未在職，如有錯誤請聯繫人事負責人");
@@ -65,8 +75,8 @@ public class EmpServiceImpl implements EmpService {
 			return emp;
 		};
 		
-		emp.setMessage("登入成功");
-		emp.setSuccessful(true);	
+		emp.setMessage("新增成功");
+		emp.setSuccessful(false);	
 		return emp;
 	}
 
@@ -75,4 +85,46 @@ public class EmpServiceImpl implements EmpService {
 		return dao.deleteByEmpNo(empno);
     }
 
+	//修改
+//	@Override
+//	public Mem updatePersonalInfo(Mem mem) {
+//		
+//		if(dao.selectByMemMobile(mem.getMemMobile()) != null 
+//				&& dao.selectByMemMobile(mem.getMemMobile()).getMemNo() !=  mem.getMemNo() ) {
+//			mem.setMessage("手機號碼重複");
+//			mem.setSuccessful(false);
+//			return mem;
+//		}
+//		
+//		if(dao.updateMemInfo(mem) < 1) {
+//			mem.setMessage("變更失敗，請聯絡管理員");
+//			mem.setSuccessful(false);
+//			return mem;
+//		}
+//		
+//		mem.setMessage("修改成功");
+//		mem.setSuccessful(true);
+//		return mem;
+//		
+//	}
+	
+	
+	//新增照片
+//	@Override
+//	public Mem changePersonalImage(byte[] memPic, Integer memNo) {
+//		
+//		Mem mem = new Mem();
+//
+//		if(dao.updateMemImage(memPic, memNo) < 1) {
+//			mem.setMessage("圖片變更失敗，請聯絡管理員");
+//			mem.setSuccessful(false);
+//			return mem;
+//		}
+//		
+//		mem.setMessage("圖片修改成功");
+//		mem.setSuccessful(true);
+//		return mem;
+//		
+//	}
+	
 }

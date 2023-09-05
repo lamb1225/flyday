@@ -39,7 +39,7 @@ public class EmpDaoImpl implements EmpDao {
 	@Override
 	public int insert(Emp emp) {
 		session.persist(emp);
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -88,6 +88,11 @@ public class EmpDaoImpl implements EmpDao {
 	public Emp selectByEmpNo(Integer empNo) {
 		return session.get(Emp.class, empNo);
 	}
+	
+//	@Override
+//	public Emp selectByEmpStatus(Integer empStatus) {
+//		return session.get(Emp.class, empStatus);
+//	}
 
 @Override
 	public Emp selectByEmpAcc(String empAcc) {

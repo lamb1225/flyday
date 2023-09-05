@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import core.entity.Core;
 
@@ -27,10 +28,24 @@ public class Emp extends Core {
 	private String empName;
 	@Column(name = "EMP_STATUS")
 	private Integer empStatus;
+	@Transient
+	private String signUp;
 	
+	
+	
+	
+	public String getSignUp() {
+		return signUp;
+	}
+
+
+	public void setSignUp(String signUp) {
+		this.signUp = signUp;
+	}
+
+
 	public Emp() {
 	}
-	
 	
 	
 	public Integer getEmpNo() {
