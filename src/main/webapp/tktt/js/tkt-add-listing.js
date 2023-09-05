@@ -8,8 +8,10 @@ $(function () {
     const proddesc = document.querySelector('#proddesc');
     const notice = document.querySelector('#notice');
     const howuse = document.querySelector('#phowuse');
+
     const location = document.querySelector('#location');
-    const countycity = document.querySelector('#countycity');
+    const city = document.querySelector('#city');
+    const districts = document.querySelector('#districts');
     const address = document.querySelector('#address');
 
     const sclatitude = document.querySelector('#sclatitude');
@@ -17,14 +19,17 @@ $(function () {
 
     const schowarrival = document.querySelector('#schowarrival');
     const scservicehr = document.querySelector('#scservicehr');
+
     const tktsort = document.querySelector('#tktsort');
 
     const planname = document.querySelector('#planname');
     
     const inputs = document.querySelectorAll('input');
-
     
     btn1.addEventListener('click', async function() {
+        // 商品狀態
+        const tktstat = document.querySelector('input[name="tktstat"]:checked');
+
 		// const tktnameLength = tktname.value.length;
 		// if (tktnameLength < 2 || tktnameLength > 40) {
 		// 	msg.textContent = '標題長度需介於2~40字元';
@@ -229,7 +234,7 @@ $(function () {
              });            
              priceAll.push(priceValues.join('|'));
           });
-        //   console.log(priceAll);
+          console.log(priceAll);
           $("small[id^='priceMsgs']").text('');
           $("div[name='planpoint']").each(function(){            
              $(this).find("input[name='price']").each(function() {
@@ -261,7 +266,8 @@ $(function () {
                 notice: $("#notice div").html(),
                 howuse: $("#howuse div").html(),
                 location: location.value,
-                countycity: countycity.value,
+                city: city.value,
+                districts: districts.value,
                 address: address.value,
 
                 sclatitude: 123,
@@ -270,7 +276,7 @@ $(function () {
                 schowarrival: schowarrival.value,
                 scservicehr: scservicehr.value,
 
-                tktstat: 1,
+                tktstat: tktstat.value,
                 tktsort: tktsort.value,
 
                 ratetotal: 0,
@@ -375,7 +381,8 @@ function showTkterrorMegs(){
     $("#tktinstructionMsgs").html('');
 
     $("#locationMsgs").html('');
-    $("#countycityMsgs").html('');
+    $("#cityMsgs").html('');
+    $("#districtsMsgs").html('');
     $("#addressMsgs").html('');
 
     $("#tktsortMsgs").html('');
@@ -404,8 +411,11 @@ function showTkterrorMegs(){
     if (errorMsgs.hasOwnProperty('locationMsgs')){
         $("#locationMsgs").html(`${errorMsgs.locationMsgs}`);
     }
-    if (errorMsgs.hasOwnProperty('countycityMsgs')){
-        $("#countycityMsgs").html(`${errorMsgs.countycityMsgs}`);
+    if (errorMsgs.hasOwnProperty('cityMsgs')){
+        $("#cityMsgs").html(`${errorMsgs.cityMsgs}`);
+    }
+    if (errorMsgs.hasOwnProperty('districtsMsgs')){
+        $("#districtsMsgs").html(`${errorMsgs.districtsMsgs}`);
     }
     if (errorMsgs.hasOwnProperty('addressMsgs')){
         $("#addressMsgs").html(`${errorMsgs.addressMsgs}`);
@@ -429,7 +439,7 @@ function showTypeerrorMegs(){
     if (errorMsgs.hasOwnProperty('msg')){
         $("#msg").html(`${errorMsgs.msg}`);
         if($("#msg").text() === "tkttype新增成功"){
-        //    window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
+            window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
         }
     }
 

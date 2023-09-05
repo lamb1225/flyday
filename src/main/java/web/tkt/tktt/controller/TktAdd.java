@@ -92,12 +92,14 @@ public class TktAdd extends HttpServlet{
 				errorMsgs.put("locationMsgs", "景點名稱需介於2~40個字之間");
 			}
 			
-			String countycity = tkt.getCountycity().trim();
-			String countycityReg = "^.{2,5}$";
-			if(countycity == null || countycity.trim().length() == 0) {
-				errorMsgs.put("countycityMsgs", "縣市名稱請勿空白");
-			} else if (!countycity.trim().matches(countycityReg)) {
-				errorMsgs.put("countycityMsgs", "縣市名稱需介於2~5個字之間");
+			String city = tkt.getCity().trim();
+			if(city == null || "0".equals(city)) {
+				errorMsgs.put("cityMsgs", "縣市未選擇");
+			}
+			
+			String districts = tkt.getDistricts().trim();
+			if(districts == null || "0".equals(districts)) {
+				errorMsgs.put("districtsMsgs", "地區未選擇");
 			}
 			
 			String address = tkt.getAddress().trim();

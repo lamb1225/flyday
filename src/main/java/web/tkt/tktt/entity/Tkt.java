@@ -14,7 +14,9 @@ public class Tkt extends TktCore{
 	private String notice;
 	private String howuse;
 	private String location;
-	private String countycity;
+//	private String countycity;
+	private String city;
+	private String districts;
 	private String address;	
 	
 	private Double sclatitude;
@@ -30,23 +32,12 @@ public class Tkt extends TktCore{
 	private Integer rateqty;	
 	
 	
-	@Override
-	public String toString() {
-		return "Tkt [tktno=" + tktno + ", tktname=" + tktname + ", tktstartdate=" + tktstartdate + ", tktenddate="
-				+ tktenddate + ", tktinstruction=" + tktinstruction + ", proddesc=" + proddesc + ", notice=" + notice
-				+ ", howuse=" + howuse + ", location=" + location + ", countycity=" + countycity + ", address="
-				+ address + ", sclatitude=" + sclatitude + ", sclongitude=" + sclongitude + ", schowarrival="
-				+ schowarrival + ", scservicehr=" + scservicehr + ", tktstat=" + tktstat + ", tktsort=" + tktsort + "]";
-	}
 
-	public Tkt(){
-		super();
-	}
-		
+
 	public Tkt(Integer tktno, String tktname, String tktstartdate, String tktenddate, String tktinstruction,
-			String proddesc, String notice, String howuse, String location, String countycity, String address,
-			Double sclatitude, Double sclongitude, String schowarrival, String scservicehr, Integer tktstat,
-			Integer tktsort, Integer ratetotal, Integer rateqty) {
+			String proddesc, String notice, String howuse, String location, String city, String districts,
+			String address, Double sclatitude, Double sclongitude, String schowarrival, String scservicehr,
+			Integer tktstat, Integer tktsort, Integer ratetotal, Integer rateqty) {
 		super();
 		this.tktno = tktno;
 		this.tktname = tktname;
@@ -57,7 +48,8 @@ public class Tkt extends TktCore{
 		this.notice = notice;
 		this.howuse = howuse;
 		this.location = location;
-		this.countycity = countycity;
+		this.city = city;
+		this.districts = districts;
 		this.address = address;
 		this.sclatitude = sclatitude;
 		this.sclongitude = sclongitude;
@@ -68,6 +60,26 @@ public class Tkt extends TktCore{
 		this.ratetotal = ratetotal;
 		this.rateqty = rateqty;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Tkt [tktno=" + tktno + ", tktname=" + tktname + ", tktstartdate=" + tktstartdate + ", tktenddate="
+				+ tktenddate + ", tktinstruction=" + tktinstruction + ", proddesc=" + proddesc + ", notice=" + notice
+				+ ", howuse=" + howuse + ", location=" + location + ", city=" + city + ", districts=" + districts
+				+ ", address=" + address + ", sclatitude=" + sclatitude + ", sclongitude=" + sclongitude
+				+ ", schowarrival=" + schowarrival + ", scservicehr=" + scservicehr + ", tktstat=" + tktstat
+				+ ", tktsort=" + tktsort + ", ratetotal=" + ratetotal + ", rateqty=" + rateqty + "]";
+	}
+
+
+
+	public Tkt(){
+		super();
+	}
+		
+
 
 	public Integer getTktno() {
 		return tktno;
@@ -135,17 +147,34 @@ public class Tkt extends TktCore{
 		this.location = location;
 	}
 	
-	public String getCountycity() {
-		return countycity;
+//	public String getCountycity() {
+//		return countycity;
+//	}
+//
+//	public void setCountycity(String countycity) {
+//		this.countycity = countycity;
+//	}
+	
+	public String getCity() {
+		return city;
 	}
 
-	public void setCountycity(String countycity) {
-		this.countycity = countycity;
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistricts() {
+		return districts;
+	}
+
+	public void setDistricts(String districts) {
+		this.districts = districts;
 	}
 
 	public String getAddress() {
 		return address;
 	}
+	
 	public void setAddress(String address) {
 		this.address = address;
 	}

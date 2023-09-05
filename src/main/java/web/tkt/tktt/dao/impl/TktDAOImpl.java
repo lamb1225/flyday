@@ -40,8 +40,8 @@ public class TktDAOImpl implements TktDAO{
 //	}
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, HOWUSE, LOCATION, COUNTYCITY, ADDRESS, SC_LATITUDE, SC_LONGITUDE, SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, HOWUSE, LOCATION, CITY, DISTRICTS, ADDRESS, SC_LATITUDE, SC_LONGITUDE, SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY)"
+			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private static final String FIND_MAX_TKTNO = 
 			"SELECT MAX(TKT_NO) TKT_NO FROM tkt";
@@ -80,16 +80,17 @@ public class TktDAOImpl implements TktDAO{
 			pstmt.setString(6, tkt.getNotice());
 			pstmt.setString(7, tkt.getHowuse());
 			pstmt.setString(8, tkt.getLocation());
-			pstmt.setString(9, tkt.getCountycity());
-			pstmt.setString(10, tkt.getAddress());
-			pstmt.setDouble(11, tkt.getSclatitude());
-			pstmt.setDouble(12, tkt.getSclongitude());
-			pstmt.setString(13, tkt.getSchowarrival());
-			pstmt.setString(14, tkt.getScservicehr());
-			pstmt.setInt(15, tkt.getTktstat());
-			pstmt.setInt(16, tkt.getTktsort());
-			pstmt.setInt(17, tkt.getRatetotal());
-			pstmt.setInt(18, tkt.getRateqty());			
+			pstmt.setString(9, tkt.getCity());
+			pstmt.setString(10, tkt.getDistricts());
+			pstmt.setString(11, tkt.getAddress());
+			pstmt.setDouble(12, tkt.getSclatitude());
+			pstmt.setDouble(13, tkt.getSclongitude());
+			pstmt.setString(14, tkt.getSchowarrival());
+			pstmt.setString(15, tkt.getScservicehr());
+			pstmt.setInt(16, tkt.getTktstat());
+			pstmt.setInt(17, tkt.getTktsort());
+			pstmt.setInt(18, tkt.getRatetotal());
+			pstmt.setInt(19, tkt.getRateqty());			
 			
 			System.out.println("新增成功222");
 
