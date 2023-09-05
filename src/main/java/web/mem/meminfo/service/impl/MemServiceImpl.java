@@ -1,6 +1,8 @@
 package web.mem.meminfo.service.impl;
 
 
+import java.util.Base64;
+
 import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 
@@ -8,6 +10,7 @@ import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import core.util.EmailSender;
 import redis.clients.jedis.Jedis;
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
@@ -42,6 +45,38 @@ public class MemServiceImpl implements MemService {
 		if(mem == null) {
 			mem = new Mem();
 			mem.setMessage("使用者名稱或密碼錯誤");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		if(mem.getMemAccStatus() == 0) {
+			//寄驗證信
+			EmailSender emailSender = new EmailSender();
+			
+			String randomString = Base64.getEncoder().encodeToString((mem.getMemAcc() + System.currentTimeMillis()).getBytes());
+			String urlLink = randomString.substring(0,30);
+			
+			try(Jedis jedis = new Jedis();){
+				jedis.set(mem.getMemNo().toString(), urlLink);
+				jedis.expire(mem.getMemNo().toString(), 259200);
+			}
+			
+			String to = mem.getMemEmail();
+			String subject = "【Flyday】會員功能啟用信";
+			String messageText = "親愛的Flyday會員您好：" + "\n" 
+									+ "請點選以下連結完成會員功能啟用：\n\n" 
+									+ "http://localhost:8081/flyday/mem/activate?no=" + mem.getMemNo()
+									+ "&urlLink=" + urlLink + "\n\n此連結將於3天內失效";
+			
+			emailSender.sendMail(to, subject, messageText);
+			
+			mem.setMessage("帳號未啟用，請收驗證信啟用帳號");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		if(mem.getMemAccStatus() == 2) {
+			mem.setMessage("帳號已停權，無法登入");
 			mem.setSuccessful(false);
 			return mem;
 		}
@@ -127,7 +162,7 @@ public class MemServiceImpl implements MemService {
 	}
 
 	@Override
-	public Mem checkEmail(Mem mem) {
+	public Mem isEmailDuplicated(Mem mem) {
 		if(dao.selectByMemEmail(mem.getMemEmail()) != null){
 			
 			mem.setMessage("此Email信箱已註冊！");
@@ -138,6 +173,11 @@ public class MemServiceImpl implements MemService {
 		mem.setMessage("Email可使用！");
 		mem.setSuccessful(true);
 		return mem;
+	}
+	
+	@Override
+	public Mem checkEmailExists(String memEmail) {
+		return dao.selectByMemEmail(memEmail);
 	}
 
 	@Override
@@ -164,7 +204,21 @@ public class MemServiceImpl implements MemService {
 		return mem;
 		
 	}
-	
+
+	@Override
+	public int renewPwd(String newMemPwd, Integer memNo) {
+		return dao.updateMemPassword(newMemPwd, memNo);
+	}
+
+	@Override
+	public Mem checkMemInfoByMemNo(Integer memNo) {
+		return dao.selectByMemNo(memNo);
+	}
+
+	@Override
+	public int activateAccStatus(Integer memNo) {
+		return dao.updateMemAccStatus(1, memNo);
+	}
 	
 
 }
