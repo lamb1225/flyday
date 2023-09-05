@@ -6,12 +6,12 @@ const pwdConfirm = document.getElementById("psw-input-confirm");
 const errMsg = document.getElementById("errMsg");
 const register = document.getElementById("btn-register");
 
-const accRegex = /^\w{6,20}$/
+const accRegex = /^\w{6,12}$/
 const pwdRegex = /^\w{6,12}$/
 const mobileRegex = /^09[0-9]{8}$/
 const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
 
-const contextPath = window.location.pathname.split('/')[1]
+const contextPath = window.location.pathname.split('/')[1];
 
 register.addEventListener("click", function(){
     errMsg.textContent = ""
@@ -23,7 +23,7 @@ register.addEventListener("click", function(){
 
         errMsg.textContent = "尚有必填欄位未輸入";
     }else if(! accRegex.test(acc.value)){
-        errMsg.textContent = "帳號應由6-20個英數字組合而成"
+        errMsg.textContent = "帳號應由6-12個英數字組合而成"
     }else if(! emailRegex.test(email.value)){
         errMsg.textContent = "email輸入格式不符"
     }else if(! mobileRegex.test(mobile.value)){
@@ -47,6 +47,7 @@ register.addEventListener("click", function(){
         }).then(function(jsonObject){
             const{successful, message} = jsonObject;
             if(successful){
+                alert(message);
                 location = "index.html";
             }else{
                 errMsg.textContent = message;

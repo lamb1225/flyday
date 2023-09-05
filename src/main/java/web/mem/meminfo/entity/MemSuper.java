@@ -8,6 +8,8 @@ public class MemSuper implements Serializable{
 	private String message;
 	//用來將byte陣列轉成base64格式用
 	private String memPicBase64;
+	//當多個前端呼叫相同Servlet時，存放對應操作動作使用
+	private String action;
 	
 	public MemSuper() {
 	}
@@ -33,7 +35,13 @@ public class MemSuper implements Serializable{
 		this.memPicBase64 = memPicBase64;
 	}
 
-	
-	
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
 	
 }
