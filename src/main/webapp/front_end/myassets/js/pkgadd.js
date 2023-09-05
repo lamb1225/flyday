@@ -10,6 +10,7 @@
     const pkgcontent = document.getElementById("pkgcontent")
     const pkgnotice = document.getElementById("pkgnotice")
     const refpolicy = document.getElementById("refpolicy")
+    
     const bt = document.getElementById("sent")
     
     const img = document.getElementById("image")
@@ -19,7 +20,7 @@
 
     const errMsg = document.getElementById("errMsg");
 
-    bt.addEventListener("click", function(){
+    bt.addEventListener("click", async function(){
         errMsg.textContent = "";
         if(
             name.value === null || name.value.trim().length === 0||
@@ -56,30 +57,54 @@
             	formData.append("pkgNotice", pkgnotice.value);
             	formData.append("pkgRefpolicy", refpolicy.value);
             
-                fetch("/flyday/pkg/add", {
-                    method: "POST",
-                    body: formData
-                }).then(function(response){
-                    return response.json();
-                }).then(function(jsonObject){
-                    const{successful, message} = jsonObject;
-                    if(successful){
-                        name.value = "";
-                        group.selectedIndex = 0;
-                        gather.value = "";
-                        place.value = "";
-                        address.value = "";
-                        latitude.value = "";
-                        longitude.value = "";
-                        sort.selectedIndex = 0;
-                        pkgcontent.value = "";
-                        pkgnotice.value = "";
-                        refpolicy.value = "";
-                        img.value = "";
+                const response = await fetch("/flyday/pkg/add", {
+                	method: "POST",
+                	body: formData
+            	});
+	            if (response.ok) {
+	                const jsonObject = await response.json();
+	                const { successful, message ,pkgNo} = jsonObject;
+	                if (successful) {
+	                    name.value = "";
+	                    group.selectedIndex = 0;
+	                    gather.value = "";
+	                    place.value = "";
+	                    address.value = "";
+	                    latitude.value = "";
+	                    longitude.value = "";
+	                    sort.selectedIndex = 0;
+	                    pkgcontent.value = "";
+	                    pkgnotice.value = "";
+	                    refpolicy.value = "";
+	                    img.value = "";
+	                    
+	                    const pkgno = pkgNo;
+                        
+                        const inpics = document.getElementById("pkgpics");
+						const onepic = inpics.querySelectorAll("img");
+						const onepicarray = Array.from(onepic);
+						const picarrry = [];
+						for(let pic of onepicarray){
+						    const srcValue = pic.getAttribute("src");
+						    picarrry.push(srcValue);
+						} ;
+						const uploadPromises = picarrry.map(async (element) => {
+	                        const picResponse = await fetch("/flyday/pkgpic/add", {
+						        method: "POST",
+						        headers: {"Content-Type": "application/json"},
+						        body: JSON.stringify({
+						            pkgNo: pkgno,
+						            pkgImg: element
+						        })
+						    })
+							if (!picResponse.ok) {
+						        throw new Error("上傳圖片時發生錯誤");
+						    }
+						});
+						await Promise.all(uploadPromises);
                     }
                     errMsg.textContent = message
-                })
-            }
-    })
-
+                }
+			};
+    });
 })()
