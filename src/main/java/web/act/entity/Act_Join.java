@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -35,8 +32,12 @@ public class Act_Join extends Core {
     private Timestamp jointime;
     @Column(name = "JOIN_STATUS", insertable = false)
     private Integer joinstatus;
+    @ManyToOne
+    @JoinColumn(name = "ACT_NO", insertable = false, updatable = false)
+    private Act act;
 
 }
+
 @Setter
 @Getter
 @NoArgsConstructor

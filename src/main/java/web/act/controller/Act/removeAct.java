@@ -1,4 +1,4 @@
-package web.act.controller;
+package web.act.controller.Act;
 
 import core.entity.Core;
 import core.util.CommonUtil;
@@ -15,8 +15,8 @@ import java.io.IOException;
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 
-@WebServlet("/Act/selectone")
-public class SelectoneAct extends HttpServlet {
+@WebServlet("/Act/remove")
+public class removeAct extends HttpServlet {
     private ActService service;
 
     public void init() throws ServletException {
@@ -27,12 +27,13 @@ public class SelectoneAct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final Integer id = json2Pojo(req, Act.class).getActno();
-
         final Core core = new Core();
-        if (id == null) {
+        if(id == null){
             core.setMessage("查無此id");
             core.setSuccessful(false);
+        }else {
+            core.setSuccessful(service.deleteAct(id));
         }
-        writePojo2Json(resp, service.selectAct(id));
+        writePojo2Json(resp,core);
     }
 }

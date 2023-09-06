@@ -11,6 +11,7 @@ import java.util.List;
 public class Act_ReplyDaoImpl implements ActReplyDAO {
     @PersistenceContext
     private Session session;
+
     @Override
     public int insert(Act_Reply actReply) {
         session.persist(actReply);

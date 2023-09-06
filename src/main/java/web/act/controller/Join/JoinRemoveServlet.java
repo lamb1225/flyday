@@ -1,4 +1,4 @@
-package web.act.controller;
+package web.act.controller.Join;
 
 import core.entity.Core;
 import core.util.CommonUtil;
@@ -14,8 +14,9 @@ import java.io.IOException;
 
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
-@WebServlet("/Act/pass")
-public class joinstatus extends HttpServlet {
+
+@WebServlet("/Act/removejoin")
+public class JoinRemoveServlet extends HttpServlet {
     private JoinActService service;
 
     public void init() throws ServletException {
@@ -25,14 +26,15 @@ public class joinstatus extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final Act_Join actJoin = json2Pojo(req, Act_Join.class);
+        final Act_Join Join = json2Pojo(req, Act_Join.class);
         final Core core = new Core();
-        if (actJoin == null) {
-            core.setMessage("無狀態資訊");
-            core.setSuccessful(false);
-        }else {
-            core.setSuccessful(service.updatestatus(actJoin));
+        if (Join.getActno() == null || Join.getMemno() == null) {
+            Act_Join actJoin = new Act_Join();
+            actJoin.setMessage("查無此id");
+            actJoin.setSuccessful(false);
+        } else {
+            core.setSuccessful(service.exit(Join.getActno(), Join.getMemno()));
+            writePojo2Json(resp, core);
         }
-        writePojo2Json(resp,core);
     }
 }

@@ -1,9 +1,8 @@
-let mem = 4;
-let acts;
+let mem = parseInt(sessionStorage.getItem("memno"));
+let act1 = {};
 let join;
-function $id(id) {
-    return document.getElementById(id);
-}
+let Show = document.querySelector("#Show");
+const pageid = document.querySelector("#pageid");
 window.addEventListener("load", function () {
 
     fetch(`select`)
@@ -12,88 +11,108 @@ window.addEventListener("load", function () {
             return resp.json()
         })
         .then(function (data) {
-            acts = data;
-            showAct();//將其顯示到頁面中
+            act1 = data;
+            pagination(act1, 1);
         })
         .catch(function (error) {
             console.log(error);
         })
 
 })
-function showAct() {
+function showAct(act) {
     let html = '';
-    if (acts.length == 0) {
-        html = "<tr><td colspan='4' align='center'>尚無員工資料</td></tr>";
+    if (act.length == 0) {
+        html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
     } else {
-        for (let i = 0; i < acts.length; i++) {
+        $(act).each((i, acts) => {
             html += `
-                <tr>
-                <td>${acts[i].actno}</td>
-                <td>${acts[i].memno}</td>
-                <td>${acts[i].acttitle}</td>
-                <td>${acts[i].actcontent}</td>
-                <td>${acts[i].actmaxcount}</td>
-                <td>${acts[i].actmincount}</td>
-                <td>${acts[i].actcurrentcount}</td>
-                <td>${acts[i].actjoinbegin}</td>
-                <td>${acts[i].actjoinend}</td>
+            <div class="col-md-6 col-xl-4">
+            <div class="card shadow p-2 pb-0 h-100">
+                <!-- Image -->
+                <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image">
+
+                <!-- Card body START -->
+                <div class="card-body px-3 pb-0">
+                    <!-- Rating and cart -->
+                    <div class="d-flex justify-content-between mb-3">
+
+                    </div>
+
+                    <!-- Title -->
+                    <h5 class="card-title"><a href="hotel-detail.html" onclick='onlook(${acts.actno})'>${acts.acttitle} </a></h5>
+                    <ul class="nav nav-divider mb-2 mb-sm-3">`
+            switch (acts.actstatus) {
+                case 0:
+                    html += `<li class="nav-item"> 揪團中</li>`
+                    break;
+                case 1:
+                    html += `<li class="nav-item">已成團</li>`
+                    break;
+            }
+            html += `</ul>`
+
+            html += ` <!-- List -->
+                    <div class="d-flex align-items-center">
+                        <h5 class="fw-normal text-success mb-0 me-1">${acts.price}</h5>
+                        <span class="mb-0 me-2">$</span>
+                    </div>
+                    <div class="mt-2 mt-sm-0 z-index-2">`
+            if (mem !== acts.memno) {
+                html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
+            class="bi bi-arrow-right ms-2"></i></a>`
+            }
+            html += `</div>
+                </div>
+                
+                <!-- Card body END -->
+                <!-- Card footer START-->
+            </div>
+        </div>
                 `;
-            if (acts[i].actstatus === 0) {
-                html += `<td>揪團中</td>`;
-            } else if (acts[i].actstatus === 1) {
-                html += `<td>已成團</td>`;
-            } else if (acts[i].actstatus === 2) {
-                html += `<td>已取消</td>`;
-            }
-            if (mem === acts[i].memno) {
-                html += `
-                <td>
-                <button type="button" disabled="disabled" class="btn" onclick='JoinActClick(${acts[i].actno})'>加入揪團</button>
-                </td>`;
-            } else {
-                html += `
-                <td>
-                <button type="button" class="btn" onclick='JoinActClick(${acts[i].actno})'>加入揪團</button>
-                </td>`;
-            }
 
-            html += `
-                <td>
-                <button type="button" class="btn" onclick='onRemoveClick(${acts[i].actno})'>移除</button>
-                </td>`;
-            html += `
-                <td>
-                <button type="button" class="btn" onclick='onReviseClick(${acts[i].actno})'>修改</button>
-                </td>`;
-            html += `</tr>`;
+        });
 
-        }
     }
-    $id("showPanel").innerHTML = html;
-    //將emps資料放入頁面中
+    Show.innerHTML = html;
+    // onclick='JoinActClick(${acts.actno})'  放在a標籤裡面
 }
-function onRemoveClick(id) {
-    if (!confirm('確定刪除?')) {
+// function onRemoveClick(id) {
+//     if (!confirm('確定刪除?')) {
+//         return;
+//     }
+//     fetch('removejoin', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ actno: id })
+//     })
+//         .then(resp => resp.json())
+//         .then(body => {
+//             if (body.successful) {
+//                 location.reload();
+//             }
+//         });
+// }
+function onlook(actno) {
+    sessionStorage.setItem('actno', actno);
+    location.href = `${getContextPath()}/Act/hotel-detail.html`;
+}
+function getContextPath() {
+    return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
+}
+// function onReviseClick(id) {
+//     sessionStorage.setItem("actno", id);
+//     location.href = `${getContextPath()}/Act/reviseAct.html`;
+// }
+function JoinActClick(id) {
+    let differ = act.actmaxcount - act.actcurrentcount;
+    let memid = mem;
+    if(differ === 0){
+        Swal.fire({
+            title: '揪團已滿',
+            icon: 'error'
+        })
         return;
     }
-    fetch('removejoin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ actno: id })
-    })
-        .then(resp => resp.json())
-        .then(body => {
-            if (body.successful) {
-                location.reload();
-            }
-        });
-}
-function onReviseClick(id) {
-    sessionStorage.setItem("actno", id);
-    location.href = `http://localhost:8080/flydaytest/Act/reviseAct.html`;
-}
-function JoinActClick(id) {
-    let memid = mem;
     if (!confirm('確定加入?')) {
         return;
     }
@@ -110,12 +129,20 @@ function JoinActClick(id) {
             const { successful } = body;
             if (successful) {
                 join1(id);
-                alert('加入成功');
-
-                // setTimeout("location.href='http://localhost:8080/flydaytest/Act/selectAct.html'", 1000);
+                Swal.fire({
+                    title: '加入成功',
+                    icon: 'success'
+                }).then(function () {
+                    sessionStorage.setItem('actno', id);
+                    sessionStorage.setItem('memno', memid);
+                    location.href = `${getContextPath()}/Act/hotel-detail.html`;
+                })
             } else {
 
-                alert('加入失敗');
+                Swal.fire({
+                    title: '已加入過',
+                    icon: 'error'
+                })
             }
         });
 }
@@ -135,7 +162,7 @@ async function join1(id) {
                 body: JSON.stringify({
                     actno: id,
                     actcurrentcount: join.length
-        
+
                 })
             }).then(resp => resp.json())
                 .then(body => {
@@ -150,3 +177,88 @@ async function join1(id) {
 
 
 }
+function pagination(jsonData, nowPage) {
+    console.log(nowPage);
+    // 取得全部資料長度
+    const dataTotal = jsonData.length;
+
+    // 設定要顯示在畫面上的資料數量
+    // 預設每一頁只顯示 5 筆資料。
+    const perpage = 6;
+
+    // page 按鈕總數量公式 總資料數量 / 每一頁要顯示的資料
+    // 這邊要注意，因為有可能會出現餘數，所以要無條件進位。
+    const pageTotal = Math.ceil(dataTotal / perpage);
+
+    // 當前頁數，對應現在當前頁數
+    let currentPage = nowPage;
+
+    // 因為要避免當前頁數筆總頁數還要多，假設今天總頁數是 3 筆，就不可能是 4 或 5
+    // 所以要在寫入一個判斷避免這種狀況。
+    // 當"當前頁數"比"總頁數"大的時候，"當前頁數"就等於"總頁數"
+    // 注意這一行在最前面並不是透過 nowPage 傳入賦予與 currentPage，所以才會寫這一個判斷式，但主要是預防一些無法預期的狀況，例如：nowPage 突然發神經？！
+    if (currentPage > pageTotal) {
+        currentPage = pageTotal;
+    }
+
+    // 由前面可知 最小數字為 6 ，所以用答案來回推公式。
+    const minData = (currentPage * perpage) - perpage + 1;
+    const maxData = (currentPage * perpage);
+
+    // 先建立新陣列
+    const data = [];
+    // 這邊將會使用 ES6 forEach 做資料處理
+    // 首先必須使用索引來判斷資料位子，所以要使用 index
+    jsonData.forEach((item, index) => {
+        // 獲取陣列索引，但因為索引是從 0 開始所以要 +1。
+        const num = index + 1;
+        // 這邊判斷式會稍微複雜一點
+        // 當 num 比 minData 大且又小於 maxData 就push進去新陣列。
+        if (num >= minData && num <= maxData) {
+            data.push(item);
+        }
+    })
+    // 用物件方式來傳遞資料
+    const page = {
+        pageTotal,
+        currentPage,
+        hasPage: currentPage > 1,
+        hasNext: currentPage < pageTotal,
+    }
+    showAct(data);
+    pageBtn(page);
+}
+function pageBtn(page) {
+    let str = '';
+    const total = page.pageTotal;
+
+    if (page.hasPage) {
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(page.currentPage) - 1}">Previous</a></li>`;
+    } else {
+        str += `<li class="page-item disabled"><span class="page-link">Previous</span></li>`;
+    }
+
+
+    for (let i = 1; i <= total; i++) {
+        if (Number(page.currentPage) === i) {
+            str += `<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        } else {
+            str += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        }
+    };
+
+    if (page.hasNext) {
+        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(page.currentPage) + 1}">Next</a></li>`;
+    } else {
+        str += `<li class="page-item disabled"><span class="page-link">Next</span></li>`;
+    }
+
+    pageid.innerHTML = str;
+}
+function switchPage(e) {
+    e.preventDefault();
+    if (e.target.nodeName !== 'A') return;
+    const page = e.target.dataset.page;
+    pagination(act1, page);
+}
+pageid.addEventListener('click', switchPage);

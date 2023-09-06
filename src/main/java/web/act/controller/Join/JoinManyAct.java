@@ -1,4 +1,4 @@
-package web.act.controller;
+package web.act.controller.Join;
 
 import core.util.CommonUtil;
 import web.act.entity.Act_Join;
@@ -14,8 +14,8 @@ import java.io.IOException;
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 
-@WebServlet("/Act/Join")
-public class JoinAct extends HttpServlet {
+@WebServlet("/Act/ManyAct")
+public class JoinManyAct extends HttpServlet {
     private JoinActService service;
 
     public void init() throws ServletException {
@@ -25,18 +25,7 @@ public class JoinAct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Act_Join actjoin = json2Pojo(req, Act_Join.class);
-
-
-        if (actjoin == null) {
-            actjoin = new Act_Join();
-            actjoin.setMessage("無加入資訊");
-            actjoin.setSuccessful(false);
-            writePojo2Json(resp, actjoin);
-            return;
-        }
-        actjoin = service.JoinAct(actjoin);
-
-        writePojo2Json(resp, actjoin);
+        final Integer id = json2Pojo(req, Act_Join.class).getActno();
+        writePojo2Json(resp,service.ManyJoin(id));
     }
 }
