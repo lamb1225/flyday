@@ -325,6 +325,8 @@ document.addEventListener("DOMContentLoaded",function(){
 //個人資料變更   
 const errMsgInfo = document.getElementById("err-msg-info");
 
+const mobileRegex = /^09[0-9]{8}$/
+
 saveChanges.addEventListener("click", function(){
   
   errMsgInfo.textContent = "";
@@ -339,6 +341,8 @@ saveChanges.addEventListener("click", function(){
   
   if(myMobileInput.value === null || myMobileInput.value.trim().length === 0){
     errMsgInfo.textContent = "手機號碼為必填";
+  }else if(! mobileRegex.test(myMobileInput.value)){
+    errMsgInfo.textContent = "手機號碼輸入格式不符"
   }else{
     fetch(`/${contextPath}/mem/updateMemInfo`,{
       method: "POST",

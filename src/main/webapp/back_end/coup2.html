@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coup</title>
+</head>
+<body>
+    	<!-- VIEW COUPON START -->
+        <div class="modal-2 fade" id="map360" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content2">
+                    <!-- Title -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="map360label"><i class="fa-solid fa-tag"></i> 查詢優惠券</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            data-bs-toggle="modal" data-bs-target="#map360"></button>
+                    </div>
+    
+    
+                   <div class="card-2-body-2 p-0">
+                            <form class="row g-4-2">
+                                <!-- Number -->
+                                <div class="col-md-10">
+                                    <label class="form-label">*優惠券編號</label> <input type="text"
+                                        class="form-control2" id="ncoupno">
+                                </div>
+                                <!-- NAME -->
+                                <div class="col-md-10">
+                                    <label class="form-label">*優惠券名稱</label> <input type="text"
+                                        class="form-control2" id="ncoupname">
+                                </div>
+                                <!-- INTRODUCTION -->
+                                <div class="col-12-2" >
+                                    <label class="form-label">*優惠券介紹</label>
+                                    <textarea class="form-control2" rows="3" id="nintroduction"></textarea>
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <!-- DISCOUNT -->
+                                <div class="col-6">
+                                    <label class="form-label">*優惠券折扣金額</label> <input
+                                        type="text" class="form-control2" id="ndiscount">
+                                </div>
+                                <!-- MINICHARGE -->
+                                <div class="col-6">
+                                    <label class="form-label">*能使用的最低消費金額</label> <input
+                                        type="text" class="form-control2" id="nminicharge">
+                                </div>
+    
+    
+    
+                                <!-- USESTART -->
+                                <div class="col-3">
+                                    <label class="form-label">*發放起始日 (上架)</label> <input
+                                        type="date" class="form-control2 flatpickr"
+                                        value="2023-08-29" placeholder="Enter your date"
+                                        id="nstartdate">
+                                </div>
+                                <!-- USEEND -->
+                                <div class="col-3">
+                                    <label class="form-label">*發放結束日 (下架)</label> <input
+                                        type="date" class="form-control2 flatpickr"
+                                        value="2023-08-28" placeholder="Enter your birth-date"
+                                         id="nenddate">
+                                </div>
+                                <!-- USESTART -->
+                                <div class="col-3">
+                                    <label class="form-label">*使用起始日</label> <input
+                                        type="date" class="form-control2 flatpickr"
+                                        value="2023-08-28" placeholder="Enter your birth-date"
+                                         id="nusestartdate">
+                                </div>
+                                <!-- USEEND -->
+                                <div class="col-3">
+                                    <label class="form-label">*使用結束日</label> <input
+                                        type="date" class="form-control2 flatpickr"
+                                        value="2023-08-28" placeholder="Enter your birth-date"
+                                         id="nuseenddate">
+                                </div>
+                                
+                                <!-- STATE -->
+                                <div class="col-6">
+                                    <label class="form-label">*優惠券狀態</label> <input
+                                        type="text" class="form-control2" id="nstate">
+                                </div>
+    
+                                
+    
+    
+                            <div class="col-12-2">
+    
+                                <button class="btn btn-dark mb-0 float-end" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add" id="selectbtn">查詢</button>
+                            </div>
+    
+    						<div class="col-12-2">
+    
+                                <button class="btn btn-dark mb-0 float-end" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add" id="editbtn">送出修改</button>
+                            </div>
+                        </form>
+                    </div>
+    				<div id="msg"></div>
+    
+                </div>
+            </div>
+		<!-- VIEW COUPON END -->
+		    <script src="myassets/js/coupselect.js"></script>
+			<script src="myassets/js/editcoup.js"></script>
+		
+</body>
+</html>
