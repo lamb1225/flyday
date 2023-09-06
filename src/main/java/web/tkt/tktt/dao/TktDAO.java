@@ -3,6 +3,7 @@ package web.tkt.tktt.dao;
 import java.util.List;
 
 import web.tkt.tktt.entity.Tkt;
+import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 
@@ -12,7 +13,9 @@ public interface TktDAO {
 	
 	public void insertPlan(TktPlan tktplan);
 	
-	public void insertType(TktType tkttype);	
+	public void insertType(TktType tkttype);
+	
+	public void insertImg(TktImg tktimg);	
 	
 	public Tkt findByPK(Integer tktno);
 	

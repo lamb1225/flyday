@@ -1,4 +1,4 @@
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
     const btn1 = document.querySelector('#btn1');
     const msg = document.querySelector('#msg');
 	const tktname = document.querySelector('#tktname');
@@ -25,10 +25,21 @@ $(function () {
     const planname = document.querySelector('#planname');
     
     const inputs = document.querySelectorAll('input');
+
     
     btn1.addEventListener('click', async function() {
         // 商品狀態
         const tktstat = document.querySelector('input[name="tktstat"]:checked');
+        
+        // 圖片庫(存入)
+        const tktimg = document.getElementById("tktimg");
+        const onepic = tktimg.querySelectorAll("img");
+        const picArray = Array.from(onepic);
+        const picArrryAll = [];
+        for(let pic of picArray){
+            const srcValue = pic.getAttribute("src");
+            picArrryAll.push(srcValue);
+        } ;
 
 		// const tktnameLength = tktname.value.length;
 		// if (tktnameLength < 2 || tktnameLength > 40) {
@@ -234,7 +245,7 @@ $(function () {
              });            
              priceAll.push(priceValues.join('|'));
           });
-          console.log(priceAll);
+        //   console.log(priceAll);
           $("small[id^='priceMsgs']").text('');
           $("div[name='planpoint']").each(function(){            
              $(this).find("input[name='price']").each(function() {
@@ -245,12 +256,8 @@ $(function () {
                 }
             });
           });
-        
-        
 
 		// msg.textContent = '';
-        
- 
        
 		await fetch('addtkt', {
 			method: 'POST',
@@ -285,7 +292,7 @@ $(function () {
 		})
             .then(response => {
                 if (response.ok) {
-                    return response.json();
+                    return response.json();                    
                 } else {
                     const { status, statusText } = response;
                     throw Error(`${status}: ${statusText}`);
@@ -316,6 +323,16 @@ $(function () {
 				// }
 			})
             .then(data => console.log(data));
+            const picResponse = await fetch('addtkt', {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    tktimgBase64: picArrryAll,
+                })
+            })
+            if (!picResponse.ok) {
+                throw new Error("上傳圖片時發生錯誤");
+            }
             await fetch('addtkt', {
                 method: 'POST',
                 headers: {
@@ -439,7 +456,7 @@ function showTypeerrorMegs(){
     if (errorMsgs.hasOwnProperty('msg')){
         $("#msg").html(`${errorMsgs.msg}`);
         if($("#msg").text() === "tkttype新增成功"){
-            window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
+           window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
         }
     }
 

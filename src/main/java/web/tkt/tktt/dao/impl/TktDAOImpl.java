@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.naming.Context;
@@ -14,6 +15,7 @@ import javax.sql.DataSource;
 
 import web.tkt.tktt.dao.TktDAO;
 import web.tkt.tktt.entity.Tkt;
+import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.util.Util;
@@ -38,16 +40,21 @@ public class TktDAOImpl implements TktDAO{
 //			e.printStackTrace();
 //		}
 //	}
-
+	
+	// 新增商品SQL
 	private static final String INSERT_STMT = 
 			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, HOWUSE, LOCATION, CITY, DISTRICTS, ADDRESS, SC_LATITUDE, SC_LONGITUDE, SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
+	// 新增圖片SQL
+	// 查商品編號，"新增方案SQL"共用"FIND_MAX_TKTNO"
+	private static final String INSERTIMG_STMT = 
+			"INSERT INTO tkt_img(TKT_NO,TKT_IMG) VALUES (?, ?)";
+	// 新增方案SQL
 	private static final String FIND_MAX_TKTNO = 
 			"SELECT MAX(TKT_NO) TKT_NO FROM tkt";
 	private static final String INSERTPLAN_STMT = 
 			"INSERT INTO tkt_plan(TKT_NO,PLAN_NAME,PLAN_CONTENT,SOLD_AMOUNT,PLAN_STAT) VALUES (?, ?, ?, ? ,?)";
-	
+	// 新增票種SQL
 	private static final String FIND_MAX_TKTPLANNO = 
 			"SELECT MAX(TKT_PLAN_NO) TKT_PLAN_NO FROM tkt_plan";
 	private static final String FIND_ADDPLAN_COUNT = 
@@ -55,9 +62,10 @@ public class TktDAOImpl implements TktDAO{
 	private static final String INSERTTYPE_STMT = 
 			"INSERT INTO tkt_type(TKT_PLAN_NO,TKT_TYPE,PRICE) VALUES (?, ?, ?)";	
 	
-	
+	// 單筆查詢SQL
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME FROM tkt WHERE TKT_NO = ?";
+	// 多筆查詢SQL
 	private static final String getAll_STMT = 
 			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_STAT,TKT_SORT FROM tkt ORDER BY TKT_NO";
 	
@@ -98,6 +106,55 @@ public class TktDAOImpl implements TktDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// 新增圖片
+	@Override
+	public void insertImg(TktImg tktimg) {
+		System.out.println("有到insertImg()");
+		
+		List<String> tktimgBase64List = tktimg.getTktimgBase64();
+	    List<byte[]> tktimgList = new ArrayList<>();
+
+	    for (String base64Image : tktimgBase64List) {
+	        // 去除"data:image/png;base64,"這段前贅字
+	        String imageData = base64Image.substring(base64Image.indexOf(",") + 1); 
+	        
+	        // 將Base64數據解碼為byte[]
+	        byte[] tktimgBytes = Base64.getDecoder().decode(imageData);
+
+	        // 添加解碼後的數據到List
+	        tktimgList.add(tktimgBytes);
+	    }
+		
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
+				PreparedStatement pstmt = con.prepareStatement(INSERTIMG_STMT);){
+		
+//		try (	Connection con = ds.getConnection();
+//				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
+//				PreparedStatement pstmt = con.prepareStatement(INSERTIMG_STMT);){
+			
+			try(ResultSet rsno = pstmtno.executeQuery();){
+				while (rsno.next()) {
+					pstmt.setInt(1, rsno.getInt("TKT_NO"));
+				}
+				for (int i = 0; i < tktimgList.size(); i++) {
+	                byte[] img = tktimgList.get(i);                
+	                
+	                pstmt.setBytes(2, img);
+	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
+				}				
+			}
+			
+			System.out.println("新增成功img");
+			
+			pstmt.executeBatch(); // 執行批量插入
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 
@@ -271,6 +328,8 @@ public class TktDAOImpl implements TktDAO{
 		}
 		return list;
 	}
+
+
 
 
 

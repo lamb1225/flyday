@@ -1,6 +1,8 @@
 package web.tkt.tktt.entity;
 
-public class TktCore {
+import java.io.Serializable;
+
+public class TktCore implements Serializable{
 	private boolean successful;
 	private String message;
 	

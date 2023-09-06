@@ -5,6 +5,7 @@ import java.util.List;
 import web.tkt.tktt.dao.TktDAO;
 import web.tkt.tktt.dao.impl.TktDAOImpl;
 import web.tkt.tktt.entity.Tkt;
+import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.service.TktService;
@@ -19,6 +20,14 @@ public class TktServiceImpl implements TktService{
 		System.out.println("有來到addtkt()");
 		dao.insertTkt(tkt);
 		return tkt;		
+	}
+	
+	// 新增圖片
+	@Override
+	public TktImg addtktimg(TktImg tktimg) {
+		System.out.println("有來到addtktimg()");
+		dao.insertImg(tktimg);
+		return tktimg;
 	}
 
 	// 新增方案
@@ -43,6 +52,8 @@ public class TktServiceImpl implements TktService{
 		System.out.println("有來到findAll()");
 		return dao.getAll();
 	}
+
+
 
 
 

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import web.tkt.tktt.dao.TktDAO;
 import web.tkt.tktt.dao.impl.TktDAOImpl;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktCore;
+import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.service.TktService;
@@ -38,6 +40,7 @@ public class TktAdd extends HttpServlet{
 	
 	public static final TktService service = new TktServiceImpl();
 	int tktin = 0;
+	int tktimgin = 0;
 	int tktplanin = 0;
 	int tkttypein = 0;
 
@@ -147,7 +150,31 @@ public class TktAdd extends HttpServlet{
 				System.out.println("tktin3="+tktin);
 			}		
 			System.out.println("tkt="+tkt);
+			
 		} 
+		
+//		==================================================================================================
+		// 圖片(傳入TktServiceImpl)
+		if(requestBody.contains("tktimgBase64")) {
+			TktImg tktimgBase64 = json2Pojo(requestBody, TktImg.class);
+			
+			Map<String,String> okMsgs = new LinkedHashMap<String,String>();
+			
+			System.out.println("進入tktimg");
+			
+			System.out.println(tktimgBase64);
+			
+			if(tktimgin == 0 && tktin == 1) {
+				tktimgin = 1;
+				tktimgBase64 = service.addtktimg(tktimgBase64);
+				okMsgs.put("msg", "tktimg新增成功");
+				writePojo2Json(response, okMsgs);
+				System.out.println("tktimgin2="+tktimgin);
+			} else {
+				writePojo2Json(response, tktimgBase64);
+				System.out.println("tktimgin3="+tktimgin);
+			}
+		}
 		
 //		==================================================================================================
 		
