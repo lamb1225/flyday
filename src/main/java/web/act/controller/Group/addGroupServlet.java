@@ -5,6 +5,7 @@ import web.act.entity.Rp_Group;
 import web.act.service.GroupService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
-
+@WebServlet("/Act/report")
 public class addGroupServlet extends HttpServlet {
     private GroupService service;
 
@@ -27,7 +28,7 @@ public class addGroupServlet extends HttpServlet {
 
         if (group == null) {
             group = new Rp_Group();
-            group.setMessage("無揪團資訊");
+            group.setMessage("無檢舉資訊");
             group.setSuccessful(false);
             writePojo2Json(resp, group);
             return;

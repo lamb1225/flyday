@@ -1,8 +1,9 @@
 let mem = parseInt(sessionStorage.getItem("memno"));
 let act1 = {};
 let join;
+let reportdata = '';
 let Show = document.querySelector("#Show");
-const pageid = document.querySelector("#pageid");
+var pageid = document.querySelector("#pageid");
 window.addEventListener("load", function () {
 
     fetch(`select`)
@@ -13,6 +14,7 @@ window.addEventListener("load", function () {
         .then(function (data) {
             act1 = data;
             pagination(act1, 1);
+
         })
         .catch(function (error) {
             console.log(error);
@@ -20,16 +22,20 @@ window.addEventListener("load", function () {
 
 })
 function showAct(act) {
+    pic1(act)
     let html = '';
     if (act.length == 0) {
         html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
     } else {
         $(act).each((i, acts) => {
+            
             html += `
             <div class="col-md-6 col-xl-4">
-            <div class="card shadow p-2 pb-0 h-100">
-                <!-- Image -->
-                <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image">
+            <div class="card shadow p-2 pb-0 h-100"id="img${acts.actno}">
+            <!-- Image -->
+            
+            <img src="data:image/png;base64,${pic1(acts.pkgno)}" class="rounded-2" alt="Card image">
+            
 
                 <!-- Card body START -->
                 <div class="card-body px-3 pb-0">
@@ -61,11 +67,10 @@ function showAct(act) {
                 html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
             class="bi bi-arrow-right ms-2"></i></a>`
             }
+
             html += `</div>
+            <a id="memid"onclick='report(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 repo"> 檢舉揪團</a>
                 </div>
-                
-                <!-- Card body END -->
-                <!-- Card footer START-->
             </div>
         </div>
                 `;
@@ -99,6 +104,80 @@ function onlook(actno) {
 function getContextPath() {
     return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
 }
+let report = (id) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        html: `<div class="col-md-6">
+        <label class="form-label">Nationality<span class="text-danger">*</span></label>
+        <select class="form-select js-choice" id="select1">
+            <option selected value="0">活動內容與標題不符</option>
+            <option value="1">言論違反善良風俗</option>
+            <option value="2">騷擾行為</option>
+            <option value="3">其他</option>
+        </select>
+    </div>
+    <div class="col-12">
+		<label class="form-label">檢舉內容</label>
+		<textarea class="form-control" id="reportmsg" rows="3" spellcheck="false">2119 N Division Ave, New Hampshire, York, United States</textarea>
+	</div>
+    `,
+        showCancelButton: true,
+        confirmButtonText: '送出!',
+        cancelButtonText: '取消',
+        reverseButtons: true
+    }).then((result) => {
+
+        const select1 = document.querySelector(`#select1`).value;
+        const reportmsg = document.querySelector(`#reportmsg`).value;
+
+        if (result.isConfirmed) {
+            fetch('report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    memno: mem,
+                    actno: id,
+                    rpgroupreason: select1,
+                    rpgroupcontent: reportmsg
+                })
+            })
+                .then(resp => resp.json())
+                .then(body => {
+                    const { successful } = body;
+                    if (successful) {
+                        Swal.fire({
+                            title: '已送出',
+                            icon: 'success'
+                        }).then(function () {
+                            location.reload();
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: '已取消',
+                            icon: 'error'
+                        })
+                    }
+                });
+
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                '已取消',
+            )
+        }
+    })
+}
 // function onReviseClick(id) {
 //     sessionStorage.setItem("actno", id);
 //     location.href = `${getContextPath()}/Act/reviseAct.html`;
@@ -106,7 +185,7 @@ function getContextPath() {
 function JoinActClick(id) {
     let differ = act.actmaxcount - act.actcurrentcount;
     let memid = mem;
-    if(differ === 0){
+    if (differ === 0) {
         Swal.fire({
             title: '揪團已滿',
             icon: 'error'
@@ -254,6 +333,21 @@ function pageBtn(page) {
     }
 
     pageid.innerHTML = str;
+}
+function pic1(pic) {
+
+    let html = '';
+    fetch('/flyday/pkg/selectpkgno', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pkgno: pic.pkgno })
+    }).then(resp => resp.json())
+        .then(data => {
+            html = data.pkgPicBase64
+        })
+    return html;
+
+
 }
 function switchPage(e) {
     e.preventDefault();

@@ -33,7 +33,7 @@ public class Rp_Group extends Core {
     private String rpgroupcontent;
     @Column(name = "RP_GROUP_TIMESTAMP",insertable = false,updatable = false)
     private Timestamp rpgrouptimestamp;
-    @Column(name = "EMP_NO")
+    @Column(name = "EMP_NO",insertable = false)
     private Integer empno;
     @Column(name = "RP_GROUP_DONE_TIME",insertable = false,updatable = false)
     private Timestamp rpgroupdonetime;
