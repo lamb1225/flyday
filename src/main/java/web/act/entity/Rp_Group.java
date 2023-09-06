@@ -1,12 +1,12 @@
 package web.act.entity;
 
+import core.entity.Core;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rp_Group implements Serializable {
+public class Rp_Group extends Core {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RP_GROUP_NO")
@@ -27,17 +27,17 @@ public class Rp_Group implements Serializable {
     private Integer memno;
     @Column(name = "ACT_NO")
     private Integer actno;
-    @Column(name = "RP_GROUP_REASON")
+    @Column(name = "RP_GROUP_REASON",insertable = false)
     private Integer rpgroupreason;
     @Column(name = "RP_GROUP_CONTENT")
     private String rpgroupcontent;
-    @Column(name = "RP_GROUP_TIMESTAMP")
+    @Column(name = "RP_GROUP_TIMESTAMP",insertable = false,updatable = false)
     private Timestamp rpgrouptimestamp;
     @Column(name = "EMP_NO")
     private Integer empno;
-    @Column(name = "RP_GROUP_DONE_TIME")
+    @Column(name = "RP_GROUP_DONE_TIME",insertable = false,updatable = false)
     private Timestamp rpgroupdonetime;
-    @Column(name = "RP_GROUP_STATUS")
+    @Column(name = "RP_GROUP_STATUS",insertable = false)
     private Integer rpgroupstatus;
     @Column(name = "RP_GROUP_NOTE")
     private String rpgroupnote;

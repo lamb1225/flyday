@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>建立揪團</title>
+	<title>Booking - Multipurpose Online Booking Theme</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
@@ -10,8 +10,66 @@
 	<meta name="author" content="Webestica.com">
 	<meta name="description" content="Booking - Multipurpose Online Booking Theme">
 
-	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
-	<link rel="stylesheet" href="./Act/css/createAct.css">
+	<!-- Dark mode -->
+	<script>
+		const storedTheme = localStorage.getItem('theme')
+
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+			var el = document.querySelector('.theme-icon-active');
+			if (el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+					const activeThemeIcon = document.querySelector('.theme-icon-active use')
+					const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+					const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+					document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+						element.classList.remove('active')
+					})
+
+					btnToActive.classList.add('active')
+					activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+				}
+
+				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+					if (storedTheme !== 'light' || storedTheme !== 'dark') {
+						setTheme(getPreferredTheme())
+					}
+				})
+
+				showActiveTheme(getPreferredTheme())
+
+				document.querySelectorAll('[data-bs-theme-value]')
+					.forEach(toggle => {
+						toggle.addEventListener('click', () => {
+							const theme = toggle.getAttribute('data-bs-theme-value')
+							localStorage.setItem('theme', theme)
+							setTheme(theme)
+							showActiveTheme(theme)
+						})
+					})
+
+			}
+		})
+
+	</script>
+
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -24,14 +82,14 @@
 	<!-- Plugins CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
-	<link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/vendor/dropzone/css/dropzone.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/flatpickr/css/flatpickr.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/tiny-slider/tiny-slider.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/nouislider/nouislider.css">
+
 	<!-- Theme CSS -->
-	<link rel="stylesheet" href="./Act/css/createAct.css">
-	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<script defer src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
@@ -110,7 +168,7 @@
 									<ul class="dropdown-menu" data-bs-popper="none">
 										<li> <a class="dropdown-item" href="index-cab.html">Cab Home</a></li>
 										<li> <a class="dropdown-item" href="cab-list.html">Cab List</a></li>
-
+										<li> <a class="dropdown-item" href="cab-detail.html">Cab Detail</a></li>
 										<li> <a class="dropdown-item" href="cab-booking.html">Cab Booking</a></li>
 									</ul>
 								</li>
@@ -476,426 +534,250 @@
 	<main>
 
 		<!-- =======================
-Page Banner START -->
-		<section class="pt-4 pt-md-5 pb-0">
+Main Banner START -->
+		<section class="pt-0">
 			<div class="container">
-				<div class="row">
-					<div class="col-12 mx-auto text-center">
-						<h1 class="fs-2 mb-2">快樂揪團旅遊</h1>
-						<p class="mb-0">快樂的Friday就是要使用flyday來到處揪團找朋友出去玩啦</p>
+				<!-- Background image -->
+				<div class="rounded-3 p-3 p-sm-5"
+					style="background-image: url(assets/images/bg/05.jpg); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+					<!-- Banner title -->
+					<div class="row my-2 my-xl-5">
+						<div class="col-md-8 mx-auto">
+							<h1 class="text-center text-white">FlyDay for fun together</h1>
+						</div>
 					</div>
+
+					<!-- Booking from START -->
+
+					<!-- Booking from END -->
 				</div>
 			</div>
 		</section>
 		<!-- =======================
-Page Banner END -->
+Main Banner END -->
 
 		<!-- =======================
-Main content START -->
-		<section>
-			<div class="container">
+Title and Tabs START -->
+		<section class="pt-0 pb-4">
+			<div class="container position-relative">
+
+				<!-- Title and button START -->
 				<div class="row">
-					<div class="col-lg-10 mx-auto">
-						<form class="vstack gap-4">
+					<div class="col-12">
+						<!-- Meta START -->
+						<div class="d-flex justify-content-between">
+							<!-- Filter collapse button -->
 
-							<!-- Owner Detail START -->
-							<div class="card shadow">
-								<!-- Card header -->
-								<div class="card-header border-bottom">
-									<h5 class="mb-0">建立新揪團</h5>
-								</div>
-
-								<!-- Card body -->
-								<div class="card-body">
-									<div class="row g-3">
-										<!-- Owner name -->
-										<div class="col-12">
-											<div class="col-md-6">
-												<label class="form-label act">揪團主題</label>
-												<input class="form-control" type="text" placeholder="請填寫揪團主題"
-													id="title">
-												<span class="pop1" style="color: red;"></span>
-											</div>
-										</div>
-
-										<!-- Contact number -->
-										<div class="col-12">
-											<label class="form-label act">揪團內容</label>
-											<textarea class="form-control" rows="2" placeholder="請填寫揪團內容"
-												id="content"></textarea>
-											<span class="pop1" style="color: red;"></span>
-										</div>
-										<!-- Email -->
-										<div class="col-12">
-											<div class="col-md-6">
-												<label class="form-label">可參與最多人數</label>
-												<input class="form-control act" type="text"
-													oninput="value=value.replace(/[^\d]/g,'')" id="max"
-													placeholder="請填寫參加最高上限">
-												<span class="pop1" style="color: red;"></span>
-											</div>
-										</div>
-										<!-- Address -->
-										<div class="col-12">
-											<div class="col-md-6">
-												<label class="form-label">可參與最少人數</label>
-												<input class="form-control act" type="text" id="min"
-													placeholder="參加人數不得低於2">
-												<span class="pop1" style="color: red;"></span>
-											</div>
-										</div>
-
-										<!-- State -->
-										<div>
-											<div class="antialiased sans-serif">
-												<div x-data="app" x-cloak>
-													<div class="container mx-auto py-2 md:py-10">
-														<div>
-															<span
-																class="font-bold my-1 text-gray-700 block">請選擇報名開始與結束日期</span>
-															<input class="act" type="hidden" id="from1" name="date_from"
-																x-model="dateFromYmdHis">
-															<input type="hidden" id="to1" name="date_to"
-																x-model="dateToYmdHis"
-																class="mt-2 sm:mt-0 ml-0 sm:ml-2 act">
-															<label for="timemode"
-																class="font-bold mt-3 mb-1 text-gray-700 block">Time
-																Input Mode</label>
-															<select id="timemode" x-model="timeMode"
-																@change="changeTimeMode()"
-																class="focus:outline-none border-none p-2 rounded-md border-r border-gray-300">
-																<option value=12>12 Hour Clock</option>
-																<option value=24>24 Hour Clock</option>
-															</select>
-															<label for="datepicker"
-																class="font-bold mt-3 mb-1 text-gray-700 block">Select
-																Date/Time
-																Range</label>
-															<div class="relative" @keydown.escape="closeDatepicker()"
-																@click.outside="closeDatepicker()">
-																<div
-																	class="inline-flex items-center border rounded-md mt-3 bg-gray-200">
-																	<input type="text"
-																		@click="endToShow = 'from'; init(); showDatepicker = true"
-																		x-model="outputDateFromValue"
-																		:class="{'font-semibold': endToShow == 'from' }"
-																		class="focus:outline-none border-none p-2 w-64 rounded-l-md border-r border-gray-300" />
-																	<div class="inline-block px-2 h-full">to</div>
-																	<input type="text"
-																		@click="endToShow = 'to'; init(); showDatepicker = true"
-																		x-model="outputDateToValue"
-																		:class="{'font-semibold': endToShow == 'to' }"
-																		class="focus:outline-none border-none p-2 w-64 rounded-r-md border-l border-gray-300" />
-																</div>
-																<div class="absolute bg-white mt-2 rounded-lg shadow p-4 sm:w-80 w-full"
-																	x-show="showDatepicker" x-transition>
-																	<div class="flex flex-col items-center">
-
-																		<div
-																			class="w-full flex justify-between items-center mb-2">
-																			<div>
-																				<span x-text="MONTH_NAMES[month]"
-																					class="text-lg font-bold text-gray-800"></span>
-																				<span x-text="year"
-																					class="ml-1 text-lg text-gray-600 font-normal"></span>
-																			</div>
-																			<div>
-																				<button type="button"
-																					class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
-																					@click="if (month == 0) {year--; month=11;} else {month--;} getNoOfDays()">
-																					<svg class="h-6 w-6 text-gray-500 inline-flex"
-																						fill="none" viewBox="0 0 24 24"
-																						stroke="currentColor">
-																						<path stroke-linecap="round"
-																							stroke-linejoin="round"
-																							stroke-width="2"
-																							d="M15 19l-7-7 7-7" />
-																					</svg>
-																				</button>
-																				<button type="button"
-																					class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
-																					@click="if (month == 11) {year++; month=0;} else {month++;}; getNoOfDays()">
-																					<svg class="h-6 w-6 text-gray-500 inline-flex"
-																						fill="none" viewBox="0 0 24 24"
-																						stroke="currentColor">
-																						<path stroke-linecap="round"
-																							stroke-linejoin="round"
-																							stroke-width="2"
-																							d="M9 5l7 7-7 7" />
-																					</svg>
-																				</button>
-																			</div>
-																		</div>
-
-																		<div class="w-full flex flex-wrap mb-3 -mx-1">
-																			<template x-for="(day, index) in DAYS"
-																				:key="index">
-																				<div style="width: 14.26%" class="px-1">
-																					<div x-text="day"
-																						class="text-gray-800 font-medium text-center text-xs">
-																					</div>
-																				</div>
-																			</template>
-																		</div>
-
-																		<div class="flex flex-wrap -mx-1">
-																			<template x-for="blankday in blankdays">
-																				<div style="width: 14.28%"
-																					class="text-center border p-1 border-transparent text-sm">
-																				</div>
-																			</template>
-																			<template
-																				x-for="(date, dateIndex) in no_of_days"
-																				:key="dateIndex">
-																				<div style="width: 14.28%">
-																					<div @click="getDateValue(date, false)"
-																						@mouseenter="getDateValue(date, true)"
-																						x-text="date"
-																						class="p-1 cursor-pointer text-center text-sm leading-none leading-loose transition ease-in-out duration-100"
-																						:class="{'font-bold': isToday(date) == true, 'bg-blue-800 text-white rounded-l-full': isDateFrom(date) == true, 'bg-blue-800 text-white rounded-r-full': isDateTo(date) == true, 'bg-blue-200': isInRange(date) == true }">
-																					</div>
-																				</div>
-																			</template>
-																		</div>
-
-																		<div class="flex items-center my-3 border border-gray-300 rounded-md bg-gray-200"
-																			:class="{'cursor-not-allowed': timePickerDisabled}">
-																			<div
-																				class="inline-flex items-center h-full px-2 py-1 rounded-l-md bg-white">
-																				<div class="flex flex-col items-center">
-																					<div class="relative">
-																						<input
-																							@click="showFromHourPicker=true"
-																							type="text" value="12"
-																							x-model="hourFromValue"
-																							:class="{'font-bold': showFromHourPicker == true, 'cursor-not-allowed': timePickerDisabled}"
-																							class="focus:outline-none w-6 text-center border-none p-0"
-																							readonly
-																							x-bind:disabled="timePickerDisabled" />
-																						<div class="absolute bg-white rounded-lg shadow p-2"
-																							x-show="showFromHourPicker"
-																							x-transition
-																							@click.outside="showFromHourPicker=false">
-																							<div
-																								:class="{'w-40': timeMode==24}">
-																								<template
-																									x-for="hour in hoursFrom"
-																									:key="hour.id">
-																									<div :style="timeMode==24 && { width: '16.666666%' }"
-																										@click="if (!hour.disabled) {getHour('from', hour.id);  showToHourPicker=false;}"
-																										x-text="hour.label"
-																										class="px-1 hover:bg-blue-200"
-																										:class="{'cursor-not-allowed opacity-25': hour.disabled, 'float-left': timeMode==24,  'clear-both': timeMode==24 && hour.id > 0 && hour.id % 6 === 0}"
-																										:disabled="hour.disabled">
-																									</div>
-																								</template>
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-																				<div class="inline-block px-1 h-full">:
-																				</div>
-																				<div class="relative">
-																					<input
-																						@click="showFromMinutePicker=true"
-																						type="text"
-																						x-model="minuteFromValue"
-																						:class="{'font-bold': showFromMinutePicker == true, 'cursor-not-allowed': timePickerDisabled}"
-																						class="focus:outline-none w-6 text-center border-none p-0"
-																						readonly
-																						x-bind:disabled="timePickerDisabled" />
-																					<div class="absolute top-7 bg-white rounded-lg shadow p-2"
-																						:class="{'-left-24': timeMode==24, '-left-12': timeMode==12 }"
-																						x-show="showFromMinutePicker"
-																						x-transition
-																						@click.outside="showFromMinutePicker=false">
-																						<div class="w-72">
-																							<template
-																								x-for="minute in minutesFrom"
-																								:key="minute.id">
-																								<div style="width: 10%"
-																									@click="if (!minute.disabled) { changeMinutesFrom(minute.label); }"
-																									x-text="minute.label"
-																									class="float-left px-1 hover:bg-blue-200"
-																									:class="{'cursor-not-allowed opacity-25': minute.disabled, 'clear-both': minute.id > 0 && minute.id % 10 === 0 }"
-																									:disabled="minute.disabled">
-																								</div>
-																							</template>
-																						</div>
-																					</div>
-																				</div>
-																				<template x-if="timeMode == 12">
-																					<select x-model="meridiemFrom"
-																						@change="changeMeridansFrom()"
-																						x-bind:disabled="timePickerDisabled"
-																						:class="{'cursor-not-allowed': timePickerDisabled}"
-																						class="focus:outline-none border-none p-0">
-																						<template
-																							x-for="meridiem in meridiemsFrom"
-																							:key="meridiem.id">
-																							<option
-																								:value="meridiem.value"
-																								x-text="meridiem.label"
-																								:disabled="meridiem.disabled"
-																								:selected="meridiem.selected">
-																							</option>
-																						</template>
-																					</select>
-																				</template>
-																			</div>
-																			<div class="inline-block px-2 h-full">to
-																			</div>
-																			<div
-																				class="inline-flex items-center h-full px-2 py-1 rounded-r-md bg-white">
-																				<div class="flex flex-col items-center">
-																					<div class="relative">
-																						<input
-																							@click="showToHourPicker=true"
-																							type="text" value="11"
-																							x-model="hourToValue"
-																							:class="{'font-bold': showToHourPicker == true, 'cursor-not-allowed': timePickerDisabled}"
-																							class="focus:outline-none w-6 text-center border-none p-0"
-																							readonly
-																							x-bind:disabled="timePickerDisabled" />
-																						<div class="absolute bg-white rounded-lg shadow p-2"
-																							x-show="showToHourPicker"
-																							x-transition
-																							@click.outside="showToHourPicker=false">
-																							<div
-																								:class="{'w-40': timeMode==24}">
-																								<template
-																									x-for="hour in hoursTo"
-																									:key="hour.id">
-																									<div :style="timeMode==24 && { width: '16.666666%' }"
-																										@click="if (!hour.disabled) {getHour('to', hour.id);  showToHourPicker=false;}"
-																										x-text="hour.label"
-																										class="px-1 hover:bg-blue-200"
-																										:class="{'cursor-not-allowed opacity-25': hour.disabled, 'float-left': timeMode==24,  'clear-both': timeMode==24 && hour.id > 0 && hour.id % 6 === 0}"
-																										:disabled="hour.disabled">
-																									</div>
-																								</template>
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-																				<div class="inline-block px-1 h-full">:
-																				</div>
-																				<div class="relative">
-																					<input
-																						@click="showToMinutePicker=true"
-																						type="text"
-																						x-model="minuteToValue"
-																						:class="{'font-bold': showToMinutePicker == true, 'cursor-not-allowed': timePickerDisabled}"
-																						class="focus:outline-none w-6 text-center border-none p-0"
-																						readonly
-																						x-bind:disabled="timePickerDisabled" />
-																					<div class="absolute top-7 -right-16 bg-white rounded-lg shadow p-2"
-																						x-show="showToMinutePicker"
-																						x-transition
-																						@click.outside="showToMinutePicker=false">
-																						<div class="w-72">
-																							<template
-																								x-for="minute in minutesTo"
-																								:key="minute.id">
-																								<div style="width: 10%"
-																									@click="if (!minute.disabled) { changeMinutesTo(minute.label); }"
-																									x-text="minute.label"
-																									class="float-left px-1 hover:bg-blue-200"
-																									:class="{'cursor-not-allowed opacity-25': minute.disabled, 'clear-both': minute.id > 0 && minute.id % 10 === 0 }"
-																									:disabled="minute.disabled">
-																								</div>
-																							</template>
-																						</div>
-																					</div>
-																				</div>
-																				<template x-if="timeMode == 12">
-																					<select x-model="meridiemTo"
-																						@change="changeMeridansTo()"
-																						x-bind:disabled="timePickerDisabled"
-																						:class="{'cursor-not-allowed': timePickerDisabled}"
-																						class="focus:outline-none border-none p-0">
-																						<template
-																							x-for="meridiem in meridiemsTo"
-																							:key="meridiem.id">
-																							<option
-																								:value="meridiem.value"
-																								x-text="meridiem.label"
-																								:disabled="meridiem.disabled"
-																								:selected="meridiem.selected">
-																							</option>
-																						</template>
-																					</select>
-																				</template>
-																			</div>
-																		</div>
-
-																		<div>
-																			<a @click="showDatepicker = false"
-																				class="px-2 py-1 border border-gray-300 hover:border-gray-500 rounded-md">
-																				Cancel
-																			</a>
-																			<a @click="outputDateValues(); showDatepicker = false"
-																				class="px-2 py-1 border border-blue-600 bg-blue-500 hover:bg-blue-300 text-white rounded-md">
-																				OK
-																			</a>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<span class="pop1" id="date" style="color: red;"></span>
-												<div id="msg" class="error"></div>
-												<!-- City -->
-
-												<!-- Owner Detail END -->
-												<!-- Button -->
-												<div class="text-end">
-													<a class="btn btn-primary mb-0" id="btn1">Add
-														listing</a>
-												</div>
-						</form>
+							<!-- tabs -->
+						</div>
+						<!-- Meta END -->
 					</div>
 				</div>
+				<!-- Title and button END -->
+
+				<!-- Collapse body START -->
+
+				<!-- Collapse body END -->
+
 			</div>
 		</section>
 		<!-- =======================
-Main content END -->
+Title and Tabs END -->
+
+		<!-- =======================
+Hotel grid START -->
+		<section class="pt-0">
+			<div class="container">
+				<div class="row g-4" id="Show" >
+
+					<!-- Card item START -->
+
+					<!-- Card item END -->
+
+					<!-- Card item START =======================================================================-->
+					
+					<!-- Card item END ======================================================================-->
+
+					<!-- Card item START -->
+					
+					<!-- Card item END -->
+
+				</div> <!-- Row END -->
+				<ul class="pagination" id="pageid"></ul>
+				<!-- Pagination -->
+			</div>
+		</section>
+		<!-- =======================
+Hotel grid END -->
 
 	</main>
 	<!-- **************** MAIN CONTENT END **************** -->
 
 	<!-- =======================
 Footer START -->
-	<footer class="bg-dark p-3">
+	<footer class="bg-dark pt-5">
 		<div class="container">
-			<div class="row align-items-center">
+			<!-- Row START -->
+			<div class="row g-4">
 
-				<!-- Widget -->
-				<div class="col-md-4">
-					<div class="text-center text-md-start mb-3 mb-md-0">
-						<a href="index.html"> <img class="h-30px" src="assets/images/logo-light.svg" alt="logo"> </a>
+				<!-- Widget 1 START -->
+				<div class="col-lg-3">
+					<!-- logo -->
+					<a href="index.html">
+						<img class="h-40px" src="assets/images/logo-light.svg" alt="logo">
+					</a>
+					<p class="my-3 text-muted">Departure defective arranging rapturous did believe him all had
+						supported.</p>
+					<p class="mb-2"><a href="#" class="text-muted text-primary-hover"><i
+								class="bi bi-telephone me-2"></i>+1234 568 963</a> </p>
+					<p class="mb-0"><a href="#" class="text-muted text-primary-hover"><i
+								class="bi bi-envelope me-2"></i>example@gmail.com</a></p>
+				</div>
+				<!-- Widget 1 END -->
+
+				<!-- Widget 2 START -->
+				<div class="col-lg-8 ms-auto">
+					<div class="row g-4">
+						<!-- Link block -->
+						<div class="col-6 col-md-3">
+							<h5 class="text-white mb-2 mb-md-4">Page</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="#">About us</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Contact us</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">News and Blog</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Meet a Team</a></li>
+							</ul>
+						</div>
+
+						<!-- Link block -->
+						<div class="col-6 col-md-3">
+							<h5 class="text-white mb-2 mb-md-4">Link</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign up</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign in</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Support</a></li>
+							</ul>
+						</div>
+
+						<!-- Link block -->
+						<div class="col-6 col-md-3">
+							<h5 class="text-white mb-2 mb-md-4">Global Site</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="#">India</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">California</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Indonesia</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Canada</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#">Malaysia</a></li>
+							</ul>
+						</div>
+
+						<!-- Link block -->
+						<div class="col-6 col-md-3">
+							<h5 class="text-white mb-2 mb-md-4">Booking</h5>
+							<ul class="nav flex-column text-primary-hover">
+								<li class="nav-item"><a class="nav-link text-muted" href="#"><i
+											class="fa-solid fa-hotel me-2"></i>Hotel</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#"><i
+											class="fa-solid fa-plane me-2"></i>Flight</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#"><i
+											class="fa-solid fa-globe-americas me-2"></i>Tour</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="#"><i
+											class="fa-solid fa-car me-2"></i>Cabs</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
+				<!-- Widget 2 END -->
 
-				<!-- Widget -->
-				<div class="col-md-4">
-					<div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a
-							href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
+			</div><!-- Row END -->
+
+			<!-- Tops Links -->
+			<div class="row mt-5">
+				<h5 class="mb-2 text-white">Top Links</h5>
+				<ul class="list-inline text-primary-hover lh-lg">
+					<li class="list-inline-item"><a href="#" class="text-muted">Flights</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Hotels</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Tours</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Cabs</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">About</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Contact us</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Blogs</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Services</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Detail page</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Services</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Policy</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Testimonials</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Newsletters</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Podcasts</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Protests</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">NewsCyber</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Education</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Sports</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Tech and Auto</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Opinion</a></li>
+					<li class="list-inline-item"><a href="#" class="text-muted">Share Market</a></li>
+				</ul>
+			</div>
+
+			<!-- Payment and card -->
+			<div class="row g-4 justify-content-between mt-0 mt-md-2">
+
+				<!-- Payment card -->
+				<div class="col-sm-7 col-md-6 col-lg-4">
+					<h5 class="text-white mb-2">Payment & Security</h5>
+					<ul class="list-inline mb-0 mt-3">
+						<li class="list-inline-item"> <a href="#"><img src="assets/images/element/paypal.svg"
+									class="h-30px" alt=""></a></li>
+						<li class="list-inline-item"> <a href="#"><img src="assets/images/element/visa.svg"
+									class="h-30px" alt=""></a></li>
+						<li class="list-inline-item"> <a href="#"><img src="assets/images/element/mastercard.svg"
+									class="h-30px" alt=""></a></li>
+						<li class="list-inline-item"> <a href="#"><img src="assets/images/element/expresscard.svg"
+									class="h-30px" alt=""></a></li>
+					</ul>
 				</div>
 
-				<!-- Widget -->
-				<div class="col-md-4">
-					<ul class="list-inline mb-0 text-center text-md-end">
-						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a>
-						</li>
-						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a>
-						</li>
-						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
-						</li>
-						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
+				<!-- Social media icon -->
+				<div class="col-sm-5 col-md-6 col-lg-3 text-sm-end">
+					<h5 class="text-white mb-2">Follow us on</h5>
+					<ul class="list-inline mb-0 mt-3">
+						<li class="list-inline-item"> <a class="btn btn-sm px-2 bg-facebook mb-0" href="#"><i
+									class="fab fa-fw fa-facebook-f"></i></a> </li>
+						<li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-instagram mb-0" href="#"><i
+									class="fab fa-fw fa-instagram"></i></a> </li>
+						<li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-twitter mb-0" href="#"><i
+									class="fab fa-fw fa-twitter"></i></a> </li>
+						<li class="list-inline-item"> <a class="btn btn-sm shadow px-2 bg-linkedin mb-0" href="#"><i
+									class="fab fa-fw fa-linkedin-in"></i></a> </li>
 					</ul>
+				</div>
+			</div>
+
+			<!-- Divider -->
+			<hr class="mt-4 mb-0">
+
+			<!-- Bottom footer -->
+			<div class="row">
+				<div class="container">
+					<div class="d-lg-flex justify-content-between align-items-center py-3 text-center text-lg-start">
+						<!-- copyright text -->
+						<div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a
+								href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
+						<!-- copyright links-->
+						<div class="nav mt-2 mt-lg-0">
+							<ul class="list-inline text-primary-hover mx-auto mb-0">
+								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Privacy
+										policy</a></li>
+								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Terms and
+										conditions</a></li>
+								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted pe-0"
+										href="#">Refund policy</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -910,28 +792,16 @@ Footer END -->
 	<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Vendors -->
-	<script src="assets/vendor/choices/js/choices.min.js"></script>
-	<script src="assets/vendor/dropzone/js/dropzone.js"></script>
-	<script src="assets/vendor/tiny-slider/tiny-slider.js"></script>
-	<script src="assets/vendor/glightbox/js/glightbox.js"></script>
-	<script src="assets/vendor/choices/js/choices.min.js"></script>
 	<script src="assets/vendor/flatpickr/js/flatpickr.min.js"></script>
-
+	<script src="assets/vendor/choices/js/choices.min.js"></script>
+	<script src="assets/vendor/tiny-slider/tiny-slider.js"></script>
+	<script src="assets/vendor/nouislider/nouislider.min.js"></script>
+	<script src="./js/jquery-3.7.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- ThemeFunctions -->
 	<script src="assets/js/functions.js"></script>
-	<script src="./js/jquery-3.7.0.min.js"></script>
-	<script src="./js/date.js"></script>
-	<script src="./js/insertAct.js">  </script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		textarea = document.querySelector("#content");
-		textarea.addEventListener('input', autoResize, false);
+	<script src="./js/selectAct.js"></script>
 
-		function autoResize() {
-			this.style.height = 'auto';
-			this.style.height = this.scrollHeight + 'px';
-		}
-	</script>
 </body>
 
 </html>

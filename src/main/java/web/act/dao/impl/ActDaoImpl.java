@@ -78,4 +78,13 @@ public class ActDaoImpl implements ActDAO {
                 .setParameter("memno", memno)
                 .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
     }
+
+    @Override
+    public List<Act> selectByactno(Integer actno) {
+        final String sql = "select * from ACT where ACT_NO= :actno order by ACT_NO"; //sql查詢寫法
+        return session
+                .createNativeQuery(sql, Act.class)
+                .setParameter("actno", actno)
+                .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
+    }
 }

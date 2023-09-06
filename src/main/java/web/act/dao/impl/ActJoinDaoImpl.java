@@ -39,6 +39,12 @@ public class ActJoinDaoImpl implements ActJoinDAO {
 
     @Override
     public Act_Join selectById(Integer id) {
+        return null;
+    }
+
+
+    @Override
+    public Act_Join selectByactid(Integer id) {
         return session.get(Act_Join.class, id);
     }
 
@@ -79,5 +85,16 @@ public class ActJoinDaoImpl implements ActJoinDAO {
                 .setParameter("memno", memno)
                 .executeUpdate();
     }
+
+    @Override
+    public List<Act_Join> selectBymember(Integer memid) {
+        final String sql = "select * from ACT_JOIN where MEM_NO= :memno order by ACT_NO"; //sql查詢寫法
+        return session
+                .createNativeQuery(sql, Act_Join.class)
+                .setParameter("memno", memid)
+                .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
+    }
+
+
 }
 
