@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded",function(){
                 <!-- Price -->
                 <div class="mt-3 mt-sm-0">
                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick=addplan(${data.pkgNo}) id="${data.pkgNo}">新增方案</a>    
-                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=edit(${data.pkgNo}) id="${data.pkgNo}">查看/修改</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=edit(${data.pkgNo}) id="${data.pkgNo}">查看行程/修改</a>    
                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick=editpic(${data.pkgNo}) id="${data.pkgNo}">查看/修改(圖片)</a>    
-                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=findplan(${data.pkgNo}) id="${data.pkgNo}">查看所有方案</a>    
+                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick=findplan(${data.pkgNo}) id="${data.pkgNo}">查看所有方案/新增方案明細</a>    
                 </div>                  
             </div>
         </div>
@@ -88,5 +88,5 @@ document.addEventListener("DOMContentLoaded",function(){
 	}
 	function findplan(pkgNo){
 		sessionStorage.setItem("pkgNo", pkgNo);
-		location = "";
+		location = "pkgplanlist.html";
 	}
