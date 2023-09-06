@@ -23,7 +23,7 @@ public class PkgPlanServiceImpl implements PkgPlanService{
 		dao.insert(pkgPlan);
 		pkgPlan.setMessage("新增成功");
 		pkgPlan.setSuccessful(true);
-		return null;
+		return pkgPlan;
 	}
 
 	@Override
