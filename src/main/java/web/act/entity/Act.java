@@ -26,6 +26,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor // 生成一個沒有參數的構造函數
 @AllArgsConstructor // 為類中的每個字段生成一個帶有 1 個參數的構造函數
 //@Table(name = "act")與資料庫同名不須再設定(不區分⼤⼩寫)
+
 public class Act extends Core {
     @Id //設定識別屬性。可在屬性或Setter/Getter前設定
     @GeneratedValue(strategy = GenerationType.IDENTITY) //設定識別值產⽣⽅式
@@ -53,6 +54,7 @@ public class Act extends Core {
     private Integer actstatus;
     @Column(updatable = false)
     private Double price;
+
 
 
 }

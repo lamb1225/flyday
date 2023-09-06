@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.act.dao.ActJoinDAO;
+import web.act.entity.Act;
 import web.act.entity.Act_Join;
 import web.act.service.JoinActService;
 
@@ -75,4 +76,21 @@ public class JoinActServiceImpl implements JoinActService {
     public boolean updatestatus(Act_Join actJoin) {
         return dao.update(actJoin) > 0;
     }
+
+    @Override
+    public List<Act_Join> memJoin(Integer memid) {
+        return dao.selectBymember(memid);
+    }
+
+    @Override
+    public Act_Join selectone(Integer actno, Integer memid) {
+        return dao.selectForJoin(actno, memid);
+    }
+
+    @Override
+    public Act ManyJoin(Integer id) {
+        return dao.selectByactid(id).getAct();
+    }
+
+
 }
