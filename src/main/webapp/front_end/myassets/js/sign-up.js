@@ -47,6 +47,7 @@ register.addEventListener("click", function(){
         }).then(function(jsonObject){
             const{successful, message} = jsonObject;
             if(successful){
+                alert(message);
                 location = "index.html";
             }else{
                 errMsg.textContent = message;
