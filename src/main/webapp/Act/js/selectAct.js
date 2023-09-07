@@ -4,25 +4,41 @@ let join;
 let reportdata = '';
 let Show = document.querySelector("#Show");
 var pageid = document.querySelector("#pageid");
+
+var img = document.querySelector(`imgpic`);
+
 window.addEventListener("load", function () {
 
     fetch(`select`)
-        .then(function (resp) {
-
-            return resp.json()
-        })
-        .then(function (data) {
+        .then(resp => resp.json())
+        .then(data => {
             act1 = data;
             pagination(act1, 1);
 
         })
-        .catch(function (error) {
+        .catch(error => {
             console.log(error);
         })
 
 })
+//pkgPicBase64
+// html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
+async function pic1(pic) {
+    html = '';
+    let resp = await fetch('/flyday/pkg/selectpkgno', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pkgNo: pic })
+    }) 
+      const data =resp.json(); 
+            // img.setAttribute("src", "data:image/jpeg;base64," + data.pkgPicBase64);
+            html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
+        
+    return html;
+}
+
 function showAct(act) {
-    pic1(act)
+
     let html = '';
     if (act.length == 0) {
         html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
@@ -31,13 +47,11 @@ function showAct(act) {
             
             html += `
             <div class="col-md-6 col-xl-4">
-            <div class="card shadow p-2 pb-0 h-100"id="img${acts.actno}">
+            <div class="card shadow p-2 pb-0 h-100"id="img">
             <!-- Image -->
+            <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image" id="imgpic">
             
-            <img src="data:image/png;base64,${pic1(acts.pkgno)}" class="rounded-2" alt="Card image">
-            
-
-                <!-- Card body START -->
+            <!-- Card body START -->
                 <div class="card-body px-3 pb-0">
                     <!-- Rating and cart -->
                     <div class="d-flex justify-content-between mb-3">
@@ -334,21 +348,8 @@ function pageBtn(page) {
 
     pageid.innerHTML = str;
 }
-function pic1(pic) {
-
-    let html = '';
-    fetch('/flyday/pkg/selectpkgno', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pkgno: pic.pkgno })
-    }).then(resp => resp.json())
-        .then(data => {
-            html = data.pkgPicBase64
-        })
-    return html;
 
 
-}
 function switchPage(e) {
     e.preventDefault();
     if (e.target.nodeName !== 'A') return;

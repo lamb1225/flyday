@@ -35,7 +35,7 @@ public class Rp_Group extends Core {
     private Timestamp rpgrouptimestamp;
     @Column(name = "EMP_NO",insertable = false)
     private Integer empno;
-    @Column(name = "RP_GROUP_DONE_TIME",insertable = false,updatable = false)
+    @Column(name = "RP_GROUP_DONE_TIME",insertable = false)
     private Timestamp rpgroupdonetime;
     @Column(name = "RP_GROUP_STATUS",insertable = false)
     private Integer rpgroupstatus;
