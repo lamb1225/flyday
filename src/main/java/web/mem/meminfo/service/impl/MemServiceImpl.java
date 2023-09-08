@@ -2,6 +2,8 @@ package web.mem.meminfo.service.impl;
 
 
 import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.Part;
 import javax.transaction.Transactional;
@@ -15,6 +17,7 @@ import redis.clients.jedis.Jedis;
 import web.mem.meminfo.dao.MemDao;
 import web.mem.meminfo.entity.Mem;
 import web.mem.meminfo.service.MemService;
+import web.mem.meminfo.util.MemComparator;
 
 @Service
 @Transactional
@@ -50,26 +53,6 @@ public class MemServiceImpl implements MemService {
 		}
 		
 		if(mem.getMemAccStatus() == 0) {
-			//寄驗證信
-			EmailSender emailSender = new EmailSender();
-			
-			String randomString = Base64.getEncoder().encodeToString((mem.getMemAcc() + System.currentTimeMillis()).getBytes());
-			String urlLink = randomString.substring(0,30);
-			
-			try(Jedis jedis = new Jedis();){
-				jedis.set(mem.getMemNo().toString(), urlLink);
-				jedis.expire(mem.getMemNo().toString(), 259200);
-			}
-			
-			String to = mem.getMemEmail();
-			String subject = "【Flyday】會員功能啟用信";
-			String messageText = "親愛的Flyday會員您好：" + "\n" 
-									+ "請點選以下連結完成會員功能啟用：\n\n" 
-									+ "http://localhost:8081/flyday/mem/activate?no=" + mem.getMemNo()
-									+ "&urlLink=" + urlLink + "\n\n此連結將於3天內失效";
-			
-			emailSender.sendMail(to, subject, messageText);
-			
 			mem.setMessage("帳號未啟用，請收驗證信啟用帳號");
 			mem.setSuccessful(false);
 			return mem;
@@ -116,6 +99,8 @@ public class MemServiceImpl implements MemService {
 			mem.setSuccessful(false);
 			return mem;
 		};
+		
+		mem = dao.selectByMemAcc(mem.getMemAcc());
 		mem.setMessage("註冊成功");
 		mem.setSuccessful(true);
 		return mem;
@@ -219,6 +204,55 @@ public class MemServiceImpl implements MemService {
 	public int activateAccStatus(Integer memNo) {
 		return dao.updateMemAccStatus(1, memNo);
 	}
-	
 
+	@Override
+	public List<Mem> listAllMems() {
+		return dao.selectAll();
+	}
+	
+	@Override
+	public List<Mem> listByAccStatus(Integer AccStatus) {
+		return dao.selectByAccStatus(AccStatus);
+	}
+
+	@Override
+	public List<Mem> listBySearch(String searchContent) {
+		List<Mem> memList; //最後要回傳的會員資料 
+		
+		List<Mem> memAccList = dao.selectByMemAccLike(searchContent);
+		memList = memAccList;	//將模糊查詢到的帳號資料加入回傳資料中
+		
+		List<Mem> memEmailList = dao.selectByMemEmailLike(searchContent);
+		x:
+		for(Mem memEmail : memEmailList) {	
+			for(Mem mem : memList) {	
+				if(memEmail.getMemNo() == mem.getMemNo()) {
+					continue x;
+				}
+			}
+			memList.add(memEmail);	//將模糊查詢到的手機資料去除重複值加入回傳資料中
+		}
+		
+		List<Mem> memMobileList = dao.selectByMemMobileLike(searchContent);
+		y:
+		for(Mem memMobile : memMobileList) {	
+			for(Mem mem : memList) {	
+				if(memMobile.getMemNo() == mem.getMemNo()) {
+					continue y;
+				}
+			}
+			memList.add(memMobile);	//將模糊查詢到的手機資料去除重複值加入回傳資料中
+		}	
+		
+		MemComparator memComparator = new MemComparator();
+		Collections.sort(memList,memComparator);	//將傳入的陣列資料重新依照會員編號進行排序
+		
+		return memList;
+	}
+
+	@Override
+	public int updateAllStatus(Integer memAccStatus, Integer memActStatus, Integer memNo) {
+		return dao.updateMemAccAndActStatus(memAccStatus, memActStatus, memNo);
+	}
+	
 }

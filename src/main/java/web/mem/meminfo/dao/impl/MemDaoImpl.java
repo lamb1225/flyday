@@ -115,6 +115,17 @@ public class MemDaoImpl implements MemDao {
 				.setParameter("memNo", memNo)
 				.executeUpdate();
 	}
+	
+	@Override
+	public int updateMemAccAndActStatus(Integer memAccStatus, Integer memActStatus, Integer memNo) {
+		final String hql = "UPDATE Mem SET memAccStatus = :memAccStatus, memActStatus = :memActStatus WHERE memNo = :memNo";
+		
+		return session.createQuery(hql)
+				.setParameter("memAccStatus", memAccStatus)
+				.setParameter("memActStatus", memActStatus)
+				.setParameter("memNo", memNo)
+				.executeUpdate();
+	}
 
 	@Override
 	public Mem selectByMemNo(Integer memNo) {
@@ -168,7 +179,124 @@ public class MemDaoImpl implements MemDao {
 
 	@Override
 	public List<Mem> selectAll() {
-		final String hql = "FROM mem ORDER BY id";
-		return session.createQuery(hql, Mem.class).getResultList();
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem ORDER BY id";
+		List<Mem> memList = session.createQuery(hql, Mem.class).getResultList();
+		for(Mem mem : memList) {
+			//把MemLevel的資料Join進來
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			//將圖片轉成base64字串存進物件中
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);
+			}	
+		}
+		
+		return memList;
 	}
+
+	@Override
+	public List<Mem> selectByAccStatus(Integer AccStatus) {
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memAccStatus = :memAccStatus ORDER BY id";
+		List<Mem> memList = session.createQuery(hql, Mem.class).setParameter("memAccStatus", AccStatus).getResultList();
+		
+		for(Mem mem : memList) {
+			//把MemLevel的資料Join進來
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			//將圖片轉成base64字串存進物件中
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);
+			}	
+		}
+		return memList;
+	}
+
+	@Override
+	public List<Mem> selectByMemAccLike(String searchContent) {
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, "
+				+ "memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, "
+				+ "memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memAcc LIKE "
+				+ "\'%" + searchContent + "%\'" + " ORDER BY id";
+		
+		List<Mem> memList = session.createQuery(hql, Mem.class).getResultList();
+		
+		for(Mem mem : memList) {
+			//把MemLevel的資料Join進來
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			//將圖片轉成base64字串存進物件中
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);
+			}	
+		}
+		return memList;
+	}
+	
+	@Override
+	public List<Mem> selectByMemEmailLike(String searchContent) {
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, "
+				+ "memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, "
+				+ "memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memEmail LIKE "
+				+ "\'%" + searchContent + "%\'" + " ORDER BY id";
+		
+		List<Mem> memList = session.createQuery(hql, Mem.class).getResultList();
+		
+		for(Mem mem : memList) {
+			//把MemLevel的資料Join進來
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			//將圖片轉成base64字串存進物件中
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);
+			}	
+		}
+		return memList;
+	}
+	
+	@Override
+	public List<Mem> selectByMemMobileLike(String searchContent) {
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, "
+				+ "memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, "
+				+ "memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memMobile LIKE "
+				+ "\'%" + searchContent + "%\'" + " ORDER BY id";
+		
+		List<Mem> memList = session.createQuery(hql, Mem.class).getResultList();
+		
+		for(Mem mem : memList) {
+			//把MemLevel的資料Join進來
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			//將圖片轉成base64字串存進物件中
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);
+			}	
+		}
+		return memList;
+	}
+	
 }
