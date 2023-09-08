@@ -32,9 +32,9 @@ public class PkgPlanDetailsDaoImpl implements PkgPlanDetailsDao{
 	@Override
 	public int update(PkgPlanDetails pkgPlanDetails) {
 		final String hql = "UPDATE PkgPlanDetails Set pkgDayStart = :pkgDayStart, pkgDayEnd = :pkgDayEnd, "
-						+ "pkgPeopleMax = :pkgPeopleMax, pkgPeople = :pkgPeople, pkgPrice = :pkgPrice WHERE pkgDetailsNo = :pkgDetailsNo";
+						+ "pkgPeopleMax = :pkgPeopleMax, pkgPrice = :pkgPrice WHERE pkgDetailsNo = :pkgDetailsNo";
 		return session.createQuery(hql).setParameter("pkgDayStart", pkgPlanDetails.getPkgDayStart()).setParameter("pkgDayEnd", pkgPlanDetails.getPkgDayEnd())
-				.setParameter("pkgPeopleMax", pkgPlanDetails.getPkgPeopleMax()).setParameter("pkgPeople", pkgPlanDetails.getPkgPeople())
+				.setParameter("pkgPeopleMax", pkgPlanDetails.getPkgPeopleMax())
 				.setParameter("pkgPrice", pkgPlanDetails.getPkgPrice()).setParameter("pkgDetailsNo", pkgPlanDetails.getPkgDetailsNo()).executeUpdate();
 	}
 

@@ -52,8 +52,7 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 			.append("storeEmail = :storeEmail,")
 			.append("storeReply = :storeReply,")
 			.append("storeReview = :storeReview,")
-			.append("storeNote = :storeNote,")
-			.append("storePic = :storePic ")			
+			.append("storeNote = :storeNote ")
 			.append("WHERE storeAcc = :storeAcc");
 		Query<?> query = session.createQuery(hql.toString());
 		if (storePwd != null && !storePwd.isEmpty()) {
@@ -67,7 +66,6 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 				.setParameter("storeReply", store.getStoreReply())
 				.setParameter("storeReview", store.getStoreReview())
 				.setParameter("storeNote", store.getStoreNote())
-				.setParameter("storePic", store.getStorePic())
 				.setParameter("storeAcc", store.getStoreAcc())
 				.executeUpdate();
 	}
@@ -115,6 +113,13 @@ public class StoreMemberDaoImpl implements StoreMemberDao {
 		final String hql = "UPDATE Store SET storePic = :storePic WHERE storeNo = :storeNo"; 
 		return session.createQuery(hql).setParameter("storePic", storePic)
 				.setParameter("storeNo", storeNo).executeUpdate();
+	}
+
+	@Override
+	public int updateReview(Store store) {
+		final String hql = "UPDATE Store SET storeReview = :storeReview WHERE storeNo = :storeNo";
+		return session.createQuery(hql).setParameter("storeReview", store.getStoreReview())
+				.setParameter("storeNo", store.getStoreNo()).executeUpdate();
 	}
 
 }

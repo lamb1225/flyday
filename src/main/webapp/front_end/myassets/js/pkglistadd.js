@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	}
 	function editpic(pkgNo){
 		sessionStorage.setItem("pkgNo", pkgNo);
-		location = "";
+		location = "pkgpicedit.html";
 	}
 	function findplan(pkgNo){
 		sessionStorage.setItem("pkgNo", pkgNo);

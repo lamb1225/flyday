@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", function(){
-	const planname = document.getElementById("planname");
+document.addEventListener("DOMContentLoaded",function(){
+    const planname = document.getElementById("planname");
 	const plannum = document.getElementById("plannum");
 	const pkgdeposit = document.getElementById("pkgdeposit");
 	const plancontent = document.getElementById("plancontent");
@@ -20,6 +20,21 @@ document.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	storename();
+
+    fetch("/flyday/pkgplan/selectpkgplanno",{
+        method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify({
+            pkgPlanNo: sessionStorage.getItem("pkgPlanNo")
+        })
+    }).then(function(resp){
+        return resp.json();
+    }).then(data =>{
+        planname.value = data.pkgPlanTitle;
+        plannum.value = data.pkgPlanNum;
+		pkgdeposit.value = data.pkgGroupMoney;
+		plancontent.value = data.pkgPlanContent;
+    })
 	
 	const check = /^[0-9]+$/;
 	
@@ -54,60 +69,28 @@ document.addEventListener("DOMContentLoaded", function(){
 			errmsg4.textContent="行程方案內容不能為空";
 		}
 	})
-	
-	
-	
-	bt.addEventListener("click", async function(){
+
+    bt.addEventListener("click", async function(){
 		errmsg.textContent="";
-		const response = await fetch("/flyday/pkgplan/add",{
+		fetch("/flyday/pkgplan/edit",{
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
+			    pkgPlanNo: sessionStorage.getItem("pkgPlanNo"),
 			    pkgNo: sessionStorage.getItem("pkgNo"),
 				pkgPlanTitle: planname.value,
 				pkgPlanNum: plannum.value,
 				pkgGroupMoney: pkgdeposit.value,
 				pkgPlanContent: plancontent.value,
 				pkgPlanReview: 0
-			 })
-		});
-		if (response.ok) {
-			const jsonObject = await response.json();
-			const { successful, message ,pkgPlanNo} = jsonObject;
-			if (successful) {
-				planname.value = "";
-				plannum.value = "";
-				pkgdeposit.value = "";
-				plancontent.value = "";
-				
-				
-				const pkgplanno = pkgPlanNo;
-				
-				const inpics = document.getElementById("pkgplanpics");
-				const onepic = inpics.querySelectorAll("img");
-				const onepicarray = Array.from(onepic);
-				const picarrry = [];
-				for(let pic of onepicarray){
-					const srcValue = pic.getAttribute("src");
-					picarrry.push(srcValue);
-				} ;
-				const uploadPromises = picarrry.map(async (element) => {
-					const picResponse = await fetch("/flyday/pkgplanpic/add", {
-						method: "POST",
-						headers: {"Content-Type": "application/json"},
-						body: JSON.stringify({
-							pkgPlanNo: pkgplanno,
-							pkgPlanImg: element
-						})
-					})
-					if (!picResponse.ok) {
-						throw new Error("上傳圖片時發生錯誤");
-					}
-				});
-				await Promise.all(uploadPromises);
-			}
-			errmsg.textContent = message;
-			window.location.href = "test-account-wishlist.html";
-		}
+			})
+		}).then(resp => resp.json())
+        .then(data => {
+            if(data.successful){
+                errmsg.textContent = data.message;
+			    window.location.href = "pkgplanlist.html";
+            }
+        })
+		
 	})
 })
