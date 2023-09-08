@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface ActDAO extends CoreDao<Act, Integer> {
     List<Act> selectBymember(Integer memid);
+    List<Act> selectByactno(Integer actno);
 }

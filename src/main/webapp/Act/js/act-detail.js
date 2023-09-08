@@ -3,12 +3,13 @@ let content = document.querySelector("#content");// p613
 let price1 = document.querySelector("#price");// p744
 let main1 = document.querySelector("#main");// p513
 let act = '';
+
 let mem = parseInt(sessionStorage.getItem('memno'));
 let id = sessionStorage.getItem('actno');
 let pop = '';
 let differ;
 $(() => {
-
+    sessionStorage.setItem('memno', 1);
 
     getAct(id);
 });
@@ -42,10 +43,10 @@ function getAct(id) {
 let mainbtn = (main) => {
     let html = '';
     if (mem === main.memno) {
-        
-     html += `<a class="btn btn-lg " id="edit">編輯資料</a>`;
+
+        html += `<a class="btn btn-lg " id="edit">編輯資料</a>`;
     }
- return main1.innerHTML = html;
+    return main1.innerHTML = html;
 }
 let showtitle = (titles) => {
     let html = '';
@@ -60,7 +61,7 @@ let showcontent = (contents) => {
     <p class="mb-3">${contents.actcontent}</b></p>`;
     return content.innerHTML = html;
 }
-$(document).on("click",`#edit`, () => {
+$(document).on("click", `#edit`, () => {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
@@ -76,8 +77,8 @@ $(document).on("click",`#edit`, () => {
         <label class="form-label act">揪團內容</label>
 		<textarea class="form-control" rows="5" id="content1">${act.actcontent}</textarea>`,
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
+        confirmButtonText: '確定修改',
+        cancelButtonText: '取消',
         reverseButtons: true
     }).then((result) => {
         const acttitle = document.querySelector(`#title1`).value;
@@ -138,9 +139,11 @@ let showprice = (prices) => {
     <p class="h6 fw-light mb-4"><i class="bi bi-arrow-right me-2"></i>剩餘人數:${number}</p>
 
     <!-- Button -->
-    <div class="d-grid" id="select">
-    <a class="btn btn-lg btn-primary-soft mb-0" id="join">加入揪團</a>
-    </div>
+    <div class="d-grid" id="select">`
+    if(mem !== prices.memno){
+    `<a class="btn btn-lg btn-primary-soft mb-0" id="join">加入揪團</a>`
+    }
+    `</div>
 </div>
 `;
 
