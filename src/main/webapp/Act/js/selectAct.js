@@ -1,37 +1,57 @@
 let mem = parseInt(sessionStorage.getItem("memno"));
 let act1 = {};
 let join;
+let reportdata = '';
 let Show = document.querySelector("#Show");
-const pageid = document.querySelector("#pageid");
+var pageid = document.querySelector("#pageid");
+
+var img = document.querySelector(`imgpic`);
+
 window.addEventListener("load", function () {
 
     fetch(`select`)
-        .then(function (resp) {
-
-            return resp.json()
-        })
-        .then(function (data) {
+        .then(resp => resp.json())
+        .then(data => {
             act1 = data;
             pagination(act1, 1);
+
         })
-        .catch(function (error) {
+        .catch(error => {
             console.log(error);
         })
 
 })
+//pkgPicBase64
+// html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
+async function pic1(pic) {
+    html = '';
+    let resp = await fetch('/flyday/pkg/selectpkgno', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pkgNo: pic })
+    }) 
+      const data =resp.json(); 
+            // img.setAttribute("src", "data:image/jpeg;base64," + data.pkgPicBase64);
+            html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
+        
+    return html;
+}
+
 function showAct(act) {
+
     let html = '';
     if (act.length == 0) {
         html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
     } else {
         $(act).each((i, acts) => {
+            
             html += `
             <div class="col-md-6 col-xl-4">
-            <div class="card shadow p-2 pb-0 h-100">
-                <!-- Image -->
-                <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image">
-
-                <!-- Card body START -->
+            <div class="card shadow p-2 pb-0 h-100"id="img">
+            <!-- Image -->
+            <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image" id="imgpic">
+            
+            <!-- Card body START -->
                 <div class="card-body px-3 pb-0">
                     <!-- Rating and cart -->
                     <div class="d-flex justify-content-between mb-3">
@@ -61,11 +81,10 @@ function showAct(act) {
                 html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
             class="bi bi-arrow-right ms-2"></i></a>`
             }
+
             html += `</div>
+            <a id="memid"onclick='report(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 repo"> 檢舉揪團</a>
                 </div>
-                
-                <!-- Card body END -->
-                <!-- Card footer START-->
             </div>
         </div>
                 `;
@@ -99,6 +118,80 @@ function onlook(actno) {
 function getContextPath() {
     return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
 }
+let report = (id) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        html: `<div class="col-md-6">
+        <label class="form-label">Nationality<span class="text-danger">*</span></label>
+        <select class="form-select js-choice" id="select1">
+            <option selected value="0">活動內容與標題不符</option>
+            <option value="1">言論違反善良風俗</option>
+            <option value="2">騷擾行為</option>
+            <option value="3">其他</option>
+        </select>
+    </div>
+    <div class="col-12">
+		<label class="form-label">檢舉內容</label>
+		<textarea class="form-control" id="reportmsg" rows="3" spellcheck="false">2119 N Division Ave, New Hampshire, York, United States</textarea>
+	</div>
+    `,
+        showCancelButton: true,
+        confirmButtonText: '送出!',
+        cancelButtonText: '取消',
+        reverseButtons: true
+    }).then((result) => {
+
+        const select1 = document.querySelector(`#select1`).value;
+        const reportmsg = document.querySelector(`#reportmsg`).value;
+
+        if (result.isConfirmed) {
+            fetch('report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    memno: mem,
+                    actno: id,
+                    rpgroupreason: select1,
+                    rpgroupcontent: reportmsg
+                })
+            })
+                .then(resp => resp.json())
+                .then(body => {
+                    const { successful } = body;
+                    if (successful) {
+                        Swal.fire({
+                            title: '已送出',
+                            icon: 'success'
+                        }).then(function () {
+                            location.reload();
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: '已取消',
+                            icon: 'error'
+                        })
+                    }
+                });
+
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                '已取消',
+            )
+        }
+    })
+}
 // function onReviseClick(id) {
 //     sessionStorage.setItem("actno", id);
 //     location.href = `${getContextPath()}/Act/reviseAct.html`;
@@ -106,7 +199,7 @@ function getContextPath() {
 function JoinActClick(id) {
     let differ = act.actmaxcount - act.actcurrentcount;
     let memid = mem;
-    if(differ === 0){
+    if (differ === 0) {
         Swal.fire({
             title: '揪團已滿',
             icon: 'error'
@@ -255,6 +348,8 @@ function pageBtn(page) {
 
     pageid.innerHTML = str;
 }
+
+
 function switchPage(e) {
     e.preventDefault();
     if (e.target.nodeName !== 'A') return;

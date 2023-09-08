@@ -1,6 +1,8 @@
 package web.act.controller.Group;
 
+import core.entity.Core;
 import core.util.CommonUtil;
+import web.act.entity.Act;
 import web.act.entity.Rp_Group;
 import web.act.service.GroupService;
 
@@ -13,8 +15,9 @@ import java.io.IOException;
 
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
-@WebServlet("/Act/report")
-public class addGroupServlet extends HttpServlet {
+
+@WebServlet("/Act/proces")
+public class ProcessingGroupServlet extends HttpServlet {
     private GroupService service;
 
     public void init() throws ServletException {
@@ -24,17 +27,14 @@ public class addGroupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Rp_Group group = json2Pojo(req, Rp_Group.class);
-
+        final Rp_Group group = json2Pojo(req, Rp_Group.class);
+        final Core core = new Core();
         if (group == null) {
-            group = new Rp_Group();
-            group.setMessage("無檢舉資訊");
-            group.setSuccessful(false);
-            writePojo2Json(resp, group);
-            return;
+            core.setMessage("無更新資訊");
+            core.setSuccessful(false);
+        }else {
+            core.setSuccessful(service.Processing(group));
         }
-        group = service.addGroup(group);
-
-        writePojo2Json(resp,group);
+        writePojo2Json(resp,core);
     }
 }

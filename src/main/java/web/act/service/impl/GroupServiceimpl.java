@@ -7,6 +7,8 @@ import web.act.dao.RpGroupDAO;
 import web.act.entity.Rp_Group;
 import web.act.service.GroupService;
 
+import java.util.List;
+
 @Service //Spring 設定為Service層Bean元件
 @Transactional
 public class GroupServiceimpl implements GroupService {
@@ -15,15 +17,14 @@ public class GroupServiceimpl implements GroupService {
     private RpGroupDAO dao;
 
 
-
     @Override
     public Rp_Group addGroup(Rp_Group group) {
-        if(group.getRpgroupcontent() == null){
+        if (group.getRpgroupcontent() == null) {
             group.setMessage("請輸入內容");
             group.setSuccessful(false);
             return group;
         }
-       final int result = dao.insert(group);
+        final int result = dao.insert(group);
         if (result < 1) {
             group.setMessage("建立失敗");
             group.setSuccessful(false);
@@ -32,5 +33,15 @@ public class GroupServiceimpl implements GroupService {
         group.setMessage("建立成功");
         group.setSuccessful(true);
         return group;
+    }
+
+    @Override
+    public List<Rp_Group> fillAll() {
+        return dao.selectAll();
+    }
+
+    @Override
+    public boolean Processing(Rp_Group group) {
+        return dao.update(group) > 0;
     }
 }

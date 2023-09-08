@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.mapping.ToOne;
+import web.pkg.pkgmanage.entity.Pkg;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -54,7 +56,6 @@ public class Act extends Core {
     private Integer actstatus;
     @Column(updatable = false)
     private Double price;
-
 
 
 }
