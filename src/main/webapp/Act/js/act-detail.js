@@ -2,6 +2,7 @@ let title = document.querySelector("#title"); // p506
 let content = document.querySelector("#content");// p613
 let price1 = document.querySelector("#price");// p744
 let main1 = document.querySelector("#main");// p513
+var picimg = document.querySelector("#picimg");// p532
 let act = '';
 
 let mem = parseInt(sessionStorage.getItem('memno'));
@@ -9,7 +10,8 @@ let id = sessionStorage.getItem('actno');
 let pop = '';
 let differ;
 $(() => {
-    sessionStorage.setItem('memno', 1);
+    sessionStorage.setItem('actno', 1);
+    
 
     getAct(id);
 });
@@ -34,10 +36,36 @@ function getAct(id) {
             showcontent(act);
             showprice(act);
             mainbtn(act);
+            console.log(act.pkgno);
+            fetch('/flyday/pkgpic/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pkgNo: act.pkgno })
+            })
+                .then(resp => resp.json())
+                .then(data => { pics(data) })
+
         })
         .catch(function (error) {
             console.log(error);
         })
+
+}
+var pics = (pic) => {
+    var html = '';
+    $(pic).each((i, datas) => {
+        html += `<div class="col-md-6">
+                        <a data-glightbox data-gallery="gallery" href="${datas.pkgImg}">
+                            <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" style="background-image:url(${datas.pkgImg}); background-position: center left; background-size: cover;">
+                                <!-- Card hover element -->
+                                <div class="hover-element position-absolute w-100 h-100">
+                                    <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>`
+    })
+    return picimg.innerHTML = html;
 
 }
 let mainbtn = (main) => {
@@ -140,15 +168,33 @@ let showprice = (prices) => {
 
     <!-- Button -->
     <div class="d-grid" id="select">`
-    if(mem !== prices.memno){
-    `<a class="btn btn-lg btn-primary-soft mb-0" id="join">加入揪團</a>`
+    if (mem !== parseInt(prices.memno)) {
+        html += `<a class="btn btn-lg btn-primary-soft mb-0" id="join">加入揪團</a>`
     }
-    `</div>
+    html += `<a class="btn btn-lg btn-primary-soft mb-0" id="Pay">前往付款</a>
+    </div>
 </div>
 `;
 
     return price1.innerHTML = html;
 }
+$(document).on('click', `#Pay`, () => {
+    fetch('ECPay', {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({
+            TotalAmount: act.price,
+            TradeDesc: "揪團付費",
+            ItemName: act.acttitle,
+            CustomField1: "actno"
+        })
+    }).then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+            window.open(data);
+            // newWin.document.body.innerHTML = data;
+        })
+})
 $(document).on('click', `#join`, () => {
     let memid = mem;
     let id = act.actno;

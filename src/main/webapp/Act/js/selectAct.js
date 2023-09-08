@@ -4,7 +4,7 @@ let join;
 let reportdata = '';
 let Show = document.querySelector("#Show");
 var pageid = document.querySelector("#pageid");
-
+var htmlpic;
 var img = document.querySelector(`imgpic`);
 
 window.addEventListener("load", function () {
@@ -29,28 +29,29 @@ async function pic1(pic) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pkgNo: pic })
-    }) 
-      const data =resp.json(); 
-            // img.setAttribute("src", "data:image/jpeg;base64," + data.pkgPicBase64);
-            html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
-        
-    return html;
-}
+    })
+    const data = await resp.json();
+    // img.setAttribute("src", "data:image/jpeg;base64," + data.pkgPicBase64);
+    // html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
 
-function showAct(act) {
+
+    return data.pkgPicBase64;
+}
+{/* <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image" id="imgpic"></img> */ }
+async function showAct(act) {
 
     let html = '';
     if (act.length == 0) {
         html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
     } else {
-        $(act).each((i, acts) => {
-            
+        // $(act).each(async (i, acts) => {
+        for (let acts of act) {
+            const imgshow = await pic1(acts.pkgno)
             html += `
             <div class="col-md-6 col-xl-4">
             <div class="card shadow p-2 pb-0 h-100"id="img">
             <!-- Image -->
-            <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image" id="imgpic">
-            
+            <img src="data:image/jpeg;base64,${imgshow}" class="rounded-2" alt="Card image">
             <!-- Card body START -->
                 <div class="card-body px-3 pb-0">
                     <!-- Rating and cart -->
@@ -89,7 +90,7 @@ function showAct(act) {
         </div>
                 `;
 
-        });
+        };
 
     }
     Show.innerHTML = html;
