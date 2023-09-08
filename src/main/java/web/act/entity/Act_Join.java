@@ -32,7 +32,7 @@ public class Act_Join extends Core {
     private Timestamp jointime;
     @Column(name = "JOIN_STATUS", insertable = false)
     private Integer joinstatus;
-    @Column(updatable = false)
+    @Column(insertable = false)
     private Integer Payment;
     @ManyToOne
     @JoinColumn(name = "ACT_NO", insertable = false, updatable = false)

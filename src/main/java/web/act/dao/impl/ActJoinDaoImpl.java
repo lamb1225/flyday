@@ -1,6 +1,7 @@
 package web.act.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import web.act.dao.ActJoinDAO;
 import web.act.entity.Act_Join;
@@ -27,13 +28,35 @@ public class ActJoinDaoImpl implements ActJoinDAO {
 
     @Override
     public int update(Act_Join actJoin) {
-        final String sql = "update ACT_JOIN set JOIN_STATUS = JOIN_STATUS + :status   where ACT_NO = :actno and MEM_NO = :memno";
-        return session
-                .createNativeQuery(sql, Act_Join.class)
-                .setParameter("status", actJoin.getJoinstatus())
-                .setParameter("actno", actJoin.getActno())
-                .setParameter("memno", actJoin.getMemno())
-                .executeUpdate();//查詢多筆getResultList();、單筆uniqueResult();
+
+        final StringBuilder hql = new StringBuilder().append("UPDATE Act_Join SET ");
+        final Integer status = actJoin.getJoinstatus();
+        final Integer payment = actJoin.getPayment();
+        if (status != null) {
+            hql.append("joinstatus = :joinstatus ");
+        }
+        if (payment != null) {
+            hql.append("payment = :payment ");
+        }
+        hql.append("WHERE actno = :actno and memno = :memno");
+        Query<?> query = session.createQuery(hql.toString());
+        if (status != null) {
+            query.setParameter("joinstatus",status);
+        }
+        if (payment != null) {
+            query.setParameter("payment",payment);
+        }
+        return query
+                .setParameter("actno",actJoin.getActno())
+                .setParameter("memno",actJoin.getMemno())
+                .executeUpdate();
+//        final String sql = "update ACT_JOIN set JOIN_STATUS = JOIN_STATUS + :status   where ACT_NO = :actno and MEM_NO = :memno";
+//        return session
+//                .createNativeQuery(sql, Act_Join.class)
+//                .setParameter("status", actJoin.getJoinstatus())
+//                .setParameter("actno", actJoin.getActno())
+//                .setParameter("memno", actJoin.getMemno())
+//                .executeUpdate();
 
     }
 
