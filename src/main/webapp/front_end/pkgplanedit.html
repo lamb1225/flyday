@@ -217,8 +217,8 @@ Page Banner START -->
 			<div class="container">
 				<div class="row">
 					<div class="col-12 text-center">
-						<h1 class="fs-2 mb-2">新增方案時間</h1>
-						<p class="mb-0">創建新方案時間</p>
+						<h1 class="fs-2 mb-2">修改方案</h1>
+						<p class="mb-0">修改方案</p>
 						<br>
 					</div>
 				</div>
@@ -253,43 +253,38 @@ Steps START -->
 
 								<!-- 集合地點 -->
 								<div class="col-12">
-									<label class="form-label">行程開始時間</label>
-									<input id="start" type="text" class="form-control flatpickr" value="29 Aug 2023" placeholder="Enter date of birth" data-date-format="Y-m-d">
-									
-									<small>請填寫行程開始時間</small>
+									<label class="form-label">方案標題</label>
+									<input class="form-control" type="text" id="planname">
+									<small>請填寫方案標題</small><div id="errMsg1" class="error text-danger"></div>
 								</div>
 								<!-- 行程地點 -->
 								<div class="col-12">
-									<label class="form-label">行程報名截止時間</label>
-									<input id="endtime" type="text" class="form-control flatpickr" value="29 Aug 2032" placeholder="Enter date of birth" data-date-format="Y-m-d">
-									<small>請填寫行程報名截止時間</small>
+									<label class="form-label">方案所需人數</label>
+									<input class="form-control" type="text" id="plannum">
+									<small>請填寫方案所需人數</small><div id="errMsg2" class="error text-danger"></div>
 								</div>
 
 								<!-- 行程地址 -->
 								<div class="col-12">
-									<label class="form-label">人數上限</label>
-									<input class="form-control" type="text" id="maxnum">
-									<small>請填寫人數上限</small>
+									<label class="form-label">行程訂金</label>
+									<input class="form-control" type="text" id="pkgdeposit">
+									<small>請填寫行程訂金(如果不開放揪團請填0)</small><div id="errMsg3" class="error text-danger"></div>
 								</div>
 
-                                <!-- 價格 -->
+								
+
+								
+
+								<!-- Short description -->
 								<div class="col-12">
-									<label class="form-label">價格</label>
-									<input class="form-control" type="text" id="price">
-									<small>請填寫價格</small>
+									<label class="form-label">方案內容</label>
+									<textarea class="form-control" rows="5" placeholder="方案內容" id="plancontent"></textarea>
+									<div id="errMsg4" class="error text-danger"></div>
 								</div>
-	
-							
+
 								
 							</div>
-							
 						</div>
-						<div id="newplandetails">
-						</div>
-						<div class="col-12">
-							<a class="btn btn-sm btn-primary-soft mb-0" id="add-details"><i class="bi bi-plus-circle me-2"></i>新增時間</a>
-						</div>
-								
 						<!-- Card body END -->
 					</div>
 					<!-- Listing category END -->
@@ -297,8 +292,7 @@ Steps START -->
 					
 
 					
-					
-					
+					<!-- Upload image END -->
 
 					<!-- Step 1 button -->
 					<div class="text-end">
@@ -373,8 +367,8 @@ Footer END -->
 
 	<!-- ThemeFunctions -->
 	<script src="assets/js/functions.js"></script>
-
-	<script src="myassets/js/pkgplandetailsadd.js"></script>
+	
+	<script src="myassets/js/pkgplanedit.js"></script>
 
 </body>
 

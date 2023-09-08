@@ -29,9 +29,6 @@ public class RemoveServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException {
 		final Integer pkgplanpicno = json2Pojo(request, PkgPlanPic.class).getPkgPlanPicNo();
-		final Core core = new Core();
-		
-		core.setSuccessful(service.remove(pkgplanpicno));
-		writePojo2Json(response, core);
+		service.remove(pkgplanpicno);
 	}
 }

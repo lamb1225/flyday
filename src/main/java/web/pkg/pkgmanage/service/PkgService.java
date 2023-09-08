@@ -15,4 +15,7 @@ public interface PkgService {
 	
 	Pkg select(Integer pkgNo);
 	
+	Pkg editReview(Pkg pkg);
+	
+	Pkg editComment(Pkg pkg);
 }

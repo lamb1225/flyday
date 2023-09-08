@@ -1,7 +1,16 @@
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
+
+	const storePics = document.getElementsByClassName("store-pic");
+	function storename(){
+	        document.getElementById("storename1").textContent = sessionStorage.getItem("storeName");
+	        for(let storePic of storePics){
+        			const picBase64Url = sessionStorage.getItem("storePicBase64");
+        			storePic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+      			}
+	}
+	
+	storename();
+
 	const imgpic = document.getElementById("imgpic");
 	const name = document.getElementById("pkgname")
 	const group = document.getElementById("pkggroup")
