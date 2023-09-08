@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class MemServiceImpl implements MemService {
 	public Mem login(Mem mem) {
 
 		final String memAcc = mem.getMemAcc();
-		final String memPwd = mem.getMemPwd();
+		final String memPwd = DigestUtils.sha256Hex(mem.getMemPwd());
 		
 		if(memAcc == null || memAcc.trim().isEmpty()) {
 			mem.setMessage("帳號未輸入");
@@ -93,6 +94,8 @@ public class MemServiceImpl implements MemService {
 		mem.setMemAccStatus(0);
 		mem.setMemLevelNo(1);
 		mem.setMemActStatus(0);
+		String memPwdSha256 = DigestUtils.sha256Hex(mem.getMemPwd());
+		mem.setMemPwd(memPwdSha256);
 		
 		if(dao.insert(mem) < 1) {
 			mem.setMessage("註冊失敗，請聯絡管理員");

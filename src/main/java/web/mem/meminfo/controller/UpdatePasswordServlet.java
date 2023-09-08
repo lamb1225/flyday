@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -28,7 +29,7 @@ public class UpdatePasswordServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String memPwd = req.getParameter("newMemPwd");
+		String memPwd = DigestUtils.sha256Hex(req.getParameter("newMemPwd"));
 		Integer memNo = Integer.valueOf(req.getParameter("memNo"));
 		
 		String errMsg = "";

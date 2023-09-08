@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -48,6 +49,15 @@ public class ForgetPasswordServlet extends HttpServlet{
 				mem.setMessage("此電子信箱不存在");
 				mem.setSuccessful(false);
 			}else {
+				mem.setMessage("驗證信已發送");
+				mem.setSuccessful(true);
+				
+				Gson gson = new Gson();
+				resp.setContentType("application/json");
+				try(PrintWriter pw = resp.getWriter();){
+					pw.print(gson.toJson(mem));	
+				}
+				
 				try(Jedis jedis = new Jedis("localhost", 6379);){
 					
 					req.getSession().setAttribute("memAcc", mem.getMemAcc());
@@ -85,17 +95,7 @@ public class ForgetPasswordServlet extends HttpServlet{
 					emailSender.sendMail(to, subject, messageText);
 					
 				}
-				
-				mem.setMessage("驗證信已發送");
-				mem.setSuccessful(true);
 			}
-
-			Gson gson = new Gson();
-			resp.setContentType("application/json");
-			try(PrintWriter pw = resp.getWriter();){
-				pw.print(gson.toJson(mem));	
-			}
-			
 		}
 		
 		if("resetPassword".equals(action)) {
@@ -129,7 +129,7 @@ public class ForgetPasswordServlet extends HttpServlet{
 		
 		
 		if("updatePassword".equals(action)) {
-			String newMemPwd = (String) req.getParameter("newMemPwd");
+			String newMemPwd = DigestUtils.sha256Hex((String) req.getParameter("newMemPwd"));
 			Integer memNo = (Integer)req.getSession().getAttribute("memNo");
 			
 			Mem mem = new Mem();
