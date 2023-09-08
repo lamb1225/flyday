@@ -26,10 +26,7 @@ public class EditServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-		final HttpSession session = request.getSession();
-		final Integer pkgno = ((PkgPlan)session.getAttribute("pkgPlan")).getPkgNo();
 		PkgPlan pkgPlan = json2Pojo(request, PkgPlan.class);
-		pkgPlan.setPkgNo(pkgno);
 		writePojo2Json(response, service.edit(pkgPlan));
 	}
 }

@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", function(){
+
+	const storePics = document.getElementsByClassName("store-pic");
+    function storename() {
+        document.getElementById("storename1").textContent = sessionStorage.getItem("storeName");
+        for (let storePic of storePics) {
+            const picBase64Url = sessionStorage.getItem("storePicBase64");
+            storePic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url);
+        }
+    }
+
+    storename();
 	
 	const newplandetails = document.getElementById("newplandetails");
 	const addbt = document.getElementById("add-details");
@@ -93,5 +104,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			})
 		});
 		await Promise.all(uploadPromises);
+		window.location.href = "pkgplanlist.html";
+		
 	})
 })

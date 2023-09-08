@@ -48,4 +48,20 @@ public class PkgServiceImpl implements PkgService{
 		return dao.selectByPkgNo(pkgNo);
 	}
 
+	@Override
+	public Pkg editReview(Pkg pkg) {
+		final int result = dao.updateReview(pkg);
+		pkg.setSuccessful(result > 0);
+		pkg.setMessage(result > 0 ? "修改成功" : "修改失敗");
+		return pkg;
+	}
+
+	@Override
+	public Pkg editComment(Pkg pkg) {
+		final int result = dao.updateComment(pkg);
+		pkg.setSuccessful(result > 0);
+		pkg.setMessage(result > 0 ? "修改成功" : "修改失敗");
+		return pkg;
+	}
+
 }

@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick="adddetails(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">新增明細</a>
                                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick="edit(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看方案/修改</a>
                                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick="editpic(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看/修改(圖片)</a>
-                                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick="findplan(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看所有明細</a>
+                                    <a class="btn btn-sm btn-dark w-100 mb-0" onclick="findplandetails(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看所有明細</a>
                                 </div>
                             </div>
                         </div>
@@ -68,17 +68,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 function edit(pkgPlanNo){
     sessionStorage.setItem("pkgPlanNo", pkgPlanNo);
-    location = "";
+    location = "pkgplanedit.html";
 }
 function adddetails(pkgPlanNo){
     sessionStorage.setItem("pkgPlanNo", pkgPlanNo);
-    location = "pkgplandetailsass.html";
+    location = "pkgplandetailsadd.html";
 }
 function editpic(pkgPlanNo){
     sessionStorage.setItem("pkgPlanNo", pkgPlanNo);
-    location = "";
+    location = "pkgplanpicedit.html";
 }
-function findplan(pkgPlanNo){
+function findplandetails(pkgPlanNo){
     sessionStorage.setItem("pkgPlanNo", pkgPlanNo);
-    location = "";
+    location = "plandetailslist.html";
 }
