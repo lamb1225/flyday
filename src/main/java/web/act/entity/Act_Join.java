@@ -22,6 +22,12 @@ import java.util.Objects;
 @AllArgsConstructor
 @IdClass(Act_JoinID.class)
 public class Act_Join extends Core {
+    public Act_Join(Integer actno, Integer memno, Integer payment) {
+        this.actno = actno;
+        this.memno = memno;
+        Payment = payment;
+    }
+
     @Id
     @Column(name = "ACT_NO")
     private Integer actno;

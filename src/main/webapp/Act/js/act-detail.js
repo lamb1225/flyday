@@ -11,7 +11,7 @@ let pop = '';
 let differ;
 $(() => {
     sessionStorage.setItem('actno', 1);
-    
+
 
     getAct(id);
 });
@@ -186,12 +186,15 @@ $(document).on('click', `#Pay`, () => {
             TotalAmount: act.price,
             TradeDesc: "揪團付費",
             ItemName: act.acttitle,
-            CustomField1: "actno"
+            CustomField1: act.actno,
+            CustomField2: mem,
+            CustomField3: 1,
         })
     }).then(resp => resp.json())
         .then(data => {
             console.log(data);
             window.open(data);
+            // var newWin = window.open('/Act/ECPayform.html');
             // newWin.document.body.innerHTML = data;
         })
 })
