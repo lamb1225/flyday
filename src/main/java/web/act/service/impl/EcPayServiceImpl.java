@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static web.act.controller.ECPayServlet.SERVER_URL;
+
 
 public class EcPayServiceImpl implements EcPayService {
-    public String ecpayCheckout(AioCheckOutALL aioCheckOutALL, String returnURL) {
+    public String ecpayCheckout(AioCheckOutALL aioCheckOutALL, String reurl) {
         Date tradeDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String tracdeDatestr = sdf.format(tradeDate);
@@ -19,8 +21,9 @@ public class EcPayServiceImpl implements EcPayService {
         AllInOne all = new AllInOne("");
         aioCheckOutALL.setMerchantTradeNo(uuid);
         aioCheckOutALL.setMerchantTradeDate(tracdeDatestr);
-        aioCheckOutALL.setReturnURL(returnURL);
+        aioCheckOutALL.setReturnURL(reurl);
         aioCheckOutALL.setNeedExtraPaidInfo("N");
+//        aioCheckOutALL.getCustomField1();
         String form = all.aioCheckOut(aioCheckOutALL, null);
         return form;
     }
