@@ -22,6 +22,8 @@ public interface MemDao {
 	
 	int updateMemAccStatus(Integer memAccStatus, Integer memNo);
 	
+	int updateMemAccAndActStatus(Integer memAccStatus, Integer memActStatus, Integer memNo);
+	
 	Mem selectByMemNo(Integer memNo);
 	
 	Mem selectByMemAcc(String memAcc);
@@ -33,5 +35,13 @@ public interface MemDao {
 	Mem selectAccAndPwd(String memAcc, String memPwd);
 	
 	List<Mem> selectAll();
+	
+	List<Mem> selectByAccStatus(Integer AccStatus);
+	
+	List<Mem> selectByMemAccLike(String searchContent);
+	
+	List<Mem> selectByMemEmailLike(String searchContent);
+	
+	List<Mem> selectByMemMobileLike(String searchContent);
 	
 }
