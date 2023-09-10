@@ -9,8 +9,10 @@ public interface EmpService {
 	
 	Emp register(Emp emp);
 
-
 	int deleteEmp(Integer empno);
+
+	Emp update(Emp emp);
+
 
 	
 }

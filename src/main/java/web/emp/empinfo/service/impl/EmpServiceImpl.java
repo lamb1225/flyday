@@ -4,18 +4,19 @@ package web.emp.empinfo.service.impl;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import web.emp.empinfo.dao.EmpDao;
 import web.emp.empinfo.entity.Emp;
 import web.emp.empinfo.service.EmpService;
-//import web.mem.meminfo.entity.Mem;
 
 @Service
 @Transactional
 public class EmpServiceImpl implements EmpService {
 	
 	@Autowired
+	@Qualifier("empDaoImpl")
 	private EmpDao dao;
 	
 	@Override
@@ -86,27 +87,30 @@ public class EmpServiceImpl implements EmpService {
     }
 
 	//修改
-//	@Override
-//	public Mem updatePersonalInfo(Mem mem) {
-//		
-//		if(dao.selectByMemMobile(mem.getMemMobile()) != null 
-//				&& dao.selectByMemMobile(mem.getMemMobile()).getMemNo() !=  mem.getMemNo() ) {
-//			mem.setMessage("手機號碼重複");
-//			mem.setSuccessful(false);
-//			return mem;
-//		}
-//		
-//		if(dao.updateMemInfo(mem) < 1) {
-//			mem.setMessage("變更失敗，請聯絡管理員");
-//			mem.setSuccessful(false);
-//			return mem;
-//		}
-//		
-//		mem.setMessage("修改成功");
-//		mem.setSuccessful(true);
-//		return mem;
-//		
-//	}
+	@Override
+	public Emp update(Emp emp) {
+		
+		if(this.dao == null) {
+		    System.out.println("DAO is null!");
+		}
+		
+		if(this.dao != null) {
+		    System.out.println(this.dao);
+		}
+		
+		if(this.dao.update(emp) < 1) {
+			emp.setMessage("變更失敗，請聯絡管理員");
+			emp.setSuccessful(false);
+			return emp;
+		}
+		
+		
+
+		emp.setMessage("修改成功");
+		emp.setSuccessful(true);
+		return emp;
+		
+	}
 	
 	
 	//新增照片

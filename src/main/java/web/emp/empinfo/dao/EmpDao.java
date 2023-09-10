@@ -24,5 +24,6 @@ public interface EmpDao {
 	Emp selectByEmpAcc(String empAcc);
 	
 	List<Emp> selectAll();
+
 	
 }
