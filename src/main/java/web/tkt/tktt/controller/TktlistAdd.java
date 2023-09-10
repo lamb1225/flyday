@@ -21,7 +21,6 @@ import web.tkt.tktt.service.impl.TktServiceImpl;
 public class TktlistAdd extends HttpServlet{
 	
 	public static final TktService service = new TktServiceImpl();
-	public static final TktDAO dao = new TktDAOImpl();
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
