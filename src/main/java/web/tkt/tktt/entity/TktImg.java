@@ -6,7 +6,7 @@ import java.util.List;
 public class TktImg extends TktCore{
 	private Integer tktimgno;
     private Integer tktno;
-    private List<byte[]> tktimg;
+    private byte[] tktimg;
     private List<String> tktimgBase64;
     
 	
@@ -16,13 +16,17 @@ public class TktImg extends TktCore{
 				+ tktimgBase64 + "]";
 	}
 
-	public TktImg(Integer tktimgno, Integer tktno, List<byte[]> tktimg, List<String> tktimgBase64) {
+
+
+	public TktImg(Integer tktimgno, Integer tktno, byte[] tktimg, List<String> tktimgBase64) {
 		super();
 		this.tktimgno = tktimgno;
 		this.tktno = tktno;
 		this.tktimg = tktimg;
 		this.tktimgBase64 = tktimgBase64;
 	}
+
+
 
 	public TktImg(){
 		super();
@@ -44,11 +48,11 @@ public class TktImg extends TktCore{
 		this.tktno = tktno;
 	}
 
-	public List<byte[]> getTktimg() {
+	public byte[] getTktimg() {
 		return tktimg;
 	}
 
-	public void setTktimg(List<byte[]> tktimg) {
+	public void setTktimg(byte[] tktimg) {
 		this.tktimg = tktimg;
 	}
 

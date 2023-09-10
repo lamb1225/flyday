@@ -2,6 +2,7 @@ package web.tkt.tktt.service;
 
 import java.util.List;
 
+import web.tkt.tktt.entity.PlanType;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
@@ -18,5 +19,9 @@ public interface TktService {
 	TktImg addtktimg(TktImg tktimg);
 
 	List<Tkt> findAll();
+	
+	List<TktImg> findAllImg();
+	
+	List<PlanType> findAllPlayType(Integer tktno);
 
 }

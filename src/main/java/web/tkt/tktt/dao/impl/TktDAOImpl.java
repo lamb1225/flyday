@@ -14,6 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import web.tkt.tktt.dao.TktDAO;
+import web.tkt.tktt.entity.PlanType;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktPlan;
@@ -65,10 +66,26 @@ public class TktDAOImpl implements TktDAO{
 	// 單筆查詢SQL
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME FROM tkt WHERE TKT_NO = ?";
-	// 多筆查詢SQL
+	// 多筆查詢(Tkt)SQL
 	private static final String getAll_STMT = 
 			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_STAT,TKT_SORT FROM tkt ORDER BY TKT_NO";
-	
+	// 多筆查詢(圖片)SQL
+		private static final String getAllImg_STMT = 
+			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img ORDER BY TKT_IMG_NO";
+	// 多筆查詢SQL(join圖片)
+		private static final String getAllPlanType_STMT =
+	        "SELECT " +
+	        "tp.TKT_NO, tp.TKT_PLAN_NO, tp.PLAN_NAME, tp.SOLD_AMOUNT, tp.PLAN_STAT, " +
+	        "tt.TKT_TYPE_NO, tt.TKT_TYPE, tt.PRICE " +
+	        "FROM " +
+	        "tkt_plan tp " +
+	        "JOIN " +
+	        "tkt_type tt ON tp.TKT_PLAN_NO = tt.TKT_PLAN_NO " +
+	        "WHERE " +
+	        "tp.TKT_NO = ? " +
+	        "ORDER BY " +
+	        "tp.TKT_PLAN_NO, tt.TKT_TYPE_NO";
+		
 	// 新增商品
 	@Override
 	public void insertTkt(Tkt tkt) {
@@ -257,8 +274,6 @@ public class TktDAOImpl implements TktDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 
@@ -290,11 +305,10 @@ public class TktDAOImpl implements TktDAO{
 			e.printStackTrace();
 		}
 		return tkt;
-
 	}
 	
 
-	// 多筆查詢
+	// 多筆查詢(票券管理List)
 	@Override
 	public List<Tkt> getAll() {
 		List<Tkt> list = new ArrayList<Tkt>();
@@ -304,7 +318,7 @@ public class TktDAOImpl implements TktDAO{
 				PreparedStatement pstmt = con.prepareStatement(getAll_STMT);){
 		
 //		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(findAll_STMT);){
+//				PreparedStatement pstmt = con.prepareStatement(getAll_STMT);){
 			
 			
 			try(ResultSet rs = pstmt.executeQuery();){
@@ -328,7 +342,85 @@ public class TktDAOImpl implements TktDAO{
 		}
 		return list;
 	}
+	
+	
+	// 多筆查詢(圖片)
+		@Override
+		public List<TktImg> getAllImg() {
+			List<TktImg> imgList = new ArrayList<TktImg>();
+			TktImg tktimg = null;
 
+			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+					PreparedStatement pstmt = con.prepareStatement(getAllImg_STMT);){
+			
+//			try (	Connection con = ds.getConnection();
+//					PreparedStatement pstmt = con.prepareStatement(getAllImg_STMT);){
+				
+				
+				try(ResultSet rs = pstmt.executeQuery();){
+					while (rs.next()) {
+						tktimg = new TktImg();
+						tktimg.setTktimgno(rs.getInt("TKT_IMG_NO"));
+						tktimg.setTktno(rs.getInt("TKT_NO"));
+						
+						byte[] img = rs.getBytes("TKT_IMG");
+						String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
+						tktimg.setTktimgBase64(new ArrayList<>());
+						tktimg.getTktimgBase64().add(tktimgBase64);
+						System.out.println(tktimgBase64);
+						
+						imgList.add(tktimg); 
+					}
+				}
+				
+				System.out.println("查詢成功");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return imgList;
+		}
+
+		// 多筆查詢(該票券編號的方案&票種)
+		@Override
+		public List<PlanType> getAllPlanType(Integer tktno) {
+			
+			List<PlanType> list = new ArrayList<PlanType>();
+			PlanType planType = null;
+
+			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+					PreparedStatement pstmt = con.prepareStatement(getAllPlanType_STMT);){
+			
+//			try (	Connection con = ds.getConnection();
+//					PreparedStatement pstmt = con.prepareStatement(getAllPlanType_STMT);){
+				
+				pstmt.setInt(1, tktno);
+				
+				try(ResultSet rs = pstmt.executeQuery();){
+					while (rs.next()) {
+						planType = new PlanType();
+						planType.setTktno(rs.getInt("TKT_NO"));
+						planType.setTktplanno(rs.getInt("TKT_PLAN_NO"));
+						planType.setPlanname(rs.getString("PLAN_NAME"));
+						planType.setSoldamount(rs.getInt("SOLD_AMOUNT"));
+						planType.setPlanstat(rs.getInt("PLAN_STAT"));						
+						planType.setTkttypeno(rs.getInt("TKT_TYPE_NO"));
+						planType.setTkttype(rs.getString("TKT_TYPE"));
+						planType.setPrice(rs.getInt("PRICE"));
+	
+						list.add(planType); 
+					}
+				}
+				
+				System.out.println("查詢成功");
+				System.out.println("list="+list);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return list;
+
+		}
 
 
 
