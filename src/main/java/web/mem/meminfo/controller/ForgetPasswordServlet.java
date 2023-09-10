@@ -52,16 +52,17 @@ public class ForgetPasswordServlet extends HttpServlet{
 				mem.setMessage("驗證信已發送");
 				mem.setSuccessful(true);
 				
-				Gson gson = new Gson();
-				resp.setContentType("application/json");
-				try(PrintWriter pw = resp.getWriter();){
-					pw.print(gson.toJson(mem));	
-				}
 				
 				try(Jedis jedis = new Jedis("localhost", 6379);){
 					
 					req.getSession().setAttribute("memAcc", mem.getMemAcc());
 					req.getSession().setAttribute("memNo", mem.getMemNo());
+					
+					Gson gson = new Gson();
+					resp.setContentType("application/json");
+					try(PrintWriter pw = resp.getWriter();){
+						pw.print(gson.toJson(mem));	
+					}
 					
 					String verifiedNumber = String.valueOf((int)(Math.random()*1000000)+1);
 					switch (verifiedNumber.length()) {
