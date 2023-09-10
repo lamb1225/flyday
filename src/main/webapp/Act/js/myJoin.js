@@ -4,7 +4,7 @@ let acts = '';
 let join = '';
 let id = sessionStorage.getItem("memno");
 window.addEventListener("load", () => {
-    
+
     getAct(id);
 
 })
@@ -70,22 +70,24 @@ function showmem(data) {
 
                         <div class="col-md-4">
                             <span>審核狀態</span>`
-                            switch (acts.joinstatus) {
-                                case 0:
-                                    html += `<h6 class="mb-0">待審核</h6>`;
-                                    break;
-                                case 1:
-                                    html +=`<h6 class="mb-0">審核通過</h6 >`;
-                                    break;
-                                case 2:
-                                    html +=`<h6 class="mb-0">審核不通過</h6 >`;
-                                    break;
-                                case 3:
-                                    html +=`<h6 class="mb-0">取消</h6 >`;
-                                    break;
-                            }
-                
-                    html+=`</div>
+            switch (acts.joinstatus) {
+                case 0:
+                    html += `<h6 class="mb-0">待審核</h6>`;
+                    break;
+                case 1:
+                    html += `<h6 class="mb-0">審核通過</h6 >`;
+                    break;
+                case 2:
+                    html += `<h6 class="mb-0">審核不通過</h6 >`;
+                    break;
+                case 3:
+                    html += `<h6 class="mb-0">取消</h6 >`;
+                    break;
+            }
+
+            
+
+            html += ` </div>
                     </div>
                 </div>
             `;

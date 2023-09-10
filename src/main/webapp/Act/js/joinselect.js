@@ -100,8 +100,18 @@ async function showjoin() {
                     html += `<span>取消</span>`;
                     break;
             }
+
             html += ` </div>
-                </div>
+            <label class="form-label">付款狀態: </label>`
+            switch (joins.Payment) {
+                case 0:
+                    html += `<span>未付款</span>`;
+                    break;
+                case 1:
+                    html += `<span>已付款</span>`;
+                    break;
+            }
+            html += `</div>
 
                 <!-- Birth day -->
                 <div>
@@ -120,6 +130,9 @@ async function showjoin() {
                         break;
                 }
             }
+            if (memid === joins.memno && joins.joinstatus === 1 && joins.Payment === 0) {
+                html += `<a class="btn btn-lg btn-primary-soft mb-0" id="Pay">前往付款</a>`
+            }
             html += ` </form>
                         </div>`;
 
@@ -133,12 +146,30 @@ async function showjoin() {
         </div>`;
         }
 
-       
+
 
     }
     return showm.innerHTML = html;
 }
-    
+$(document).on('click', `#Pay`, () => {
+    fetch('ECPay', {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({
+            TotalAmount: acts.price,
+            TradeDesc: "揪團付費",
+            ItemName: acts.acttitle,
+            CustomField1: acts.actno,
+            CustomField2: memid,
+            CustomField3: 1,
+        })
+    }).then(resp => resp.json())
+        .then(data => {
+            var newWindow = window.open();
+            newWindow.document.write(data); // 插入表單 HTML 內容
+            newWindow.document.close();
+        })
+})
 function onRemoveClick(actid, memid) {
 
     fetch('removejoin', {

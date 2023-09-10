@@ -171,33 +171,13 @@ let showprice = (prices) => {
     if (mem !== parseInt(prices.memno)) {
         html += `<a class="btn btn-lg btn-primary-soft mb-0" id="join">加入揪團</a>`
     }
-    html += `<a class="btn btn-lg btn-primary-soft mb-0" id="Pay">前往付款</a>
-    </div>
+    html += `</div>
 </div>
 `;
 
     return price1.innerHTML = html;
 }
-$(document).on('click', `#Pay`, () => {
-    fetch('ECPay', {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({
-            TotalAmount: act.price,
-            TradeDesc: "揪團付費",
-            ItemName: act.acttitle,
-            CustomField1: act.actno,
-            CustomField2: mem,
-            CustomField3: 1,
-        })
-    }).then(resp => resp.json())
-        .then(data => {
-            console.log(data);
-            window.open(data);
-            // var newWin = window.open('/Act/ECPayform.html');
-            // newWin.document.body.innerHTML = data;
-        })
-})
+
 $(document).on('click', `#join`, () => {
     let memid = mem;
     let id = act.actno;

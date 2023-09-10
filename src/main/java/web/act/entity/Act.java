@@ -56,6 +56,8 @@ public class Act extends Core {
     private Integer actstatus;
     @Column(updatable = false)
     private Double price;
+    @Column(insertable = false)
+    private Integer payment;
 
 
 }
