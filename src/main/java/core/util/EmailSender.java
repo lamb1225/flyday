@@ -24,7 +24,7 @@ public class EmailSender {
 			props.put("mail.smtp.port", "465");
 
 			final String myGmail = "cha102group1@gmail.com";
-			final String myGmail_password = "jrkmugzmrstecrfs";
+			final String myGmail_password = "";
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(myGmail, myGmail_password);
