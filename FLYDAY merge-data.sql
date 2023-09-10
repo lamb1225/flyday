@@ -20,7 +20,7 @@ create table MEM (
 	MEM_NO int primary key not null auto_increment,
     MEM_LEVEL_NO int default 1 not null,
     MEM_ACC varchar(12) not null unique,
-    MEM_PWD varchar(12) not null,
+    MEM_PWD varchar(64) not null,
     MEM_ACC_STATUS tinyint default 0 not null,
     MEM_NAME varchar(20),
     MEM_GENDER tinyint default 0 ,
@@ -38,17 +38,17 @@ create table MEM (
 
 insert into MEM (MEM_LEVEL_NO, MEM_ACC , MEM_PWD, MEM_ACC_STATUS, MEM_NAME, MEM_GENDER, MEM_BDAY, MEM_EMAIL, MEM_MOBILE, MEM_CITY, MEM_DIST, MEM_ADDR, MEM_ACT_STATUS)
 values
-(1, "testacc01", "testpwd01", 0, "Peter Wu", 1, "1988-12-12", "testacc01@gmail.com", "0911223456", "桃園市", "中壢區", "復興路46號9樓", 0),
-(2, "testacc02", "testpwd02", 1, "William Lee", 0, "1994-11-20", "testacc02@gmail.com", "0923551225", "澎湖縣", "馬公市", "安宅里1-40號", 1),
-(3, "testacc03", "testpwd03", 2, "Ronald Liu", 0, "1978-02-19", "testacc03@gmail.com", "0919325883", "高雄市", "苓雅區", "三多一路289號", 0),
-(4, "testacc04", "testpwd04", 1, "王曉明", 2, "1963-12-08", "testacc04@gmail.com", "0967221332", "花蓮縣", "壽豐鄉", "志學村志學新邨184號", 0),
-(1, "testacc05", "testpwd05", 1, "蔡陰魂", 1, "1956-08-31", "darksoul.gov@gmail.com", "0912345678", "臺北市", "中正區", "重慶南路一段122號", 0),
-(1, "testacc06", "testpwd06", 1, "韓國偷", 1, "1957-06-17", "koreasteal@gmail.com", "0933558133", "高雄市", "那瑪夏區", "秀嶺巷87號", 1),
-(3, "testacc07", "testpwd07", 2, "王4間", 1, "1950-01-01", "fullhouse@gmail.com", "0922512835", "臺北市", "中山區", "長春路107號", 0),
-(2, "testacc08", "testpwd08", 1, "高甲魚", 1, "1980-10-17", "dontsingfish@gmail.com", "0973827155", "臺北市", "內湖區", "民權東路六段423號", 1),
-(2, "testacc09", "testpwd09", 1, "Ellie Wang", 1, "2000-02-16", "testacc09@gmail.com", "0938838848", "臺中市", "大甲區", "順天路158號", 0),
-(1, "testacc10", "testpwd10", 0, "Anderson Peng", 1, "1988-12-12", "testacc10@gmail.com", "0979217375", "澎湖縣", "白沙鄉", "目斗嶼1號", 0),
-(4, "testacc11", "testpwd11", 0, "Ken-Yuan Kan", 1, "1993-12-13", "410122037@gms.ndhu.edu.tw", "0919319702", "桃園市", "蘆竹區", "外社里草子崎路二鄰199巷92弄14號", 0);
+(1, "testacc01", "92c22c6a826cbcf2d946be9cc0e48fa49db80d5bd8b60677acddcf9e4b660031", 0, "Peter Wu", 1, "1988-12-12", "testacc01@gmail.com", "0911223456", "桃園市", "中壢區", "復興路46號9樓", 0),	-- 測試密碼testpwd01
+(2, "testacc02", "26bf9b805931f1fe7151c5484f94447536c6da6ac02dd2f95e2e17ffad620df9", 1, "William Lee", 0, "1994-11-20", "testacc02@gmail.com", "0923551225", "澎湖縣", "馬公市", "安宅里1-40號", 1), -- 測試密碼testpwd02
+(3, "testacc03", "a5603e56d20c85b9a72eb5b4d6261ef1ccf9255ea12c87a605214cfc10cff89f", 2, "Ronald Liu", 0, "1978-02-19", "testacc03@gmail.com", "0919325883", "高雄市", "苓雅區", "三多一路289號", 0), -- 測試密碼testpwd03
+(4, "testacc04", "6ed85ee34095f1e868b028d79fe30046915aef8a5666f7151dd7f8f1ddd2a39c", 1, "王曉明", 2, "1963-12-08", "testacc04@gmail.com", "0967221332", "花蓮縣", "壽豐鄉", "志學村志學新邨184號", 0), -- 測試密碼testpwd04
+(1, "testacc05", "e5579090ec5508197c2700406fa215cc29c64abeecbbf7b256af2d78d1dcd5db", 1, "蔡陰魂", 1, "1956-08-31", "darksoul.gov@gmail.com", "0912345678", "臺北市", "中正區", "重慶南路一段122號", 0), -- 測試密碼testpwd05
+(1, "testacc06", "74900ba56c2a7bc8b98f7c616565807831d364bfcff02be45e0b6423f34be021", 1, "韓國偷", 1, "1957-06-17", "koreasteal@gmail.com", "0933558133", "高雄市", "那瑪夏區", "秀嶺巷87號", 1), -- 測試密碼testpwd06
+(3, "testacc07", "9ab2688d7bdfc5e1d5593198d1c69adf3c5d35fb4502cdbe77cf21ad271d5966", 2, "王4間", 1, "1950-01-01", "fullhouse@gmail.com", "0922512835", "臺北市", "中山區", "長春路107號", 0), -- 測試密碼testpwd07
+(2, "testacc08", "e64b10b2eec2e5381a499830e370f564983b0a4d7653dd186980ae9ae83814fd", 1, "高甲魚", 1, "1980-10-17", "dontsingfish@gmail.com", "0973827155", "臺北市", "內湖區", "民權東路六段423號", 1), -- 測試密碼testpwd08
+(2, "testacc09", "b356b77e0010ecc2b9c978aeb5cf6642fb24f71aea07e9aecdc6c112dff280f8", 1, "Ellie Wang", 1, "2000-02-16", "testacc09@gmail.com", "0938838848", "臺中市", "大甲區", "順天路158號", 0), -- 測試密碼testpwd09
+(1, "testacc10", "e469477c36e718e1fbdfe0b9eff8cc05cf7eaad73c1abf18702fa0cc49ad4e1b", 0, "Anderson Peng", 1, "1988-12-12", "testacc10@gmail.com", "0979217375", "澎湖縣", "白沙鄉", "目斗嶼1號", 0), -- 測試密碼testpwd10
+(4, "testacc11", "568ea9b696a005880da0ea334fbb43decb136b5a6f25eb04821378737dc0d635", 0, "Ken-Yuan Kan", 1, "1993-12-13", "410122037@gms.ndhu.edu.tw", "0919319702", "桃園市", "蘆竹區", "外社里草子崎路二鄰199巷92弄14號", 0); -- 測試密碼testpwd11
 
 -- 2.廠商 -------------
 
