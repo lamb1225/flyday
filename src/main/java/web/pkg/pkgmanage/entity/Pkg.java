@@ -2,18 +2,14 @@ package web.pkg.pkgmanage.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import core.entity.Core;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import web.act.entity.Act;
 
 @Entity
 @Setter
@@ -66,4 +62,5 @@ public class Pkg extends Core{
 	
 	@Transient
 	private String pkgPicBase64;
+
 }

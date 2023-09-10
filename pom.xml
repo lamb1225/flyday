@@ -53,6 +53,10 @@
 					<groupId>javax.servlet.jsp</groupId>
 					<artifactId>jsp-api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -135,9 +139,12 @@
 		    <artifactId>commons-codec</artifactId>
 		    <version>1.15</version>
 		</dependency>
-		
+		<dependency>
+		    <groupId>com.opencsv</groupId>
+		    <artifactId>opencsv</artifactId>
+		    <version>5.7.1</version>
+		</dependency>
 				
-			
 	</dependencies>
 	<build>
 		<finalName>hibernate-exercise</finalName>

@@ -25,7 +25,7 @@ public class SelectPkgNoServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-		final Integer pkgplanno = json2Pojo(request, PkgPlan.class).getPkgPlanNo();
-		writePojo2Json(response, service.findall(pkgplanno));
+		final Integer pkgno = json2Pojo(request, PkgPlan.class).getPkgNo();
+		writePojo2Json(response, service.findall(pkgno));
 	}
 }

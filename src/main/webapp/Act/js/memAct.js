@@ -1,8 +1,8 @@
 const tab = document.querySelector("#tabsw");
 const pageid = document.querySelector("#pageid");
 let acts = {};
+let id = parseInt(sessionStorage.getItem("memno"));
 window.addEventListener("load", () => {
-    let id = 2;
     getAct(id);
 
 })

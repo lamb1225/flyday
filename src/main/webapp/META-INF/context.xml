@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
+<!--<!DOCTYPE xml>-->
 <Context>
 
 <!-- 	//預設使用Tomcat的連線池DBCP -->

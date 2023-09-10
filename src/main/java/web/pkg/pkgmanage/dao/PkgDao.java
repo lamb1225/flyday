@@ -9,4 +9,8 @@ public interface PkgDao extends CoreDao<Pkg, Integer>{
 	Pkg selectByPkgNo(Integer pkgNo);
 	
 	List<Pkg> selectByStoreNo(Integer storeNo); 
+	
+	int updateReview(Pkg pkg);
+	
+	int updateComment(Pkg pkg);
 }

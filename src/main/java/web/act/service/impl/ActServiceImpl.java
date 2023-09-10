@@ -8,6 +8,7 @@ import web.act.dao.ActDAO;
 import web.act.entity.Act;
 import web.act.service.ActService;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service //Spring 設定為Service層Bean元件
@@ -25,6 +26,8 @@ public class ActServiceImpl implements ActService {
 
     @Override
     public Act createAct(Act act) { //商業邏輯判斷是否為
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+
         if (act.getActtitle() == null) {
             act.setMessage("請輸入標題");
             act.setSuccessful(false);
@@ -64,6 +67,12 @@ public class ActServiceImpl implements ActService {
             act.setSuccessful(false);
             return act;
         }
+        if (act.getActjoinbegin().before(time)) {
+            act.setMessage("開始時間不譨早於現在時間");
+            act.setSuccessful(false);
+            return act;
+        }
+
 //        act.setMemno(2);
 //        act.setPkgno(2);
         final int result = dao.insert(act);
@@ -94,6 +103,15 @@ public class ActServiceImpl implements ActService {
 
     @Override
     public boolean revise(Act act) {
+//        Integer count = act.getActcurrentcount();
+//        Integer max = act.getActmaxcount();
+//        int differ = max - count;
+//        if (differ == 0) {
+//            act.setMessage("揪團已滿");
+//            act.setSuccessful(false);
+//            return false;
+//        }
+
         return dao.update(act) > 0;
     }
 
@@ -101,5 +119,10 @@ public class ActServiceImpl implements ActService {
     public List<Act> memAct(Integer memid) {
 
         return dao.selectBymember(memid);
+    }
+
+    @Override
+    public List<Act> selectActno(Integer actno) {
+        return dao.selectByactno(actno);
     }
 }

@@ -37,8 +37,7 @@ public class PKgDaoImpl implements PkgDao{
 		final String hql = "UPDATE Pkg SET pkgName = :pkgName, pkgGroup = :pkgGroup, pkgGather = :pkgGather, "
 						+ "pkgPlace = :pkgPlace, pkgAddress = :pkgAddress, pkgLatitude = :pkgLatitude, "
 						+ "pkgLongitude = :pkgLongitude, pkgSort = :pkgSort, pkgContent = :pkgContent, "
-						+ "pkgNotice = :pkgNotice, pkgReview = :pkgReview, pkgStartdate = :pkgStartdate, "
-						+ "pkgNotReason = :pkgNotReason, pkgRatetotal = :pkgRatetotal, pkgCommentNum = :pkgCommentNum, "
+						+ "pkgNotice = :pkgNotice, "
 						+ "pkgRefpolicy = :pkgRefpolicy, pkgOnePic = :pkgOnePic WHERE pkgNo = :pkgNo";
 		Query<?> query = session.createQuery(hql);
 		
@@ -48,9 +47,7 @@ public class PKgDaoImpl implements PkgDao{
 				.setParameter("pkgAddress", pkg.getPkgAddress()).setParameter("pkgLatitude", pkg.getPkgLatitude())
 				.setParameter("pkgLongitude", pkg.getPkgLongitude()).setParameter("pkgSort", pkg.getPkgSort())
 				.setParameter("pkgContent", pkg.getPkgContent()).setParameter("pkgNotice", pkg.getPkgNotice())
-				.setParameter("pkgReview", pkg.getPkgReview()).setParameter("pkgStartdate", pkg.getPkgStartdate())
-				.setParameter("pkgNotReason", pkg.getPkgNotReason()).setParameter("pkgRatetotal", pkg.getPkgRatetotal())
-				.setParameter("pkgCommentNum", pkg.getPkgCommentNum()).setParameter("pkgRefpolicy", pkg.getPkgRefpolicy())
+				.setParameter("pkgRefpolicy", pkg.getPkgRefpolicy())
 				.setParameter("pkgOnePic", pkg.getPkgOnePic()).setParameter("pkgNo", pkg.getPkgNo())
 				.executeUpdate();
 	}
@@ -112,6 +109,20 @@ public class PKgDaoImpl implements PkgDao{
 			}
 		}
 		return pkgs ;
+	}
+
+	@Override
+	public int updateReview(Pkg pkg) {
+		final String hql = "UPDATE Pkg SET pkgReview = :pkgReview WHERE pkgNo = :pkgNo";
+		return session.createQuery(hql).setParameter("pkgReview", pkg.getPkgReview())
+				.setParameter("pkgNo", pkg.getPkgNo()).executeUpdate();
+	}
+
+	@Override
+	public int updateComment(Pkg pkg) {
+		final String hql = "UPDATE Pkg SET pkgRatetotal = :pkgRatetotal, pkgCommentNum = :pkgCommentNum WHERE pkgNo = :pkgNo";
+		return session.createQuery(hql).setParameter("pkgRatetotal", pkg.getPkgRatetotal())
+				.setParameter("pkgCommentNum", pkg.getPkgCommentNum()).executeUpdate();
 	}
 
 }

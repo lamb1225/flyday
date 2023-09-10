@@ -1,5 +1,5 @@
 (() => {
-   
+
     const btn = document.querySelector('#btn1');
     const title = document.querySelector('#title');
     const content = document.querySelector('#content');
@@ -36,7 +36,8 @@
     min.addEventListener("blur", () => {
         // console.log(max.value);
         // console.log(min.value);
-        if (min.value == '' || min.value < 2 || max.value < min.value) {
+        if (min.value == '' || parseInt(min.value) < 2 || parseInt(max.value) < parseInt(min.value)) {
+            console.log(max.value < min.value);
             span[3].textContent = '請填寫最少人數並且不得小於2和大於最多人數';
         } else {
             span[3].textContent = '';
@@ -63,7 +64,8 @@
         } else {
             span[2].textContent = '';
         }
-        if (min.value == '' || min.value < 2 || max.value < min.value) {
+        if (min.value == '' || parseInt(min.value) < 2 || parseInt(max.value) < parseInt(min.value)) {
+
             span[3].textContent = '請填寫最少人數並且不得小於2和大於最多人數';
             return 0;
         }
@@ -71,7 +73,12 @@
             date.textContent = '日期不得為空值';
             return 0;
         }
-
+        let from2 = new Date(from1.value);
+        let date1 = new Date();
+        if (from2 < date1) {
+            date.textContent = '開始時間不譨早於現在時間';
+            return 0;
+        }
         insert();
     });
 
@@ -85,7 +92,7 @@ function insert() {
     fetch('create', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             memno: memid,
@@ -96,7 +103,7 @@ function insert() {
             actmincount: min.value,
             actjoinbegin: new Date(from1.value),
             actjoinend: new Date(to1.value),
-            price: price,
+            price: price
         }),
     })
         .then(resp => resp.json())
@@ -105,13 +112,24 @@ function insert() {
             if (successful) {
                 msg.className = 'info';
                 msg.textContent = '創建成功';
-                setTimeout(location.href=`${getContextPath()}/Act/selectAct.html`, 1000);
+                Swal.fire({
+                    title: '新增成功',
+                    icon: 'success'
+                }).then(function () {
+                    location.href = `${getContextPath()}/Act/hotel-detail.html`;
+                })
+
             } else {
                 msg.className = 'error';
                 msg.textContent = '創建失敗';
+                Swal.fire({
+                    title: '新增失敗',
+                    icon: 'error'
+                })
             }
         });
 }
 function getContextPath() {
     return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
 }
+

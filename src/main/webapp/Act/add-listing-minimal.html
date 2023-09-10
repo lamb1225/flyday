@@ -553,9 +553,9 @@ Main content START -->
 														<div>
 															<span
 																class="font-bold my-1 text-gray-700 block">請選擇報名開始與結束日期</span>
-															<input class="act" type="text" id="from1" name="date_from"
+															<input class="act" type="hidden" id="from1" name="date_from"
 																x-model="dateFromYmdHis">
-															<input type="text" id="to1" name="date_to"
+															<input type="hidden" id="to1" name="date_to"
 																x-model="dateToYmdHis"
 																class="mt-2 sm:mt-0 ml-0 sm:ml-2 act">
 															<label for="timemode"
@@ -922,6 +922,7 @@ Footer END -->
 	<script src="./js/jquery-3.7.0.min.js"></script>
 	<script src="./js/date.js"></script>
 	<script src="./js/insertAct.js">  </script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 		textarea = document.querySelector("#content");
 		textarea.addEventListener('input', autoResize, false);
