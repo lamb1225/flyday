@@ -12,5 +12,6 @@ public interface ActService {
     List<Act> selectAll();
     boolean revise(Act act);
     List<Act> memAct(Integer memid);
+    List<Act> selectActno(Integer actno);
 
 }

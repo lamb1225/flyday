@@ -12,5 +12,7 @@ public interface PkgPlanService {
 	List<PkgPlan> findall(Integer pkgNo); //單一行程的全部方案
 	
 	PkgPlan select(Integer pkgPlanNo);
+	
+	PkgPlan editPlanReview(PkgPlan pkgPlan);
 
 }

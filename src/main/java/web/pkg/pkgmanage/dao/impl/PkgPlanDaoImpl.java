@@ -32,12 +32,12 @@ public class PkgPlanDaoImpl implements PkgPlanDao{
 	@Override
 	public int update(PkgPlan pkgPlan) {
 		final String hql = "UPDATE PkgPlan SET pkgPlanTitle = :pkgPlanTitle, pkgPlanNum = :pkgPlanNum, "
-						+ "pkgGroupMoney = :pkgGroupMoney, pkgPlanReview = :pkgPlanReview, pkgPlanContent = :pkgPlanContent "
+						+ "pkgGroupMoney = :pkgGroupMoney, pkgPlanContent = :pkgPlanContent "
 						+ "WHERE pkgPlanNo = :pkgPlanNo";
 		return session.createQuery(hql).setParameter("pkgPlanTitle", pkgPlan.getPkgPlanTitle())
 				.setParameter("pkgPlanContent", pkgPlan.getPkgPlanContent())
 				.setParameter("pkgPlanNum", pkgPlan.getPkgPlanNum()).setParameter("pkgGroupMoney", pkgPlan.getPkgGroupMoney())
-				.setParameter("pkgPlanReview", pkgPlan.getPkgPlanReview()).setParameter("pkgPlanNo", pkgPlan.getPkgPlanNo())
+				.setParameter("pkgPlanNo", pkgPlan.getPkgPlanNo())
 				.executeUpdate();
 	}
 
@@ -56,6 +56,13 @@ public class PkgPlanDaoImpl implements PkgPlanDao{
 	public List<PkgPlan> selectByPkgNo(Integer pkgNo) {
 		final String hql = "FROM PkgPlan WHERE pkgNo = :pkgNo";
 		return session.createQuery(hql, PkgPlan.class).setParameter("pkgNo", pkgNo).getResultList();
+	}
+
+	@Override
+	public int updatePlanReview(PkgPlan pkgPlan) {
+		final String hql = "UPDATE PkgPlan SET pkgPlanReview = :pkgPlanReview "+ "WHERE pkgPlanNo = :pkgPlanNo";
+		return session.createQuery(hql).setParameter("pkgPlanReview", pkgPlan.getPkgPlanReview())
+				.setParameter("pkgPlanNo", pkgPlan.getPkgPlanNo()).executeUpdate();
 	}
 
 }

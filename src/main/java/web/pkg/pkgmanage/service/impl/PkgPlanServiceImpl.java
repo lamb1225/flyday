@@ -23,7 +23,7 @@ public class PkgPlanServiceImpl implements PkgPlanService{
 		dao.insert(pkgPlan);
 		pkgPlan.setMessage("新增成功");
 		pkgPlan.setSuccessful(true);
-		return null;
+		return pkgPlan;
 	}
 
 	@Override
@@ -42,6 +42,14 @@ public class PkgPlanServiceImpl implements PkgPlanService{
 	@Override
 	public PkgPlan select(Integer pkgPlanNo) {
 		return dao.selectById(pkgPlanNo);
+	}
+
+	@Override
+	public PkgPlan editPlanReview(PkgPlan pkgPlan) {
+		final int result = dao.updatePlanReview(pkgPlan);
+		pkgPlan.setSuccessful(result > 0);
+		pkgPlan.setMessage(result > 0 ? "修改成功" : "修改失敗");
+		return pkgPlan;
 	}
 	
 

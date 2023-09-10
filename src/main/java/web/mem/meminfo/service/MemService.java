@@ -1,5 +1,7 @@
 package web.mem.meminfo.service;
 
+import java.util.List;
+
 import javax.servlet.http.Part;
 
 import web.mem.meminfo.entity.Mem;
@@ -25,5 +27,14 @@ public interface MemService {
 	Mem checkMemInfoByMemNo(Integer memNo);
 	
 	int activateAccStatus(Integer memNo);
+	
+	List<Mem> listAllMems();
+	
+	List<Mem> listByAccStatus(Integer AccStatus);
+	
+	List<Mem> listBySearch(String searchContent);
+	
+	int updateAllStatus(Integer memAccStatus, Integer memActStatus, Integer memNo);
+	 
 	
 }

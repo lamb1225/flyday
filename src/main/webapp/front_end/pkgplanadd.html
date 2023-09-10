@@ -133,7 +133,7 @@
 						<a class="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button"
 							data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							<img class="avatar-img rounded-2" src="assets/images/avatar/01.jpg" alt="avatar">
+							<img class="avatar-img rounded-2 store-pic" src="assets/images/avatar/01.jpg" alt="avatar">
 						</a>
 
 						<ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
@@ -143,11 +143,11 @@
 								<div class="d-flex align-items-center">
 									<!-- Avatar -->
 									<div class="avatar me-3">
-										<img class="avatar-img rounded-circle shadow" src="assets/images/avatar/01.jpg"
+										<img class="avatar-img rounded-circle shadow store-pic" src="assets/images/avatar/01.jpg"
 											alt="avatar">
 									</div>
 									<div>
-										<a class="h6 mt-2 mt-sm-0" href="#">Lori Ferguson</a>
+										<a class="h6 mt-2 mt-sm-0" href="#" id="storename1">Lori Ferguson</a>
 
 									</div>
 								</div>
@@ -254,21 +254,21 @@ Steps START -->
 								<!-- 集合地點 -->
 								<div class="col-12">
 									<label class="form-label">方案標題</label>
-									<input class="form-control" type="text">
-									<small>請填寫方案標題</small>
+									<input class="form-control" type="text" id="planname">
+									<small>請填寫方案標題</small><div id="errMsg1" class="error text-danger"></div>
 								</div>
 								<!-- 行程地點 -->
 								<div class="col-12">
 									<label class="form-label">方案所需人數</label>
-									<input class="form-control" type="text">
-									<small>請填寫方案所需人數</small>
+									<input class="form-control" type="text" id="plannum">
+									<small>請填寫方案所需人數</small><div id="errMsg2" class="error text-danger"></div>
 								</div>
 
 								<!-- 行程地址 -->
 								<div class="col-12">
 									<label class="form-label">行程訂金</label>
-									<input class="form-control" type="text">
-									<small>請填寫行程訂金</small>
+									<input class="form-control" type="text" id="pkgdeposit">
+									<small>請填寫行程訂金(如果不開放揪團請填0)</small><div id="errMsg3" class="error text-danger"></div>
 								</div>
 
 								
@@ -278,7 +278,8 @@ Steps START -->
 								<!-- Short description -->
 								<div class="col-12">
 									<label class="form-label">方案內容</label>
-									<textarea class="form-control" rows="5" placeholder="行稱內容"></textarea>
+									<textarea class="form-control" rows="5" placeholder="方案內容" id="plancontent"></textarea>
+									<div id="errMsg4" class="error text-danger"></div>
 								</div>
 
 								
@@ -312,7 +313,7 @@ Steps START -->
 											<i class="bi bi-upload display-3"></i>
 											<p>Drop files here or click to upload.</p>
 										</div>
-										<div class="dz-preview row g-4">
+										<div class="dz-preview row g-4" id="pkgplanpics">
 											<div class="col-xl-2 col-md-4 col-sm-6">
 												<div class="card p-2 mb-0 shadow-none border position-relative h-100">
 													<!-- Image -->
@@ -346,7 +347,8 @@ Steps START -->
 
 					<!-- Step 1 button -->
 					<div class="text-end">
-						<button class="btn btn-primary next-btn mb-0">送出</button>
+						<div id="errMsg" class="error text-danger"></div>
+						<a class="btn btn-primary next-btn mb-0" id="sent">送出</a>
 					</div>
 				</div>
 			</div>
@@ -417,7 +419,7 @@ Footer END -->
 	<!-- ThemeFunctions -->
 	<script src="assets/js/functions.js"></script>
 	
-	<script src="assets/js/pkgplanadd.js"></script>
+	<script src="myassets/js/pkgplanadd.js"></script>
 
 </body>
 

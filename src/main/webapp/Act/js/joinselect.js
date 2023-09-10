@@ -3,15 +3,11 @@ let acts = '';
 let join = '';
 let showjoin1 = document.querySelector("#showjoin");
 let showm = document.querySelector("#showm");
-let id =parseInt(sessionStorage.getItem('actno'));
+let id = parseInt(sessionStorage.getItem('actno'));
 let memid = parseInt(sessionStorage.getItem('memno'));
 window.addEventListener("load", () => {
     console.log(memid);
     getAct(id);
-
-
-
-
 
 })
 async function getAct(id) {
@@ -128,16 +124,21 @@ async function showjoin() {
                         </div>`;
 
         });
-        html +=
-            `<div class="text-end">
-        <a class="btn btn-primary mb-0"
-        id="remove">
-            <i class="bi"></i> 移除揪團
-        </a>
-    </div>`;
+        if (memid === acts.memno) {
+            html += `<div class="text-end">
+            <a class="btn btn-primary mb-0"
+            id="remove" >
+                <i class="bi"></i> 移除揪團
+            </a>
+        </div>`;
+        }
+
+       
+
     }
     return showm.innerHTML = html;
 }
+    
 function onRemoveClick(actid, memid) {
 
     fetch('removejoin', {
@@ -288,7 +289,7 @@ $(document).on('click', `#remove`, () => {
                                                     '若有想要一起出遊請建立揪團ㄅ',
                                                     'success'
                                                 )
-                                                location.href = `${getContextPath()}/Act/selectAct.html`;
+                                                location.href = `${getContextPath()}/Act/hotel-grid.html`;
 
                                             }
                                         });
