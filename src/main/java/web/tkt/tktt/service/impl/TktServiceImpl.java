@@ -7,6 +7,7 @@ import web.tkt.tktt.dao.impl.TktDAOImpl;
 import web.tkt.tktt.entity.PlanType;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktImg;
+import web.tkt.tktt.entity.TktJoinPrice;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.service.TktService;
@@ -47,6 +48,20 @@ public class TktServiceImpl implements TktService{
 		return tkttype;
 	}
 	
+	// 查詢該票券編號的商品內容
+	@Override
+	public Tkt findTktDetial(Integer tktno) {
+		System.out.println("有來到findTktDetial()");		
+		return dao.findByPK(tktno);
+	}
+
+	// 查詢該票券編號的所有圖片
+	@Override
+	public List<TktImg> findTktImgDetial(Integer tktno) {
+		System.out.println("有來到findTktImg()");		
+		return dao.getTktImg(tktno);
+	}
+	
 	// 查詢全部Tkt
 	@Override
 	public List<Tkt> findAll() {
@@ -68,14 +83,11 @@ public class TktServiceImpl implements TktService{
 		return dao.getAllPlanType(tktno);
 	}
 
-
-
-
-
-	
-
-
-	
-
+	// 查詢全部Tkt和最低票價
+	@Override
+	public List<TktJoinPrice> findAllTktLowPrice() {
+		System.out.println("有來到findAllTktLowPrice()");
+		return dao.getAllTktLowPrice();
+	}
 
 }

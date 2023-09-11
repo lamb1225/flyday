@@ -5,6 +5,7 @@ import java.util.List;
 import web.tkt.tktt.entity.PlanType;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktImg;
+import web.tkt.tktt.entity.TktJoinPrice;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 
@@ -20,11 +21,14 @@ public interface TktDAO {
 	
 	public Tkt findByPK(Integer tktno);
 	
+	public List<TktImg> getTktImg(Integer tktno);
+	
 	public List<Tkt> getAll();
 	
 	public List<TktImg> getAllImg();
 	
 	public List<PlanType> getAllPlanType(Integer tktno);
 	
+	public List<TktJoinPrice> getAllTktLowPrice();	
 	
 }

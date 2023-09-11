@@ -14,9 +14,11 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import web.tkt.tktt.dao.TktDAO;
+import web.tkt.tktt.entity.ImageUtil;
 import web.tkt.tktt.entity.PlanType;
 import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.entity.TktImg;
+import web.tkt.tktt.entity.TktJoinPrice;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
 import web.tkt.tktt.util.Util;
@@ -63,28 +65,42 @@ public class TktDAOImpl implements TktDAO{
 	private static final String INSERTTYPE_STMT = 
 			"INSERT INTO tkt_type(TKT_PLAN_NO,TKT_TYPE,PRICE) VALUES (?, ?, ?)";	
 	
-	// 單筆查詢SQL
+	// 單筆查詢(TktDetail)SQL
 	private static final String findByPK_STMT = 
-			"SELECT TKT_NO,TKT_NAME FROM tkt WHERE TKT_NO = ?";
+			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_INSTRUCTION,PROD_DESC,NOTICE,HOWUSE, " +
+			"LOCATION,CITY,DISTRICTS,ADDRESS,SC_LATITUDE,SC_LONGITUDE,SC_HOWARRIVAL,SC_SERVICEHR,TKT_STAT,TKT_SORT,RATETOTAL,RATEQTY " +
+			"FROM tkt WHERE TKT_NO = ?";
+	// 多筆查詢(該商品的所有圖片)SQL
+	private static final String getTktImg_STMT = 
+			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img " +
+			"WHERE TKT_NO = ? " +
+			"ORDER BY TKT_IMG_NO";
+		
 	// 多筆查詢(Tkt)SQL
 	private static final String getAll_STMT = 
 			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_STAT,TKT_SORT FROM tkt ORDER BY TKT_NO";
 	// 多筆查詢(圖片)SQL
-		private static final String getAllImg_STMT = 
+	private static final String getAllImg_STMT = 
 			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img ORDER BY TKT_IMG_NO";
-	// 多筆查詢SQL(join圖片)
-		private static final String getAllPlanType_STMT =
-	        "SELECT " +
-	        "tp.TKT_NO, tp.TKT_PLAN_NO, tp.PLAN_NAME, tp.SOLD_AMOUNT, tp.PLAN_STAT, " +
+	// 多筆查詢(方案&票種)SQL
+	private static final String getAllPlanType_STMT =
+	        "SELECT tp.TKT_NO, tp.TKT_PLAN_NO, tp.PLAN_NAME, tp.PLAN_CONTENT, tp.SOLD_AMOUNT, tp.PLAN_STAT, " +
 	        "tt.TKT_TYPE_NO, tt.TKT_TYPE, tt.PRICE " +
-	        "FROM " +
-	        "tkt_plan tp " +
-	        "JOIN " +
-	        "tkt_type tt ON tp.TKT_PLAN_NO = tt.TKT_PLAN_NO " +
-	        "WHERE " +
-	        "tp.TKT_NO = ? " +
-	        "ORDER BY " +
-	        "tp.TKT_PLAN_NO, tt.TKT_TYPE_NO";
+	        "FROM tkt_plan tp " +
+	        "JOIN tkt_type tt ON tp.TKT_PLAN_NO = tt.TKT_PLAN_NO " +
+	        "WHERE tp.TKT_NO = ? " +
+	        "ORDER BY tp.TKT_PLAN_NO, tt.TKT_TYPE_NO";
+	// 多筆查詢(Tkt和LowestPrice)SQL
+	private static final String getAllTktLowPrice_STMT = 
+            "SELECT t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
+            "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY, MIN(tt.PRICE) AS PRICE " +
+            "FROM tkt t " +
+            "INNER JOIN tkt_plan tp ON t.TKT_NO = tp.TKT_NO " +
+            "INNER JOIN tkt_type tt ON tp.TKT_PLAN_NO = tt.TKT_PLAN_NO " +
+            "GROUP BY t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
+            "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY " +
+            "ORDER BY t.TKT_NO";
+
 		
 	// 新增商品
 	@Override
@@ -277,7 +293,7 @@ public class TktDAOImpl implements TktDAO{
 	}
 
 
-	// 單筆查詢
+	// 單筆查詢(該票券編號的商品內容)
 	@Override
 	public Tkt findByPK(Integer tktno) {
 		
@@ -295,16 +311,75 @@ public class TktDAOImpl implements TktDAO{
 				while (rs.next()) {
 					tkt = new Tkt();
 					tkt.setTktno(rs.getInt("TKT_NO"));
-					tkt.setTktname(rs.getString("TKT_NAME"));				
+					tkt.setTktname(rs.getString("TKT_NAME"));
+					tkt.setTktstartdate(rs.getString("TKT_STARTDATE"));
+					tkt.setTktenddate(rs.getString("TKT_ENDDATE"));
+					tkt.setTktinstruction(rs.getString("TKT_INSTRUCTION"));
+					tkt.setProddesc(rs.getString("PROD_DESC"));
+					tkt.setNotice(rs.getString("NOTICE"));
+					tkt.setHowuse(rs.getString("HOWUSE"));
+					tkt.setLocation(rs.getString("LOCATION"));
+					tkt.setCity(rs.getString("CITY"));
+					tkt.setDistricts(rs.getString("DISTRICTS"));
+					tkt.setAddress(rs.getString("ADDRESS"));
+					tkt.setSclatitude(rs.getDouble("SC_LATITUDE"));
+					tkt.setSclongitude(rs.getDouble("SC_LONGITUDE"));
+					tkt.setSchowarrival(rs.getString("SC_HOWARRIVAL"));						
+					tkt.setScservicehr(rs.getString("SC_SERVICEHR"));
+					tkt.setTktstat(rs.getInt("TKT_STAT"));
+					tkt.setTktsort(rs.getInt("TKT_SORT"));
+					tkt.setRatetotal(rs.getInt("RATETOTAL"));
+					tkt.setRateqty(rs.getInt("RATEQTY"));		
 				}
 			}
 						
 			System.out.println("查詢成功");
+			System.out.println("tkt="+tkt);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return tkt;
+	}
+	
+	// 多筆查詢(該票券編號的所有圖片)
+	@Override
+	public List<TktImg> getTktImg(Integer tktno){
+		
+		List<TktImg> imgList = new ArrayList<TktImg>();
+		TktImg tktImg = null;
+	
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement(getTktImg_STMT);){
+		
+	//				try (	Connection con = ds.getConnection();
+	//						PreparedStatement pstmt = con.prepareStatement(getTktImg_STMT);){
+			
+			pstmt.setInt(1, tktno);
+			
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+					tktImg = new TktImg();
+					tktImg.setTktimgno(rs.getInt("TKT_IMG_NO"));
+					tktImg.setTktno(rs.getInt("TKT_NO"));
+					
+					byte[] img = rs.getBytes("TKT_IMG");
+					img = tktImg.shrink(img, 200);
+					String tktimgBase64 = Base64.getEncoder().encodeToString(img);
+					tktImg.setImgBase64(tktimgBase64);
+					System.out.println(tktimgBase64);
+					
+					imgList.add(tktImg); 
+				}
+			}
+			
+			System.out.println("查詢成功");
+			System.out.println("imgList="+imgList);
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imgList;
 	}
 	
 
@@ -364,6 +439,7 @@ public class TktDAOImpl implements TktDAO{
 						tktimg.setTktno(rs.getInt("TKT_NO"));
 						
 						byte[] img = rs.getBytes("TKT_IMG");
+						img = tktimg.shrink(img, 200);
 						String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
 						tktimg.setTktimgBase64(new ArrayList<>());
 						tktimg.getTktimgBase64().add(tktimgBase64);
@@ -402,6 +478,7 @@ public class TktDAOImpl implements TktDAO{
 						planType.setTktno(rs.getInt("TKT_NO"));
 						planType.setTktplanno(rs.getInt("TKT_PLAN_NO"));
 						planType.setPlanname(rs.getString("PLAN_NAME"));
+						planType.setPlancontent(rs.getString("PLAN_CONTENT"));
 						planType.setSoldamount(rs.getInt("SOLD_AMOUNT"));
 						planType.setPlanstat(rs.getInt("PLAN_STAT"));						
 						planType.setTkttypeno(rs.getInt("TKT_TYPE_NO"));
@@ -421,16 +498,49 @@ public class TktDAOImpl implements TktDAO{
 			return list;
 
 		}
+		
+		// 多筆查詢(票券瀏覽List)
+		@Override
+		public List<TktJoinPrice> getAllTktLowPrice() {
+			
+			List<TktJoinPrice> list = new ArrayList<TktJoinPrice>();
+			TktJoinPrice tktJoinPrice = null;
 
+			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+					PreparedStatement pstmt = con.prepareStatement(getAllTktLowPrice_STMT);){
+			
+//			try (	Connection con = ds.getConnection();
+//					PreparedStatement pstmt = con.prepareStatement(getAllTktLowPrice_STMT);){
+				
+				
+				try(ResultSet rs = pstmt.executeQuery();){
+					while (rs.next()) {
+						tktJoinPrice = new TktJoinPrice();
+						tktJoinPrice.setTktno(rs.getInt("TKT_NO"));
+						tktJoinPrice.setTktname(rs.getString("TKT_NAME"));
+						tktJoinPrice.setTktstartdate(rs.getString("TKT_STARTDATE"));
+						tktJoinPrice.setTktenddate(rs.getString("TKT_ENDDATE"));
+						tktJoinPrice.setTktinstruction(rs.getString("TKT_INSTRUCTION"));
+						tktJoinPrice.setCity(rs.getString("CITY"));
+						tktJoinPrice.setTktstat(rs.getInt("TKT_STAT"));
+						tktJoinPrice.setTktsort(rs.getInt("TKT_SORT"));
+						tktJoinPrice.setRatetotal(rs.getInt("RATETOTAL"));
+						tktJoinPrice.setRateqty(rs.getInt("RATEQTY"));
+						tktJoinPrice.setPrice(rs.getInt("PRICE"));
 
+						list.add(tktJoinPrice); 
+					}
+				}
+				
+				System.out.println("查詢成功");
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return list;
+		}
 
-
-
-
-
-
-
+		
 	
 	
 
