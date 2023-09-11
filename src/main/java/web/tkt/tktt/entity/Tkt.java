@@ -14,7 +14,6 @@ public class Tkt extends TktCore{
 	private String notice;
 	private String howuse;
 	private String location;
-//	private String countycity;
 	private String city;
 	private String districts;
 	private String address;	
@@ -147,13 +146,6 @@ public class Tkt extends TktCore{
 		this.location = location;
 	}
 	
-//	public String getCountycity() {
-//		return countycity;
-//	}
-//
-//	public void setCountycity(String countycity) {
-//		this.countycity = countycity;
-//	}
 	
 	public String getCity() {
 		return city;

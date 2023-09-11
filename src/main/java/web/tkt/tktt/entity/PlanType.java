@@ -6,6 +6,7 @@ public class PlanType extends TktCore{
 	private Integer tktplanno;  
 	private Integer tktno;	    
 	private String planname;
+	private String plancontent;
 	private Integer soldamount;
 	private Integer planstat;
 	
@@ -13,28 +14,28 @@ public class PlanType extends TktCore{
     private String tkttype;
     private Integer price;
   
-    
-    
-    @Override
+
+	@Override
 	public String toString() {
-		return "PlanType [tktplanno=" + tktplanno + ", tktno=" + tktno + ", planname=" + planname + ", soldamount="
-				+ soldamount + ", planstat=" + planstat + ", tkttypeno=" + tkttypeno + ", tkttype=" + tkttype
-				+ ", price=" + price + "]";
+		return "PlanType [tktplanno=" + tktplanno + ", tktno=" + tktno + ", planname=" + planname + ", plancontent="
+				+ plancontent + ", soldamount=" + soldamount + ", planstat=" + planstat + ", tkttypeno=" + tkttypeno
+				+ ", tkttype=" + tkttype + ", price=" + price + "]";
 	}
-    
-	public PlanType(Integer tktplanno, Integer tktno, String planname, Integer soldamount, Integer planstat,
-			Integer tkttypeno, String tkttype, Integer price) {
+	
+	public PlanType(Integer tktplanno, Integer tktno, String planname, String plancontent, Integer soldamount,
+			Integer planstat, Integer tkttypeno, String tkttype, Integer price) {
 		super();
 		this.tktplanno = tktplanno;
 		this.tktno = tktno;
 		this.planname = planname;
+		this.plancontent = plancontent;
 		this.soldamount = soldamount;
 		this.planstat = planstat;
 		this.tkttypeno = tkttypeno;
 		this.tkttype = tkttype;
 		this.price = price;
 	}
-	
+
 	public PlanType() {
 		super();
 	}
@@ -52,6 +53,15 @@ public class PlanType extends TktCore{
 	public void setTktno(Integer tktno) {
 		this.tktno = tktno;
 	}
+	
+	public String getPlancontent() {
+		return plancontent;
+	}
+
+	public void setPlancontent(String plancontent) {
+		this.plancontent = plancontent;
+	}
+
 	public String getPlanname() {
 		return planname;
 	}

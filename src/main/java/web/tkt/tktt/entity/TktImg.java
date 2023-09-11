@@ -3,29 +3,28 @@ package web.tkt.tktt.entity;
 import java.util.Arrays;
 import java.util.List;
 
-public class TktImg extends TktCore{
+public class TktImg extends ImageUtil{
 	private Integer tktimgno;
     private Integer tktno;
     private byte[] tktimg;
+    private String imgBase64;
     private List<String> tktimgBase64;
+
     
-	
 	@Override
 	public String toString() {
-		return "TktImg [tktimgno=" + tktimgno + ", tktno=" + tktno + ", tktimg=" + tktimg + ", tktimgBase64="
-				+ tktimgBase64 + "]";
+		return "TktImg [tktimgno=" + tktimgno + ", tktno=" + tktno + ", tktimg=" + Arrays.toString(tktimg)
+				+ ", imgBase64=" + imgBase64 + ", tktimgBase64=" + tktimgBase64 + "]";
 	}
-
-
-
-	public TktImg(Integer tktimgno, Integer tktno, byte[] tktimg, List<String> tktimgBase64) {
+	
+	public TktImg(Integer tktimgno, Integer tktno, byte[] tktimg, String imgBase64, List<String> tktimgBase64) {
 		super();
 		this.tktimgno = tktimgno;
 		this.tktno = tktno;
 		this.tktimg = tktimg;
+		this.imgBase64 = imgBase64;
 		this.tktimgBase64 = tktimgBase64;
 	}
-
 
 
 	public TktImg(){
@@ -54,6 +53,15 @@ public class TktImg extends TktCore{
 
 	public void setTktimg(byte[] tktimg) {
 		this.tktimg = tktimg;
+	}
+
+	
+	public String getImgBase64() {
+		return imgBase64;
+	}
+
+	public void setImgBase64(String imgBase64) {
+		this.imgBase64 = imgBase64;
 	}
 
 	public List<String> getTktimgBase64() {
