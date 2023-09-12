@@ -154,7 +154,5 @@ $.ajax({
             }
         });
     },
-    error: function () {
-        alert('Failed to fetch data from server.');
-    }
+    
 });
