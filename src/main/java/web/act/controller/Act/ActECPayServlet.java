@@ -17,7 +17,7 @@ import static core.util.CommonUtil.writePojo2Json;
 
 @WebServlet("/Act/ActECPay")
 public class ActECPayServlet extends HttpServlet {
-    public static final String SERVER_URL = "https://853d-1-171-172-15.ngrok.io";
+    public static final String SERVER_URL = "https://b191-111-249-15-170.ngrok.io";
     private static final long serialVersionUID = -3935509715372119008L;
     //    public static final ECPayCheckoutService SERVICE = new ECPayCheckoutService();
     public static final EcPayService SERVICE = new EcPayServiceImpl();
@@ -33,7 +33,7 @@ public class ActECPayServlet extends HttpServlet {
         System.out.println(form);
         req.getSession().setAttribute("ECPayForm", form);
 
-        String url = "/Act/ECPayform.jsp";
+//        String url = "/Act/ECPayform.jsp";
 //        writePojo2Json(resp,form);
         writePojo2Json(resp, form);
 //        req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() + url
