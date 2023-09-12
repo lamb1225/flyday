@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import static web.act.controller.ECPayServlet.SERVER_URL;
-
 
 public class EcPayServiceImpl implements EcPayService {
     public String ecpayCheckout(AioCheckOutALL aioCheckOutALL, String reurl) {
