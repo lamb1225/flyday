@@ -2,8 +2,11 @@ package web.act.dao;
 
 
 import core.dao.CoreDao;
+import web.act.entity.Act;
 import web.act.entity.Act_Reply;
 
-public interface ActReplyDAO extends CoreDao<Act_Reply, Integer> {
+import java.util.List;
 
+public interface ActReplyDAO extends CoreDao<Act_Reply, Integer> {
+    List<Act_Reply> selectByactno(Integer actno);
 }

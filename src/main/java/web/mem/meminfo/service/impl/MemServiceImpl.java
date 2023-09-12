@@ -28,24 +28,10 @@ public class MemServiceImpl implements MemService {
 	private MemDao dao;
 	
 	@Override
-	public Mem login(Mem mem) {
+	public Mem login(String memAcc, String memPwd) {
 
-		final String memAcc = mem.getMemAcc();
-		final String memPwd = DigestUtils.sha256Hex(mem.getMemPwd());
+		Mem mem = dao.selectAccAndPwd(memAcc, memPwd);
 		
-		if(memAcc == null || memAcc.trim().isEmpty()) {
-			mem.setMessage("帳號未輸入");
-			mem.setSuccessful(false);
-			return mem;
-		}
-		
-		if(memPwd == null || memPwd.trim().isEmpty()) {
-			mem.setMessage("密碼未輸入");
-			mem.setSuccessful(false);
-			return mem;
-		}
-		
-		mem = dao.selectAccAndPwd(memAcc, memPwd);
 		if(mem == null) {
 			mem = new Mem();
 			mem.setMessage("使用者名稱或密碼錯誤");
@@ -90,13 +76,13 @@ public class MemServiceImpl implements MemService {
 			mem.setSuccessful(false);
 			return mem;
 		}
-		
+
 		mem.setMemAccStatus(0);
 		mem.setMemLevelNo(1);
 		mem.setMemActStatus(0);
 		String memPwdSha256 = DigestUtils.sha256Hex(mem.getMemPwd());
 		mem.setMemPwd(memPwdSha256);
-		
+
 		if(dao.insert(mem) < 1) {
 			mem.setMessage("註冊失敗，請聯絡管理員");
 			mem.setSuccessful(false);
@@ -104,8 +90,9 @@ public class MemServiceImpl implements MemService {
 		};
 		
 		mem = dao.selectByMemAcc(mem.getMemAcc());
-		mem.setMessage("註冊成功");
+		mem.setMessage("會員功能啟用信已發送，請依照信中指示完成會員啟用");
 		mem.setSuccessful(true);
+		
 		return mem;
 	}
 
