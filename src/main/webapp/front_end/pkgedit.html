@@ -227,7 +227,7 @@ Steps START -->
 											<div class="row g-4" >
 												<!-- 行程名稱 -->
 												<div class="col-12">
-													<label class="form-label">行程名稱</label>
+													<label class="form-label">行程名稱(最多40個字)</label>
 													<input class="form-control" type="text" id="pkgname">
 													<small>請填寫行程名稱</small>
 												</div>
@@ -235,7 +235,7 @@ Steps START -->
 												<!-- Choose type -->
 												<div class="col-12">
 													<label class="form-label">開放揪團</label>
-													<select class="form-select js-choice" id="pkggroup">
+													<select class="form-select " id="pkggroup">
 														<option value="0">不開放揪團</option>
 														<option value="1">開放揪團</option>
 													</select>
@@ -244,20 +244,20 @@ Steps START -->
 
 												<!-- 集合地點 -->
 												<div class="col-12">
-													<label class="form-label">集合地點</label>
+													<label class="form-label">集合地點(最多40個字)</label>
 													<input class="form-control" type="text" id="gather">
 													<small>請填寫集合地點</small>
 												</div>
 												<!-- 行程地點 -->
 												<div class="col-12">
-													<label class="form-label">行程地點</label>
+													<label class="form-label">行程地點(最多40個字)</label>
 													<input class="form-control" type="text" id="place">
 													<small>請填寫行程地點</small>
 												</div>
 
 												<!-- 行程地址 -->
 												<div class="col-12">
-													<label class="form-label">行程地址</label>
+													<label class="form-label">行程地址(最多40個字)</label>
 													<input class="form-control" type="text" id="address">
 													<small>請填寫準確的行程地址</small>
 												</div>
@@ -277,7 +277,7 @@ Steps START -->
 												<!-- 行程類型 -->
 												<div class="col-12">
 													<label class="form-label">行程類型</label>
-													<select class="form-select js-choice" id="sort">
+													<select class="form-select" id="sort">
 														<option value="0">遊船觀光</option>
 														<option value="1">單車旅遊</option>
 														<option value="2">文化體驗</option>
@@ -288,19 +288,19 @@ Steps START -->
 
 												<!-- Short description -->
 												<div class="col-12">
-													<label class="form-label">行稱內容</label>
+													<label class="form-label">行程內容(最多800個字)</label>
 													<textarea class="form-control" rows="5" placeholder="行稱內容" id="pkgcontent"></textarea>
 												</div>
 
 												<!-- Short description -->
 												<div class="col-12">
-													<label class="form-label">購買須知</label>
+													<label class="form-label">購買須知(最多500個字)</label>
 													<textarea class="form-control" rows="2" placeholder="購買須知" id="pkgnotice"></textarea>
 												</div>
 
 												<!-- Short description -->
 												<div class="col-12">
-													<label class="form-label">退款規則</label>
+													<label class="form-label">退款規則(最多500個字)</label>
 													<textarea class="form-control" rows="2" placeholder="退款規則" id="refpolicy"></textarea>
 												</div>
 											</div>
@@ -343,9 +343,9 @@ Steps START -->
 											<div class="row g-3">
 												<!-- Thumbnail image -->
 												<div class="col-12">
-													<label class="form-label">上傳圖片</label>
+													<label class="form-label">上傳圖片(請重新選擇檔案)</label>
 													<input class="form-control" type="file" name="my-image" id="image" accept="image/gif, image/jpeg, image/png">
-													<img class="rounded bg-light" src="assets/images/avatar/01.jpg" id="imgpic">
+													<img class="rounded bg-light" src="assets/images/avatar/01.jpg" id="imgpic" width: 200px height: 150px>
 													<p class="small mb-0 mt-2"><b>Note:</b> Only JPG, JPEG, and PNG. Our suggested dimensions are 600px * 450px. The larger image will be cropped to 4:3 to fit our thumbnails/previews.</p>
 												</div>
 

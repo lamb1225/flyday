@@ -79,6 +79,15 @@ document.addEventListener("DOMContentLoaded",async function () {
 </div>`
         });
         
+    });
+    
+    const logout = document.getElementById("logout");
+    logout.addEventListener("click", function(){
+        sessionStorage.removeItem("storeNo");
+        sessionStorage.removeItem("storeName");
+        sessionStorage.removeItem("storePicBase64");
+        fetch("/flyday/store/logout")
+        location = "/flyday/front_end/store-sign-in.html";
     })
 })
 function edit(pkgDetailsNo){

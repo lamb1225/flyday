@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded",function(){
         return resp.json()
     }).then(datas => {
             datas.forEach(data => {
-                mypkglist.innerHTML +=
+            console.log(data.pkgReview);
+                html =  
                 `<div class="card shadow p-2">
 <div class="row g-0">
     <!-- Card img -->
@@ -42,11 +43,57 @@ document.addEventListener("DOMContentLoaded",function(){
                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick=editpic(${data.pkgNo}) id="${data.pkgNo}">查看/修改(圖片)</a>    
                     <a class="btn btn-sm btn-dark w-100 mb-0" onclick=findplan(${data.pkgNo}) id="${data.pkgNo}">查看所有方案/新增方案明細</a>    
                 </div>                  
+            </div>`
+                if (data.pkgReview > 1) {
+                    switch (data.pkgReview) {
+                        case 2:
+                            html += 
+                            `<!-- Data item -->
+                            <div class="col">
+                                <select class="js-choice" id="a${data.pkgNo}">
+                                    <option value="2" selected>未上架</option>
+                                    <option value="3">上架</option>
+                                    <option value="4">下架</option>
+                                </select>
+                            </div>
+                            <!-- 確認 -->
+                            <div class="col"><button class="btn btn-sm btn-light mb-0" onclick=sent(${data.pkgNo})>送出</button></div>`
+                            break;
+                        case 3:
+                            html +=
+                            `<!-- Data item -->
+                            <div class="col">
+                                <select class="js-choice" id="a${data.pkgNo}">
+                                    <option value="2">未上架</option>
+                                    <option value="3" selected>上架</option>
+                                    <option value="4">下架</option>
+                                </select>
+                            </div>
+                            <!-- 確認 -->
+                            <div class="col"><button class="btn btn-sm btn-light mb-0" onclick=sent(${data.pkgNo})>送出</button></div>`
+                            break;
+                        case 4:
+                            html +=
+                            `<!-- Data item -->
+                            <div class="col">
+                                <select class="js-choice" id="a${data.pkgNo}">
+                                    <option value="2">未上架</option>
+                                    <option value="3">上架</option>
+                                    <option value="4" selected>下架</option>
+                                </select>
+                            </div>
+                            <!-- 確認 -->
+                            <div class="col"><a class="btn btn-sm btn-light mb-0" onclick=sent(${data.pkgNo})>送出</a></div>`
+                            break;
+                    } 
+                }
+                html +=
+                    `</div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-</div>`
+            </div>`
+
+                mypkglist.innerHTML += html;
             });
         })
 
@@ -71,7 +118,33 @@ document.addEventListener("DOMContentLoaded",function(){
 	}
 	
 	storename();
+	
+	const logout = document.getElementById("logout");
+    logout.addEventListener("click", function(){
+        sessionStorage.removeItem("storeNo");
+        sessionStorage.removeItem("storeName");
+        sessionStorage.removeItem("storePicBase64");
+        fetch("/flyday/store/logout")
+        location = "/flyday/front_end/store-sign-in.html";
+    })
 })
+
+	function sent(pkgno){
+    	let reviewno = document.getElementById(`a${pkgno}`).value;
+		fetch("/flyday/pkg/editreview",{
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({
+				pkgNo: pkgno,
+				pkgReview: reviewno
+			})
+		}).then(resp => resp.json())
+		.then(data =>{
+			if (data.successful) {
+				location = "test-account-wishlist.html";
+			}
+		})
+	}
 
 
 	function edit(pkgNo){
