@@ -282,27 +282,34 @@ saveChanges.addEventListener("click", function(){
 
 // 上傳照片
 const uploadImage = document.getElementById("upload-image");
+//--設置最大上傳容量
+const fileMaxSize = 1024*1024*1   //1M
 
 uploadImage.addEventListener("change", function(){
 
-  const formData = new FormData();
-  formData.append("image", uploadImage.files[0]);
-  formData.append("memNo", getOneInfoObj[0]);
+  if(uploadImage.files[0].size > fileMaxSize){
+    alert("上傳容量限制為1MB！");
+  }else{
+    console.log("YYY");
+    const formData = new FormData();
+    formData.append("image", uploadImage.files[0]);
+    formData.append("memNo", getOneInfoObj[0]);
 
-  fetch(`/${contextPath}/mem/updateImage`,{
-      method: "POST",
-      body: formData
-  }).then(function(response){
-    return response.json();
-  }).then(function(jsonObject){
-    const{successful, message, memPicBase64} = jsonObject;
-    if(successful){
-      for(let myMemPic of myMemPics){
-        const picBase64Url = memPicBase64;
-        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+    fetch(`/${contextPath}/mem/updateImage`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+      return response.json();
+    }).then(function(jsonObject){
+      const{successful, message, memPicBase64} = jsonObject;
+      if(successful){
+        for(let myMemPic of myMemPics){
+          const picBase64Url = memPicBase64;
+          myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 //更新Email
@@ -493,6 +500,7 @@ for(let tktCheck of tktChecks){
 const logoutSide = document.getElementById("logoutSide");
 
 logoutSide.addEventListener("click", function(){
+  sessionStorage.removeItem("memNo");
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });
@@ -500,6 +508,7 @@ logoutSide.addEventListener("click", function(){
 const logoutNav = document.getElementById("logoutNav");
 
 logoutNav.addEventListener("click", function(){
+  sessionStorage.removeItem("memNo");
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });
