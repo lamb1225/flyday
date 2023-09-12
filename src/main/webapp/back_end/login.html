@@ -172,14 +172,14 @@ Main Content END -->
 
 <!--自訂操作相關JS-->
 <script>
-const acc = document.querySelector("#acc-input"); // 假設它是ID
-const pwd = document.querySelector("#pwd-input"); // 假設它是ID
-const errMsg = document.querySelector("#errMsg"); // 假設它是ID
+const acc = document.querySelector("#acc-input"); 
+const pwd = document.querySelector("#pwd-input"); 
+const errMsg = document.querySelector("#errMsg"); 
 const signIn = document.getElementById("sign-in");
 
 signIn.addEventListener("click", async function(){
   if (!acc || !pwd || !errMsg) {
-    console.error("Some elements could not be found.");
+    console.error("acc/pwd/errMsg參數遺失");
     return;
   }
 
@@ -189,23 +189,27 @@ signIn.addEventListener("click", async function(){
       headers:  { "Content-Type": "application/json" },
       body: JSON.stringify({
         empAcc: acc.value,
-        empPwd: pwd.value
+        empPwd: pwd.value,
       })
     });
     
     const jsonObject = await response.json();
 
-    const { successful, message, empAcc } = jsonObject;
+    const { successful, message, empAcc, empStatus } = jsonObject; //加入empStatus
     
+    //這裡設定將emp的empAcc及empStatus存入
     if (successful) {
       sessionStorage.setItem("empAcc", empAcc);
-      location = "admin-guest-list.html";
+      sessionStorage.setItem("empStatus", empStatus.toString());//轉成字串存入session
+      location = "admin-list.html";
+//    location = "empList.html";
+
     } else {
       errMsg.textContent = message;
     }
   } catch (error) {
     console.error("An error occurred:", error);
-    errMsg.textContent = "您的登入資訊有誤，請確認帳號密碼";
+    errMsg.textContent = "您的登入資訊有誤，請確認帳號密碼正確";
   }
 });
 </script>

@@ -25,13 +25,14 @@ public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private EmpService service;
+//	private EmpStatus service;
 
 	public void init() throws ServletException{
 		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		service = applicationContext.getBean(EmpService.class);	
 		
 	}
-	
+	//增加區分區塊邏輯
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try(BufferedReader br = request.getReader();){
@@ -47,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 				pw.print(gson.toJson(emp));	
 				return;	
 			}
+			
 			emp = service.login(emp);
 			if(emp.isSuccessful()) {
 				if(request.getSession(false) != null) {
@@ -56,10 +58,21 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("loggedin", true);
 				session.setAttribute("emp", emp);
 			}
+			//將emp存入json,存入什麼依html設定
 			response.setContentType("application/json");
 			try(PrintWriter pw = response.getWriter();){
 				pw.print(gson.toJson(emp));	
 			}
 		}	
 	}
+	
+
+	public class GetEmpStatusServlet extends HttpServlet {
+		private static final long serialVersionUID = 1L;
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String empStatus = (String) request.getSession().getAttribute("empStatus");
+	        response.getWriter().write(empStatus);
+	    }
+	}
+
 }

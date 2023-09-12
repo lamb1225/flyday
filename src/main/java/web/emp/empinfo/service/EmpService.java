@@ -12,6 +12,7 @@ public interface EmpService {
 	int deleteEmp(Integer empno);
 
 	Emp update(Emp emp);
+	
 
 
 	

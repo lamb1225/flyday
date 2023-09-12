@@ -46,14 +46,32 @@ public class EmpServiceImpl implements EmpService {
 			return emp;
 		}
 		
+		
 //		emp = dao.selectByEmpStatus(empStatus);
-//		if(emp.equals(1)) {
-//			emp.setMessage("您的資料顯示未在職，如有錯誤請聯繫人事負責人");
-//			emp.setSuccessful(false);
-//			return emp;
-//		};
+//		0=實習人員/1=系統測試員/2=人事管理/3=票卷管理/4=揪團管理/5=廠商管理/6=客服管理/6/7/8
+		if(emp.getEmpStatus()==1) {
+			System.out.println("系統管理員");
+			emp.setSuccessful(true);
+			return emp;
+		};
+		if(emp.getEmpStatus()==2) {
+			System.out.println("訂購、票卷管理");
+			emp.setSuccessful(true);
+			return emp;
+		};
+		if(emp.getEmpStatus()==3) {
+			System.out.println("揪團檢舉、首頁管理");
+			emp.setSuccessful(true);
+			return emp;
+		};
+		if(emp.getEmpStatus()==0) {
+			System.out.println("基礎(會員、廠商、客服)管理");
+			emp.setSuccessful(true);
+			return emp;
+		};
 		
 		emp.setMessage("登入成功");
+		System.out.println("一般管理者");
 		emp.setSuccessful(true);
 		return emp;
 		

@@ -71,8 +71,6 @@ public class EmpDaoImpl implements EmpDao {
 	
 	@Override
 	public int update(Emp emp) {
-//		final String hql = "UPDATE Emp SET empAcc = :empAcc ,empPwd = :empPwd"
-//				+ "empName = :empName, empStatus = :empStatus WHERE empNo = :empNo";
 		final String hql = "UPDATE Emp SET "
 				+ "empAcc = :empAcc, empPwd = :empPwd, empName = :empName, "
 				+ "empStatus = :empStatus WHERE empNo = :empNo";
@@ -95,10 +93,10 @@ public class EmpDaoImpl implements EmpDao {
 		return session.get(Emp.class, empNo);
 	}
 	
-//	@Override
-//	public Emp selectByEmpStatus(Integer empStatus) {
-//		return session.get(Emp.class, empStatus);
-//	}
+	@Override
+	public Emp selectByEmpStatus(Integer empStatus) {
+		return session.get(Emp.class, empStatus);
+	}
 
 @Override
 	public Emp selectByEmpAcc(String empAcc) {

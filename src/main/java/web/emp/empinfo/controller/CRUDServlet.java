@@ -279,16 +279,6 @@ public class CRUDServlet extends HttpServlet {
 //					Integer empNo = Integer.parseInt(empNoObj.toString());
 					// 檢查碼end
 					Emp emp = dao.selectByEmpNo(empNo);// 使用 dao 查詢 emp
-					if (emp == null) {
-						emp = new Emp();
-						emp.setMessage("請輸入會員編號");
-						emp.setSuccessful(false);
-						response.setContentType("application/json");
-						try (PrintWriter pw = response.getWriter();) {
-							pw.print(gson.toJson(emp));
-						}
-						return;
-					}
 
 					HttpSession session = request.getSession();
 					session.setAttribute("emp", emp);
