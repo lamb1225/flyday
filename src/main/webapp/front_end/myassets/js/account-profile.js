@@ -63,7 +63,337 @@ myMemDist.addEventListener("change", function(){
 });
 
 
-//購物車icon功能
+//滑鼠移動到頭像更換照片
+const changeImgBtn = document.getElementsByClassName("change-img-btn")[0];
+const changeImg = document.getElementsByClassName("change-img")[0];
+const changeImgDiv = document.getElementsByClassName("change-img-div")[0];
+
+changeImgDiv.addEventListener("mouseenter", function(){
+  changeImg.setAttribute("style","filter:grayscale(20%);");
+  changeImgBtn.style.display = "block";
+});
+
+changeImgDiv.addEventListener("mouseleave", function(){
+  changeImg.removeAttribute("style");
+  changeImgBtn.style.display = "none";
+});
+
+
+//更改欄位資料才可以按送出按鈕
+const showView = document.getElementById("show-view");  //調整修改成功框
+
+const personalInfo = document.getElementById("personal-info");
+const saveChanges = document.getElementById("save-changes");
+
+personalInfo.addEventListener("change", function(){
+  saveChanges.removeAttribute("disabled");
+  showView.setAttribute("style", "display: none;");
+});
+
+const sendEmail = document.getElementById("send-email");
+const sendEmailBtn = document.getElementById("send-email-btn");
+const confirmEmail = document.getElementById("confirm-email");
+const confirmEmailBtn = document.getElementById("confirm-email-btn");
+
+sendEmail.addEventListener("change", function(){
+  sendEmailBtn.removeAttribute("disabled");
+});
+
+confirmEmail.addEventListener("change", function(){
+  confirmEmailBtn.removeAttribute("disabled"); 
+});
+
+//登入成功後抓存在session裡的會員資料顯示在頁面需要呈現的地方
+
+const myAccs = document.getElementsByClassName("my-acc");
+const myEmails = document.getElementsByClassName("my-email");
+
+const myNameInput = document.getElementById("my-name-input");
+const myMobileInput = document.getElementById("my-mobile-input");
+const myAddrInput = document.getElementById("my-addr-input");
+const myBdayInput = document.getElementById("my-bday-input");
+const myGenders = document.getElementsByName("my-gender");
+
+const myCityOptions = document.querySelectorAll("#my-mem-city > option");
+
+const myMemLevels = document.getElementsByClassName("my-mem-level");
+
+const myMemPics = document.getElementsByClassName("my-mem-pic");
+
+const contextPath = window.location.pathname.split('/')[1];
+
+//用一個陣列來存載入網頁時從後端拿來需要重複使用的資料
+let getOneInfoObj = [];
+
+document.addEventListener("DOMContentLoaded",function(){
+  fetch(`/${contextPath}/mem/getOneInfo`,{
+    method: "POST"
+  }).then(function(response){
+    if(response.status === 401){
+      sessionStorage.setItem("originalURL", window.location.href);
+      location = "sign-in.html";
+    }else if(response.ok){
+      return response.json();
+    }else{
+      alert("發生未知錯誤，請洽管理員");
+      location = "index.html";
+    }
+  }).then(function(jsonObject){
+    const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
+    const {memLevelName, memLevelDisc} = memLevel;  //上面回傳的東西只有memLevel是物件，針對其再解構
+    
+    //填入帳號
+    for(let myAcc of myAccs){
+      myAcc.textContent = memAcc;
+    }
+    
+    //填入Email
+    for(let myEmail of myEmails){
+      myEmail.textContent = memEmail;
+    }
+    
+    //填入姓名、手機、地址、生日
+    if(typeof memName !== "undefined"){  
+      myNameInput.value = memName;
+    }  
+    
+    myMobileInput.value = memMobile;
+    
+    if(typeof memName !== "undefined"){  
+      myAddrInput.value = memAddr;
+    }
+    
+    if(typeof memName !== "undefined"){  
+      myBdayInput.value = memBday;
+    }
+    
+    //填入性別
+    if(typeof memName !== "undefined"){  
+      for(let myGender of myGenders){
+        if(parseInt(myGender.value) === parseInt(memGender)){
+          myGender.setAttribute("checked", true);
+        }
+      }
+    }
+
+    //填入會員等級
+    for(let myMemLevel of myMemLevels){
+      myMemLevel.textContent = memLevelName;
+    }
+    
+    //填入居住縣市
+    if(typeof memName !== "undefined"){  
+      for(let myCityOption of myCityOptions){
+        if(myCityOption.value === memCity){
+          myCityOption.setAttribute("selected", true);
+        }else{
+          myCityOption.removeAttribute("selected");
+        }
+      }
+    } 
+
+    //如果頁面載入有取得縣市，則動態生成地區的選單
+    if(typeof memName !== "undefined"){  
+      if(memCity !== null){
+        const distList2 = dists[myMemCity.value];
+        myMemDist.innerHTML= `<option value="0" class="text-secondary">選擇居住地區</option>`;
+        for(let dist of distList2){
+          myMemDist.insertAdjacentHTML("beforeend", `<option value=${dist} class="text-secondary">${dist}</option>`);   
+        }
+
+        //填入居住地區
+        const myDistOptions = document.querySelectorAll("#my-mem-dist > option");
+
+        for(let myDistOption of myDistOptions){
+          if(myDistOption.value === memDist){
+            myDistOption.setAttribute("selected", true);
+          }else{
+            myDistOption.removeAttribute("selected");
+          }
+        }
+        //如果居住縣市與地區皆已填入，取消灰階的顯示
+        myMemCity.classList.remove("text-secondary");
+        myMemDist.classList.remove("text-secondary");
+      }
+    }
+
+    //顯示從資料庫顯示圖片
+    if(typeof memPicBase64 !== "undefined"){  
+      for(let myMemPic of myMemPics){
+        const picBase64Url = memPicBase64;
+        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+      }
+    }
+    //把會員編號存到陣列中
+    getOneInfoObj = [memNo];
+
+  })
+});
+
+
+//個人資料變更   
+const errMsgInfo = document.getElementById("err-msg-info");
+
+const mobileRegex = /^09[0-9]{8}$/
+
+saveChanges.addEventListener("click", function(){
+  
+  errMsgInfo.textContent = "";
+  
+  let selectedValue = "";
+  for(const myGender of myGenders){
+    if(myGender.checked){
+      selectedValue = myGender.value;
+      break;
+    }
+  };
+  
+  if(myMobileInput.value === null || myMobileInput.value.trim().length === 0){
+    errMsgInfo.textContent = "手機號碼為必填";
+  }else if(! mobileRegex.test(myMobileInput.value)){
+    errMsgInfo.textContent = "手機號碼輸入格式不符"
+  }else{
+    fetch(`/${contextPath}/mem/updateMemInfo`,{
+      method: "POST",
+      headers:  { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        memName: myNameInput.value,
+        memGender: selectedValue,
+        memBday: myBdayInput.value,
+        memMobile: myMobileInput.value,
+        memCity: myMemCity.value,
+        memDist: myMemDist.value,
+        memAddr: myAddrInput.value,
+        memNo: getOneInfoObj[0],
+      })
+    }).then(function(response){
+      return response.json();
+    }).then(function(jsonObject){
+      const{successful, message} = jsonObject;
+      if(successful){
+        showView.removeAttribute("style");
+        saveChanges.setAttribute("disabled", true);
+      }else{
+        errMsgInfo.textContent = message;
+      }
+    });
+  }
+});
+
+// 上傳照片
+const uploadImage = document.getElementById("upload-image");
+
+uploadImage.addEventListener("change", function(){
+
+  const formData = new FormData();
+  formData.append("image", uploadImage.files[0]);
+  formData.append("memNo", getOneInfoObj[0]);
+
+  fetch(`/${contextPath}/mem/updateImage`,{
+      method: "POST",
+      body: formData
+  }).then(function(response){
+    return response.json();
+  }).then(function(jsonObject){
+    const{successful, message, memPicBase64} = jsonObject;
+    if(successful){
+      for(let myMemPic of myMemPics){
+        const picBase64Url = memPicBase64;
+        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+      }
+    }
+  });
+});
+
+//更新Email
+const errMsgEmail = document.getElementById("err-msg-email");
+const myNewEmail = document.getElementById("my-new-email");
+const myVerification = document.getElementById("my-verification");
+
+const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
+
+let countdown = 60;
+
+//--設定發送驗證信
+sendEmailBtn.addEventListener("click", function(){
+  errMsgEmail.textContent="";
+  if(myNewEmail.value === null || myNewEmail.value.trim().length === 0){
+    errMsgEmail.textContent = "未輸入Email";
+  }else if(! emailRegex.test(myNewEmail.value)){
+    errMsgEmail.textContent = "email輸入格式不符"
+  }else{
+    fetch(`/${contextPath}/mem/sendEmailVerification`,{
+        method: "POST",
+        headers:  { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          memNo: getOneInfoObj[0],
+          memEmail: myNewEmail.value 
+        })
+    }).then(function(response){
+      return response.json();
+    }).then(function(jsonObject){
+      const{successful, message} = jsonObject;
+      if(successful){
+        myNewEmail.setAttribute("disabled", true);  //按下發送驗證信後，就不讓使用者更改電子信箱，避免錯誤
+        errMsgEmail.textContent = "驗證信發送成功！";
+        //設計每過60秒才能再次發送驗證信
+        sendEmailBtn.setAttribute("disabled", true);
+        sendEmailBtn.textContent = `再次發送(${countdown}s)`;
+
+        const timer = setInterval(function(){
+          countdown--;
+          sendEmailBtn.textContent = `再次發送(${countdown}s)`;
+
+          if(countdown <= 0){
+            clearInterval(timer);
+            sendEmailBtn.textContent = "發送驗證信" ;
+            sendEmailBtn.removeAttribute("disabled");
+            countdown = 60;
+          }
+        },1000);
+      }else{
+        errMsgEmail.textContent = message;
+      }
+    });
+  }
+  //--點擊輸入驗證碼時，錯誤訊息會刪除
+  myVerification.addEventListener("focus", function(){
+    errMsgEmail.textContent = "";
+  });
+  //--完成變更前確認驗證碼是否正確
+  const verificationRegex = /^[0-9]{6}$/;
+  
+  confirmEmailBtn.addEventListener("click", function(){
+    errMsgEmail.textContent = "";
+    if(myVerification.value === null || myVerification.value.trim().length === 0){
+      errMsgEmail.textContent = "未輸入驗證碼";
+    }else if(! verificationRegex.test(myVerification.value)){
+      errMsgEmail.textContent = "驗證碼輸入格式不符"
+    }else{
+      fetch(`/${contextPath}/mem/checkEmailVerification`,{
+          method: "POST",
+          headers:  { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            myNewEmail: myNewEmail.value,
+            verificationInput: myVerification.value
+          })
+      }).then(function(response){
+        return response.json();
+      }).then(function(jsonObject){
+        const{successful, message} = jsonObject;
+        if(successful){
+          alert("電子信箱變更成功");
+          location.reload();
+        }else{
+          errMsgEmail.textContent = message;
+        }
+      });
+    }  
+  });
+
+});
+
+//nav bar 購物車icon功能
 
 //--切換購物車種類，改變按鈕形式
 const pkgCart = document.getElementById("my_pkg_cart");
@@ -159,340 +489,17 @@ for(let tktCheck of tktChecks){
   });
 }
 
-//滑鼠移動到頭像更換照片
-const changeImgBtn = document.getElementsByClassName("change-img-btn")[0];
-const changeImg = document.getElementsByClassName("change-img")[0];
-const changeImgDiv = document.getElementsByClassName("change-img-div")[0];
-
-changeImgDiv.addEventListener("mouseenter", function(){
-  changeImg.setAttribute("style","filter:grayscale(20%);");
-  changeImgBtn.style.display = "block";
-});
-
-changeImgDiv.addEventListener("mouseleave", function(){
-  changeImg.removeAttribute("style");
-  changeImgBtn.style.display = "none";
-});
-
-
-//更改欄位資料才可以按送出按鈕
-const showView = document.getElementById("show-view");  //調整修改成功框
-
-const personalInfo = document.getElementById("personal-info");
-const saveChanges = document.getElementById("save-changes");
-
-personalInfo.addEventListener("change", function(){
-  saveChanges.removeAttribute("disabled");
-  showView.setAttribute("style", "display: none;");
-});
-
-const sendEmail = document.getElementById("send-email");
-const sendEmailBtn = document.getElementById("send-email-btn");
-const confirmEmail = document.getElementById("confirm-email");
-const confirmEmailBtn = document.getElementById("confirm-email-btn");
-
-sendEmail.addEventListener("change", function(){
-  sendEmailBtn.removeAttribute("disabled");
-});
-
-confirmEmail.addEventListener("change", function(){
-  confirmEmailBtn.removeAttribute("disabled"); 
-});
-
-//登入成功後抓存在session裡的會員資料顯示在頁面需要呈現的地方
-
-const myAccs = document.getElementsByClassName("my-acc");
-const myEmails = document.getElementsByClassName("my-email");
-
-const myNameInput = document.getElementById("my-name-input");
-const myMobileInput = document.getElementById("my-mobile-input");
-const myAddrInput = document.getElementById("my-addr-input");
-const myBdayInput = document.getElementById("my-bday-input");
-const myGenders = document.getElementsByName("my-gender");
-
-const myCityOptions = document.querySelectorAll("#my-mem-city > option");
-
-const myMemLevels = document.getElementsByClassName("my-mem-level");
-
-const myMemPics = document.getElementsByClassName("my-mem-pic");
-
-const contextPath = window.location.pathname.split('/')[1];
-
-//用一個陣列來存載入網頁時從後端拿來需要重複使用的資料
-let getOneInfoObj = [];
-
-document.addEventListener("DOMContentLoaded",function(){
-  fetch(`/${contextPath}/mem/getOneInfo`,{
-    method: "POST"
-  }).then(function(response){
-    return response.json();
-  }).then(function(jsonObject){
-    const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
-    const {memLevelName, memLevelDisc} = memLevel;  //上面回傳的東西只有memLevel是物件，針對其再解構
-    
-    //填入帳號
-    for(let myAcc of myAccs){
-      myAcc.textContent = memAcc;
-    }
-    
-    //填入Email
-    for(let myEmail of myEmails){
-      myEmail.textContent = memEmail;
-    }
-    
-    //填入姓名、手機、地址、生日
-    if(typeof memName !== "undefined"){  
-      myNameInput.value = memName;
-    }  
-    
-    myMobileInput.value = memMobile;
-    
-    if(typeof memName !== "undefined"){  
-      myAddrInput.value = memAddr;
-    }
-    
-    if(typeof memName !== "undefined"){  
-      myBdayInput.value = memBday;
-    }
-    
-    //填入性別
-    if(typeof memName !== "undefined"){  
-      for(let myGender of myGenders){
-        if(parseInt(myGender.value) === parseInt(memGender)){
-          myGender.setAttribute("checked", true);
-        }
-      }
-    }
-
-    //填入會員等級
-    for(let myMemLevel of myMemLevels){
-      myMemLevel.textContent = memLevelName;
-    }
-    
-    //填入居住縣市
-    if(typeof memName !== "undefined"){  
-      for(let myCityOption of myCityOptions){
-        if(myCityOption.value === memCity){
-          myCityOption.setAttribute("selected", true);
-        }else{
-          myCityOption.removeAttribute("selected");
-        }
-      }
-    } 
-
-    //如果頁面載入有取得縣市，則動態生成地區的選單
-    if(typeof memName !== "undefined"){  
-      if(memCity !== null){
-        const distList2 = dists[myMemCity.value];
-        myMemDist.innerHTML= `<option value="0" class="text-secondary">選擇居住地區</option>`;
-        for(let dist of distList2){
-          myMemDist.insertAdjacentHTML("beforeend", `<option value=${dist} class="text-secondary">${dist}</option>`);   
-        }
-
-        //填入居住地區
-        const myDistOptions = document.querySelectorAll("#my-mem-dist > option");
-
-        for(let myDistOption of myDistOptions){
-          if(myDistOption.value === memDist){
-            myDistOption.setAttribute("selected", true);
-          }else{
-            myDistOption.removeAttribute("selected");
-          }
-        }
-        //如果居住縣市與地區皆已填入，取消灰階的顯示
-        myMemCity.classList.remove("text-secondary");
-        myMemDist.classList.remove("text-secondary");
-      }
-    }
-
-    //顯示從資料庫顯示圖片
-    if(typeof memPicBase64 !== "undefined"){  
-      for(let myMemPic of myMemPics){
-        const picBase64Url = memPicBase64;
-        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
-      }
-    }
-    //把會員編號存到陣列中
-    getOneInfoObj = [memNo];
-
-  }).catch(function(){
-    alert("請先登入");
-    location = "sign-in.html";
-  })
-});
-
-
-//個人資料變更   
-const errMsgInfo = document.getElementById("err-msg-info");
-
-const mobileRegex = /^09[0-9]{8}$/
-
-saveChanges.addEventListener("click", function(){
-  
-  errMsgInfo.textContent = "";
-  
-  let selectedValue = "";
-  for(const myGender of myGenders){
-    if(myGender.checked){
-      selectedValue = myGender.value;
-      break;
-    }
-  };
-  
-  if(myMobileInput.value === null || myMobileInput.value.trim().length === 0){
-    errMsgInfo.textContent = "手機號碼為必填";
-  }else if(! mobileRegex.test(myMobileInput.value)){
-    errMsgInfo.textContent = "手機號碼輸入格式不符"
-  }else{
-    fetch(`/${contextPath}/mem/updateMemInfo`,{
-      method: "POST",
-      headers:  { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        memName: myNameInput.value,
-        memGender: selectedValue,
-        memBday: myBdayInput.value,
-        memMobile: myMobileInput.value,
-        memCity: myMemCity.value,
-        memDist: myMemDist.value,
-        memAddr: myAddrInput.value,
-        memNo: getOneInfoObj[0],
-      })
-    }).then(function(response){
-      return response.json();
-    }).then(function(jsonObject){
-      const{successful, message} = jsonObject;
-      if(successful){
-        showView.removeAttribute("style");
-        saveChanges.setAttribute("disabled", true);
-      }else{
-        errMsgInfo.textContent = message;
-      }
-    });
-  }
-});
-
-// 上傳照片
-const uploadImage = document.getElementById("upload-image");
-
-uploadImage.addEventListener("change", function(){
-
-  const formData = new FormData();
-  formData.append("image", uploadImage.files[0]);
-  formData.append("memNo", getOneInfoObj[0]);
-
-  fetch(`/${contextPath}/mem/updateImage`,{
-      method: "POST",
-      body: formData
-  }).then(function(response){
-    return response.json();
-  }).then(function(jsonObject){
-    const{successful, message, memPicBase64} = jsonObject;
-    if(successful){
-      for(let myMemPic of myMemPics){
-        const picBase64Url = memPicBase64;
-        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
-      }
-    }
-  });
-});
-
-//更新Email
-const errMsgEmail = document.getElementById("err-msg-email");
-const myNewEmail = document.getElementById("my-new-email");
-const myVerification = document.getElementById("my-verification");
-
-const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
-
-let countdown = 60;
-//--設定發送驗證信
-sendEmailBtn.addEventListener("click", function(){
-  errMsgEmail.textContent="";
-  if(myNewEmail.value === null || myNewEmail.value.trim().length === 0){
-    errMsgEmail.textContent = "未輸入Email";
-  }else if(! emailRegex.test(myNewEmail.value)){
-    errMsgEmail.textContent = "email輸入格式不符"
-  }else{
-    fetch(`/${contextPath}/mem/sendEmailVerification`,{
-        method: "POST",
-        headers:  { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          memNo: getOneInfoObj[0],
-          memEmail: myNewEmail.value 
-        })
-    }).then(function(response){
-      return response.json();
-    }).then(function(jsonObject){
-      const{successful, message} = jsonObject;
-      if(successful){
-        myNewEmail.setAttribute("disabled", true);  //按下發送驗證信後，就不讓使用者更改電子信箱，避免錯誤
-        errMsgEmail.textContent = "驗證信發送成功！";
-        //設計每過60秒才能再次發送驗證信
-        sendEmailBtn.setAttribute("disabled", true);
-        sendEmailBtn.textContent = `再次發送(${countdown}s)`;
-
-        const timer = setInterval(function(){
-          countdown--;
-          sendEmailBtn.textContent = `再次發送(${countdown}s)`;
-
-          if(countdown <= 0){
-            clearInterval(timer);
-            sendEmailBtn.textContent = "發送驗證信" ;
-            sendEmailBtn.removeAttribute("disabled");
-            countdown = 60;
-          }
-        },1000);
-      }else{
-        errMsgEmail.textContent = message;
-      }
-    });
-  }
-  //--點擊輸入驗證碼時，錯誤訊息會刪除
-  myVerification.addEventListener("focus", function(){
-    errMsgEmail.textContent = "";
-  });
-  //--完成變更前確認驗證碼是否正確
-  const verificationRegex = /^[0-9]{6}$/;
-  
-  confirmEmailBtn.addEventListener("click", function(){
-    errMsgEmail.textContent = "";
-    if(myVerification.value === null || myVerification.value.trim().length === 0){
-      errMsgEmail.textContent = "未輸入驗證碼";
-    }else if(! verificationRegex.test(myVerification.value)){
-      errMsgEmail.textContent = "驗證碼輸入格式不符"
-    }else{
-      fetch(`/${contextPath}/mem/checkEmailVerification`,{
-          method: "POST",
-          headers:  { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            myNewEmail: myNewEmail.value,
-            verificationInput: myVerification.value
-          })
-      }).then(function(response){
-        return response.json();
-      }).then(function(jsonObject){
-        const{successful, message} = jsonObject;
-        if(successful){
-          alert("電子信箱變更成功");
-          location.reload();
-        }else{
-          errMsgEmail.textContent = message;
-        }
-      });
-    }  
-  });
-
-});
-
 //登出按鈕
-const logoutNav = document.getElementsByClassName("logout")[0];
-const logoutSide = document.getElementsByClassName("logout")[1];
+const logoutSide = document.getElementById("logoutSide");
 
-logoutNav.addEventListener("click", function(){
+logoutSide.addEventListener("click", function(){
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });
 
-logoutSide.addEventListener("click", function(){
+const logoutNav = document.getElementById("logoutNav");
+
+logoutNav.addEventListener("click", function(){
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });

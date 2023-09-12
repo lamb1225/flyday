@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>tw.idv.william</groupId>
-	<artifactId>hibernate-exercise</artifactId>
+	<groupId>tw.idv.cha102G1</groupId>
+	<artifactId>flyday</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>hibernate-exercise Web App</name>
+	<name>flyday Web App</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-version>5.3.29</spring-version>
@@ -147,7 +147,7 @@
 				
 	</dependencies>
 	<build>
-		<finalName>hibernate-exercise</finalName>
+		<finalName>flyday</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

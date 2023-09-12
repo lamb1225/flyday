@@ -8,7 +8,7 @@ import web.mem.meminfo.entity.Mem;
 
 public interface MemService {
 
-	Mem login(Mem mem);
+	Mem login(String memAcc, String memPwd);
 	
 	Mem register(Mem mem);
 	
