@@ -28,7 +28,7 @@ public class ActECPayServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
         AioCheckOutALL obj = json2Pojo(req, AioCheckOutALL.class);
 //        String reurl = SERVER_URL + req.getContextPath() + "/Act/pay?actno=" + obj.getCustomField1() + "&memno=" + obj.getCustomField2() + "&Payment=" + obj.getCustomField3();//Servlet路徑
-        String reurl = SERVER_URL + req.getContextPath() + "/Act/PayAct?actno=" + obj.getCustomField1() + "&payment=" + obj.getCustomField2();
+        String reurl = SERVER_URL + req.getContextPath() + "/Act/PayAct?actno=" + obj.getCustomField1() + "&payment=" + obj.getCustomField2();//Servlet路徑
         String form = SERVICE.ecpayCheckout(obj, reurl);
         System.out.println(form);
         req.getSession().setAttribute("ECPayForm", form);

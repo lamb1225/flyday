@@ -202,6 +202,8 @@ function onRemoveClick(actid, memid) {
                         }
                     });
                 location.reload();
+            } else {
+                alert("裡面沒有人");
             }
         });
 }
@@ -294,41 +296,61 @@ $(document).on('click', `#remove`, () => {
             })
                 .then(resp => resp.json())
                 .then(body => {
-                    console.log(body);
-                    $(body).each((index, acts) => {
-                        act = acts.actno;
-                        fetch('removejoin', {
+                    if (body.length > 0) {
+                        $(body).each((index, acts) => {
+                            act = acts.actno;
+                            fetch('removejoin', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    actno: acts.actno,
+                                    memno: acts.memno
+                                })
+                            }).then(resp => resp.json())
+                                .then(body => {
+                                    if (body.successful) {
+                                        fetch('remove', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ actno: act })
+                                        })
+                                            .then(resp => resp.json())
+                                            .then(body => {
+                                                if (body.successful) {
+                                                    swalWithBootstrapButtons.fire(
+                                                        '已刪除!',
+                                                        '若有想要一起出遊請建立揪團ㄅ',
+                                                        'success'
+                                                    )
+                                                    location.href = `${getContextPath()}/Act/hotel-grid.html`;
+
+                                                }
+                                            });
+                                    }
+                                })
+
+
+                        })
+                    } else {
+                        fetch('remove', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                actno: acts.actno,
-                                memno: acts.memno
-                            })
-                        }).then(resp => resp.json())
+                            body: JSON.stringify({ actno: row.actno })
+                        })
+                            .then(resp => resp.json())
                             .then(body => {
                                 if (body.successful) {
-                                    fetch('remove', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ actno: act })
+
+                                    swalWithBootstrapButtons.fire(
+                                        '已刪除!'
+
+                                    ).then(() => {
+
+                                        location.reload();
                                     })
-                                        .then(resp => resp.json())
-                                        .then(body => {
-                                            if (body.successful) {
-                                                swalWithBootstrapButtons.fire(
-                                                    '已刪除!',
-                                                    '若有想要一起出遊請建立揪團ㄅ',
-                                                    'success'
-                                                )
-                                                location.href = `${getContextPath()}/Act/hotel-grid.html`;
-
-                                            }
-                                        });
                                 }
-                            })
-
-
-                    })
+                            });
+                    }
                 })
 
         } else if (
