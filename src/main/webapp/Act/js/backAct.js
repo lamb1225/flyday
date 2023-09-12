@@ -76,93 +76,63 @@ $.ajax({
                                     })
                                         .then(resp => resp.json())
                                         .then(body => {
-                                            console.log(body);
-                                            $(body).each((index, acts) => {
-                                                act = acts.actno;
-                                                fetch('removejoin', {
+                                            if (body.length > 0) {
+                                                $(body).each((index, acts) => {
+                                                    act = acts.actno;
+                                                    fetch('removejoin', {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({
+                                                            actno: acts.actno,
+                                                            memno: acts.memno
+                                                        })
+                                                    }).then(resp => resp.json())
+                                                        .then(body => {
+                                                            if (body.successful) {
+                                                                fetch('remove', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({ actno: act })
+                                                                })
+                                                                    .then(resp => resp.json())
+                                                                    .then(body => {
+                                                                        if (body.successful) {
+                                                                            swalWithBootstrapButtons.fire(
+                                                                                '已刪除!'
+
+                                                                            ).then(() => {
+
+                                                                                location.reload();
+                                                                            })
+
+                                                                        }
+                                                                    });
+                                                            }
+                                                        })
+
+
+                                                })
+                                            }else{
+                                                fetch('remove', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({
-                                                        actno: acts.actno,
-                                                        memno: acts.memno
-                                                    })
-                                                }).then(resp => resp.json())
+                                                    body: JSON.stringify({ actno: row.actno })
+                                                })
+                                                    .then(resp => resp.json())
                                                     .then(body => {
                                                         if (body.successful) {
-                                                            fetch('remove', {
-                                                                method: 'POST',
-                                                                headers: { 'Content-Type': 'application/json' },
-                                                                body: JSON.stringify({ actno: act })
+            
+                                                            swalWithBootstrapButtons.fire(
+                                                                '已刪除!'
+            
+                                                            ).then(() => {
+            
+                                                                location.reload();
                                                             })
-                                                                .then(resp => resp.json())
-                                                                .then(body => {
-                                                                    if (body.successful) {
-                                                                        swalWithBootstrapButtons.fire(
-                                                                            '已刪除!'
-
-                                                                        ).then(() => {
-
-                                                                            location.reload();
-                                                                        })
-
-                                                                    }
-                                                                });
                                                         }
-                                                    })
-
-
-                                            })
-                                        })
-
-                                } else if (
-                                    /* Read more about handling dismissals below */
-                                    result.dismiss === Swal.DismissReason.cancel
-                                ) {
-                                    swalWithBootstrapButtons.fire(
-                                        '已取消'
-
-                                    )
-                                }
-                            })
-
-                        })
-                        $(document).on('click', `.del${row.actno}`, () => {
-                            const swalWithBootstrapButtons = Swal.mixin({
-                                customClass: {
-                                    confirmButton: 'btn btn-success',
-                                    cancelButton: 'btn btn-danger'
-                                },
-                                buttonsStyling: false
-                            })
-
-                            swalWithBootstrapButtons.fire({
-                                title: '你確定要刪除嗎?',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: '確定!',
-                                cancelButtonText: '取消',
-                                reverseButtons: true
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-
-                                    fetch('remove', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ actno: row.actno })
-                                    })
-                                        .then(resp => resp.json())
-                                        .then(body => {
-                                            if (body.successful) {
-
-                                                swalWithBootstrapButtons.fire(
-                                                    '已刪除!'
-
-                                                ).then(() => {
-
-                                                    location.reload();
-                                                })
+                                                    });
                                             }
-                                        });
+                                        })
                                 } else if (
                                     /* Read more about handling dismissals below */
                                     result.dismiss === Swal.DismissReason.cancel
@@ -172,10 +142,10 @@ $.ajax({
 
                                     )
                                 }
-
                             })
 
                         })
+                       
 
                         return `<button type="button" class="btn btn-danger btn-sm dels${row.actno}">刪除揪團</button>` +
                             `<button type="button" class="btn btn-danger btn-sm del${row.actno}">刪除無成員揪團</button>`

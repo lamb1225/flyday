@@ -3,6 +3,7 @@ package web.act.dao.impl;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import web.act.dao.ActReplyDAO;
+import web.act.entity.Act;
 import web.act.entity.Act_Reply;
 
 import javax.persistence.PersistenceContext;
@@ -38,9 +39,17 @@ public class Act_ReplyDaoImpl implements ActReplyDAO {
 
     @Override
     public List<Act_Reply> selectAll() {
-        final String hql = "FROM act ORDER BY act_reply_no";
+        final String hql = "FROM Act_Reply ORDER BY act_reply_no";
         return session
                 .createQuery(hql, Act_Reply.class)
                 .getResultList();
+    }
+    @Override
+    public List<Act_Reply> selectByactno(Integer actno) {
+        final String sql = "select * from ACT_REPLY where ACT_NO= :actno order by act_reply_no"; //sql查詢寫法
+        return session
+                .createNativeQuery(sql, Act_Reply.class)
+                .setParameter("actno", actno)
+                .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
     }
 }

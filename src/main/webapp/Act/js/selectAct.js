@@ -6,7 +6,7 @@ let Show = document.querySelector("#Show");
 var pageid = document.querySelector("#pageid");
 var htmlpic;
 var img = document.querySelector(`imgpic`);
-
+var date1 = new Date();
 window.addEventListener("load", function () {
 
     fetch(`select`)
@@ -89,8 +89,29 @@ async function showAct(act) {
             </div>
         </div>
                 `;
+            var date2 = new Date(acts.actjoinend);
+            if (date2 < date1) {
+                fetch('revise', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        actno: acts.actno,
+                        actstatus: 1
+                    })
+                })
+                    .then(resp => resp.json())
+                    .then(body => {
+                        const { successful, message } = body;
+                        if (successful) {
+                            console.log('更新成功!');
+                        } else {
+                            console.log(message ?? '存檔失敗');
+                        }
+                    });
+            }
 
         };
+
 
     }
     Show.innerHTML = html;
