@@ -104,9 +104,15 @@ public class MemListServlet extends HttpServlet {
 			String[] memCityArray = req.getParameter("memCityArray").split(",");
 			String[] memDistArray = req.getParameter("memDistArray").split(",");
 			String[] memAddrArray = req.getParameter("memAddrArray").split(",");
-			String[] memRegDateArray = req.getParameter("memRegDateArray").split(",");
 			String[] memAccStatusArray = req.getParameter("memAccStatusArray").split(",");
 			String[] memActStatusArray = req.getParameter("memActStatusArray").split(",");
+			//因為註冊時間原本用逗號相隔，日/月/年時間會被切開，要重組回來
+			String[] memRegDateInnitialArray = req.getParameter("memRegDateArray").split(",");
+			String[] memRegDateArray = new String[memNoArray.length];
+			for(int i = 0; i < memRegDateArray.length; i++) {
+				memRegDateArray[i] = memRegDateInnitialArray[i*3] + " /" + memRegDateInnitialArray[i*3+1] + " －" + memRegDateInnitialArray[i*3+2];
+				System.out.println(memRegDateArray[i]);
+			}
 
 			resp.setContentType("text/csv; charset=UTF-8");
 			resp.setHeader("Content-Disposition", "attachment; filename=\"selectedMemInfo.csv\"");
