@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 
 @Entity
 public class Mem extends MemSuper {
@@ -45,6 +47,7 @@ public class Mem extends MemSuper {
 	@Column(name = "MEM_ADDR")
 	private String memAddr;
 	@Column(name = "MEM_REG_DATE")
+	@CreationTimestamp
 	private Date memRegDate;
 	@Column(name = "MEM_PIC")
 	private byte[] memPic;

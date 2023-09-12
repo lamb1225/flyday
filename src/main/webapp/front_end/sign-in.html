@@ -117,19 +117,19 @@ Main Content START -->
 								</a>
 								<!-- Title -->
 								<h1 class="mb-2 h3">登入</h1>
-								<p class="mb-0">還沒有帳戶?<a href="sign-up.html"> 註冊帳號</a></p>
+								<p class="mb-0">還沒有帳戶?<a href="sign-up.html">註冊帳號</a></p>
 		
 								<!-- Form START -->
 								<form class="mt-4 text-start">
 									<!-- 帳號 -->
 									<div class="mb-3">
 										<label class="form-label">帳號</label>
-										<input type="text" class="form-control" id="acc-input">
+										<input type="text" class="form-control" id="acc-input" name="accInput">
 									</div>
 									<!-- Password -->
 									<div class="mb-3 position-relative">
 										<label class="form-label">密碼</label>
-										<input class="form-control fakepassword" type="password" id="psw-input">
+										<input class="form-control fakepassword" type="password" id="psw-input" name="pwdInput">
 										<span class="position-absolute top-50 end-0 translate-middle-y p-0 mt-3">
 											<i class="fakepasswordicon fas fa-eye-slash cursor-pointer p-2"></i>
 										</span>
@@ -159,6 +159,11 @@ Main Content START -->
 </section>
 <!-- =======================
 Main Content END -->
+
+<!--用在純後端的驗證-->
+<!-- <form method="post">
+	<input type="hidden" name="action" value="forward">
+</form> -->
 
 </main>
 <!-- **************** MAIN CONTENT END **************** -->

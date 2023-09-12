@@ -110,6 +110,14 @@ public class StoreMemberServiceImpl implements StoreMemberService{
 		return store;
 	}
 
+	@Override
+	public Store editReview(Store store) {
+		final Integer result = dao.updateReview(store);
+		store.setSuccessful(result > 0);
+		store.setMessage(result > 0 ? "修改成功" : "修改失敗");
+		return store;
+	}
+
 	
 
 	

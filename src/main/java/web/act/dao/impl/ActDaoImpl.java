@@ -53,6 +53,7 @@ public class ActDaoImpl implements ActDAO {
         final Integer status = act.getActstatus(); // 取得前端網頁的值
         final String title = act.getActtitle(); // 取得前端網頁的值
         final String content = act.getActcontent(); // 取得前端網頁的值
+        final Integer payment = act.getPayment();
         if (count != null) { // 判定前端網頁值為空值就不執行該欄位更新
             oldact.setActcurrentcount(count);
         }
@@ -65,6 +66,9 @@ public class ActDaoImpl implements ActDAO {
         if (content != null) {
             oldact.setActcontent(act.getActcontent());
         }
+        if (payment != null) {
+            oldact.setPayment(payment);
+        }
         return 1;
 
     }
@@ -76,6 +80,15 @@ public class ActDaoImpl implements ActDAO {
         return session
                 .createNativeQuery(sql, Act.class)
                 .setParameter("memno", memno)
+                .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
+    }
+
+    @Override
+    public List<Act> selectByactno(Integer actno) {
+        final String sql = "select * from ACT where ACT_NO= :actno order by ACT_NO"; //sql查詢寫法
+        return session
+                .createNativeQuery(sql, Act.class)
+                .setParameter("actno", actno)
                 .getResultList();//查詢多筆getResultList();、單筆uniqueResult();
     }
 }

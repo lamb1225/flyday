@@ -1,5 +1,6 @@
 package web.act.entity;
 
+import core.entity.Core;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Act_Reply implements Serializable {
+public class Act_Reply extends Core {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ACT_REPLY_NO")
@@ -28,9 +29,9 @@ public class Act_Reply implements Serializable {
     private	String	replycontent;
     @Column(name="MEM_NO")
     private	Integer	memno;
-    @Column(name="ACT_REPLY_TIME")
+    @Column(name="ACT_REPLY_TIME",insertable = false)
     private Timestamp actreplytime;
-    @Column(name="ACT_REPLY_STATUS")
+    @Column(name="ACT_REPLY_STATUS",insertable = false)
     private	Integer	actreplystatus;
 
 

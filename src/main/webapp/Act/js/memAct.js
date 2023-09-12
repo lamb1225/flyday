@@ -1,8 +1,9 @@
 const tab = document.querySelector("#tabsw");
 const pageid = document.querySelector("#pageid");
 let acts = {};
+let id = parseInt(sessionStorage.getItem("memno"));
+var title;
 window.addEventListener("load", () => {
-    let id = 2;
     getAct(id);
 
 })
@@ -18,6 +19,7 @@ function getAct(id) {
         })
         .then(function (data) {
             // console.log(data);
+
             acts = data;
             pagination(acts, 1);//將其顯示到頁面中
         })
@@ -81,11 +83,12 @@ function showmem(data) {
     let html = '';
 
     if (data.length == 0) {
-        html = "<tr><td colspan='4' align='center'>尚無員工資料</td></tr>";
+        html = "<tr><td colspan='4' align='center'>尚無揪團資料</td></tr>";
     } else {
         // for (let i = 0; i < acts.length; i++) {}
 
         data.forEach(act => {
+
             html += `
 									<!-- Card header -->
 									<div class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
@@ -101,8 +104,11 @@ function showmem(data) {
 										</div>
 	
 										<!-- Button -->
-										<div class="mt-2 mt-md-0">
-											<a href="#" class="btn btn-primary-soft mb-0"onclick='Check(${act.actno},${act.memno})'>查看內容</a>
+										<div class="mt-2 mt-md-0">`
+            if (act.payment === 0) {
+                html += `<a class="btn btn-lg btn-primary-soft mb-0" id="Pay" onclick='PayAct(${act.actno},${act.price},"${act.acttitle}")'>前往付款</a>`
+            }
+            html += `	<a href="#" class="btn btn-primary-soft mb-0"onclick='Check(${act.actno},${act.memno})'>查看內容</a>
 										</div>
 									</div>
 	
@@ -123,6 +129,18 @@ function showmem(data) {
 												<span>報名人數</span>
 												<h6 class="mb-0">${act.actcurrentcount}</h6>
 											</div>
+                                            <div class="col-md-4">
+												<span>團長付款狀態</span>`
+            switch (act.payment) {
+                case 0:
+                    html += `<h6 class="mb-0">未付款</h6>`
+                    break;
+                case 1:
+                    html += `<h6 class="mb-0">已付款</h6>`
+                    break;
+            }
+
+            html += `</div>
 										</div>
 									</div>
 								
@@ -133,7 +151,25 @@ function showmem(data) {
     }
     return tab.innerHTML = html;
 }
+function PayAct(actno, price, title) {
+    fetch('ActECPay', {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({
+            TotalAmount: price,
+            TradeDesc: "揪團付費",
+            ItemName: title,
+            CustomField1: actno,
+            CustomField2: 1,
 
+        })
+    }).then(resp => resp.json())
+        .then(data => {
+            var newWindow = window.open();
+            newWindow.document.write(data); // 插入表單 HTML 內容
+            newWindow.document.close();
+        })
+}
 function pageBtn(page) {
     let str = '';
     const total = page.pageTotal;

@@ -18,4 +18,6 @@ public interface StoreMemberService {
 	boolean save(Store store);
 	
 	Store editpic(byte[] storePic, Integer storeNo);
+	
+	Store editReview(Store store);
 }

@@ -18,7 +18,6 @@ public class GetOneInfoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5307039260388838781L;
 	
-	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Mem mem = (Mem) req.getSession().getAttribute("mem");
