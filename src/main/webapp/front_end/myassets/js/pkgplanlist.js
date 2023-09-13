@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <!-- Price and Button -->
                             <div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
                                 <!-- Price -->
-                                <div class="mt-3 mt-sm-0">
-                                    <a class="btn btn-sm btn-info w-100 mb-0" onclick="adddetails(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">新增明細</a>
-                                    <a class="btn btn-sm btn-info w-100 mb-0" onclick="edit(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看方案/修改</a>
-                                    <a class="btn btn-sm btn-info w-100 mb-0" onclick="editpic(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看/修改(圖片)</a>
-                                    <a class="btn btn-sm btn-info w-100 mb-0" onclick="findplan(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看所有明細</a>
+                                <div class="mt-3 mt-sm-0 d-flex justify-content-between mb-2">
+                                    <a class="btn btn-sm btn-outline-secondary mb-0" onclick="adddetails(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">新增明細</a>
+                                    <a class="btn btn-sm btn-outline-secondary mb-0" onclick="edit(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看方案/修改</a>
+                                    <a class="btn btn-sm btn-outline-secondary mb-0" onclick="editpic(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看/修改(圖片)</a>
+                                    <a class="btn btn-sm btn-outline-secondary mb-0" onclick="findplan(${datas.pkgPlanNo})" id="${datas.pkgPlanNo}">查看所有明細</a>
                                 </div>
                             </div>`
                         switch (datas.pkgPlanReview) {
@@ -61,26 +61,30 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 html += 
                                 `<!-- Data item -->
                                 <div class="col d-flex justify-content-end">
+                                	<div class="col-4">
                                     <select class="js-choice" id="a${datas.pkgPlanNo}">
                                         <option value="0" selected>未上架</option>
                                         <option value="1">上架</option>
                                     </select>
+                                    </div>
                                 `
                                 break;
                             case 1:
                                 html +=
                                 `<!-- Data item -->
                                 <div class="col d-flex justify-content-end">
+                                	<div class="col-4">
                                     <select class="js-choice" id="a${datas.pkgPlanNo}">
                                         <option value="0">未上架</option>
                                         <option value="1" selected>上架</option>
                                     </select>
+                                    </div>
                                 `
                                 break;
                         } 
                         html +=
 							`<!-- 確認 -->
-							<div class="col" style="text-align: right;"><button class="btn btn-sm btn-light mb-0" onclick=sent(${datas.pkgPlanNo})>送出</button></div>   
+							<div class="col-1.5"><button class="btn btn-sm btn-light mb-0" onclick=sent(${datas.pkgPlanNo})>送出</button></div>   
                         	</div>
                         </div>
                     </div>
