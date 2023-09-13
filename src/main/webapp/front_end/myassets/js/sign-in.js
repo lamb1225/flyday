@@ -27,8 +27,9 @@ signIn.addEventListener("click", function(){
 		}).then(function(response){
 			return response.json();
 		}).then(function(jsonObject){
-			const{successful, message} = jsonObject;
+			const{successful, message, memNo} = jsonObject;
 			if(successful){
+				sessionStorage.setItem("memNo", memNo);
 				const nextURL = sessionStorage.getItem("originalURL");
 				if(nextURL !== null && typeof nextURL !== "undefined"){
 					sessionStorage.removeItem("originalURL");	

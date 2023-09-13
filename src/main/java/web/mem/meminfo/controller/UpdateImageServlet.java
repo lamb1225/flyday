@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.springframework.context.ApplicationContext;
@@ -38,9 +39,10 @@ public class UpdateImageServlet extends HttpServlet {
 		Part part = req.getPart("image");
 		String memNoString = req.getParameter("memNo");
 		
-		Mem mem = new Mem();
+		Mem mem ;
 		
 		if(part == null || memNoString == null) {
+			mem = new Mem();
 			mem.setMessage("無圖片資料");
 			mem.setSuccessful(false);
 		}else {

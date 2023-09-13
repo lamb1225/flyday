@@ -130,6 +130,7 @@ public class MemServiceImpl implements MemService {
 			return mem;
 		}
 		
+		mem = dao.selectByMemNo(memNo);	//將資料庫依照會員編號查詢的會員物件回傳
 		mem.setMessage("圖片修改成功");
 		mem.setSuccessful(true);
 		return mem;
@@ -243,6 +244,11 @@ public class MemServiceImpl implements MemService {
 	@Override
 	public int updateAllStatus(Integer memAccStatus, Integer memActStatus, Integer memNo) {
 		return dao.updateMemAccAndActStatus(memAccStatus, memActStatus, memNo);
+	}
+
+	@Override
+	public Mem checkMemInfoByMemAcc(String memAcc) {
+		return dao.selectByMemAcc(memAcc);
 	}
 	
 }

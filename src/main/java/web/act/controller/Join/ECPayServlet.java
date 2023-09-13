@@ -1,4 +1,4 @@
-package web.act.controller;
+package web.act.controller.Join;
 
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import web.act.service.EcPayService;
@@ -33,7 +33,7 @@ public class ECPayServlet extends HttpServlet {
         System.out.println(form);
         req.getSession().setAttribute("ECPayForm", form);
 
-        String url = "/Act/ECPayform.jsp";
+//        String url = "/Act/ECPayform.jsp";
 //        writePojo2Json(resp,form);
         writePojo2Json(resp, form);
 //        req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() + url

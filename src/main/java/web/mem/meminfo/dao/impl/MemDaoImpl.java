@@ -129,7 +129,25 @@ public class MemDaoImpl implements MemDao {
 
 	@Override
 	public Mem selectByMemNo(Integer memNo) {
-		return session.get(Mem.class, memNo);
+		final String hql = "SELECT new web.mem.meminfo.entity.Mem(memNo, memLevelNo, memAcc, memAccStatus, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memRegDate, memPic, memActStatus) FROM Mem WHERE memNo = :memNo";	
+		Mem mem = session.createQuery(hql, Mem.class).setParameter("memNo", memNo).uniqueResult();
+		
+		//將圖片轉為base64存進查到的物件
+		if(mem == null) {
+			return mem;
+		}else {
+			Mem memGetMemLevel = session.get(Mem.class, mem.getMemNo()); 
+			MemLevel memLevel = memGetMemLevel.getMemLevel();
+			
+			mem.setMemLevel(memLevel);
+			
+			if(mem.getMemPic() != null) {
+				byte[] memPic = mem.getMemPic();
+				String memPicBase64 = Base64.getEncoder().encodeToString(memPic); 
+				mem.setMemPicBase64(memPicBase64);  
+			}
+			return mem;
+		}	
 	}
 	
 	@Override
