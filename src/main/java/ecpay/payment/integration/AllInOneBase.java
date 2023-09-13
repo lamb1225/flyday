@@ -33,7 +33,7 @@ public class AllInOneBase {
 //			String configPath = URLDecoder.decode(classLoader.getResource("/payment_conf.xml").getPath(), "UTF-8");
 //			doc = EcpayFunction.xmlParser(configPath);
 			/* when using testing code*/
-			String paymentConfPath = "C:/ProJect/flyday/src/main/resources/payment_conf.xml";
+			String paymentConfPath = "C:/Flyday/flyday_workspace/flyday/src/main/resources/payment_conf.xml";
 			doc = EcpayFunction.xmlParser(paymentConfPath);
 			
 			doc.getDocumentElement().normalize();

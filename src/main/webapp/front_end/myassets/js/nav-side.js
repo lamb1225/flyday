@@ -101,9 +101,14 @@ const memPicNavList = document.getElementsByClassName("mem-pic-nav");
 
 const hidableList = document.getElementsByClassName("hidable");
 const loginBtnNav = document.getElementById("login-btn-nav");
-const actMenu = document.getElementById("accounntMenu");
 
 const contextPath = window.location.pathname.split('/')[1];
+
+//會員側邊攔
+const myMemPic = document.getElementsByClassName("my-mem-pic")[0];
+const myEmail = document.getElementsByClassName("my-email")[0];
+const myMemLevel = document.getElementsByClassName("my-mem-level")[0];
+const myAcc = document.getElementsByClassName("my-acc")[0];
 
 //用一個陣列來存載入網頁時從後端拿來需要重複使用的資料
 let getOneInfoObj = [];
@@ -115,23 +120,17 @@ document.addEventListener("DOMContentLoaded",function(){
     if(response.ok){
       return response.json();
     }else if(response.status === 401){
-      
+      //如果沒登入進到此頁面會跳轉回登入畫面
+      sessionStorage.setItem("originalURL", window.location.href);
+      location = "/flyday/front_end/sign-in.html";
+
       //未登入時隱藏會員的購物車、通知、會員區塊
-      for(let hidable of hidableList){
-        hidable.style = "display: none;";
-      }
+      // for(let hidable of hidableList){
+      //   hidable.style = "display: none;";
+      // }
 
-      //未登入時顯示註冊按鈕
-      loginBtnNav.style = "display: block;";
-
-      //未登入時點選揪團活動會導向登入畫面
-      actMenu.addEventListener("click", function(e){
-        e.preventDefault();
-        alert("請先登入！");
-        sessionStorage.setItem("originalURL", "/flyday/Act/hotel-grid.html");
-        location = "/flyday/front_end/sign-in.html";
-      })
-      
+      // //未登入時顯示註冊按鈕
+      // loginBtnNav.style = "display: block;";
     }
   }).then(function(jsonObject){
     const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
@@ -151,15 +150,23 @@ document.addEventListener("DOMContentLoaded",function(){
       }
     }
 
+    //填入側邊欄圖片
+    const picBase64Url = memPicBase64;
+    myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+
+    //填入側邊欄帳號
+    myAcc.textContent = memAcc;
+
+    //填入側邊欄email
+    myEmail.textContent = memEmail;
+
+    //填入側邊欄會員等級
+    myMemLevel.textContent = memLevelName;
+
   }).catch(function(){
     
   })
 })  
-
-//點選導覽列的註冊/登入按鈕，會先存當前的位址資訊，登入後可以跳轉回原頁面
-loginBtnNav.addEventListener("click", function(){
-  sessionStorage.setItem("originalURL", window.location.href);
-})
 
 
 //登出按鈕

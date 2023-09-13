@@ -29,7 +29,7 @@ signIn.addEventListener("click", function(){
 		}).then(function(jsonObject){
 			const{successful, message, memNo} = jsonObject;
 			if(successful){
-				sessionStorage.setItem("memNo", memNo);
+				sessionStorage.setItem("memno", memNo);
 				const nextURL = sessionStorage.getItem("originalURL");
 				if(nextURL !== null && typeof nextURL !== "undefined"){
 					sessionStorage.removeItem("originalURL");	
