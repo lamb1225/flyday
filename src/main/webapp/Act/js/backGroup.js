@@ -1,5 +1,5 @@
 
-
+var table;
 $.ajax({
     url: 'SelectGroup', //請求動態網址
     contentType: 'application/json; charset=UTF-8',
@@ -7,23 +7,26 @@ $.ajax({
     dataType: "json",
     success: function (data) {
         // 綁定tableId，使用 jQuery Table 來動態生成表格
-        $('#tableAjax').DataTable({
+        table = $('#tableAjax').DataTable({
             //抓取請求的資料
             data: data,
             //搜尋欄位是否開啟及設定
             searchDelay: 500,
+            scrollX: '500px',
+            autoWidth: false,
+            paging: true,
             //資料欄位區塊(columns)
             columns: [
                 { data: 'rpgroupno' },               // targets[0]
                 { data: 'memno' },            // targets[1]
                 { data: 'actno' },            // targets[2]
                 { data: 'rpgroupreason' },      // targets[3]
-                { data: 'rpgroupcontent' },  // targets[4]
+                { data: 'rpgroupcontent', },  // targets[4]
                 { data: 'rpgrouptimestamp' },  // targets[5]
                 { data: 'rpgroupstatus' },  // targets[6]
-                { data: 'empno' },  // targets[7]
-                { data: 'rpgroupdonetime' },  // targets[8]
-                { data: 'rpgroupnote' },  // targets[9]
+                { data: 'empno', defaultContent: '' },  // targets[7]
+                { data: 'rpgroupdonetime', defaultContent: '' },  // targets[8]
+                { data: 'rpgroupnote', defaultContent: '' },  // targets[9]
                 { data: null }                  // targets[10] 操作欄位
             ],
             // 欄位元素定義區塊(columnDefs)，依需求決定內容可加可不加。
@@ -31,7 +34,7 @@ $.ajax({
                 {
                     //調整th:qaId欄位的寬度
                     targets: [0],
-                    width: "50px"
+
                 }, {
                     targets: [1],
 
@@ -40,6 +43,7 @@ $.ajax({
 
                 }, {
                     targets: [3],
+
                     render: function (data) {
 
                         switch (data) {
@@ -68,6 +72,13 @@ $.ajax({
                         }
 
                     }
+                }, {
+                    targets: [4]
+                    
+                }, {
+                    targets: [8]
+                }, {
+                    targets: [9]
                 }, {
                     targets: [10],
                     render: (data, type, row) => {
@@ -154,5 +165,6 @@ $.ajax({
             }
         });
     },
-    
+
 });
+
