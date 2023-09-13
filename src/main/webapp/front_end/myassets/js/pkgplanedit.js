@@ -37,11 +37,15 @@ document.addEventListener("DOMContentLoaded",function(){
     })
 	
 	const check = /^[0-9]+$/;
+	const check2 = /^.{1,100}$/;
+	const check3 = /^.{1,500}$/;
 	
 	planname.addEventListener("blur", function(){
 		errmsg1.textContent="";
 		if(planname.value === null ||planname.value.trim().length === 0){
 			errmsg1.textContent="行程方案名稱不能為空";
+		}else if(!check2.test(planname.value)){
+			errmsg1.textContent="行程方案名稱字數過多";
 		}
 	})
 	
@@ -67,6 +71,8 @@ document.addEventListener("DOMContentLoaded",function(){
 		errmsg4.textContent="";
 		if(plancontent.value === null ||plancontent.value.trim().length === 0){
 			errmsg4.textContent="行程方案內容不能為空";
+		}else if(!check3.test(plancontent.value)){
+			errmsg4.textContent="行程方案內容字數過多";
 		}
 	})
 

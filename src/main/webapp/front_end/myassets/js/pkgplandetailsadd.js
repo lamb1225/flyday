@@ -82,12 +82,14 @@ document.addEventListener("DOMContentLoaded", function(){
 			const pkgDayEnd = endtimes[i].value;
 			const pkgPeopleMax = maxnum[i].value;
 			const pkgPrice = prices[i].value;
+			const pkgPeople = 0;
 			
 			const pkgObject = {
 				pkgPlanNo,
 				pkgDayStart,
 				pkgDayEnd,
 				pkgPeopleMax,
+				pkgPeople,
 				pkgPrice,
 			};
 
