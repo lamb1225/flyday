@@ -10,7 +10,6 @@ let id = sessionStorage.getItem('actno');
 let pop = '';
 let differ;
 $(() => {
-    sessionStorage.setItem('actno', 1);
 
 
     getAct(id);

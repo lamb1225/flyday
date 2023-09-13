@@ -145,10 +145,7 @@ $.ajax({
                             })
 
                         })
-                       
-
-                        return `<button type="button" class="btn btn-danger btn-sm dels${row.actno}">刪除揪團</button>` +
-                            `<button type="button" class="btn btn-danger btn-sm del${row.actno}">刪除無成員揪團</button>`
+                        return `<button type="button" class="btn btn-danger btn-sm dels${row.actno}">刪除揪團</button>`
                     }
 
                 }, {

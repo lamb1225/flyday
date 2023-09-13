@@ -86,9 +86,9 @@
 })();
 
 function insert() {
-    let memid = 2;
-    let pkgid = 2;
-    let price = 4400;
+    let memid = sessionStorage.getItem("memno");
+    let pkgid = sessionStorage.getItem("pkgno");
+    let price = sessionStorage.getItem("price");
     fetch('create', {
         method: 'POST',
         headers: {

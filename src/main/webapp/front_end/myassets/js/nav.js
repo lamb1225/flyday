@@ -121,9 +121,6 @@ document.addEventListener("DOMContentLoaded",function(){
 
       //未登入時顯示註冊按鈕
       loginBtnNav.style = "display: block;";
-
-      console.log("XX");
-
     }
   }).then(function(jsonObject){
     const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
@@ -131,6 +128,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     //填入帳號
     accNav.textContent = memAcc;
+    console.log(memAcc);
 
     //填入會員等級
     memLevelNav.textContent = memLevelName;
@@ -153,6 +151,7 @@ document.addEventListener("DOMContentLoaded",function(){
 const logoutNav = document.getElementById("logoutNav");
 
 logoutNav.addEventListener("click", function(){
+  sessionStorage.removeItem("memNo");
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });
