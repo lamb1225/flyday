@@ -2,14 +2,10 @@ package web.emp.empinfo.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,18 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.core.util.IOUtils;
-import org.aspectj.org.eclipse.jdt.internal.compiler.lookup.InvocationSite.EmptyWithAstNode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import web.emp.empinfo.dao.EmpDao;
 import web.emp.empinfo.entity.Emp;
 import web.emp.empinfo.service.EmpService;
-import web.emp.empinfo.service.impl.EmpServiceImpl;
 
 @WebServlet("/emp/controller")
 public class CRUDServlet extends HttpServlet {
@@ -42,7 +34,7 @@ public class CRUDServlet extends HttpServlet {
 	public void init() throws ServletException {
 		ApplicationContext applicationContext = WebApplicationContextUtils
 				.getWebApplicationContext(getServletContext());
-		dao = applicationContext.getBean(EmpDao.class);// 初始化EmpDao，我們的資料託管給Bean
+		dao = applicationContext.getBean(EmpDao.class);// 初始化EmpDao，資料託管給Bean
 		empService = applicationContext.getBean(EmpService.class); // 初始化EmpService，會使原功能變500(?)
 		// 檢查碼
 		if (dao == null) {
@@ -126,7 +118,6 @@ public class CRUDServlet extends HttpServlet {
 			}
 
 			// 修改功能
-//		try {
 			if ("btn-save".equals(action)) {
 				// 檢查碼，確認action value
 //			System.out.println("Action value: " + action);
@@ -139,7 +130,6 @@ public class CRUDServlet extends HttpServlet {
 					empNo = Integer.valueOf((String) requestData.get("empNo"));
 					//此令empNo轉為String
 				}
-				
 				String empAcc = requestData.containsKey("empAcc") ? (String) requestData.get("empAcc") : null;
 				String empPwd = requestData.containsKey("empPwd") ? (String) requestData.get("empPwd") : null;
 				String empName = requestData.containsKey("empName") ? (String) requestData.get("empName") : null;
@@ -157,7 +147,6 @@ public class CRUDServlet extends HttpServlet {
 				String empPwdReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{5,8}$";// 判定5-8碼
 				// (\u4e00-\u9fa5):任一Unicode 範圍 4E00 到 9FA5 之間的字符，大致對應到常用的中文字。
 				// (a-zA-Z0-9)任一小寫、大寫字母，0-9;{5,8}前述字符出現5-8次
-
 				// 修改信箱、密碼、姓名、在職碼
 				if (empAcc == null || empAcc.trim().length() == 0) {
 					errorMsgs.put("empAcc", "未輸入員工帳號");
@@ -175,95 +164,31 @@ public class CRUDServlet extends HttpServlet {
 					errorMsgs.put("empName", "未輸入姓名");
 				}
 
-//				String job = request.getParameter("job").trim();
-//				String jobReg = "^.{2,10}$"; //此正則(規)表示式(regular-expression)- 用來比對JSR 303 的@Size
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.put("job","員工職位: 請勿空白");
-//				} else if(!job.trim().matches(jobReg)) {
-//					errorMsgs.put("job","員工職位: 長度必需在2到10之間");
-//	            }
-
-//				java.sql.Date hiredate = null;
-//				try {
-//					hiredate = java.sql.Date.valueOf(request.getParameter("hiredate").trim());
-//				} catch (IllegalArgumentException e) {
-//					errorMsgs.put("hiredate","雇用日期: 請勿空白");
-//				}
-
-//				Double sal = null;
-//				try {
-//					sal = Double.valueOf(request.getParameter("sal").trim());
-//				} catch (NumberFormatException e) {
-//					errorMsgs.put("sal","員工薪水: 請輸入數字");
-//				}
-
-//				Double comm = null;
-//				try {
-//					comm = Double.valueOf(request.getParameter("comm").trim());
-//				} catch (NumberFormatException e) {
-//					errorMsgs.put("comm","員工獎金: 請輸入數字");
-//				}
-
-				// 照片
-//				InputStream in = request.getPart("upFiles").getInputStream(); //從javax.servlet.http.Part物件取得上傳檔案的InputStream
-//				byte[] upFiles = null;
-//				if(in.available()!=0){
-//					upFiles = new byte[in.available()];
-//					in.read(upFiles);
-//					in.close();
-//				}  else {
-//					EmpService empSvc = new EmpService();
-//					upFiles = empSvc.getOneEmp(empno).getUpFiles();
-//				}
-
-				// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				errorMsgs.put("Exception", "修改資料失敗:---------------");
-//				RequestDispatcher failureView = request.getRequestDispatcher("/back-end/emp/update_emp_input.jsp");
-//				failureView.forward(request, response);
-//				return; // 程式中斷
-//			}
 				// Send the use back to the form, if there were errors by json
 				if (!errorMsgs.isEmpty()) {
 					String jsonErrorMsgs = new Gson().toJson(errorMsgs);
 					out.print("{\"success\":false, \"errors\":" + jsonErrorMsgs + "}");
 					return; // 程式中斷
 				}
-
 				/*************************** 2.開始修改資料 *****************************************/
 				if (empService == null) {
 					out.print("{\"success\":false, \"message\":\"伺服器錯誤\"}");
 					return; // this will exit the doPost method
 				}
-//			EmpServiceImpl empUpdata = new EmpServiceImpl();
-//			Emp emp = empUpdata.update(update);
 				Emp emp = empService.update(update);
 				//偵錯檢查碼
-				if(emp.getEmpNo() == null) {
-				    System.out.println("EmpNo is null after update operation.");
-				} else {
-				    System.out.println("Updating emp with empNo: " + emp.getEmpNo());
-				    out.print("{\"success\":true, \"message\":\"修改成功\"}");
-				}
+//				if(emp.getEmpNo() == null) {
+//				    System.out.println("EmpNo is null after update operation.");
+//				} else {
+//				    System.out.println("Updating emp with empNo: " + emp.getEmpNo());
+//				    out.print("{\"success\":true, \"message\":\"修改成功\"}");
+//				}
 				//偵錯檢查碼end
-				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-//			request.setAttribute("success", "- (修改成功)");
-//			request.setAttribute("emp", emp); // 資料庫update成功後,正確的的empVO物件,存入req
-//			String url = "/back_end/empList.html";
-////			request.getRequestDispatcher("/back_end/empList.html").forward(request, response);
-//			RequestDispatcher successView = request.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-//			successView.forward(request, response);
 			}
-//	} catch(Exception e) {
-//	    out.print("{\"success\":false, \"message\":\"伺服器內部錯誤\"}");
-//	    return;
-//	}
-			// 單一員工查詢功能，無引導機制
-			else {
-				System.out.println("Action value: " + action);
-				System.out.println("查詢員工功能");
-				try (BufferedReader br = request.getReader();) {
 
+			// 單一員工查詢功能
+			if ("btn-search".equals(action)) {
+				try (BufferedReader br = request.getReader();) {
 					Integer empNo = Integer.parseInt(requestData.get("EMP_NO").toString()); // 從 map 中獲取 empNo)
 					// 檢查碼
 //					Map<String, Object> requestBody = gson.fromJson(br, type);
@@ -289,7 +214,7 @@ public class CRUDServlet extends HttpServlet {
 					}
 
 				}
-			}
+			}else{System.out.println("Action value: " + action);};
 
 		} catch (Exception e) {
 			out.print("{\"success\":false, \"message\":\"伺服器內部錯誤2\"}");
