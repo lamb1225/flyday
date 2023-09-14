@@ -9,15 +9,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 import java.io.IOException;
 
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
+import static core.util.Constants.SERVER_URL;;
 
 
 @WebServlet("/Act/ActECPay")
 public class ActECPayServlet extends HttpServlet {
-    public static final String SERVER_URL = "https://b191-111-249-15-170.ngrok.io";
+//    public static final String SERVER_URL = "https://c454-2001-b011-5c0a-d38f-6c4b-6f60-2a1b-130a.ngrok.io ";
     private static final long serialVersionUID = -3935509715372119008L;
     //    public static final ECPayCheckoutService SERVICE = new ECPayCheckoutService();
     public static final EcPayService SERVICE = new EcPayServiceImpl();
