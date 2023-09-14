@@ -143,7 +143,6 @@
 							<ul class="nav collapse flex-column show" id="collapsemember"
 								data-bs-parent="#navbar-sidebar">
 								<li class="nav-item"><a class="nav-link active" href="###" id="mem1">會員資料查詢</a></li>
-								<li class="nav-item"><a class="nav-link" href="###" id="mem2">設定會員等級規則</a></li>
 							</ul></li>
 
 						<!-- Menu item -->
@@ -154,7 +153,6 @@
 							<ul class="nav collapse flex-column" id="collapsestore"
 								data-bs-parent="#navbar-sidebar">
 								<li class="nav-item"><a class="nav-link" href="###" id="factory1">廠商註冊審核</a></li>
-								<li class="nav-item"><a class="nav-link" href="###" id="factory2">廠商資料查詢</a></li>
 								<li class="nav-item"><a class="nav-link" href="###" id="factory3">行程審核管理</a></li>
 							</ul></li>
 
@@ -166,7 +164,6 @@
 							<ul class="nav collapse flex-column" id="collapseorder"
 								data-bs-parent="#navbar-sidebar">
 								<li class="nav-item"><a class="nav-link" href="###" id="buy1">票券訂單管理</a></li>
-								<li class="nav-item"><a class="nav-link" href="###" id="buy2">票券優惠券管理</a></li>
 								<li class="nav-item"><a class="nav-link" href="###" id="buy3">行程優惠券管理</a></li>
 							</ul></li>
 
@@ -175,24 +172,21 @@
 							id="ticketroll">票券管理</a></li>
 
 						<!-- Menu item -->
-						<li class="nav-item"><a class="nav-link" href="###"
-							id="grouproll">揪團檢舉管理</a></li>
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapsegroup" role="button"
+							aria-expanded="false" aria-controls="collapseagent" id="grouproll">
+								揪團管理系統 </a> <!-- Submenu -->
+							<ul class="nav collapse flex-column" id="collapsegroup"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link" href="###" id="grouproll1">揪團管理</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="grouproll2">揪團檢舉管理</a></li>
+							</ul></li>
 
 						<!-- Menu item -->
 						<li class="nav-item"><a class="nav-link" href="###"
 							id="guestroll">客服訊息管理</a></li>
 
-						<!-- Menu item -->
-						<li class="nav-item"><a class="nav-link"
-							data-bs-toggle="collapse" href="#collapseindex" role="button"
-							aria-expanded="false" aria-controls="collapseauthentication"
-							id="frontroll"> 首頁管理 </a> <!-- Submenu -->
-							<ul class="nav collapse flex-column" id="collapseindex"
-								data-bs-parent="#navbar-sidebar">
-								<li class="nav-item"><a class="nav-link" href="###" id="front1">公告設定</a></li>
-								<li class="nav-item"><a class="nav-link" href="###" id="front2">票券檔期設定</a></li>
-								<li class="nav-item"><a class="nav-link" href="###" id="front3">行程檔期設定</a></li>
-							</ul></li>
+						
 					</ul>
 					<!-- Sidebar menu end -->
 <!-- 陳炳翰:功能加入id end -->
@@ -464,28 +458,21 @@ const csvDownloadBtn = document.getElementById("csv-download-btn");
 const toempList = document.getElementById("toempList");
 const toempListroll = document.getElementById("toempListroll");
 const mem1 = document.getElementById("mem1");
-const mem2 = document.getElementById("mem2");
 const factory1 = document.getElementById("factory1");
-const factory2 = document.getElementById("factory2");
 const factory3 = document.getElementById("factory3");
 const buyroll = document.getElementById("buyroll");
 const buy1 = document.getElementById("buy1");
-const buy2 = document.getElementById("buy2");
 const buy3 = document.getElementById("buy3");
 const ticketroll = document.getElementById("ticketroll");
 const grouproll = document.getElementById("grouproll");
+const grouproll1 = document.getElementById("grouproll1");
+const grouproll2 = document.getElementById("grouproll");
 const guestroll = document.getElementById("guestroll");
-const frontroll = document.getElementById("frontroll");
-const front1 = document.getElementById("front1");
-const front2 = document.getElementById("front2");
-const front3 = document.getElementById("front3");
+
+
 //陳炳翰新增-業務邏輯
 var empStatus = '<%= session.getAttribute("empStatus") %>';
-fetch('/emp/login')
-    .then(response => response.text())
-    .then(empStatus => {
-        console.log(empStatus);  // 這裡你可以使用empStatus
-    });
+
 
 //員工管理系統=1
 toempListroll.addEventListener("click", function () {
@@ -501,26 +488,18 @@ toempListroll.addEventListener("click", function () {
 mem1.addEventListener("click", function () {
     location = "empList.html";
 }),
-    mem2.addEventListener("click", function () {
-        location = "empList.html";
-    })
+
 //廠商管理系統=all
 factory1.addEventListener("click", function () {
-    location = "empList.html";
-})
-factory2.addEventListener("click", function () {
-    location = "empList.html";
+    location = "store-list.html";
 })
 factory3.addEventListener("click", function () {
-    location = "empList.html";
+    location = "pkgreview.html";
 })
 //訂購管理系統=1/2
 buyroll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
         buy1.addEventListener("click", function () {
-            location = "empList.html";
-        });
-        buy2.addEventListener("click", function () {
             location = "empList.html";
         });
         buy3.addEventListener("click", function () {
@@ -542,7 +521,12 @@ ticketroll.addEventListener("click", function () {
 //揪團檢舉管理=1/3
 grouproll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
-        location = "empList.html";
+    	grouproll1.addEventListener("click", function () {
+            location = "/flyday/Act/back-Act.html";
+        });
+    	grouproll2.addEventListener("click", function () {
+            location = "/flyday/Act/back-Group.html";
+        });
     } else {
         alert("無登入權限");
     }
@@ -550,23 +534,8 @@ grouproll.addEventListener("click", function () {
 //客服訊息管理=all
 guestroll.addEventListener("click", function () {
     location = "empList.html";
-}),
-    //首頁管理=1/3
-    frontroll.addEventListener("click", function () {
-        if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
-            front1.addEventListener("click", function () {
-                location = "empList.html";
-            });
-            front2.addEventListener("click", function () {
-                location = "empList.html";
-            });
-            front3.addEventListener("click", function () {
-                location = "empList.html";
-            });
-        } else {
-            alert("無登入權限");
-        }
-    });
+});
+
 	
 	
 	

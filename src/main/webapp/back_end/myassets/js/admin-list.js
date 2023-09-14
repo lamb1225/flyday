@@ -11,15 +11,7 @@ const accStatusBtn1 = document.getElementById("accStatus1");
 const accStatusBtn2 = document.getElementById("accStatus2");  
 const searchMem = document.getElementById("search-mem");
 const csvDownloadBtn = document.getElementById("csv-download-btn");
-//0911陳炳翰新增
-const toList = document.getElementById("toempList");
 
-toList.addEventListener("click", function () {
-		
-		
-		location = "empList.html";
-	});
-//0911陳炳翰新增end
 
 document.addEventListener("DOMContentLoaded", function(){
     const formData = new FormData();
