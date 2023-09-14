@@ -21,7 +21,7 @@ var empStatus = '<%= session.getAttribute("empStatus") %>';
 toempListroll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1) {
         toempList.addEventListener("click", function () {
-            location = "empList.html";
+            location = "/flyday/back_end/empList.html";
         });
     } else {
         alert("無登入權限");
@@ -29,26 +29,33 @@ toempListroll.addEventListener("click", function () {
 });
 //會員管理系統=all
 mem1.addEventListener("click", function () {
-    location = "admin-list.html";
+    location = "/flyday/back_end/admin-list.html";
 });
 
 //廠商管理系統=all
 factory1.addEventListener("click", function () {
-    location = "store-list.html";
+    location = "/flyday/back_end/store-list.html";
 });
 factory3.addEventListener("click", function () {
-    location = "pkgreview.html";
+    location = "/flyday/back_end/pkgreview.html";
 });
 //訂購管理系統=1/2
 buyroll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
-        buy1.addEventListener("click", function () {
-            location = "empList.html";
-        });
-        buy3.addEventListener("click", function () {
-            location = "empList.html";
-        });
-
+    } else {
+        alert("無登入權限");
+    }
+});
+buy1.addEventListener("click", function () {
+	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
+       	location = "empList.html";
+    } else {
+        alert("無登入權限");
+    }
+});
+buy3.addEventListener("click", function () {
+	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
+       	location = "empList.html";
     } else {
         alert("無登入權限");
     }
@@ -64,12 +71,22 @@ ticketroll.addEventListener("click", function () {
 //揪團檢舉管理=1/3
 grouproll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
-    	grouproll1.addEventListener("click", function () {
-            location = "/flyday/Act/back-Act.html";
-        });
-    	grouproll2.addEventListener("click", function () {
-            location = "/flyday/Act/back-Group.html";
-        });
+ 
+    } else {
+        alert("無登入權限");
+    }
+});
+
+grouproll2.addEventListener("click", function () {
+	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
+       	location = "/flyday/Act/back-Group.html";
+    } else {
+        alert("無登入權限");
+    }
+});
+grouproll1.addEventListener("click", function () {
+	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
+       	location = "/flyday/Act/back-Act.html";
     } else {
         alert("無登入權限");
     }
