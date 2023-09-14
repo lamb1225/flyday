@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Flyday - 後台管理系統</title>
+
+<!-- Meta Tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Webestica.com">
+<meta name="description"
+	content="Booking - Multipurpose Online Booking Theme">
+
+<!-- Dark mode -->
+<script>
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+
+			}
+		})
+		
+	</script>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="myassets/logo_noliteral.png">
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+<!-- Plugins CSS -->
+<link rel="stylesheet" type="text/css"
+	href="assets/vendor/font-awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/vendor/choices/css/choices.min.css">
+
+<!-- Theme CSS -->
+<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+	<!-- **************** MAIN CONTENT START **************** -->
+	<main>
+
+		<!-- Sidebar START -->
+		<nav class="navbar sidebar navbar-expand-xl navbar-light">
+			<!-- Navbar brand for xl START -->
+			<div class="d-flex align-items-center">
+				<a class="navbar-brand" href="../front_end/index.html"> <img
+					class="light-mode-item navbar-brand-item" src="myassets/logo.svg"
+					alt="logo"> <img class="dark-mode-item navbar-brand-item"
+					src="myassets/logo.svg" alt="logo">
+				</a>
+			</div>
+			<!-- Navbar brand for xl END -->
+
+			<div
+				class="offcanvas offcanvas-start flex-row custom-scrollbar h-100"
+				data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
+				<div class="offcanvas-body sidebar-content d-flex flex-column pt-4">
+
+					<!-- Sidebar menu START -->
+					<ul class="navbar-nav flex-column" id="navbar-sidebar">
+
+						<!-- Menu item -->
+						<!-- 					陳炳翰:將帳號跟權限管理整合 -->
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapsebackend"
+							id="toempListroll" role="button" aria-expanded="false"
+							aria-controls="collapsebooking"> 員工管理系統 </a> 
+							<!-- Submenu -->
+							<ul class="nav collapse flex-column" id="collapsebackend"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link" href="###"
+									id="toempList">後台帳號權限管理</a></li>     <!-- 	陳炳翰:註解下行，新增id="toempList" -->
+								<!-- 							<li class="nav-item"> <a class="nav-link" href="###">後台帳號管理</a></li> -->
+							</ul></li>
+						<!-- 陳炳翰:將以下各功能加入id並設定權限 -->
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapsemember" role="button"
+							aria-expanded="true" aria-controls="collapseguest" id="memroll">
+								會員管理系統 </a> <!-- Submenu -->
+							<ul class="nav collapse flex-column show" id="collapsemember"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link active" href="###" id="mem1">會員資料查詢</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="mem2">設定會員等級規則</a></li>
+							</ul></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapsestore" role="button"
+							aria-expanded="false" aria-controls="collapsebooking"
+							id="factoryroll"> 廠商管理系統 </a> <!-- Submenu -->
+							<ul class="nav collapse flex-column" id="collapsestore"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link" href="###" id="factory1">廠商註冊審核</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="factory2">廠商資料查詢</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="factory3">行程審核管理</a></li>
+							</ul></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapseorder" role="button"
+							aria-expanded="false" aria-controls="collapseagent" id="buyroll">
+								訂購管理系統 </a> <!-- Submenu -->
+							<ul class="nav collapse flex-column" id="collapseorder"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link" href="###" id="buy1">票券訂單管理</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="buy2">票券優惠券管理</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="buy3">行程優惠券管理</a></li>
+							</ul></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link" href="###"
+							id="ticketroll">票券管理</a></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link" href="###"
+							id="grouproll">揪團檢舉管理</a></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link" href="###"
+							id="guestroll">客服訊息管理</a></li>
+
+						<!-- Menu item -->
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="collapse" href="#collapseindex" role="button"
+							aria-expanded="false" aria-controls="collapseauthentication"
+							id="frontroll"> 首頁管理 </a> <!-- Submenu -->
+							<ul class="nav collapse flex-column" id="collapseindex"
+								data-bs-parent="#navbar-sidebar">
+								<li class="nav-item"><a class="nav-link" href="###" id="front1">公告設定</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="front2">票券檔期設定</a></li>
+								<li class="nav-item"><a class="nav-link" href="###" id="front3">行程檔期設定</a></li>
+							</ul></li>
+					</ul>
+					<!-- Sidebar menu end -->
+<!-- 陳炳翰:功能加入id end -->
+					<!-- Sidebar footer START -->
+					<div
+						class="d-flex align-items-center justify-content-between text-primary-hover mt-auto p-3">
+						<a class="h6 fw-light mb-0 text-body"
+							href="../front_end/index.html" data-bs-toggle="tooltip"
+							data-bs-placement="top" aria-label="Sign out"> <i
+							class="fa-solid fa-arrow-right-from-bracket"></i> 登出
+						</a>
+					</div>
+					<!-- Sidebar footer END -->
+
+				</div>
+			</div>
+		</nav>
+		<!-- Sidebar END -->
+
+		<!-- Page content START -->
+		<div class="page-content">
+
+			<!-- Top bar START -->
+			<nav class="navbar top-bar navbar-light py-0 py-xl-3">
+				<div class="container-fluid p-0">
+					<div class="d-flex align-items-center w-100">
+
+						<!-- Logo START -->
+						<div class="d-flex align-items-center d-xl-none">
+							<a class="navbar-brand" href="../front_end/index.html"> <img
+								class="navbar-brand-item h-40px" src="myassets/logo.svg" alt="">
+							</a>
+						</div>
+						<!-- Logo END -->
+
+						<!-- Toggler for sidebar START -->
+						<div class="navbar-expand-xl sidebar-offcanvas-menu">
+							<button class="navbar-toggler me-auto p-2" type="button"
+								data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar"
+								aria-controls="offcanvasSidebar" aria-expanded="false"
+								aria-label="Toggle navigation" data-bs-auto-close="outside">
+								<i class="bi bi-list text-primary fa-fw"
+									data-bs-target="#offcanvasMenu"></i>
+							</button>
+						</div>
+						<!-- Toggler for sidebar END -->
+
+						<!-- Top bar left -->
+						<div class="navbar-expand-lg ms-auto ms-xl-0">
+							<!-- Topbar menu START -->
+							<div class="collapse navbar-collapse w-100 z-index-1"
+								id="navbarTopContent"></div>
+							<!-- Topbar menu END -->
+						</div>
+						<!-- Top bar left END -->
+
+						<!-- Top bar right START -->
+						<ul
+							class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+							<!-- Dark mode options START -->
+							<li class="nav-item dropdown ms-3">
+								<button class="nav-notification lh-0 btn btn-light p-0 mb-0"
+									id="bd-theme" type="button" aria-expanded="false"
+									data-bs-toggle="dropdown" data-bs-display="static">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+										fill="currentColor"
+										class="bi bi-circle-half fa-fw theme-icon-active"
+										viewBox="0 0 16 16">
+									<path
+											d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+									<use href="#"></use>
+								</svg>
+								</button>
+
+								<ul class="dropdown-menu min-w-auto dropdown-menu-end"
+									aria-labelledby="bd-theme">
+									<li class="mb-1">
+										<button type="button"
+											class="dropdown-item d-flex align-items-center"
+											data-bs-theme-value="light">
+											<svg width="16" height="16" fill="currentColor"
+												class="bi bi-brightness-high-fill fa-fw mode-switch me-1"
+												viewBox="0 0 16 16">
+											<path
+													d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+											<use href="#"></use>
+										</svg>
+											Light
+										</button>
+									</li>
+									<li class="mb-1">
+										<button type="button"
+											class="dropdown-item d-flex align-items-center"
+											data-bs-theme-value="dark">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor"
+												class="bi bi-moon-stars-fill fa-fw mode-switch me-1"
+												viewBox="0 0 16 16">
+											<path
+													d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+											<path
+													d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+											<use href="#"></use>
+										</svg>
+											Dark
+										</button>
+									</li>
+									<li>
+										<button type="button"
+											class="dropdown-item d-flex align-items-center active"
+											data-bs-theme-value="auto">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor"
+												class="bi bi-circle-half fa-fw mode-switch"
+												viewBox="0 0 16 16">
+											<path
+													d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+											<use href="#"></use>
+										</svg>
+											Auto
+										</button>
+									</li>
+								</ul>
+							</li>
+							<!-- Dark mode options END-->
+
+						</ul>
+						<!-- Top bar right END -->
+					</div>
+				</div>
+			</nav>
+			<!-- Top bar END -->
+
+			<!-- Page main content START -->
+			<div class="page-content-wrapper p-xxl-4">
+
+				<!-- Title -->
+				<div class="row">
+					<div class="col-12 mb-4 mb-sm-5">
+						<div class="d-sm-flex justify-content-between align-items-center">
+							<h1 class="h3 mb-3 mb-sm-0">會員清單</h1>
+							<div class="d-grid">
+								<a href="#" class="btn btn-primary mb-0" id="csv-download-btn"><i
+									class="bi bi-filetype-csv me-2"></i>會員資料下載</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Filters START -->
+				<div class="row g-4 align-items-center justify-content-between">
+					<!-- Tabs -->
+					<div class="col-lg-6">
+						<ul class="nav nav-pills-shadow nav-responsive">
+							<li class="nav-item"><a class="nav-link mb-0 active"
+								data-bs-toggle="tab" href="#tab-1" id="all-mem">所有會員</a></li>
+							<li class="nav-item"><a class="nav-link mb-0"
+								data-bs-toggle="tab" href="#tab-2" id="accStatus0">尚未啟用帳號</a></li>
+							<li class="nav-item"><a class="nav-link mb-0"
+								data-bs-toggle="tab" href="#tab-3" id="accStatus1">正常啟用帳號</a></li>
+							<li class="nav-item"><a class="nav-link mb-0"
+								data-bs-toggle="tab" href="#tab-4" id="accStatus2">已停權帳號</a></li>
+						</ul>
+					</div>
+
+					<!-- Search -->
+					<div class="col-md-6 col-lg-3">
+						<form class="rounded position-relative ">
+							<input class="form-control bg-transparent" type="search"
+								placeholder="搜尋" aria-label="Search" id="search-mem">
+							<button
+								class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+								type="submit">
+								<i class="fas fa-search fs-6"></i>
+							</button>
+						</form>
+					</div>
+
+				</div>
+				<!-- Filters END -->
+
+				<!-- Guest list START -->
+				<div class="card shadow mt-5">
+					<!-- Card body START -->
+					<div class="card-body" id="mem-list-area">
+						<!-- Table head -->
+						<div class="bg-light rounded p-3 d-none d-lg-block">
+							<div class="row row-cols-7 g-4">
+								<div class="col-2">
+									<h6 class="mb-0">會員帳號</h6>
+								</div>
+								<div class="col-2">
+									<h6 class="mb-0">會員Email</h6>
+								</div>
+								<div class="col-2">
+									<h6 class="mb-0">會員手機</h6>
+								</div>
+								<div class="col-2">
+									<h6 class="mb-0">會員等級</h6>
+								</div>
+								<div class="col-2">
+									<h6 class="mb-0">帳號/揪團狀態</h6>
+								</div>
+								<div class="col-2">
+									<h6 class="mb-0">操作</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Card body END -->
+
+					<!-- Card footer START -->
+					<div class="card-footer pt-0">
+						<!-- Pagination and content -->
+						<div
+							class="d-sm-flex justify-content-sm-between align-items-sm-center">
+							<!-- Content -->
+							<p class="mb-sm-0 text-center text-sm-start" id="list-length">當前顯示第
+								1 至第 10 筆資料，共 25 筆資料</p>
+							<!-- Pagination -->
+							<nav class="mb-sm-0 d-flex justify-content-center"
+								aria-label="navigation">
+								<ul
+									class="pagination pagination-sm pagination-primary-soft mb-0"
+									id="page-ul">
+
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- Card footer END -->
+				</div>
+				<!-- Guest list END -->
+			</div>
+			<!-- Page main content END -->
+		</div>
+		<!-- Page content END -->
+
+	</main>
+	<!-- **************** MAIN CONTENT END **************** -->
+
+	<!-- Bootstrap JS -->
+	<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Vendor -->
+	<script
+		src="assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js"></script>
+	<script src="assets/vendor/choices/js/choices.min.js"></script>
+
+	<!-- ThemeFunctions -->
+	<script src="assets/js/functions.js"></script>
+
+	<!-- 自訂JS-->
+	<script>
+//載入畫面就讀取會員資料
+const memListArea = document.getElementById("mem-list-area");
+const contextPath = window.location.pathname.split('/')[1];
+const pageUl = document.getElementById("page-ul");
+let jsonData = {};  //宣告物件變數讓所有函式可以使用
+
+//宣告上方頁籤
+const allMemBtn = document.getElementById("all-mem");
+const accStatusBtn0 = document.getElementById("accStatus0");  
+const accStatusBtn1 = document.getElementById("accStatus1");  
+const accStatusBtn2 = document.getElementById("accStatus2");  
+const searchMem = document.getElementById("search-mem");
+const csvDownloadBtn = document.getElementById("csv-download-btn");
+//陳炳翰新增-母清單id
+const toempList = document.getElementById("toempList");
+const toempListroll = document.getElementById("toempListroll");
+const mem1 = document.getElementById("mem1");
+const mem2 = document.getElementById("mem2");
+const factory1 = document.getElementById("factory1");
+const factory2 = document.getElementById("factory2");
+const factory3 = document.getElementById("factory3");
+const buyroll = document.getElementById("buyroll");
+const buy1 = document.getElementById("buy1");
+const buy2 = document.getElementById("buy2");
+const buy3 = document.getElementById("buy3");
+const ticketroll = document.getElementById("ticketroll");
+const grouproll = document.getElementById("grouproll");
+const guestroll = document.getElementById("guestroll");
+const frontroll = document.getElementById("frontroll");
+const front1 = document.getElementById("front1");
+const front2 = document.getElementById("front2");
+const front3 = document.getElementById("front3");
+//陳炳翰新增-業務邏輯
+var empStatus = '<%= session.getAttribute("empStatus") %>';
+fetch('/emp/login')
+    .then(response => response.text())
+    .then(empStatus => {
+        console.log(empStatus);  // 這裡你可以使用empStatus
+    });
+
+//員工管理系統=1
+toempListroll.addEventListener("click", function () {
+    if (sessionStorage.getItem("empStatus") == 1) {
+        toempList.addEventListener("click", function () {
+            location = "empList.html";
+        });
+    } else {
+        alert("無登入權限");
+    }
+});
+//會員管理系統=all
+mem1.addEventListener("click", function () {
+    location = "empList.html";
+}),
+    mem2.addEventListener("click", function () {
+        location = "empList.html";
+    })
+//廠商管理系統=all
+factory1.addEventListener("click", function () {
+    location = "empList.html";
+})
+factory2.addEventListener("click", function () {
+    location = "empList.html";
+})
+factory3.addEventListener("click", function () {
+    location = "empList.html";
+})
+//訂購管理系統=1/2
+buyroll.addEventListener("click", function () {
+    if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
+        buy1.addEventListener("click", function () {
+            location = "empList.html";
+        });
+        buy2.addEventListener("click", function () {
+            location = "empList.html";
+        });
+        buy3.addEventListener("click", function () {
+            location = "empList.html";
+        });
+
+    } else {
+        alert("無登入權限");
+    }
+});
+//票卷管理=1/2
+ticketroll.addEventListener("click", function () {
+    if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
+        location = "empList.html";
+    } else {
+        alert("無登入權限");
+    }
+});
+//揪團檢舉管理=1/3
+grouproll.addEventListener("click", function () {
+    if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
+        location = "empList.html";
+    } else {
+        alert("無登入權限");
+    }
+});
+//客服訊息管理=all
+guestroll.addEventListener("click", function () {
+    location = "empList.html";
+}),
+    //首頁管理=1/3
+    frontroll.addEventListener("click", function () {
+        if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 3) {
+            front1.addEventListener("click", function () {
+                location = "empList.html";
+            });
+            front2.addEventListener("click", function () {
+                location = "empList.html";
+            });
+            front3.addEventListener("click", function () {
+                location = "empList.html";
+            });
+        } else {
+            alert("無登入權限");
+        }
+    });
+	
+	
+	
+	
+//陳炳翰新增end
+
+document.addEventListener("DOMContentLoaded", function(){
+    const formData = new FormData();
+    formData.append("action", "listAllMems");
+
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })
+});
+
+allMemBtn.addEventListener("click", function(){     //按下所有會員按鈕
+    const formData = new FormData();
+    formData.append("action", "listAllMems");
+    
+    //初始化會員清單顯示區塊、頁面區塊
+    searchMem.value = "";
+    pageUl.innerHTML = "";
+    memListArea.innerHTML = `
+    <!-- Table head -->
+    <div class="bg-light rounded p-3 d-none d-lg-block">
+        <div class="row row-cols-7 g-4">
+            <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員Email</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+            <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+            <div class="col-2"><h6 class="mb-0">操作</h6></div>
+        </div>
+    </div>
+    `;
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })
+});
+
+accStatusBtn0.addEventListener("click", function(){     //按下"尚未啟用帳號"按鈕
+    const formData = new FormData();
+    formData.append("action", "listByAccStatus");
+    formData.append("accStatus", "0");
+    
+    //初始化會員清單顯示區塊、頁面區塊
+    searchMem.value = "";
+    pageUl.innerHTML = "";
+    memListArea.innerHTML = `
+    <!-- Table head -->
+    <div class="bg-light rounded p-3 d-none d-lg-block">
+        <div class="row row-cols-7 g-4">
+            <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員Email</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+            <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+            <div class="col-2"><h6 class="mb-0">操作</h6></div>
+        </div>
+    </div>
+    `;
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })
+});
+
+accStatusBtn1.addEventListener("click", function(){     //按下"正常啟用帳號"按鈕
+    const formData = new FormData();
+    formData.append("action", "listByAccStatus");
+    formData.append("accStatus", "1");
+    
+    //初始化會員清單顯示區塊、頁面區塊
+    searchMem.value = "";
+    pageUl.innerHTML = "";
+    memListArea.innerHTML = `
+    <!-- Table head -->
+    <div class="bg-light rounded p-3 d-none d-lg-block">
+        <div class="row row-cols-7 g-4">
+            <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員Email</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+            <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+            <div class="col-2"><h6 class="mb-0">操作</h6></div>
+        </div>
+    </div>
+    `;
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })
+});
+
+accStatusBtn2.addEventListener("click", function(){     //按下"已停權帳號"按鈕
+    const formData = new FormData();        
+    formData.append("action", "listByAccStatus");
+    formData.append("accStatus", "2");
+    
+    //初始化會員清單顯示區塊、頁面區塊
+    searchMem.value = "";
+    pageUl.innerHTML = "";
+    memListArea.innerHTML = `
+    <!-- Table head -->
+    <div class="bg-light rounded p-3 d-none d-lg-block">
+        <div class="row row-cols-7 g-4">
+            <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員Email</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+            <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+            <div class="col-2"><h6 class="mb-0">操作</h6></div>
+        </div>
+    </div>
+    `;
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })
+});
+
+csvDownloadBtn.addEventListener("click", function(){
+    const formData = new FormData();        
+    formData.append("action", "csvDownload");
+    
+    //宣告formData物件內的各屬性陣列，將物件內所有的相同屬性存在同一個陣列
+    const memNoArray = [];     
+    const memLevelNameArray = [];
+    const memAccArray = [];
+    const memNameArray = [];
+    const memGenderArray = [];
+    const memBdayArray = [];
+    const memEmailArray = [];
+    const memMobileArray = [];
+    const memCityArray = [];
+    const memDistArray = [];
+    const memAddrArray = [];
+    const memRegDateArray = [];
+    const memAccStatusArray = [];
+    const memActStatusArray = [];
+
+    jsonData.forEach(function(element){
+        memNoArray.push(element.memNo);
+        memLevelNameArray.push(element.memLevel.memLevelName);
+        memAccArray.push(element.memAcc);
+        (typeof element.memName !== "undefined") ? memNameArray.push(element.memName) : memNameArray.push("未填寫");
+        memGenderArray.push(genderInfo(element.memGender));
+        memBdayArray.push((typeof element.memBday !== "undefined") ? element.memBday : "未填寫");
+        memEmailArray.push(element.memEmail);
+        memMobileArray.push(element.memMobile);
+        memCityArray.push((typeof element.memCity !== "undefined") ? element.memCity : "未填寫");
+        memDistArray.push((typeof element.memDist !== "undefined") ? element.memDist : "未填寫");
+        memAddrArray.push((typeof element.memAddr !== "undefined") ? element.memAddr : "未填寫");
+        memRegDateArray.push(element.memRegDate);
+        memAccStatusArray.push(accStatustext(element.memAccStatus));
+        memActStatusArray.push((element.memActStatus === 0 ? "揪團功能正常" : "揪團功能停權"));
+    })
+    
+    //將陣列存進formData
+    formData.append("memNoArray", memNoArray);      
+    formData.append("memLevelNameArray", memLevelNameArray);
+    formData.append("memAccArray", memAccArray);
+    formData.append("memNameArray", memNameArray);
+    formData.append("memGenderArray", memGenderArray);
+    formData.append("memBdayArray", memBdayArray);
+    formData.append("memEmailArray", memEmailArray);
+    formData.append("memMobileArray", memMobileArray);
+    formData.append("memCityArray", memCityArray);
+    formData.append("memDistArray", memDistArray);
+    formData.append("memAddrArray", memAddrArray);
+    formData.append("memRegDateArray", memRegDateArray);
+    formData.append("memAccStatusArray", memAccStatusArray);
+    formData.append("memActStatusArray", memActStatusArray);
+
+    //透過formData發送請求到後端
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.blob();
+    }).then(function(blob){
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "selectedMemInfo.csv";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+})
+
+let timer = null;   //用來宣告計時器
+
+searchMem.addEventListener("input", function(){      //搜尋框改變就模糊搜尋資料庫資料
+    clearTimeout(timer);    //重置定時器
+    timer = setTimeout(() => {  //設定定時器，避免過多次發送請求
+    
+    const formData = new FormData();        
+    formData.append("action", "searchMem");
+    formData.append("searchContent", searchMem.value);
+    //初始化會員清單顯示區塊、頁面區塊
+    pageUl.innerHTML = "";
+    memListArea.innerHTML = `
+    <!-- Table head -->
+    <div class="bg-light rounded p-3 d-none d-lg-block">
+        <div class="row row-cols-7 g-4">
+            <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員電子信箱</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+            <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+            <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+            <div class="col-2"><h6 class="mb-0">操作</h6></div>
+        </div>
+    </div>
+    `;
+    fetch(`/${contextPath}/mem/memList`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+        return response.json();
+    }).then(function(memList){
+        jsonData = memList;
+        pagination(jsonData, 1);     //呼叫分頁函式
+    })}, 400);
+});
+
+//分頁資料函式設定
+function pagination(jsonData, nowPage){
+            
+    //分頁資料設定
+    const memListLength = jsonData.length;   //資料長度
+    const pageLength = 10;  //定義每頁顯示筆數
+    const pageNumber = Math.ceil(memListLength/pageLength);   //總頁數
+
+    let currentPage = nowPage;
+
+    if(currentPage > pageNumber){   
+        currentPage = pageNumber;   //當前頁面比總頁數大，當前頁面等於總頁數
+    }
+
+    function minDataCommpute(){         //當前頁面的第一筆資料是總資料的第幾筆
+        if(currentPage === 1)return 1;
+        else if(currentPage === 0)return 0;
+        else return (currentPage * pageLength) - pageLength + 1;
+    };
+    const minData = minDataCommpute();  
+    const maxData = currentPage * pageLength;    //當前頁面的最後一筆資料是總資料的第幾筆
+    
+    const datas = [];    //準備一個陣列放準備顯示的資料
+
+    jsonData.forEach(function(element,index){
+        const num = index + 1;  //num表示是第幾筆mem資料
+        if(num >= minData && num <= maxData){
+            datas.push(element);     //當資料屬於頁面內的範圍時，就推進陣列內準備顯示
+        }
+    })
+    
+    //--資料顯示
+    let i = 1;   //計次 
+
+    for(let data of datas){
+        const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64, memAccStatus, memActStatus, memRegDate} = data;
+        const {memLevelName, memLevelDisc} = memLevel;  //上面回傳的東西只有memLevel是物件，針對其再解構
+
+
+        //定義會員清單內動態生成的html
+        let memListAreaHtml = `
+        <!-- Table data -->
+        <div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+            
+            <!-- Data item -->
+            <div class="col-6 col-lg-2">
+                <small class="d-block d-lg-none">會員帳號：</small>
+                <div class="d-flex align-items-center">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-xs flex-shrink-0">
+                        <img class="avatar-img rounded-circle" src=${showMemImg(memPicBase64)} alt="myassets/graybackground.png">
+                    </div>
+                    <!-- Info -->
+                    <div class="ms-2">
+                        <h6 class="mb-0 fw-light">${memAcc}</h6>
+                    </div>
+                </div>
+            </div>	
+
+            <!-- Data item -->
+            <div class="col-6 col-lg-2">
+                <small class="d-block d-lg-none">會員Email：</small>
+                <h6 class="mb-0 fw-normal">${memEmail}</h6>
+            </div>
+
+            <!-- Data item -->
+            <div class="col-6 col-lg-2">
+                <small class="d-block d-lg-none">會員手機</small>
+                <h6 class="mb-0 fw-normal">${memMobile}</h6>
+            </div>
+            
+            <!-- Data item -->
+            <div class="col-6 col-lg-2">
+                <small class="d-block d-lg-none">會員等級:</small>
+                <h6 class="mb-0 fw-normal">${memLevelName}</h6>
+            </div>
+
+            <!-- Data item -->
+            <div class="col-6 col-lg-2">
+                <small class="d-block d-lg-none">帳號/揪團狀態</small>
+                <div class="badge bg-opacity-10 ${accStatusclass(memAccStatus)}">${accStatustext(memAccStatus)}</div> /
+                <div class="badge bg-opacity-10 ${(memActStatus === 0 ? "bg-success text-success" : "bg-danger text-danger")}">${(memActStatus === 0 ? "揪團功能正常" : "揪團功能停權")}</div>
+            </div>
+
+
+            <!-- Data item 按鈕 -->
+            <div class="col-6 col-lg-2 dropdown">
+                <a class="btn btn-secondary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink${i}" data-bs-toggle="dropdown" aria-expanded="false">
+                  查看/修改
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink${i}">
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#memInformation${i}">查看會員資訊</a></li>
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateStatus${i}">修改會員權限</a></li>
+                </ul>
+            </div>
+
+            <!-- Modal 1 -->
+            <div class="modal fade" id="memInformation${i}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="memInformationLabel${i}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="memInformationLabel${i}">會員完整資訊</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>會員編號：${memNo}</p>
+                            <p>會員等級：${memLevelName}</p>
+                            <p>會員帳號：${memAcc}</p>
+                            <p>會員姓名：${(typeof memName !== "undefined") ? memName : "未填寫"}</p>
+                            <p>會員性別：${genderInfo(memGender)}</p>
+                            <p>會員生日：${(typeof memBday !== "undefined") ? memBday : "未填寫"}</p>
+                            <p>會員電子信箱：${memEmail}</p>
+                            <p>會員手機號碼：${memMobile}</p>
+                            <p>會員居住縣市：${(typeof memCity !== "undefined") ? memCity : "未填寫"}</p>
+                            <p>會員居住地區：${(typeof memDist !== "undefined") ? memDist : "未填寫"}</p>
+                            <p>會員住址：${(typeof memAddr !== "undefined") ? memAddr : "未填寫"}</p>
+                            <p>會員註冊時間：${memRegDate}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal 2 -->
+            <div class="modal fade" id="updateStatus${i}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStatusLabel${i}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateStatusLabel${i}">修改會員權限</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label">帳號狀態</label>
+                                        <select class="form-select text-secondary" id="accStatus-select${i}">
+                                            <option value="0" ${(memAccStatus === 0) ? "selected" : ""}>帳號未啟用</option>
+                                            <option value="1" ${(memAccStatus === 1) ? "selected" : ""}>帳號已啟用</option>
+                                            <option value="2" ${(memAccStatus === 2) ? "selected" : ""}>帳號停權</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">揪團功能狀態</label>
+                                        <select class="form-select text-secondary" id="actStatus-select${i}">
+                                            <option value="0" ${(memActStatus === 0) ? "selected" : ""}>功能正常</option>
+                                            <option value="1" ${(memActStatus === 1) ? "selected" : ""}>揪團功能停權</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <button type="button" class="btn btn-primary" id="update-btn${i}" disabled>完成修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+        //動態生成會員清單
+        memListArea.insertAdjacentHTML("beforeend", memListAreaHtml);
+
+        //揪團狀態有變動，才能按完成修改按鈕
+        const accStatusSelect = document.getElementById("accStatus-select" + i);
+        const actStatusSelect = document.getElementById("actStatus-select" + i);
+        const actStatusOptions = document.querySelectorAll("#actStatus-select" + i + "> option");
+        const updateBtn = document.getElementById("update-btn" + i);
+
+        accStatusSelect.addEventListener("change", function(){
+            updateBtn.removeAttribute("disabled");
+            if(accStatusSelect.value === "2"){
+                for(let actStatusOption of actStatusOptions){
+                    actStatusOption.removeAttribute("selected");
+                }
+                actStatusOptions[1].setAttribute("selected", true);
+            }
+        });
+
+        actStatusSelect.addEventListener("change", function(){
+            updateBtn.removeAttribute("disabled");
+        });
+
+        //--修改會員狀態
+        updateBtn.addEventListener("click", function(){
+            const formDataUpdateStatus = new FormData();
+            formDataUpdateStatus.append("action", "updateStatus");
+            formDataUpdateStatus.append("memAccStatus", accStatusSelect.value);
+            formDataUpdateStatus.append("memActStatus", actStatusSelect.value);
+            formDataUpdateStatus.append("memNo", memNo);
+            
+            fetch(`/${contextPath}/mem/memList`,{
+                method: "POST",
+                body: formDataUpdateStatus
+            }).then(function(response){
+                return response.json();
+            }).then(function(memObject){
+                const {successful, message} = memObject;
+                if(successful){
+                    alert(message);
+                    location.reload();
+                }else{
+                    alert(message);
+                }
+            })
+        });
+        i++;    
+    }
+    const listLength = document.getElementById("list-length");
+    listLength.textContent = `當前顯示第 ${minData} 至第 ${(maxData > memListLength) ? memListLength : maxData} 筆資料，共 ${memListLength} 筆資料`;
+    
+    //分頁頁籤設定
+    let pageHtml = "";
+
+    if(currentPage > 1){
+        pageHtml += `<li class="page-item "><a class="page-link" href="#" data-page="${Number(currentPage) - 1}">Prev</a></li>`
+    }else{
+        pageHtml += `<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Prev</a></li>`
+    }
+
+    for(let i = 1; i <= pageNumber; i++){
+        if(Number(currentPage) === i) {
+            pageHtml +=`<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        } else {
+            pageHtml +=`<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        }
+    };
+
+    if(currentPage < pageNumber) {
+        pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(currentPage) + 1}">Next</a></li>`;
+    } else {
+        pageHtml += `<li class="page-item disabled"><a class="page-link">Next</a></li>`;
+    }
+
+    pageUl.insertAdjacentHTML("beforeend", pageHtml);
+
+    //--點擊切換頁籤
+    const pageLinks = document.querySelectorAll(".page-link");
+    
+    for(let pageLink of pageLinks){
+        pageLink.addEventListener("click", function(e){
+            e.preventDefault();
+            pageUl.innerHTML = "";
+            memListArea.innerHTML = `
+                <!-- Table head -->
+                <div class="bg-light rounded p-3 d-none d-lg-block">
+                    <div class="row row-cols-7 g-4">
+                        <div class="col-2"><h6 class="mb-0">會員帳號</h6></div>
+                        <div class="col-2"><h6 class="mb-0">會員Email</h6></div>
+                        <div class="col-2"><h6 class="mb-0">會員手機</h6></div>
+                        <div class="col-2"><h6 class="mb-0">會員等級</h6></div>
+                        <div class="col-2"><h6 class="mb-0">帳號/揪團狀態</h6></div>
+                        <div class="col-2"><h6 class="mb-0">操作</h6></div>
+                    </div>
+                </div>
+            `;
+            const page = e.target.dataset.page;
+            pagination(jsonData, page);
+        })
+    }
+}
+
+
+//定義會員狀態樣式
+function accStatusclass(memAccStatus){
+    switch(memAccStatus){
+        case 0:
+            return "bg-warning text-warning";
+        case 1:
+            return "bg-success text-success";
+        case 2:
+            return "bg-danger text-danger";
+    }
+}
+
+//定義會員狀態文字顯示
+function accStatustext(memAccStatus){
+    switch(memAccStatus){
+        case 0:
+            return "帳號未啟用";
+        case 1:
+            return "帳號已啟用";
+        case 2:
+            return "帳號停權";
+    }
+}
+
+//判斷是否有照片，無照片放預設圖，有照片放照片
+function showMemImg(memPicBase64){
+    if(typeof memPicBase64 !== "undefined"){
+        return "data:image/jpeg;base64," + memPicBase64;
+    }else{
+        return "myassets/logo_noliteral.png";
+    }
+}
+
+//定義性別狀態顯示
+function genderInfo(memGender){
+    if(typeof memGender !== "undefined"){
+        switch(memGender){
+            case 0:
+                return "不便透漏";
+            case 1:
+                return "男";
+            case 2:
+                return "女";
+        }
+    }else{
+        return "未填寫";
+    }    
+}
+</script>
+
+
+</body>
+</html>

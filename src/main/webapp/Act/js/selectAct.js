@@ -79,7 +79,7 @@ async function showAct(act) {
                     </div>
                     <div class="mt-2 mt-sm-0 z-index-2">`
             if (mem !== acts.memno) {
-                html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
+                html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno},${act.actmaxcount},${act.actcurrentcount})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
             class="bi bi-arrow-right ms-2"></i></a>`
             }
 
@@ -218,8 +218,8 @@ let report = (id) => {
 //     sessionStorage.setItem("actno", id);
 //     location.href = `${getContextPath()}/Act/reviseAct.html`;
 // }
-function JoinActClick(id) {
-    let differ = act.actmaxcount - act.actcurrentcount;
+function JoinActClick(id, actmaxcount, actcurrentcount) {
+    let differ = actmaxcount - actcurrentcount;
     let memid = mem;
     if (differ === 0) {
         Swal.fire({

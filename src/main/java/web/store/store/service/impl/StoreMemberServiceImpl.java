@@ -118,6 +118,11 @@ public class StoreMemberServiceImpl implements StoreMemberService{
 		return store;
 	}
 
+	@Override
+	public Store selectstoreno(Integer storeNo) {
+		return dao.selectById(storeNo);
+	}
+
 	
 
 	

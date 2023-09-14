@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded",async function () {
             <h5 class="card-title mb-1"><a>${datas.pkgDayStart}</a></h5>
             <small>截止日期:${datas.pkgDayEnd}</small>
             <div><small>人數上限:${datas.pkgPeopleMax}</small></div>
+            <div class="text-success"><small>購買人數:${datas.pkgPeople}</small></div>
             <!-- Price and Button -->
             <div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
                 <!-- Price -->
@@ -79,6 +80,15 @@ document.addEventListener("DOMContentLoaded",async function () {
 </div>`
         });
         
+    });
+    
+    const logout = document.getElementById("logout");
+    logout.addEventListener("click", function(){
+        sessionStorage.removeItem("storeNo");
+        sessionStorage.removeItem("storeName");
+        sessionStorage.removeItem("storePicBase64");
+        fetch("/flyday/store/logout")
+        location = "/flyday/front_end/store-sign-in.html";
     })
 })
 function edit(pkgDetailsNo){
