@@ -152,7 +152,7 @@ async function showjoin() {
     return showm.innerHTML = html;
 }
 $(document).on('click', `#Pay`, () => {
-    fetch('ECPay', {
+    fetch('JoinPay', {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify({
