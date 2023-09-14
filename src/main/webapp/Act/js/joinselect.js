@@ -322,7 +322,7 @@ $(document).on('click', `#remove`, () => {
                                                         '若有想要一起出遊請建立揪團ㄅ',
                                                         'success'
                                                     )
-                                                    location.href = `${getContextPath()}/Act/hotel-grid.html`;
+                                                    location.href = `${getContextPath()}/Act/account-bookings.html`;
 
                                                 }
                                             });

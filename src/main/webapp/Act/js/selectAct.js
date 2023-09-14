@@ -150,7 +150,7 @@ let report = (id) => {
     })
 
     swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
+        title: '確定要加入嗎?',
         html: `<div class="col-md-6">
         <label class="form-label">Nationality<span class="text-danger">*</span></label>
         <select class="form-select js-choice" id="select1">
