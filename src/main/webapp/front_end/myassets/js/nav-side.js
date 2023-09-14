@@ -170,6 +170,15 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 //登出按鈕
+const logoutSide = document.getElementById("logoutSide");
+
+logoutSide.addEventListener("click", function(){
+  console.log("XXX");
+  sessionStorage.removeItem("memNo");
+  fetch(`/${contextPath}/mem/logout`);
+  location = `/${contextPath}/front_end/index.html`;
+});
+
 const logoutNav = document.getElementById("logoutNav");
 
 logoutNav.addEventListener("click", function(){

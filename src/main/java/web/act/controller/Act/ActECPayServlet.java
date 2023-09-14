@@ -20,7 +20,7 @@ import static core.util.Constants.SERVER_URL;;
 
 @WebServlet("/Act/ActECPay")
 public class ActECPayServlet extends HttpServlet {
-//    public static final String SERVER_URL = "https://c454-2001-b011-5c0a-d38f-6c4b-6f60-2a1b-130a.ngrok.io ";
+//    public static final String SERVER_URL = " https://9374-111-249-23-56.ngrok.io ";
     private static final long serialVersionUID = -3935509715372119008L;
     //    public static final ECPayCheckoutService SERVICE = new ECPayCheckoutService();
     public static final EcPayService SERVICE = new EcPayServiceImpl();

@@ -105,8 +105,8 @@ const actMenu = document.getElementById("accounntMenu");
 
 const contextPath = window.location.pathname.split('/')[1];
 
-//用一個陣列來存載入網頁時從後端拿來需要重複使用的資料
-let getOneInfoObj = [];
+//存入會員揪團狀態給阻擋被停權會員驗證使用，先宣告為正常值0
+let memActStatusRecord = 0 ;
 
 document.addEventListener("DOMContentLoaded",function(){
   fetch(`/${contextPath}/mem/getOneInfo`,{
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded",function(){
       
     }
   }).then(function(jsonObject){
-    const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64} = jsonObject;
+    const {memNo, memLevelNo, memAcc, memName, memGender, memBday, memEmail, memMobile, memCity, memDist, memAddr, memLevel, memPicBase64, memAccStatus, memActStatus} = jsonObject;
     const {memLevelName, memLevelDisc} = memLevel;  //上面回傳的東西只有memLevel是物件，針對其再解構
 
     //填入帳號
@@ -150,6 +150,8 @@ document.addEventListener("DOMContentLoaded",function(){
         memPicNav.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
       }
     }
+
+    memActStatusRecord = memActStatus;   //陣列存入會員揪團狀態給阻擋被停權會員驗證使用
 
   }).catch(function(){
     

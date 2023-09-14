@@ -24,7 +24,8 @@ public class NameServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		Mem mem= (Mem) session.getAttribute("mem");
-		String userName = mem.getMemName();
+//		String userName = mem.getMemName();
+		String userName = "會員編號:" + mem.getMemNo().toString();
 		req.setAttribute("userName", userName);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/message/chattocs.jsp");
