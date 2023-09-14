@@ -15,7 +15,7 @@ import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
 
 
-@WebServlet("/Act/ECPay")
+@WebServlet("/Act/JoinPay")
 public class ECPayServlet extends HttpServlet {
     public static final String SERVER_URL = "https://0a5e-1-171-172-15.ngrok.io";
     private static final long serialVersionUID = -3935509715372119008L;
