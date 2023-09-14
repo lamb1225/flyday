@@ -91,6 +91,18 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/shopcart.css">
 
+    <style>
+        #tableAjax {
+         width: 1000px; /* 將表格的寬度設定為父容器的100% */
+        }
+        th{
+            font-size: 12PX;
+        }
+        td{
+            font-size: 8px;
+        }
+
+    </style>
 
 </head>
 
@@ -451,13 +463,13 @@
                 <!-- Filters END -->
 
                 <!-- Guest list START -->
-                <div style="width:110%;" class="card shadow mt-4">
+                <div style="width:100%;" class="card shadow mt-4">
                     <!-- Card body START -->
                     <div class="card-body">
                         <!-- Table head -->
                         <!-- <div style="width:890px;" class="bg-light rounded p-3 d-none d-lg-block">
                         </div> -->
-                        <table class="table table-striped table-bordered" style="width:10%;" id="tableAjax">
+                        <table class="table table-striped table-bordered" id="tableAjax">
 
                             <thead>
                                 <tr>

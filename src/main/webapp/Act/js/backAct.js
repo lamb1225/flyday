@@ -152,6 +152,7 @@ $.ajax({
                     //將全部欄位的字置中。
                     targets: '_all',
                     className: 'text-center'
+                    
                 }
             ],
             //語言區塊:將預設英文配置改成中文顯示。
