@@ -152,7 +152,7 @@ function showmem(data) {
     return tab.innerHTML = html;
 }
 function PayAct(actno, price, title) {
-    fetch('ActECPay?actno=', {
+    fetch('ActECPay', {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify({
