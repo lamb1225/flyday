@@ -7,11 +7,13 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 
 import web.pkg.pkg.dao.PkgShopCartDao;
+import web.pkg.pkg.entity.PkgCoup;
 import web.pkg.pkg.entity.PkgShopCart;
 import web.pkg.pkg.entity.PkgShopCartId;
 
 import org.hibernate.query.Query;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public class pkgShopCartDaoImpl implements PkgShopCartDao{
 	
 	@PersistenceContext
@@ -27,17 +29,17 @@ public class pkgShopCartDaoImpl implements PkgShopCartDao{
 	public int deleteById(PkgShopCartId pkgShopCartId) {
 		PkgShopCart pkgShopCart=session.get(PkgShopCart.class, pkgShopCartId);
 		session.remove(pkgShopCart);
-		return pkgShopCart.getPkgShopCartid().getPkgDetailsNo();
+		return pkgShopCart.getPkgShopCartid().getPkgPlanNo();
 	}
 
 	@Override
 	public int update(PkgShopCart pkgShopCart) {
 		final String hql= "UPDATE PkgShopCart SET pkgQty=:pkgQty "
-				+"WHERE memNo=:memNo AND pkgDetailsNo=:pkgDetailsNo";
+				+"WHERE memNo=:memNo AND pkgPlanNo=:pkgPlanNo";
 		
 		Query<?> query = session.createQuery(hql);
 		return query.setParameter("memNo", pkgShopCart.getPkgShopCartid().getMemNo())
-				.setParameter("pkgDetailsNo", pkgShopCart.getPkgShopCartid().getPkgDetailsNo())
+				.setParameter("pkgPlanNo", pkgShopCart.getPkgShopCartid().getPkgPlanNo())
 				.setParameter("pkgQty", pkgShopCart.getPkgQty())
 				.executeUpdate();
 
@@ -49,9 +51,25 @@ public class pkgShopCartDaoImpl implements PkgShopCartDao{
 	}
 
 	@Override
+	public List<PkgShopCart> selectAll(Integer memNo) {
+		final String hql="FROM PkgShopCart WHERE pkgShopCartid.memNo=:memNo";
+		return session.createQuery(hql, PkgShopCart.class).setParameter("memNo", memNo).getResultList();
+	}
+
+	//查所有會員購物車
+	@Override
 	public List<PkgShopCart> selectAll() {
-		final String hql="FROM PkgShopCart";
+		final String hql = "FROM PkgShopCart";
 		return session.createQuery(hql, PkgShopCart.class).getResultList();
+
+	}
+	
+	//清空購物車
+	@Override
+	public int deleteAll(Integer memNo) {
+		PkgShopCart pkgShopCart=session.get(PkgShopCart.class, memNo);
+		session.remove(pkgShopCart);
+		return 1;
 	}
 	
 }

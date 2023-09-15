@@ -11,6 +11,8 @@ import web.pkg.pkg.entity.PkgShopCartId;
 
 public interface PkgShopCartDao extends CoreDao<PkgShopCart, PkgShopCartId>{
 	
-	
+	List<PkgShopCart> selectAll(Integer memNo);
+
+	int deleteAll(Integer memNo);
 
 }	
