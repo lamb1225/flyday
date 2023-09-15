@@ -131,7 +131,8 @@ document.addEventListener("DOMContentLoaded", async function(){
     $("button#type").on("click", function () {
         // 數量回到初始值1
         let buttonValue = $(this).attr("value");
-        let typeParentDiv = $(this).closest('div#PlanType' + buttonValue);
+        let planNO = $(this).closest("li").attr("value");
+        let typeParentDiv = $(this).closest('div#PlanType' + planNO);
         typeParentDiv.find('label#tktQty').attr("value", 1);
         typeParentDiv.find('label#tktQty').text(1);
         let typePrice = $(this).closest("li").attr("value");
@@ -244,6 +245,7 @@ function PlanHTML (i) {
                 <span>選擇票種</span>
                 <p></p>
                 <ul class="nav nav-pills-shadow fw-normal mb-0" id="typeList${tktPlanTypes[i].tktplanno}">
+                    <!-- Add 票種 List -->
                 </ul>									
             </div>
 
@@ -266,10 +268,11 @@ function PlanHTML (i) {
             <!-- Price and button -->
             <div class="d-sm-flex justify-content-between mt-4">
                 <div class="hstack gap-1">
-                    <h5 class="mb-0" id="price">TWD -</h5>								
+                    <h5 class="mb-0" id="price">TWD -</h5>
+                    <span class="mb-0 me-2">/ 人</span>								
                 </div>
                 <div class="mt-2 mt-sm-0">
-                    <button class="btn btn-sm btn-primary mb-0"><i class="bi bi-plus-lg"></i> 加入購物車</button>
+                    <button class="btn btn-sm btn-primary mb-0" onclick="addShopCart(this, ${tktPlanTypes[i].tktplanno})"><i class="bi bi-plus-lg"></i> 加入購物車</button>
                 </div>	
             </div>
         </div>
@@ -285,12 +288,69 @@ function PlanHTML (i) {
 function typeHTML (i){
     html = "";
     html += `
-    <li class="nav-item" value="${tktPlanTypes[i].price}"> 
-        <button class="btn btn-sm btn-outline-success mb-0 btn-type" data-bs-toggle="tab" name="type" id="type" value="${tktPlanTypes[i].tktplanno}">${tktPlanTypes[i].tkttype}</button> 
+    <li class="nav-item" value="${tktPlanTypes[i].tktplanno}"> 
+        <button class="btn btn-sm btn-outline-success mb-0 btn-type" data-bs-toggle="tab" name="type" id="type" value="${tktPlanTypes[i].tkttypeno}">${tktPlanTypes[i].tkttype}</button> 
     </li>    
     `;
 
     $("#typeList" + tktPlanTypes[i].tktplanno).append(html);
+}
+
+// 加入購物車
+function addShopCart(button, tktplanno){
+    let tktTypeNo = null; // 票種流水號
+    const parentDiv = button.closest("#PlanType"+tktplanno); // 找到按钮的父元素
+    const listItems = parentDiv.querySelectorAll('li'); // 找到父元素下所有的 <li> 元素
+    // 遍歷 <li> 元素(取得票種流水號)
+    listItems.forEach(function (li) {
+        const tabButton = li.querySelector('button');
+        if (tabButton) {
+            if (tabButton.classList.contains('active')) {
+                tktTypeNo = tabButton.value;
+            }
+        }
+    });
+    // 如果沒有選擇任何票種，票種流水號為-1
+    if (!tktTypeNo) {
+        tktTypeNo = -1;
+    }
+    console.log("Button Value:", tktTypeNo);
+    let tktQty = parentDiv.querySelector("#tktQty").getAttribute("value");
+    console.log("tktQty",tktQty);
+
+    const formdata = new FormData();
+    formdata.append("action", "addItem");
+    formdata.append("tktTypeNo", tktTypeNo);
+    formdata.append("tktQty", tktQty);
+    
+    if(tktTypeNo === -1){
+        alert("請選擇票種");
+    } else {
+        fetch('', {
+            method: 'POST',    
+            body: formdata,
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("加入購物車！"); 
+                return response.json(); 
+            } else {
+                alert("加入失敗！");
+                const { status, statusText } = response;
+                throw Error(`${status}: ${statusText}`);
+            }
+        })
+        .then(function (data) {
+            console.log(data)
+        })
+        .catch(function(error) {
+            console.error('Fetch錯誤：', error);
+            alert("加入失敗！");
+          });
+    }
+
+
+
 }
 
 // 如何抵達HTML程式碼
