@@ -21,7 +21,6 @@ import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.entity.TktJoinPrice;
 import web.tkt.tktt.entity.TktPlan;
 import web.tkt.tktt.entity.TktType;
-import web.tkt.tktt.util.Util;
 
 public class TktDAOImpl implements TktDAO{
 	
