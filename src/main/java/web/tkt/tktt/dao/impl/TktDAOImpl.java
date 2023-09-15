@@ -25,24 +25,15 @@ import web.tkt.tktt.util.Util;
 
 public class TktDAOImpl implements TktDAO{
 	
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/flyday");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
-
-	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/flyday");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	// 新增商品SQL
 	private static final String INSERT_STMT = 
@@ -118,13 +109,9 @@ public class TktDAOImpl implements TktDAO{
 	// 新增商品
 	@Override
 	public void insertTkt(Tkt tkt) {
-		System.out.println("有到insert()");
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);){
 			
 			pstmt.setString(1, tkt.getTktname());
 			pstmt.setString(2, tkt.getTktstartdate());
@@ -147,8 +134,6 @@ public class TktDAOImpl implements TktDAO{
 			pstmt.setInt(19, tkt.getRatetotal());
 			pstmt.setInt(20, tkt.getRateqty());			
 			
-			System.out.println("新增成功222");
-
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +143,6 @@ public class TktDAOImpl implements TktDAO{
 	// 新增圖片
 	@Override
 	public void insertImg(TktImg tktimg) {
-		System.out.println("有到insertImg()");
 		
 		List<String> tktimgBase64List = tktimg.getTktimgBase64();
 	    List<byte[]> tktimgList = new ArrayList<>();
@@ -174,13 +158,9 @@ public class TktDAOImpl implements TktDAO{
 	        tktimgList.add(tktimgBytes);
 	    }
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
 				PreparedStatement pstmt = con.prepareStatement(INSERTIMG_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
-//				PreparedStatement pstmt = con.prepareStatement(INSERTIMG_STMT);){
 			
 			try(ResultSet rsno = pstmtno.executeQuery();){
 				while (rsno.next()) {
@@ -194,8 +174,6 @@ public class TktDAOImpl implements TktDAO{
 				}				
 			}
 			
-			System.out.println("新增成功img");
-			
 			pstmt.executeBatch(); // 執行批量插入
 			
 		} catch (Exception e) {
@@ -208,19 +186,14 @@ public class TktDAOImpl implements TktDAO{
 	// 新增方案
 	@Override
 	public void insertPlan(TktPlan tktplan) {
-		System.out.println("有到insertplan()");
 		
 		List<String> plannameList = tktplan.getPlanname();
 		List<String> plancontentList = tktplan.getPlancontent();
 		List<Integer> planstatList = tktplan.getPlanstat();
-
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
 				PreparedStatement pstmt = con.prepareStatement(INSERTPLAN_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTNO);
-//				PreparedStatement pstmt = con.prepareStatement(INSERTPLAN_STMT);){
 			
 			try(ResultSet rsno = pstmtno.executeQuery();){
 				
@@ -238,7 +211,6 @@ public class TktDAOImpl implements TktDAO{
 	                pstmt.setInt(5, planstat);
 	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
 				}
-								
 			}
 			
 			pstmt.executeBatch(); // 執行批量插入
@@ -252,7 +224,6 @@ public class TktDAOImpl implements TktDAO{
 	// 新增票種
 	@Override
 	public void insertType(TktType tkttype) {
-		System.out.println("有到insertType()");
 		
 		List<String> tkttypeList = tkttype.getTkttype();
 		List<String> priceList = tkttype.getPrice();
@@ -260,15 +231,10 @@ public class TktDAOImpl implements TktDAO{
 		int maxplanno = 0;
 		int count = 0;
 
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTPLANNO);
 				PreparedStatement pstmtcount = con.prepareStatement(FIND_ADDPLAN_COUNT);
 				PreparedStatement pstmt = con.prepareStatement(INSERTTYPE_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmtno = con.prepareStatement(FIND_MAX_TKTPLANNO);
-//				PreparedStatement pstmtcount = con.prepareStatement(FIND_ADDPLAN_COUNT);
-//				PreparedStatement pstmt = con.prepareStatement(INSERTTYPE_STMT);){
 			
 			try(ResultSet rsno = pstmtno.executeQuery();
 				ResultSet rscount = pstmtcount.executeQuery();){
@@ -310,11 +276,8 @@ public class TktDAOImpl implements TktDAO{
 	@Override
 	public void updateTkt(Tkt tkt) {
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(UPDATE_STMT);){
-		
-//				try (	Connection con = ds.getConnection();
-//						PreparedStatement pstmt = con.prepareStatement(UPDATE_STMT);){
 			
 			pstmt.setString(1, tkt.getTktname());
 			pstmt.setString(2, tkt.getTktstartdate());
@@ -345,19 +308,14 @@ public class TktDAOImpl implements TktDAO{
 	// 修改方案(該方案編號的方案內容)
 	@Override
 	public void updateTktPlan(PlanType planType) {
-		System.out.println("有到updateTktPlan()");
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(UPDATEPLAN_STMT);){
-		
-//				try (	Connection con = ds.getConnection();
-//						PreparedStatement pstmt = con.prepareStatement(UPDATEPLAN_STMT);){
+			
 			pstmt.setString(1, planType.getPlanname());
 			pstmt.setString(2, planType.getPlancontent());
 			pstmt.setInt(3, planType.getTktplanno());
 			
-			System.out.println("修改成功222");
-
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -371,11 +329,8 @@ public class TktDAOImpl implements TktDAO{
 		
 		Tkt tkt = null;
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(findByPK_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(findByPK_STMT);){
 			
 			pstmt.setInt(1, tktno);
 			
@@ -417,11 +372,8 @@ public class TktDAOImpl implements TktDAO{
 
 		PlanType planType = null;
 		
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		try (	Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(findPlanByPK_STMT);){
-		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(findPlanByPK_STMT);){
 			
 			pstmt.setInt(1, tktplanno);
 			
@@ -434,9 +386,6 @@ public class TktDAOImpl implements TktDAO{
 				}
 			}
 						
-			System.out.println("查詢成功");
-			System.out.println("planType="+planType);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -450,11 +399,9 @@ public class TktDAOImpl implements TktDAO{
 		List<TktImg> imgList = new ArrayList<TktImg>();
 		TktImg tktImg = null;
 	
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(getTktImg_STMT);){
 		
-	//				try (	Connection con = ds.getConnection();
-	//						PreparedStatement pstmt = con.prepareStatement(getTktImg_STMT);){
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(getTktImg_STMT);){
 			
 			pstmt.setInt(1, tktno);
 			
@@ -465,17 +412,17 @@ public class TktDAOImpl implements TktDAO{
 					tktImg.setTktno(rs.getInt("TKT_NO"));
 					
 					byte[] img = rs.getBytes("TKT_IMG");
-					img = tktImg.shrink(img, 200);
-					String tktimgBase64 = Base64.getEncoder().encodeToString(img);
-					tktImg.setImgBase64(tktimgBase64);
-					System.out.println(tktimgBase64);
-					
+//					img = tktImg.shrink(img, 200);
+					if (img == null) {
+						continue;
+					} else {
+						String tktimgBase64 = Base64.getEncoder().encodeToString(img);
+						tktImg.setImgBase64(tktimgBase64);
+					}
+
 					imgList.add(tktImg); 
 				}
 			}
-			
-			System.out.println("查詢成功");
-			System.out.println("imgList="+imgList);
 	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -489,12 +436,9 @@ public class TktDAOImpl implements TktDAO{
 	public List<Tkt> getAll() {
 		List<Tkt> list = new ArrayList<Tkt>();
 		Tkt tkt = null;
-
-		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(getAll_STMT);){
 		
-//		try (	Connection con = ds.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(getAll_STMT);){
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(getAll_STMT);){
 			
 			
 			try(ResultSet rs = pstmt.executeQuery();){
@@ -511,8 +455,6 @@ public class TktDAOImpl implements TktDAO{
 				}
 			}
 			
-			System.out.println("查詢成功");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -521,132 +463,114 @@ public class TktDAOImpl implements TktDAO{
 	
 	
 	// 多筆查詢(圖片)
-		@Override
-		public List<TktImg> getAllImg() {
-			List<TktImg> imgList = new ArrayList<TktImg>();
-			TktImg tktimg = null;
-
-			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-					PreparedStatement pstmt = con.prepareStatement(getAllImg_STMT);){
-			
-//			try (	Connection con = ds.getConnection();
-//					PreparedStatement pstmt = con.prepareStatement(getAllImg_STMT);){
-				
-				
-				try(ResultSet rs = pstmt.executeQuery();){
-					while (rs.next()) {
-						tktimg = new TktImg();
-						tktimg.setTktimgno(rs.getInt("TKT_IMG_NO"));
-						tktimg.setTktno(rs.getInt("TKT_NO"));
-						
-						byte[] img = rs.getBytes("TKT_IMG");
-//						img = tktimg.shrink(img, 200);
-						if (img == null) {
-							continue;
-						} else {
-							String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
-							tktimg.setTktimgBase64(new ArrayList<>());
-							tktimg.getTktimgBase64().add(tktimgBase64);
-						}
-						
-						imgList.add(tktimg); 
-					}
-				}
-				
-				System.out.println("查詢成功");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return imgList;
-		}
-
-		// 多筆查詢(該票券編號的方案&票種)
-		@Override
-		public List<PlanType> getAllPlanType(Integer tktno) {
-			
-			List<PlanType> list = new ArrayList<PlanType>();
-			PlanType planType = null;
-
-			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-					PreparedStatement pstmt = con.prepareStatement(getAllPlanType_STMT);){
-			
-//			try (	Connection con = ds.getConnection();
-//					PreparedStatement pstmt = con.prepareStatement(getAllPlanType_STMT);){
-				
-				pstmt.setInt(1, tktno);
-				
-				try(ResultSet rs = pstmt.executeQuery();){
-					while (rs.next()) {
-						planType = new PlanType();
-						planType.setTktno(rs.getInt("TKT_NO"));
-						planType.setTktplanno(rs.getInt("TKT_PLAN_NO"));
-						planType.setPlanname(rs.getString("PLAN_NAME"));
-						planType.setPlancontent(rs.getString("PLAN_CONTENT"));
-						planType.setSoldamount(rs.getInt("SOLD_AMOUNT"));
-						planType.setPlanstat(rs.getInt("PLAN_STAT"));						
-						planType.setTkttypeno(rs.getInt("TKT_TYPE_NO"));
-						planType.setTkttype(rs.getString("TKT_TYPE"));
-						planType.setPrice(rs.getInt("PRICE"));
-	
-						list.add(planType); 
-					}
-				}
-				
-				System.out.println("查詢成功");
-				System.out.println("list="+list);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return list;
-
-		}
+	@Override
+	public List<TktImg> getAllImg() {
 		
-		// 多筆查詢(票券瀏覽List)
-		@Override
-		public List<TktJoinPrice> getAllTktLowPrice() {
+		List<TktImg> imgList = new ArrayList<TktImg>();
+		TktImg tktimg = null;
+		
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(getAllImg_STMT);){
 			
-			List<TktJoinPrice> list = new ArrayList<TktJoinPrice>();
-			TktJoinPrice tktJoinPrice = null;
-
-			try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-					PreparedStatement pstmt = con.prepareStatement(getAllTktLowPrice_STMT);){
-			
-//			try (	Connection con = ds.getConnection();
-//					PreparedStatement pstmt = con.prepareStatement(getAllTktLowPrice_STMT);){
-				
-				
-				try(ResultSet rs = pstmt.executeQuery();){
-					while (rs.next()) {
-						tktJoinPrice = new TktJoinPrice();
-						tktJoinPrice.setTktno(rs.getInt("TKT_NO"));
-						tktJoinPrice.setTktname(rs.getString("TKT_NAME"));
-						tktJoinPrice.setTktstartdate(rs.getString("TKT_STARTDATE"));
-						tktJoinPrice.setTktenddate(rs.getString("TKT_ENDDATE"));
-						tktJoinPrice.setTktinstruction(rs.getString("TKT_INSTRUCTION"));
-						tktJoinPrice.setCity(rs.getString("CITY"));
-						tktJoinPrice.setTktstat(rs.getInt("TKT_STAT"));
-						tktJoinPrice.setTktsort(rs.getInt("TKT_SORT"));
-						tktJoinPrice.setRatetotal(rs.getInt("RATETOTAL"));
-						tktJoinPrice.setRateqty(rs.getInt("RATEQTY"));
-						tktJoinPrice.setPrice(rs.getInt("PRICE"));
-
-						list.add(tktJoinPrice); 
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+					tktimg = new TktImg();
+					tktimg.setTktimgno(rs.getInt("TKT_IMG_NO"));
+					tktimg.setTktno(rs.getInt("TKT_NO"));
+					
+					byte[] img = rs.getBytes("TKT_IMG");
+//						img = tktimg.shrink(img, 200);
+					if (img == null) {
+						continue;
+					} else {
+						String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
+						tktimg.setTktimgBase64(new ArrayList<>());
+						tktimg.getTktimgBase64().add(tktimgBase64);
 					}
+					
+					imgList.add(tktimg); 
 				}
-				
-				System.out.println("查詢成功");
-
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return imgList;
+	}
 
+	// 多筆查詢(該票券編號的方案&票種)
+	@Override
+	public List<PlanType> getAllPlanType(Integer tktno) {
+		
+		List<PlanType> list = new ArrayList<PlanType>();
+		PlanType planType = null;
 
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(getAllPlanType_STMT);){
+			
+			pstmt.setInt(1, tktno);
+			
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+					planType = new PlanType();
+					planType.setTktno(rs.getInt("TKT_NO"));
+					planType.setTktplanno(rs.getInt("TKT_PLAN_NO"));
+					planType.setPlanname(rs.getString("PLAN_NAME"));
+					planType.setPlancontent(rs.getString("PLAN_CONTENT"));
+					planType.setSoldamount(rs.getInt("SOLD_AMOUNT"));
+					planType.setPlanstat(rs.getInt("PLAN_STAT"));						
+					planType.setTkttypeno(rs.getInt("TKT_TYPE_NO"));
+					planType.setTkttype(rs.getString("TKT_TYPE"));
+					planType.setPrice(rs.getInt("PRICE"));
 
-	
-	
+					list.add(planType); 
+				}
+			}
+			
+			System.out.println("查詢成功");
+			System.out.println("list="+list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+		
+	// 多筆查詢(票券瀏覽List)
+	@Override
+	public List<TktJoinPrice> getAllTktLowPrice() {
+		
+		List<TktJoinPrice> list = new ArrayList<TktJoinPrice>();
+		TktJoinPrice tktJoinPrice = null;
+
+		
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(getAllTktLowPrice_STMT);){
+			
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+					tktJoinPrice = new TktJoinPrice();
+					tktJoinPrice.setTktno(rs.getInt("TKT_NO"));
+					tktJoinPrice.setTktname(rs.getString("TKT_NAME"));
+					tktJoinPrice.setTktstartdate(rs.getString("TKT_STARTDATE"));
+					tktJoinPrice.setTktenddate(rs.getString("TKT_ENDDATE"));
+					tktJoinPrice.setTktinstruction(rs.getString("TKT_INSTRUCTION"));
+					tktJoinPrice.setCity(rs.getString("CITY"));
+					tktJoinPrice.setTktstat(rs.getInt("TKT_STAT"));
+					tktJoinPrice.setTktsort(rs.getInt("TKT_SORT"));
+					tktJoinPrice.setRatetotal(rs.getInt("RATETOTAL"));
+					tktJoinPrice.setRateqty(rs.getInt("RATEQTY"));
+					tktJoinPrice.setPrice(rs.getInt("PRICE"));
+
+					list.add(tktJoinPrice); 
+				}
+			}
+			
+			System.out.println("查詢成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 }
