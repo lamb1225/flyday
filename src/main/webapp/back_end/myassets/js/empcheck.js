@@ -63,7 +63,7 @@ buy3.addEventListener("click", function () {
 //票卷管理=1/2
 ticketroll.addEventListener("click", function () {
     if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
-        location = "empList.html";
+        location = "/flyday/tktt/tkt-admin-list.html";
     } else {
         alert("無登入權限");
     }
@@ -93,5 +93,5 @@ grouproll1.addEventListener("click", function () {
 });
 //客服訊息管理=all
 guestroll.addEventListener("click", function () {
-    location = "empList.html";
+    location = "/flyday/message/chat.jsp";
 });
