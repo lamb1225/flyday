@@ -151,9 +151,10 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     //填入側邊欄圖片
-    const picBase64Url = memPicBase64;
-    myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
-
+    if(typeof memPicBase64 !== "undefined"){  
+      const picBase64Url = memPicBase64;
+      myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+    }
     //填入側邊欄帳號
     myAcc.textContent = memAcc;
 
