@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", async function(){
     } else {
         console.log("沒有存儲的數據可供檢索");
     }
-
+    console.log(tktno);
+    
     // 回傳Tktno，取得該商品的詳細內容
     await fetch('tktDetail', {
         method: 'POST',

@@ -1,8 +1,9 @@
 let tkts;
+let tktsToRender;
 let tktimgs;
 let firstImages = {};
 
-$(async function () { 
+document.addEventListener("DOMContentLoaded", async function(){
     // 圖片
     await fetch('addtktimglist', {
         method: 'POST',
@@ -42,6 +43,7 @@ $(async function () {
         }
     })
     .then(function (data) {
+        console.log(data);
         tkts = data;
         showTktlist(); //將其顯示到頁面中(初始顯示頁面)
     })
