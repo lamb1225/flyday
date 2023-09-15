@@ -1,6 +1,7 @@
 package web.tkt.tktc.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class TktOrd implements Serializable {
@@ -19,6 +20,10 @@ public class TktOrd implements Serializable {
 	private Timestamp ordDate;
 	private Timestamp ordRefDate;
 	private Integer ordStat;
+	private String memName;
+	private byte[] memPic;
+	private String showPic;
+	private Date expDate;
 	
 	public TktOrd() {
 		super();
@@ -165,6 +170,38 @@ public class TktOrd implements Serializable {
 		this.ordStat = ordStat;
 	}
 
+	public String getMemName() {
+		return memName;
+	}
+
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+
+	public byte[] getMemPic() {
+		return memPic;
+	}
+
+	public void setMemPic(byte[] memPic) {
+		this.memPic = memPic;
+	}
+	
+	public String getShowPic() {
+		return showPic;
+	}
+
+	public void setShowPic(String showPic) {
+		this.showPic = showPic;
+	}
+
+	public Date getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(Date expDate) {
+		this.expDate = expDate;
+	}
+
 	@Override
 	public String toString() {
 		return "TktOrd [tktOrdNo=" + tktOrdNo + ", memNo=" + memNo + ", memTktCoupNo=" + memTktCoupNo + ", orgPrice="
@@ -172,5 +209,4 @@ public class TktOrd implements Serializable {
 				+ ", conName=" + conName + ", conPhone=" + conPhone + ", conEmail=" + conEmail + ", ordDate=" + ordDate
 				+ ", ordRefDate=" + ordRefDate + ", ordStat=" + ordStat + "]";
 	}
-	
 }

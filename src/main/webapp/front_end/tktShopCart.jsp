@@ -727,9 +727,12 @@ Steps START -->
 																<!-- Image -->
 																<div class="col-sm-6 col-md-4" style="display: flex;">
 																	<div class="align-self-center ps-4">
-																		<%!int i = 0;%>
+<%-- 																		<%!int i = 0;%> --%>
+<!-- 																		<img -->
+<%-- 																			src="https://picsum.photos/500/400?random=<%=i++%>" --%>
+<!-- 																			alt=""> -->
 																		<img
-																			src="https://picsum.photos/500/400?random=<%=i++%>"
+																			src="${tktJoin.showPic}"
 																			alt="">
 																	</div>
 																</div>
@@ -828,6 +831,9 @@ Steps START -->
 																<li class="list-group-item"><span
 																	class="h6 fw-normal me-1 mb-0"><i
 																		class="bi bi-dot"></i>15 to 30 天:</span> <span>收取30%</span></li>
+																<li class="list-group-item"><span
+																	class="h6 fw-normal me-1 mb-0"><i
+																		class="bi bi-dot"></i>票券期限:</span> <span>購買後60天內需使用完畢</span></li>
 															</ul>
 															<p class="mt-4">注意： 供應商需 2-5
 																個工作天進行取消流程，依照您購買的商品取消政策收取手續費，並於取消流程完成後14 個工作天內退款。</p>
@@ -870,6 +876,7 @@ Steps START -->
 									<!-- Step 1 content END -->
 								</form>
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/tkt/Order">
+<%-- 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/tkt/ECPay"> --%>
 									<!-- Step 2 content START -->
 									<div id="step-2" role="tabpanel" class="content fade"
 										aria-labelledby="steppertrigger2">
@@ -980,98 +987,44 @@ Steps START -->
 										aria-labelledby="steppertrigger3">
 										<div class="vstack gap-4">
 											<!-- Title -->
-											<h4 class="mb-0">付款選擇</h4>
+											<h4 class="mb-0">付款</h4>
 
 											<hr class="my-0">
 											<!-- Divider -->
 
-											<!-- Credit or Debit Card START -->
+											<!-- Ecpay START -->
 											<div class="card border">
 												<!-- Card header -->
 												<div
 													class="card-header border-bottom d-sm-flex justify-content-between align-items-center">
-													<h5 class="mb-2 mb-sm-0">信用卡或簽帳卡</h5>
+													<h5 class="mb-2 mb-sm-0">Pay with ECPay</h5>
 													<ul class="list-inline my-0">
-														<li class="list-inline-item"><a href="#"><img
+														<li class="list-inline-item"><img
 																src="<%=request.getContextPath()%>/front_end/assets/images/element/visa.svg" class="h-30px"
-																alt=""></a></li>
-														<li class="list-inline-item"><a href="#"><img
+																alt=""></li>
+														<li class="list-inline-item"><img
 																src="<%=request.getContextPath()%>/front_end/assets/images/element/mastercard.svg"
-																class="h-30px" alt=""></a></li>
-														<li class="list-inline-item"><a href="#"><img
+																class="h-30px" alt=""></li>
+														<li class="list-inline-item"><img
 																src="<%=request.getContextPath()%>/front_end/assets/images/element/expresscard.svg"
-																class="h-30px" alt=""></a></li>
+																class="h-30px" alt=""></li>
 													</ul>
 												</div>
 
 												<!-- Card body -->
-												<div class="card-body">
-													<div class="row g-4">
-
-														<!-- Form START -->
-														<div class="row g-3">
-															<!-- Card number -->
-															<div class="col-12">
-																<label class="form-label"><span
-																	class="h6 fw-normal">信用卡號碼 *</span></label>
-																<div class="position-relative">
-																	<input type="text" class="form-control" maxlength="14"
-																		placeholder="XXXX XXXX XXXX XXXX"> <img
-																		src="<%=request.getContextPath()%>/front_end/assets/images/element/visa.svg"
-																		class="w-30px position-absolute top-50 end-0 translate-middle-y me-2 d-none d-sm-block"
-																		alt="">
-																</div>
-															</div>
-															<!-- Expiration Date -->
-															<div class="col-md-6">
-																<label class="form-label"><span
-																	class="h6 fw-normal">有效期限 *</span></label>
-																<div class="input-group">
-																	<input type="text" class="form-control" maxlength="2"
-																		placeholder="Month"> <input type="text"
-																		class="form-control" maxlength="4" placeholder="Year">
-																</div>
-															</div>
-															<!--Cvv code  -->
-															<div class="col-md-6">
-																<label class="form-label"><span
-																	class="h6 fw-normal">CVV / CVC *</span></label> <input
-																	type="text" class="form-control" maxlength="3"
-																	placeholder="xxx">
-															</div>
-															<!-- Card name -->
-															<div class="col-12">
-																<label class="form-label"><span
-																	class="h6 fw-normal">持卡人姓名 *</span></label> <input type="text"
-																	class="form-control" aria-label="name of card holder"
-																	placeholder="Enter card holder name">
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- Credit or Debit Card END -->
-
-											<!-- Paypal START -->
-											<div class="card border">
-												<!-- Card header -->
-												<div class="card-header border-bottom">
-													<h5 class="mb-0">Pay with Paypal</h5>
-												</div>
-
-												<!-- Card body -->
-												<div class="card-body text-center">
+												<div class="card-body text-center mt-5 mb-4">
 													<!-- Image -->
-													<img src="<%=request.getContextPath()%>/front_end/assets/images/element/paypal.svg"
+													<img src="<%=request.getContextPath()%>/front_end/myassets/ecpay_logo.svg"
 														class="h-70px mb-3" alt="">
 													<p class="mb-3">
 														<strong>Tips:</strong> Simply click on the payment button
-														below to proceed to the PayPal payment page.
+														below to proceed to the ECPay payment page.
 													</p>
 
 													<!-- Button -->
-													<a href="#" class="btn btn-sm btn-outline-primary mb-0">Pay
-														with Paypal</a>
+													<button class="btn btn-sm btn-outline-primary mb-0" type="submit" id="confirmPay">Pay
+														with ECPay</button>
+													<input type="hidden" name="action" value="orderConfirm">
 												</div>
 											</div>
 											<!-- Paypal END -->
@@ -1079,13 +1032,13 @@ Steps START -->
 											<!-- Step 3 button -->
 											<div class="d-flex justify-content-between">
 												<button class="btn btn-secondary prev-btn mb-0" onclick="return false">上一步</button>
-												<button class="btn btn-success next-btn mb-0" type="submit" id="confirmPay">確認付款</button>
-												<input type="hidden" name="action" value="orderConfirm">
+<!-- 												<button class="btn btn-success next-btn mb-0" type="submit" id="confirmPay">確認付款</button> -->
+<!-- 												<input type="hidden" name="action" value="orderConfirm"> -->
 											</div>
 										</div>
 									</div>
 									<!-- Step 3 content END -->
-								</form>
+								</FORM>
 
 							</div>
 							<!-- Main content END -->
@@ -1121,10 +1074,13 @@ Steps START -->
 											</ul>
 											<div class="border-top pt-4 mb-3">
 												<div class="" style="max-width: 310px;">
-													<button class="btn btn-secondary" type="button">選擇優惠券</button>
+													<select class="form-select js-choice" aria-label=".form-select-sm" id="chooseCoup">
+														<option value="">選擇優惠券</option>
+														<option value="1">無優惠券</option>
+													</select>
 												</div>
 											</div>
-											<div class="form-control text-uppercase">無選擇優惠券</div>
+											<div class="text-uppercase" id="coupContent">優惠券內容</div>
 										</div>
 
 										<!-- Card footer -->
@@ -1386,65 +1342,6 @@ Footer END -->
 	<!--Sweetalert2 -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-	<!-- 	<script>$('.updateButton').click(function(){ -->
-	<!--  	 	const button = $(this); -->
-	<!--  	    const inputField = button.closest('div').find('.quantity-input');  -->
-	<!--          const originalAmount = parseInt(inputField.data('original-amount')); -->
-	<!--          const amount =  inputField.val();  -->
-	<!--          const tktTypeNo = button.closest('div').find(".utktTypeNo").val(); -->
-	<!--  		const memNo =button.closest('div').find(".umemNo").val(); -->
-	<!--  		console.log(amount); -->
-	<!--  		console.log(inputField); -->
-	<!--  		console.log(tktTypeNo); -->
-	<!--  		console.log(memNo); -->
-	<!--          if (amount === "0") { -->
-	<!--              swal({ -->
-	<!--                  title: "數量為 0，確定要從購物車移除嗎？", -->
-	<!--                  icon: "warning", -->
-	<!--              	buttons : true -->
-	<!--              }).then((removeItem) => { -->
-	<!--                  if (removeItem) { -->
-	<!--                  	delete(memNo,tktTypeNo); -->
-	<!--                  } else { -->
-	<!--                  	inputField.val(originalAmount); // 恢復到原始數量 -->
-	<!--                  } -->
-	<!--              }); -->
-	<!--          } -->
-	<!--          else{ -->
-	<!--          	update(memNo,tktTypeNo,tktQty); -->
-	<!--          } -->
-	<!--      }); -->
-	<!--  	//修改的方法 -->
-	<!--  	 function update(memNo,tktTypeNo,tktQty){ -->
-	<!--  		 $.ajax({ -->
-	<!--  	            url: "ShoppingCartServlet", -->
-	<!--  	            type: "POST", -->
-	<!--  	            data: { -->
-	<!--  	                tktTypeNo: tktTypeNo, -->
-	<!--  	                memNo: memNo, -->
-	<!--  	                amount:amount, -->
-	<!--  	                action: "changeQty" -->
-	<!--  	            }, -->
-	<!--  	            dataType: "json", -->
-	<!--  	            success: function(data) { -->
-	<!--  	                if (data.success) { -->
-	<!--  	                	 swal("成功修改", "", "success"); -->
-	<!--  	                     // 延遲 1 秒後刷新 -->
-	<!--  	                     setTimeout(function() { -->
-	<!--  	                         window.location.reload("#mainContent"); -->
-	<!--  	                     }, 1500); -->
-	<!--  	                } else { -->
-	<!--  	                    // 處理刪除失敗的情況 -->
-	<!--  	                } -->
-	<!--  	            }, -->
-	<!--  	            error: function() { -->
-	<!--  	                // 處理AJAX錯誤的情況 -->
-	<!--  	            } -->
-	<!--  	        }); -->
-	<!--  	    }; -->
-	<!-- 	    </script> -->
-
-
 	<script>
 	
 		// 加數量
@@ -1487,7 +1384,7 @@ Footer END -->
 						  showCancelButton: true,
 						  confirmButtonColor: '#3085d6',
 						  cancelButtonColor: '#d33',
-						  confirmButtonText: 'confirm',
+						  confirmButtonText: 'confirm'
 						}).then((result) => {
 						  if (result.isConfirmed) {
 						    Swal.fire(
@@ -1496,6 +1393,7 @@ Footer END -->
 						      'success'
 						    )
 						    $(this).next().attr("value", 0);
+						    $("#itemPrice"+$(this).attr("value")).text("$ "+0);
 						    // 如果確定刪除，要刪掉整個票券的區塊
 						    $(this).parents("div").find("div#itemStart"+$(this).attr("value")).animate({
 			                    "opacity": 0
@@ -1541,11 +1439,11 @@ Footer END -->
 					      'success'
 					    )
 					    $(this).next().next().attr("value", 0);
+					    $("#itemPrice"+$(this).attr("value")).text("$ "+0);
 					    // 如果確定刪除，要刪掉整個票券的區塊
 					    $(this).parents("div").find("div#itemStart"+$(this).attr("value")).animate({
 		                    "opacity": 0
 		                }, 250, "swing", function () {
-//		                    console.log(this);
 		                    $(this).hide();
 		                    
 		                    finalTotalPrice();
@@ -1553,7 +1451,6 @@ Footer END -->
 		                    
 		                    // 如果購物車沒東西，要顯示購物車空空的畫面
 		                    if (!($("div[class='card shadow rounded-2 overflow-hidden']").is(":visible"))){
-//		                    	console.log("hi");
 		                    	$("#nothing").attr("style", "display:block");
 		                    	$("#calPolicy").remove();
 		                    	$("#confirmPay").prop("disabled", true);
@@ -1565,22 +1462,6 @@ Footer END -->
 					  }
 					})
 	    });
-	    
-	    // $("button[class='btn btn-primary next-btn mb-0']").on("click", function(){
-	    // 	const memName = $("#memName").attr("value");
-	    // 	const memMobile = $("#memMobile").attr("value");
-	    // 	const memEmail = $("#memEmail").attr("value");
-	    // 	console.log(memName);
-	    	
-	    // 	const mobileRegex = /^09[0-9]{8}$/
-	    // 	const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
-	    	
-	    // 	if (memName.trim() === "") {
-	    // 		console.log("hi");
-		// 		$("#errorName").text("xxx");
-		// 	}
-	    	
-	    // });
 	    
 		const memName = document.getElementById("memName");
 		const errorName = document.getElementById("errorName");
@@ -1712,6 +1593,16 @@ Footer END -->
 				 });
 		 }
 		 
+		 const chooseCoup = document.getElementById("chooseCoup");
+		 const coupContent = document.getElementById("coupContent");
+		 
+		 chooseCoup.addEventListener("change", function(){
+			 console.log("xxx");
+			 if(chooseCoup.value === "1"){
+				 coupContent.textContent = "未使用優惠券";
+			 }
+		 });
+		 
 // 		 const form1 = document.getElementById("conInfo");
 // 		 const confirmPay = document.getElementById("confirmPay");
 // 		 const memTktCoupNo = document.getElementById("memTktCoupNo");
@@ -1730,29 +1621,47 @@ Footer END -->
 			 
 // 		 });
 
-		</script>
+// 		const memTktCoupNo = document.getElementByName("memTktCoupNo");
+// 		localStorage.setMemTktCoupNo("memTktCoupNo", memTktCoupNo.value);
+		
+// 		const discPrice = document.getElementByName("discPrice");
+// 		localStorage.setDiscPrice("discPrice", discPrice.value);
+		
+// 		const conTitle = document.getElementByName("conTitle");
+// 		localStorage.setConTitle("conTitle", conTitle.value);
+		
+// 		const conName = document.getElementByName("conName");
+// 		localStorage.setConName("conName", conName.value);
+		
+// 		const conPhone = document.getElementByName("conPhone");
+// 		localStorage.setConPhone("conPhone", conPhone.value);
+		
+// 		const conEmail = document.getElementByName("conEmail");
+// 		localStorage.setConEmail("conEmail", conEmail.value);
 
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart">
-		<input type="submit" value="查詢購物車"> <input type="hidden"
-			name="action" value="getAll">
-	</FORM>
+	</script>
 
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart">
-		<input type="submit" value="加入1號票券 海生館 每人 2張"> <input
-			type="hidden" name="action" value="addItem"> <input
-			type="hidden" name="testTktTypeNo" value="1"> <input
-			type="hidden" name="testTktQty" value="2">
-	</FORM>
+<!-- 	<FORM METHOD="post" -->
+<%-- 		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart"> --%>
+<!-- 		<input type="submit" value="查詢購物車"> <input type="hidden" -->
+<!-- 			name="action" value="getAll"> -->
+<!-- 	</FORM> -->
 
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart">
-		<input type="submit" value="加入3號票券 常設展 成人 2張"> <input
-			type="hidden" name="action" value="addItem"> <input
-			type="hidden" name="testTktTypeNo" value="3"> <input
-			type="hidden" name="testTktQty" value="2">
-	</FORM>
+<!-- 	<FORM METHOD="post" -->
+<%-- 		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart"> --%>
+<!-- 		<input type="submit" value="加入1號票券 海生館 每人 2張"> <input -->
+<!-- 			type="hidden" name="action" value="addItem"> <input -->
+<!-- 			type="hidden" name="testTktTypeNo" value="1"> <input -->
+<!-- 			type="hidden" name="testTktQty" value="2"> -->
+<!-- 	</FORM> -->
+
+<!-- 	<FORM METHOD="post" -->
+<%-- 		ACTION="<%=request.getContextPath()%>/tkt/shoppingCart"> --%>
+<!-- 		<input type="submit" value="加入3號票券 常設展 成人 2張"> <input -->
+<!-- 			type="hidden" name="action" value="addItem"> <input -->
+<!-- 			type="hidden" name="testTktTypeNo" value="3"> <input -->
+<!-- 			type="hidden" name="testTktQty" value="2"> -->
+<!-- 	</FORM> -->
 
 </body>
 </html>

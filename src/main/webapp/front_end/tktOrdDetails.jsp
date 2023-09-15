@@ -105,7 +105,7 @@
 	<nav class="navbar navbar-expand-xl">
 		<div class="container">
 			<!-- Logo START -->
-			<a class="navbar-brand" href="index.html">
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/front_end/index.html">
 				<img class="light-mode-item navbar-brand-item" src="<%=request.getContextPath()%>/front_end/assets/images/logo.svg" alt="logo">
 				<img class="dark-mode-item navbar-brand-item" src="<%=request.getContextPath()%>/front_end/assets/images/logo-light.svg" alt="logo">
 			</a>
@@ -434,82 +434,34 @@
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
-
-<!-- =======================
-Menu item START -->
-<!-- <section class="pt-4">
-	<div class="container">
-		<div class="card rounded-3 border p-3 pb-2"> -->
-			<!-- Avatar and info START -->
-			<!-- <div class="d-sm-flex align-items-center">
-				<div class="avatar avatar-xl mb-2 mb-sm-0">
-					<img class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg" alt="">
-				</div>
-				<h4 class="mb-2 mb-sm-0 ms-sm-3"><span class="fw-light">Hi</span> Jacqueline Miller</h4>
-				<a href="add-listing.html" class="btn btn-sm btn-primary-soft mb-0 ms-auto flex-shrink-0"><i class="bi bi-plus-lg fa-fw me-2"></i>Add New Listing</a>
-			</div> -->
-			<!-- Avatar and info START -->
-			
-			<!-- Responsive navbar toggler -->
-			<!-- <button class="btn btn-primary w-100 d-block d-xl-none mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#dashboardMenu" aria-controls="dashboardMenu">
-				<i class="bi bi-list"></i> Dashboard Menu
-			</button> -->
-
-			<!-- Nav links START -->
-			<!-- <div class="offcanvas-xl offcanvas-end mt-xl-3" tabindex="-1" id="dashboardMenu">
-				<div class="offcanvas-header border-bottom p-3">
-					<h5 class="offcanvas-title">Menu</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#dashboardMenu" aria-label="Close"></button>
-				</div> -->
-				<!-- Offcanvas body -->
-				<!-- <div class="offcanvas-body p-3 p-xl-0"> -->
-					<!-- Nav item -->
-					<!-- <div class="navbar navbar-expand-xl">
-						<ul class="navbar-nav navbar-offcanvas-menu">
-
-							<li class="nav-item"> <a class="nav-link" href="agent-dashboard.html"><i class="bi bi-house-door fa-fw me-1"></i>Dashboard</a>	</li>
-
-							<li class="nav-item"> <a class="nav-link active" href="agent-listings.html"><i class="bi bi-journals fa-fw me-1"></i>Listings</a> </li>
-
-							<li class="nav-item"> <a class="nav-link" href="agent-bookings.html"><i class="bi bi-bookmark-heart fa-fw me-1"></i>Bookings</a> </li>
-
-							<li class="nav-item"> <a class="nav-link" href="agent-activities.html"><i class="bi bi-bell fa-fw me-1"></i>Activities</a> </li>
-		
-							<li class="nav-item"> <a class="nav-link" href="agent-earnings.html"><i class="bi bi-graph-up-arrow fa-fw me-1"></i>Earnings</a>	</li>
-
-							<li class="nav-item"> <a class="nav-link" href="agent-reviews.html"><i class="bi bi-star fa-fw me-1"></i>Reviews</a></li>
-							
-							<li class="nav-item"> <a class="nav-link" href="agent-settings.html"><i class="bi bi-gear fa-fw me-1"></i>Settings</a></li>
-							
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="dropdoanMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="bi bi-list-ul fa-fw me-1"></i>Dropdown
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="dropdoanMenu"> -->
-									<!-- Dropdown menu -->
-									<!-- <li> <a class="dropdown-item" href="#">Item 1</a></li>
-									<li> <a class="dropdown-item" href="#">Item 2</a></li>
-								</ul>
-							</li>	
-						</ul>
-					</div>
-				</div>
-			</div> -->
-			<!-- Nav links END -->
-		<!-- </div>
-	</div>
-</section> -->
-<!-- =======================
-Menu item END -->
 	
 <!-- =======================
 Content START -->
 <section class="pt-0 mt-5">
 	<div class="container vstack gap-4">
 		<!-- Title START -->
-		<div class="row">
-			<div class="col-12">
-				<h1 class="fs-4 mb-0"><i class="bi bi-journals fa-fw me-1"></i>訂單編號: BS-${tktOrd.tktOrdNo}</h1>
+		<div class="card bg-light overflow-hidden px-sm-5">
+			<div class="row align-items-center g-4">
+
+				<!-- Content -->
+				<div class="col-sm-9">
+					<div class="card-body">
+						<!-- Breadcrumb -->
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb breadcrumb-dots mb-0">
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front_end/index.html"><i class="bi bi-house me-1"></i> Home</a></li>
+							</ol>
+						</nav>
+						<!-- Title -->
+						<!-- <h1 class="m-0 h2 card-title">Review your Booking</h1> -->
+						<h1 class="fs-3 mt-1 mb-3"><i class="bi bi-journals fa-fw me-1"></i>訂單編號: BS-${tktOrd.tktOrdNo}</h1>
+					</div>
+				</div>	
+
+				<!-- Image -->
+				<div class="col-sm-3 text-end d-none d-sm-block">
+					<img src="<%=request.getContextPath()%>/front_end/assets/images/element/desert.svg" class="mb-n4" alt="">
+				</div>
 			</div>
 		</div>
 		<!-- Title END -->
@@ -526,7 +478,7 @@ Content START -->
 						<div class="card border">
 							<!-- card header -->
 							<div class="card-header border-bottom">
-								<h5 class="card-title mb-0">訂單價格</h5>
+								<h5 class="card-title mb-0"><i class="bi bi-bag-check me-2"></i>訂單價格</h5>
 							</div>
 	
 							<!-- Card body -->
@@ -540,17 +492,8 @@ Content START -->
 										<span class="h6 fw-light mb-0">折抵金額</span>
 										<span class="fs-5 text-success">-$ ${tktOrd.discPrice}</span>	
 									</li>
-									<!-- <li class="list-group-item d-flex justify-content-between align-items-center pb-0">
-										<span class="h6 fw-light mb-0">Taxes % Fees</span>
-										<span class="fs-5">$350</span>
-									</li> -->
 								</ul>
-								<!-- <div class="border-top pt-4 mb-3"> -->
-									<!-- <div class="" style="max-width: 310px;">
-									  <button class="btn btn-secondary" type="button">選擇優惠券</button>
-									</div> -->
-								  <!-- </div> -->
-								  <div class="form-control text-uppercase">夏日折扣券</div>
+								  <div class="form-control text-uppercase">未使用優惠券</div>
 							</div>
 	
 							<!-- Card footer -->
@@ -562,10 +505,44 @@ Content START -->
 							</div>
 						</div>
 						<!-- Price summary END -->
-					</div> <!-- Row END -->
-				<!-- </div> -->
+						<!-- Order information START -->
+						<div class="card border">
+							<!-- card header -->
+							<div class="card-header border-bottom">
+								<h5 class="card-title mb-0"><i class="bi bi-emoji-smile me-2"></i>訂購人資訊</h5>
+							</div>
+	
+							<!-- Card body -->
+							<div class="card-body">
+								<ul class="list-group list-group-borderless">
+									<li class="list-group-item d-flex justify-content-between align-items-center pt-0">
+										<span class="h6 fw-light mb-0">姓名</span>
+										<span class="fs-6">${tktOrd.conName}</span>
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<span class="h6 fw-light mb-0">手機號碼</span>
+										<span class="fs-6">${tktOrd.conPhone}</span>	
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<span class="h6 fw-light mb-0">信箱</span>
+										<span class="fs-6">${tktOrd.conEmail}</span>	
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<span class="h6 fw-light mb-0">成立時間</span>
+										<span class="fs-6"><fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${tktOrd.ordDate}" /></span>	
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<span class="h6 fw-light mb-0">失效日期</span>
+										<span class="fs-6"><fmt:formatDate type="date" value="${tktOrd.expDate}" /></span>	
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- Order information END -->
+					</div> <!-- Row END -->				
 				</aside>
 				<!-- Right sidebar END -->
+				
 			</div>
 
 			<div class="col-12 col-xl-8">
@@ -575,53 +552,55 @@ Content START -->
 					<div class="card-header border-bottom">
 						<h5 class="card-header-title">訂單明細</h5>
 					</div>
+					
+					<c:forEach var="tktOrdDetailsJoin" items="${tktOrdDetailsJoinList}">
+						<!-- Order list START -->
+						<div class="card shadow rounded-2 overflow-hidden">
+						<div class="row g-0">
+							<!-- Image -->
+							<div class="col-sm-6 col-md-4" style="display: flex;" >
+								<div class="align-self-center ps-4"><img src="${tktOrdDetailsJoin.showPic}" alt=""></div>
+							</div>
 
-					<!-- Card body START -->
-					<div class="card-body vstack gap-3">
-						<!-- Listing item START -->
-						<c:forEach var="tktOrdDetailsJoin" items="${tktOrdDetailsJoinList}">
-							<div class="card border p-2">
-								<div class="row g-4">
-									<!-- Card img -->
-									<div class="col-md-3 col-lg-2">
-										<img src="<%=request.getContextPath()%>/front_end/myassets/test1.jpg" class="card-img rounded-2" alt="Card image">
+							<!-- Card Body START -->
+							<div class="col-sm-6 col-md-8">
+								<div class="card-body p-3">
+									<!-- Title -->
+									<div class="list-inline-item dropdown position-absolute top-0 end-0 me-3">
+										<a class="btn btn-sm w-100 bg-warning-subtle mb-0 mt-3 me-2" style="cursor: auto;">未出發</a>    
 									</div>
-		
-									<!-- Card body -->
-									<div class="col-md-9 col-lg-10">
-										<div class="card-body position-relative d-flex flex-column p-0 h-100">
-		
-											<div class="list-inline-item dropdown position-absolute top-0 end-0">
-												<a class="btn btn-sm btn-primary-soft w-100 mb-0">已出發</a>    
-											</div>
-		
-											<!-- Title -->
-											<h5 class="card-title mb-0 me-5"><a href="#">${tktOrdDetailsJoin.tktName}</a></h5>
-											<small class="d-sm-flex mt-2">方案: ${tktOrdDetailsJoin.planName}</small>
-											<small>${tktOrdDetailsJoin.tktType} * ${tktOrdDetailsJoin.tktOrdQty}</small>
-											<small>金額: $ ${tktOrdDetailsJoin.tktOrdQty * tktOrdDetailsJoin.unitPrice}</small>
-	
-											<!-- Price and Button -->
-											<div class="d-sm-flex justify-content-sm-between align-items-center mt-4 mt-md-auto">
-												<!-- Button -->
-												<div class="d-flex align-items-center">
-<%-- 													<h5 class="fw-bold mb-0 me-1">金額: $ ${tktOrdDetailsJoin.tktOrdQty * tktOrdDetailsJoin.unitPrice}</h5> --%>
-													<!-- <span class="mb-0 me-2">/總價</span> -->
-												</div>
-												<!-- Price -->
-												<div class="hstack gap-2 mt-3 mt-sm-0">
-													<a href="#" class="btn btn-sm btn-primary mb-0"><i class="bi bi-ticket-perforated fa-fw me-1"></i>QRcode</a>    
-													<a href="#" class="btn btn-sm btn-danger mb-0"><i class="bi bi-trash3 fa-fw me-1"></i>聯繫客服</a>    
-												</div>                  
-											</div>
+									<div class="d-flex justify-content-between mt-4 ms-3">
+										<h5 class="card-title mb-1"><a href="#">${tktOrdDetailsJoin.tktName}</a></h5>
+									</div>
+
+									<div class="d-sm-flex flex-wrap ms-3 mt-2">
+										<div class="text-dark fs-sm me-3">方案:<span class="text-dark fw-medium ms-2" >${tktOrdDetailsJoin.planName}</span></div>
+									</div>
+
+									<ul class="nav nav-divider small mb-0 mt-2 ms-3">
+										<li class="nav-item mb-1"><i class="bi bi-people-fill me-2"></i>${tktOrdDetailsJoin.tktType} * ${tktOrdDetailsJoin.tktOrdQty}</li>
+										<li class="nav-item mb-1"><i class="bi bi-people-fill me-2"></i>金額: $ ${tktOrdDetailsJoin.tktOrdQty * tktOrdDetailsJoin.unitPrice}</li>
+									</ul>
+						
+									<!-- Price and Button -->
+									<div class="d-sm-flex justify-content-sm-between align-items-center mt-2 ms-3">
+										<!-- Button -->
+										<div class="d-flex align-items-center">
+<%-- 											<h5 class="text-dark mb-0 me-1">金額: $ ${tktOrdDetailsJoin.tktOrdQty * tktOrdDetailsJoin.unitPrice}</h5> --%>
 										</div>
-									</div>
+										<!-- Price -->
+										<div class="hstack gap-2 mt-3 mt-sm-0">
+											<a href="#" class="btn btn-sm btn-primary-soft mb-0"><i class="bi bi-ticket-perforated fa-fw me-1"></i>QRcode</a>    
+											<a href="#" class="btn btn-sm btn-primary-soft mb-0"><i class="bi bi-chat-square-dots me-1"></i>聯繫客服</a>    
+										</div>                  
+									</div>	
 								</div>
 							</div>
-						</c:forEach>
-						<!-- Listing item END -->
+							<!-- Card body END -->
+						</div>
 					</div>
-					<!-- Card body END -->
+					<!-- Order list END -->
+					</c:forEach>
 				</div>
 				
 			</div>
@@ -629,114 +608,117 @@ Content START -->
 		<!-- Listing table END -->
 
 		<!-- Review START -->
-		<div class="row">
-			<div class="col-12">
-				<div class="card border rounded-3">
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-12"> -->
+<!-- 				<div class="card border rounded-3"> -->
 					<!-- Card header START -->
-					<div class="card-header border-bottom">
-						<h5 class="card-header-title">你的評論</h5>
-					</div>
+<!-- 					<div class="card-header border-bottom"> -->
+<!-- 						<h5 class="card-header-title">你的評論</h5> -->
+<!-- 					</div> -->
 					<!-- Card header END -->
 
 					<!-- Card body START -->
-					<div class="card-body">
-						<div class="bg-light rounded p-3">
+<!-- 					<div class="card-body"> -->
+<!-- 						<div class="bg-light rounded p-3"> -->
 							<!-- Review item START -->
-							<div class="d-sm-flex justify-content-between">
-								<!-- Avatar image -->
-								<div class="d-sm-flex align-items-center mb-3">
-									<img class="avatar avatar-md rounded-circle float-start me-3" src="<%=request.getContextPath()%>/front_end/assets/images/avatar/01.jpg" alt="avatar">
-									<!-- Title -->
-									<div>
-										<h6 class="m-0">Frances Guerrero</h6>
-										<span class="me-3 small">2 days ago</span>
-									</div>
-								</div>
+<!-- 							<div class="d-sm-flex justify-content-between"> -->
+<!-- 								Avatar image -->
+<!-- 								<div class="d-sm-flex align-items-center mb-3"> -->
+<%-- 									<img class="avatar avatar-md rounded-circle float-start me-3" src="<%=request.getContextPath()%>/front_end/assets/images/avatar/01.jpg" alt="avatar"> --%>
+<!-- 									Title -->
+<!-- 									<div> -->
+<!-- 										<h6 class="m-0">Frances Guerrero</h6> -->
+<!-- 										<span class="me-3 small">2 days ago</span> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<!-- Review star -->
-								<ul class="list-inline mb-2 mb-sm-0">
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
-								</ul>	
-							</div>
+<!-- 								<ul class="list-inline mb-2 mb-sm-0"> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li> -->
+<!-- 								</ul>	 -->
+<!-- 							</div> -->
 
 							<!-- Content -->
-							<h6 class="fw-normal"><span class="text-body">Review on:</span> Pride moon Village Resort & Spa</h6>
-							<p>Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do. </p>
+<!-- 							<h6 class="fw-normal"><span class="text-body">Review on:</span> Pride moon Village Resort & Spa</h6> -->
+<!-- 							<p>Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do. </p> -->
 							
 							<!-- Image -->
-							<div class="row g-4">
-								<div class="col-4 col-sm-3 col-lg-2">
-									<a href="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/07.jpg" data-glightbox data-gallery="gallery">
-										<img src="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/07.jpg" class="rounded" alt="">
-									</a>
-								</div>
-								<div class="col-4 col-sm-3 col-lg-2">
-									<a href="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/08.jpg" data-glightbox data-gallery="gallery">
-										<img src="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/08.jpg" class="rounded" alt="">
-									</a>
-								</div>
-							</div>
+<!-- 							<div class="row g-4"> -->
+<!-- 								<div class="col-4 col-sm-3 col-lg-2"> -->
+<%-- 									<a href="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/07.jpg" data-glightbox data-gallery="gallery"> --%>
+<%-- 										<img src="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/07.jpg" class="rounded" alt=""> --%>
+<!-- 									</a> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-4 col-sm-3 col-lg-2"> -->
+<%-- 									<a href="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/08.jpg" data-glightbox data-gallery="gallery"> --%>
+<%-- 										<img src="<%=request.getContextPath()%>/front_end/assets/images/category/hotel/4by3/08.jpg" class="rounded" alt=""> --%>
+<!-- 									</a> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							
 							<!-- Buttons and collapse -->
-							<div class="mt-3">
-								<!-- Buttons -->
-								<div class="d-flex justify-content-between align-items-center">
-									<a class="btn btn-sm btn-primary-soft mb-0" data-bs-toggle="collapse" href="#collapseComment" role="button" aria-expanded="true" aria-controls="collapseComment">
-										<i class="bi bi-reply me-1"></i>Reply
-									</a>
-									<a href="#" class="text-primary-hover text-reset small mb-0"><i class="bi bi-info-circle me-1"></i>Report</a>
-								</div>
+<!-- 							<div class="mt-3"> -->
+<!-- 								Buttons -->
+<!-- 								<div class="d-flex justify-content-between align-items-center"> -->
+<!-- 									<a class="btn btn-sm btn-primary-soft mb-0" data-bs-toggle="collapse" href="#collapseComment" role="button" aria-expanded="true" aria-controls="collapseComment"> -->
+<!-- 										<i class="bi bi-reply me-1"></i>Reply -->
+<!-- 									</a> -->
+<!-- 									<a href="#" class="text-primary-hover text-reset small mb-0"><i class="bi bi-info-circle me-1"></i>Report</a> -->
+<!-- 								</div> -->
 								<!-- collapse textarea -->
-								<div class="collapse show" id="collapseComment">
-									<div class="d-flex mt-3">
-										<textarea class="form-control mb-0" placeholder="Add a comment..." rows="2" spellcheck="false"></textarea>
-										<button class="btn btn-sm btn-primary-soft ms-2 px-4 mb-0 flex-shrink-0"><i class="fas fa-paper-plane fs-5"></i></button>
-									</div>
-								</div>
-							</div>
+<!-- 								<div class="collapse show" id="collapseComment"> -->
+<!-- 									<div class="d-flex mt-3"> -->
+<!-- 										<textarea class="form-control mb-0" placeholder="Add a comment..." rows="2" spellcheck="false"></textarea> -->
+<!-- 										<button class="btn btn-sm btn-primary-soft ms-2 px-4 mb-0 flex-shrink-0"><i class="fas fa-paper-plane fs-5"></i></button> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<!-- Review item END -->
-						</div>
+<!-- 						</div> -->
 						
-						<hr> <!-- Divider -->
+<!-- 						<hr> Divider -->
 
 						<!-- Review item START -->
-						<div class="bg-light rounded p-3">
+<!-- 						<div class="bg-light rounded p-3"> -->
 							<!-- Review item START -->
-							<div class="d-sm-flex justify-content-between">
+<!-- 							<div class="d-sm-flex justify-content-between"> -->
 								<!-- Avatar image -->
-								<div class="d-sm-flex align-items-center mb-3">
-									<img class="avatar avatar-md rounded-circle float-start me-3" src="<%=request.getContextPath()%>/front_end/assets/images/avatar/07.jpg" alt="avatar">
-									<!-- Title -->
-									<div>
-										<h6 class="m-0">Louis Ferguson</h6>
-										<span class="me-3 small">Nov 18, 2022 at 11:55 am</span>
-									</div>
-								</div>
+<!-- 								<div class="d-sm-flex align-items-center mb-3"> -->
+<%-- 									<img class="avatar avatar-md rounded-circle float-start me-3" src="<%=request.getContextPath()%>/front_end/assets/images/avatar/07.jpg" alt="avatar"> --%>
+<!-- 									Title -->
+<!-- 									<div> -->
+<!-- 										<h6 class="m-0">Louis Ferguson</h6> -->
+<!-- 										<span class="me-3 small">Nov 18, 2022 at 11:55 am</span> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<!-- Review star -->
-								<ul class="list-inline mb-2 mb-sm-0">
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
-									<li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
-								</ul>	
-							</div>
+<!-- 								<ul class="list-inline mb-2 mb-sm-0"> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li> -->
+<!-- 									<li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li> -->
+<!-- 								</ul>	 -->
+<!-- 							</div> -->
 
 							<!-- Content -->
-							<h6 class="fw-normal"><span class="text-body">Review on:</span> Courtyard by Marriott New York</h6>
-							<p>Far advanced settling say finished raillery. Offered chiefly farther Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do.</p>
-							<!-- Buttons -->
-							<div class="d-flex justify-content-between align-items-center">
-								<a class="btn btn-sm btn-primary-soft mb-0"> <i class="bi bi-reply me-1"></i>Reply </a>
-								<a href="#" class="text-primary-hover text-reset small mb-0"><i class="bi bi-info-circle me-1"></i>Report</a>
-							</div>
+<!-- 							<h6 class="fw-normal"><span class="text-body">Review on:</span> Courtyard by Marriott New York</h6> -->
+<!-- 							<p>Far advanced settling say finished raillery. Offered chiefly farther Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do.</p> -->
+<!-- 							Buttons -->
+<!-- 							<div class="d-flex justify-content-between align-items-center"> -->
+<!-- 								<a class="btn btn-sm btn-primary-soft mb-0"> <i class="bi bi-reply me-1"></i>Reply </a> -->
+<!-- 								<a href="#" class="text-primary-hover text-reset small mb-0"><i class="bi bi-info-circle me-1"></i>Report</a> -->
+<!-- 							</div> -->
 							<!-- Review item END -->
-						</div>
+<!-- 						</div> -->
 						<!-- Review item END -->
-	</div>
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 </section>
 
 <!-- =======================
@@ -754,7 +736,7 @@ Footer START -->
 			<!-- Widget -->
 			<div class="col-md-4">
 				<div class="text-center text-md-start mb-3 mb-md-0">
-					<a href="index.html"> <img class="h-30px" src="<%=request.getContextPath()%>/front_end/assets/images/logo-light.svg" alt="logo"> </a>
+					<a href="<%=request.getContextPath()%>/front_end/index.html"> <img class="h-30px" src="<%=request.getContextPath()%>/front_end/assets/images/logo-light.svg" alt="logo"> </a>
 				</div> 
 			</div>
 			
