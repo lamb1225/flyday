@@ -35,11 +35,19 @@ public class TktShopCartDaoImpl implements TktShopCartDao {
 	private static final String UPDATE = "UPDATE tkt_shop_cart set tkt_qty = ? where mem_no = ? and tkt_type_no = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM tkt_shop_cart where mem_no = ? order by tkt_type_no";
 	private static final String GET_ONE_STMT = "SELECT * FROM tkt_shop_cart where mem_no = ? and tkt_type_no = ?";
-	private static final String JOIN_STMT = "SELECT mem_no, tkt_name, plan_name, tkt_type, c.tkt_type_no, price, tkt_qty, location, ratetotal"
+	//拿取所有我要的table的資料，包括每張票券的第一張圖片
+	private static final String JOIN_STMT = "SELECT mem_no, tkt.tkt_no, tkt_name, tkt_img, plan_name, tkt_type, c.tkt_type_no, price, tkt_qty, location, ratetotal"
 			+ " FROM tkt_shop_cart c"
-			+ " join tkt_type t on c.tkt_type_no = t.tkt_type_no"
-			+ " join tkt_plan p on t.tkt_plan_no = p.tkt_plan_no"
-			+ " join tkt on p.tkt_no = tkt.tkt_no where mem_no = ?";
+			+ " JOIN tkt_type t on c.tkt_type_no = t.tkt_type_no"
+			+ " JOIN tkt_plan p on t.tkt_plan_no = p.tkt_plan_no"
+			+ " JOIN tkt on p.tkt_no = tkt.tkt_no"
+			+ " JOIN ("
+			+ "	SELECT tkt_no, MIN(tkt_img_no) AS each_first_img"
+			+ "	FROM tkt_img"
+			+ "	GROUP BY tkt_no"
+			+ ") AS first_img ON tkt.tkt_no = first_img.tkt_no"
+			+ " JOIN tkt_img i ON first_img.each_first_img = i.tkt_img_no"
+			+ " where mem_no = ?";
 	
 	@Override
 	public void insert(TktShopCart tktShopCart) {
@@ -323,6 +331,7 @@ public class TktShopCartDaoImpl implements TktShopCartDao {
 			while(rs.next()) {
 				tktJoin = new TktJoin();
 				tktJoin.setMemNo(rs.getInt("mem_no"));
+				tktJoin.setTktNo(rs.getInt("tkt_no"));
 				tktJoin.setTktName(rs.getString("tkt_name"));
 				tktJoin.setPlanName(rs.getString("plan_name"));
 				tktJoin.setTktType(rs.getString("tkt_type"));
@@ -331,6 +340,7 @@ public class TktShopCartDaoImpl implements TktShopCartDao {
 				tktJoin.setTktQty(rs.getInt("tkt_qty"));
 				tktJoin.setLocation(rs.getString("location"));
 				tktJoin.setRateTotal(rs.getInt("rateTotal"));
+				tktJoin.setTktImg(rs.getBytes("tkt_img"));
 				list.add(tktJoin); // Store the row in the list
 			}
 

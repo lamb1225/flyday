@@ -633,16 +633,19 @@ Main content START -->
 												<span class="h6 fw-normal mb-0"><fmt:formatDate type="date" value="${tktOrd.ordDate}" /></span>
 											</li>
 											<%
-											TktOrd tktOrd = (TktOrd) session.getAttribute("tktOrd");
-											Date tktOrdDate = tktOrd.getOrdDate();
-											Calendar calendar = Calendar.getInstance();
-											calendar.setTime(tktOrdDate);
-											calendar.add(Calendar.DAY_OF_MONTH, 30);
-											Date newDate = calendar.getTime();
+// 											TktOrd tktOrd = (TktOrd) session.getAttribute("tktOrd");
+// 											Date tktOrdDate = tktOrd.getOrdDate();
+// 											Calendar calendar = Calendar.getInstance();
+// 											calendar.setTime(tktOrdDate);
+// 											calendar.add(Calendar.DAY_OF_MONTH, 60);
+// // 											Date newDate = calendar.getTime();
+// // 											tktOrd.setExpDate(newDate);
+// 											java.sql.Date expDate = new java.sql.Date(calendar.getTime().getTime());
+// 										    tktOrd.setExpDate(expDate);
 											%>
 											<li class="list-group-item d-sm-flex justify-content-between align-items-center">
 												<span class="mb-0"><i class="bi bi-calendar fa-fw me-2"></i>有效日期至:</span>
-												<span class="h6 fw-normal mb-0"><fmt:formatDate type="date" value="<%=newDate%>" /></span>
+												<span class="h6 fw-normal mb-0"><fmt:formatDate type="date" value="${tktOrd.expDate}" /></span>
 											</li>
 											<!--	<li class="list-group-item d-sm-flex justify-content-between align-items-center"> -->
 											<!-- 		<span class="mb-0"><i class="bi bi-emoji-sunglasses-fill fa-fw me-2"></i>方案:</span> -->

@@ -2,6 +2,7 @@ package web.tkt.tktc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import web.mem.meminfo.entity.Mem;
 import web.tkt.tktc.entity.TktJoin;
+import web.tkt.tktc.entity.TktOrd;
 import web.tkt.tktc.entity.TktShopCart;
 import web.tkt.tktc.service.TktShopCartService;
 
@@ -53,11 +55,11 @@ public class ShoppingCartServlet extends HttpServlet {
 			Integer memNo = mem.getMemNo();
 
 			tktJoinList = tktShopCartService.selectByMemNo(memNo);
-
-			if (tktJoinList.size() > 0) {
-				// 還未取得圖片
-
+			
+			for(TktJoin tktJoin : tktJoinList) {
+				tktJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktJoin.getTktImg()));
 			}
+			
 			session.setAttribute("tktJoinList", tktJoinList);
 			session.setAttribute("memNo", memNo);
 			String url = "/front_end/tktShopCart.jsp";

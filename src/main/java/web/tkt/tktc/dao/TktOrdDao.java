@@ -15,4 +15,6 @@ public interface TktOrdDao {
 	
 	public List<TktOrd> getAll();
 	
+	public List<TktOrd> getAllOrderBy();
+	
 }

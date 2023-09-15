@@ -9,7 +9,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<title>Booking - Multipurpose Online Booking Theme</title>
 
@@ -615,10 +614,15 @@ Content START -->
 
 									<!-- Tab content item START -->
 									<div class="tab-pane fade show active" id="tab-1">
-										<h6>總筆數 (2)</h6>
+										<h6 id="showTotalItem">總筆數 (i)</h6>
+										<div style="display: none;">
+											<%=j = 0%>
+										</div>
 										<!-- Card item START -->
-<%-- 										<c:when test="${not empty tktOrdList}"> --%>
-											<c:forEach var="tktOrd" items="${tktOrdList}">
+										<form id="myForm">
+											<c:forEach var="tktOrd" items="${tktOrdListPaid}">
+											<%!int j = 0;%>
+											<div class="itemStart" id="itemStart<%=j%>" value="<%=j%>">
 											<a href="<%=request.getContextPath()%>/tkt/Order?action=getOrdDetails&tktOrdNo=${tktOrd.tktOrdNo}" class="card-link">
 												<div class="card border mb-4">
 													<!-- Card header -->
@@ -630,7 +634,9 @@ Content START -->
 																	class="bi bi-bag-check"></i></div>
 															<!-- Title -->
 															<div class="ms-2">
-																<h6 class="card-title mb-0">訂單編號: BS-${tktOrd.tktOrdNo}</h6>
+																<h6 class="card-title mb-0">訂單編號: BS-${tktOrd.tktOrdNo}
+																<input type="hidden" name="tktOrdNo<%=j%>" value="${tktOrd.tktOrdNo}">
+																</h6>
 																<ul class="nav nav-divider small">
 <!-- 																	<li class="nav-item">票券: 六福村、Xpark</li> -->
 																	<!-- <li class="nav-item">Business class</li> -->
@@ -640,7 +646,8 @@ Content START -->
 	
 														<!-- Button -->
 														<div class="mt-2 mt-md-0">
-															<a href="#" class="btn btn-primary-soft mb-0">取消訂單</a>
+															<input type="hidden" name="action" value="cancelOrd">
+															<a class="btn btn-primary-soft mb-0 cancel" id="cancel<%=j%>">取消訂單</a>
 														</div>
 													</div>
 	
@@ -648,94 +655,53 @@ Content START -->
 													<div class="card-body">
 														<div class="row g-3">
 															<div class="col-sm-6 col-md-4">
-																<span>成立時間</span>
+																<span>成立日期</span>
 																<h6 class="mb-0">
-																<fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${tktOrd.ordDate}" />
+																<fmt:formatDate type="date" value="${tktOrd.ordDate}" />
 																</h6>
 															</div>
-															<%--
-															TktOrd tktOrd = (TktOrd) session.getAttribute("tktOrd");
-															Date tktOrdDate = tktOrd.getOrdDate();
-															Calendar calendar = Calendar.getInstance();
-															calendar.setTime(tktOrdDate);
-															calendar.add(Calendar.DAY_OF_MONTH, 30);
-															Date newDate = calendar.getTime();
-															--%>
+															
 															<div class="col-sm-6 col-md-4">
 																<span>失效日期</span>
-																<h6 class="mb-0"><fmt:formatDate type="date" value="${tktOrd.ordDate}" /></h6>
+																<h6 class="mb-0"><fmt:formatDate type="date" value="${tktOrd.expDate}" /></h6>
 															</div>
 	
 															<div class="col-md-4">
 																<span>實付總金額</span>
 																<h6 class="mb-0">$ ${tktOrd.payPrice}</h6>
 															</div>
+															
+															<div class="itemInfo">
+																<input class="ordStat" type="hidden" id="ordStat<%=j%>"
+																	name="ordStat<%=j++%>" value="${tktOrd.ordStat}">
+															</div>
 														</div>
 													</div>
 												</div>
 												</a>
+												</div>
 												</c:forEach>
-<%-- 										</c:when> --%>
-										<!-- Card item END -->
-
-										<!-- Card item START -->
-<!-- 										<a href="#" class="card-link"> -->
-<!-- 											<div class="card border mb-4"> -->
-<!-- 												Card header -->
-<!-- 												<div -->
-<!-- 													class="card-header border-bottom d-md-flex justify-content-md-between align-items-center"> -->
-<!-- 													Icon and Title -->
-<!-- 													<div class="d-flex align-items-center"> -->
-<!-- 														<div class="icon-lg bg-light rounded-circle flex-shrink-0"><i -->
-<!-- 																class="bi bi-bag-check"></i></div> -->
-<!-- 														Title -->
-<!-- 														<div class="ms-2"> -->
-<!-- 															<h6 class="card-title mb-0">訂單編號: CGDSUAHA12550</h6> -->
-<!-- 															<ul class="nav nav-divider small"> -->
-<!-- 																<li class="nav-item">票券: 兒童新樂園</li> -->
-<!-- 																<li class="nav-item">Business class</li> -->
-<!-- 															</ul> -->
-<!-- 														</div> -->
-<!-- 													</div> -->
-
-<!-- 													Button -->
-<!-- 													<div class="mt-2 mt-md-0"> -->
-<!-- 														<a href="#" class="btn btn-primary-soft mb-0">取消訂單</a> -->
-<!-- 													</div> -->
-<!-- 												</div> -->
-
-<!-- 												Card body -->
-<!-- 												<div class="card-body"> -->
-<!-- 													<div class="row g-3"> -->
-<!-- 														<div class="col-sm-6 col-md-4"> -->
-<!-- 															<span>成立時間</span> -->
-<!-- 															<h6 class="mb-0">2023-08-01 12:00 AM</h6> -->
-<!-- 														</div> -->
-
-<!-- 														<div class="col-sm-6 col-md-4"> -->
-<!-- 															<span>失效日期</span> -->
-<!-- 															<h6 class="mb-0">2023-08-30 12:00 AM</h6> -->
-<!-- 														</div> -->
-
-<!-- 														<div class="col-md-4"> -->
-<!-- 															<span>實付總金額</span> -->
-<!-- 															<h6 class="mb-0">$200</h6> -->
-<!-- 														</div> -->
-<!-- 													</div> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</a> -->
+												<input type="hidden" id="totalItem" name="itemAmount" value="<%=j%>">
+												</form>
 										<!-- Card item END -->
 									</div>
 									<!-- Tabs content item END -->
 
 									<!-- Tab content item START -->
 										<div class="tab-pane fade" id="tab-2">
-											<h6>總筆數 (1)</h6>
-
+											<h6 id="showTotalCancel">總筆數 (m)</h6>
+											<div style="display: none;">
+												<%=n = 0%>
+											</div>
 											<!-- Card item START -->
-											<a href="#" class="card-link">
-											<div class="card border">
+											<c:forEach var="tktOrd" items="${tktOrdListCancel}">
+											<%!int n = 0;%>
+											<div class="itemCancelStart" id="itemCancelStart<%=n%>" value="<%=n%>">
+											<div style="display: none;">
+											<%=n++%>
+											</div>
+											<a href="<%=request.getContextPath()%>/tkt/Order?action=getOrdDetails&tktOrdNo=${tktOrd.tktOrdNo}" class="card-link">
+											<div class="card border mb-4">
 												<!-- Card header -->
 												<div
 													class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
@@ -745,18 +711,30 @@ Content START -->
 																class="bi bi-x-circle-fill"></i></div>
 														<!-- Title -->
 														<div class="ms-2">
-															<h6 class="card-title mb-0">訂單編號: CGDSUAHA12548</h6>
+															<h6 class="card-title mb-0">訂單編號: BS-${tktOrd.tktOrdNo}</h6>
 															<ul class="nav nav-divider small">
-																<li class="nav-item">票券: 劍湖山</li>
-																<!-- <li class="nav-item">AC</li> -->
+<!-- 																<li class="nav-item">票券: 劍湖山</li> -->
+<!-- 																<li class="nav-item">AC</li> -->
 															</ul>
 														</div>
 													</div>
 
 													<!-- Button -->
 													<div class="mt-2 mt-md-0">
-														<!-- <a href="#" class="btn btn-primary-soft mb-0">Manage Booking</a> -->
-														<p class="text-danger text-md-end mb-0">訂單已取消</p>
+														<p class="text-danger text-md-end mb-0">
+														<c:choose>
+												            <c:when test="${tktOrd.ordStat eq 1}">
+												            <div class="badge bg-warning bg-opacity-10 text-warning ms-1">
+												                處理中
+												            </div>
+												            </c:when>
+												            <c:when test="${tktOrd.ordStat eq 2}">
+												            <div class="badge bg-danger bg-opacity-10 text-danger ms-1">
+												                已退款
+												            </div>
+												            </c:when>
+												        </c:choose>
+														</p>
 													</div>
 												</div>
 
@@ -764,23 +742,28 @@ Content START -->
 												<div class="card-body">
 													<div class="row g-3">
 														<div class="col-sm-6 col-md-4">
-															<span>成立時間</span>
-															<h6 class="mb-0">2023-06-20 10:32 AM</h6>
+															<span>成立日期</span>
+															<h6 class="mb-0"><fmt:formatDate type="date" value="${tktOrd.ordDate}" /></h6>
 														</div>
 
 														<div class="col-sm-6 col-md-4">
 															<span>取消時間</span>
-															<h6 class="mb-0">2023-06-24 4:00 PM</h6>
+															<h6 class="mb-0"><fmt:formatDate type="both" 
+            													dateStyle="medium" timeStyle="short" value="${tktOrd.ordRefDate}" />
+            												</h6>
 														</div>
 
 														<div class="col-md-4">
 															<span>實付總金額</span>
-															<h6 class="mb-0">$800</h6>
+															<h6 class="mb-0">$ ${tktOrd.payPrice}</h6>
 														</div>
 													</div>
 												</div>
 											</div>
 										</a>
+										</div>
+										</c:forEach>
+										<input type="hidden" id="totalCancel" value="<%=n%>">
 											<!-- Card item END -->
 										</div>
 									<!-- Tabs content item END -->
@@ -867,6 +850,77 @@ Footer END -->
 
 	<!-- ThemeFunctions -->
 	<script src="<%=request.getContextPath()%>/front_end/assets/js/functions.js"></script>
+	
+	<!--Sweetalert2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	
+	<script>
+	
+	const totalItem = (document.getElementById("totalItem").value);
+	const showTotalItem = document.getElementById("showTotalItem");
+	const newValue = showTotalItem.textContent.replace("(i)", "(" + totalItem + ")");
+	showTotalItem.textContent = newValue;
+	
+	const totalCancel = (document.getElementById("totalCancel").value);
+	const showTotalCancel = document.getElementById("showTotalCancel");
+	const newTotalCancel = showTotalCancel.textContent.replace("(m)", "(" + totalCancel + ")");
+	showTotalCancel.textContent = newTotalCancel;
+	
+	//利用form表單發送fetch
+	const form = document.getElementById("myForm");
+	const cancel = document.getElementsByClassName("cancel");
+	const ordStat = document.getElementsByClassName("ordStat");
+	const itemStart = document.getElementsByClassName("itemStart");
+	const itemCancelStart = document.getElementsByClassName("itemCancelStart");
+	let a = 1;
+	
+		for (let i = 0; i < cancel.length; i++) {
+		    cancel[i].addEventListener("click", function () {
+		    	
+		    	
+		    	Swal.fire({
+		    		  title: '確定要取消嗎?',
+		    		  icon: 'warning',
+		    		  showCancelButton: true,
+		    		  confirmButtonColor: '#3085d6',
+		    		  cancelButtonColor: '#d33',
+		    		  confirmButtonText: 'confirm'
+		    		}).then((result) => {
+		    		  if (result.isConfirmed) {
+		    		    Swal.fire(
+		    		      '成功取消!',
+		    		      '訂單將由專員為您處理',
+		    		      'success'
+		    		    )
+		    		    
+		    		    const newTotalItem = totalItem - (a);
+				        showTotalItem.textContent = "總筆數 (" + newTotalItem + ")";
+				        
+				        const newCancelTotalItem = parseInt(totalCancel) + (a);
+				        showTotalCancel.textContent = "總筆數 (" + newCancelTotalItem + ")";
+				        a++;
+				        
+		    		    ordStat[i].setAttribute("value", "1");
+				        const formData = new FormData(form);
+				        formData.append(ordStat[i], ordStat[i].value);
+				        
+				        fetch("<%=request.getContextPath()%>/tkt/Order",{
+							method: "POST",
+							body: formData
+						})
+						
+						const itemStartClone = itemStart[i].cloneNode(true);
+						console.log(itemStartClone);
+						console.log(itemCancelStart[0]);
+						itemCancelStart[0].parentNode.insertBefore(itemStartClone, itemCancelStart[0]);
+// 						itemCancelStart[i].appendChild(itemStartClone);
+						itemStart[i].style.display = "none";
+		    		  }
+		    		})
+		    });
+		}
+	
+	</script>
 
 </body>
 

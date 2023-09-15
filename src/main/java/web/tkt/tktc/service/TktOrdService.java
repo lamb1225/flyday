@@ -12,10 +12,6 @@ public class TktOrdService {
 	TktOrdDaoImpl dao = new TktOrdDaoImpl();
 	TktOrd tktOrd = null;
 	
-	public TktOrdService() {
-		TktOrdDaoImpl dao = new TktOrdDaoImpl();
-	}
-	
 	//新增訂單(同時新增訂單明細)
 	public Integer insert(TktOrd tktOrd, List<TktJoin> tktJoinList) {
 		Connection con = null;
@@ -53,6 +49,10 @@ public class TktOrdService {
 	}
 	
 	public List<TktOrd> getAll(){
+		return dao.getAll();
+	}
+	
+	public List<TktOrd> getAllOrderBy(){
 		return dao.getAll();
 	}
 	
