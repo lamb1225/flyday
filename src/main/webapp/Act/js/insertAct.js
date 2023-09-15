@@ -87,8 +87,10 @@
 
 function insert() {
     let memid = sessionStorage.getItem("memno");
-    let pkgid = sessionStorage.getItem("pkgno");
-    let price = sessionStorage.getItem("price");
+    // let pkgid = sessionStorage.getItem("pkgno");
+    let pkgid = 3;
+    // let price = sessionStorage.getItem("price");
+    let price = 5000;
     fetch('create', {
         method: 'POST',
         headers: {
@@ -116,7 +118,8 @@ function insert() {
                     title: '新增成功',
                     icon: 'success'
                 }).then(function () {
-                    location.href = `${getContextPath()}/Act/hotel-detail.html`;
+
+                    location.href = `${getContextPath()}/Act/hotel-grid.html`;
                 })
 
             } else {

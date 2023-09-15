@@ -108,7 +108,7 @@ function showmem(data) {
             if (act.payment === 0) {
                 html += `<a class="btn btn-lg btn-primary-soft mb-0" id="Pay" onclick='PayAct(${act.actno},${act.price},"${act.acttitle}")'>前往付款</a>`
             }
-            html += `	<a href="#" class="btn btn-primary-soft mb-0"onclick='Check(${act.actno},${act.memno})'>查看內容</a>
+            html += `	<a href="#" class="btn btn-primary-soft mb-0"onclick='Check(${act.actno})'>查看內容</a>
 										</div>
 									</div>
 	
@@ -205,9 +205,9 @@ function switchPage(e) {
     pagination(acts, page);
 }
 pageid.addEventListener('click', switchPage);
-function Check(actno, memno) {
+function Check(actno) {
     sessionStorage.setItem('actno', actno);
-    sessionStorage.setItem('memno', memno);
+    
     location.href = `${getContextPath()}/Act/account-travelers.html`;
 }
 function getContextPath() {
