@@ -26,9 +26,7 @@ public class TktDetail extends HttpServlet{
 		
 		Tkt tkt = json2Pojo(request, Tkt.class);
 		
-		System.out.println(tkt);
 		int tktno = tkt.getTktno();
-		System.out.println(tktno);
 		
 		writePojo2Json(response, service.findTktDetial(tktno));
 	}
