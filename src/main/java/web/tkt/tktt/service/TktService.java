@@ -19,7 +19,13 @@ public interface TktService {
 	
 	TktImg addtktimg(TktImg tktimg);
 	
+	Tkt editTkt(Tkt tkt);
+	
+	PlanType editTktPlan(PlanType planType);
+	
 	Tkt findTktDetial(Integer tktno);
+	
+	PlanType findTktPlanDetial(Integer tktplanno);
 	
 	List<TktImg> findTktImgDetial(Integer tktno);
 

@@ -19,7 +19,13 @@ public interface TktDAO {
 	
 	public void insertImg(TktImg tktimg);	
 	
+	public void updateTkt(Tkt tkt);
+	
+	public void updateTktPlan(PlanType planType);
+	
 	public Tkt findByPK(Integer tktno);
+	
+	public PlanType findPlanByPK(Integer tktplanno);
 	
 	public List<TktImg> getTktImg(Integer tktno);
 	
@@ -29,6 +35,6 @@ public interface TktDAO {
 	
 	public List<PlanType> getAllPlanType(Integer tktno);
 	
-	public List<TktJoinPrice> getAllTktLowPrice();	
-	
+	public List<TktJoinPrice> getAllTktLowPrice();		
+
 }

@@ -46,8 +46,10 @@ public class TktDAOImpl implements TktDAO{
 	
 	// 新增商品SQL
 	private static final String INSERT_STMT = 
-			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, HOWUSE, LOCATION, CITY, DISTRICTS, ADDRESS, SC_LATITUDE, SC_LONGITUDE, SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO tkt(TKT_NAME, TKT_STARTDATE, TKT_ENDDATE, TKT_INSTRUCTION, PROD_DESC, NOTICE, " +
+			"HOWUSE, LOCATION, DIRECTION, CITY, DISTRICTS, ADDRESS, SC_LATITUDE, SC_LONGITUDE, " +
+			"SC_HOWARRIVAL, SC_SERVICEHR, TKT_STAT, TKT_SORT, RATETOTAL, RATEQTY) " +
+			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	// 新增圖片SQL
 	// 查商品編號，"新增方案SQL"共用"FIND_MAX_TKTNO"
 	private static final String INSERTIMG_STMT = 
@@ -63,13 +65,24 @@ public class TktDAOImpl implements TktDAO{
 	private static final String FIND_ADDPLAN_COUNT = 
 			"SELECT COUNT(*) COUNT FROM tkt_plan WHERE TKT_NO = (SELECT MAX(TKT_NO) FROM tkt);";
 	private static final String INSERTTYPE_STMT = 
-			"INSERT INTO tkt_type(TKT_PLAN_NO,TKT_TYPE,PRICE) VALUES (?, ?, ?)";	
-	
+			"INSERT INTO tkt_type(TKT_PLAN_NO,TKT_TYPE,PRICE) VALUES (?, ?, ?)";
+	// 修改商品SQL
+	private static final String UPDATE_STMT = 
+			"UPDATE tkt SET TKT_NAME = ?, TKT_STARTDATE = ?, TKT_ENDDATE = ?, TKT_INSTRUCTION = ?, " +
+			"PROD_DESC = ?, NOTICE = ?, HOWUSE = ?, LOCATION = ?, DIRECTION = ?, CITY = ?, DISTRICTS = ?, " +
+			"ADDRESS = ?, SC_LATITUDE = ?, SC_LONGITUDE = ?, SC_HOWARRIVAL = ?, SC_SERVICEHR = ?, TKT_SORT = ? " +
+			"WHERE TKT_NO = ?";
+	// 修改商案SQL
+	private static final String UPDATEPLAN_STMT = 
+			"UPDATE tkt_plan SET PLAN_NAME = ?, PLAN_CONTENT = ? WHERE TKT_PLAN_NO = ?";
 	// 單筆查詢(TktDetail)SQL
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_INSTRUCTION,PROD_DESC,NOTICE,HOWUSE, " +
 			"LOCATION,CITY,DISTRICTS,ADDRESS,SC_LATITUDE,SC_LONGITUDE,SC_HOWARRIVAL,SC_SERVICEHR,TKT_STAT,TKT_SORT,RATETOTAL,RATEQTY " +
 			"FROM tkt WHERE TKT_NO = ?";
+	// 單筆查詢(TktPlanDetail)SQL
+	private static final String findPlanByPK_STMT = 
+			"SELECT TKT_PLAN_NO,PLAN_NAME,PLAN_CONTENT FROM tkt_plan WHERE TKT_PLAN_NO = ?";
 	// 多筆查詢(該商品的所有圖片)SQL
 	private static final String getTktImg_STMT = 
 			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img " +
@@ -121,17 +134,18 @@ public class TktDAOImpl implements TktDAO{
 			pstmt.setString(6, tkt.getNotice());
 			pstmt.setString(7, tkt.getHowuse());
 			pstmt.setString(8, tkt.getLocation());
-			pstmt.setString(9, tkt.getCity());
-			pstmt.setString(10, tkt.getDistricts());
-			pstmt.setString(11, tkt.getAddress());
-			pstmt.setDouble(12, tkt.getSclatitude());
-			pstmt.setDouble(13, tkt.getSclongitude());
-			pstmt.setString(14, tkt.getSchowarrival());
-			pstmt.setString(15, tkt.getScservicehr());
-			pstmt.setInt(16, tkt.getTktstat());
-			pstmt.setInt(17, tkt.getTktsort());
-			pstmt.setInt(18, tkt.getRatetotal());
-			pstmt.setInt(19, tkt.getRateqty());			
+			pstmt.setInt(9, tkt.getDirection());
+			pstmt.setString(10, tkt.getCity());
+			pstmt.setString(11, tkt.getDistricts());
+			pstmt.setString(12, tkt.getAddress());
+			pstmt.setDouble(13, tkt.getSclatitude());
+			pstmt.setDouble(14, tkt.getSclongitude());
+			pstmt.setString(15, tkt.getSchowarrival());
+			pstmt.setString(16, tkt.getScservicehr());
+			pstmt.setInt(17, tkt.getTktstat());
+			pstmt.setInt(18, tkt.getTktsort());
+			pstmt.setInt(19, tkt.getRatetotal());
+			pstmt.setInt(20, tkt.getRateqty());			
 			
 			System.out.println("新增成功222");
 
@@ -148,14 +162,14 @@ public class TktDAOImpl implements TktDAO{
 		
 		List<String> tktimgBase64List = tktimg.getTktimgBase64();
 	    List<byte[]> tktimgList = new ArrayList<>();
-
+	    
 	    for (String base64Image : tktimgBase64List) {
 	        // 去除"data:image/png;base64,"這段前贅字
-	        String imageData = base64Image.substring(base64Image.indexOf(",") + 1); 
+	        String imageData = base64Image.substring(base64Image.indexOf(",") + 1);
 	        
 	        // 將Base64數據解碼為byte[]
 	        byte[] tktimgBytes = Base64.getDecoder().decode(imageData);
-
+	        
 	        // 添加解碼後的數據到List
 	        tktimgList.add(tktimgBytes);
 	    }
@@ -174,7 +188,7 @@ public class TktDAOImpl implements TktDAO{
 				}
 				for (int i = 0; i < tktimgList.size(); i++) {
 	                byte[] img = tktimgList.get(i);                
-	                
+	                System.out.println("img="+img);
 	                pstmt.setBytes(2, img);
 	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
 				}				
@@ -291,7 +305,65 @@ public class TktDAOImpl implements TktDAO{
 			e.printStackTrace();
 		}
 	}
+	
+	// 修改票券(該票券編號的商品內容)
+	@Override
+	public void updateTkt(Tkt tkt) {
+		
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement(UPDATE_STMT);){
+		
+//				try (	Connection con = ds.getConnection();
+//						PreparedStatement pstmt = con.prepareStatement(UPDATE_STMT);){
+			
+			pstmt.setString(1, tkt.getTktname());
+			pstmt.setString(2, tkt.getTktstartdate());
+			pstmt.setString(3, tkt.getTktenddate());			
+			pstmt.setString(4, tkt.getTktinstruction());
+			pstmt.setString(5, tkt.getProddesc());			
+			pstmt.setString(6, tkt.getNotice());
+			pstmt.setString(7, tkt.getHowuse());
+			pstmt.setString(8, tkt.getLocation());
+			pstmt.setInt(9, tkt.getDirection());
+			pstmt.setString(10, tkt.getCity());
+			pstmt.setString(11, tkt.getDistricts());
+			pstmt.setString(12, tkt.getAddress());
+			pstmt.setDouble(13, tkt.getSclatitude());
+			pstmt.setDouble(14, tkt.getSclongitude());
+			pstmt.setString(15, tkt.getSchowarrival());
+			pstmt.setString(16, tkt.getScservicehr());
+			pstmt.setInt(17, tkt.getTktsort());
+			pstmt.setInt(18, tkt.getTktno());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	// 修改方案(該方案編號的方案內容)
+	@Override
+	public void updateTktPlan(PlanType planType) {
+		System.out.println("有到updateTktPlan()");
+		
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement(UPDATEPLAN_STMT);){
+		
+//				try (	Connection con = ds.getConnection();
+//						PreparedStatement pstmt = con.prepareStatement(UPDATEPLAN_STMT);){
+			pstmt.setString(1, planType.getPlanname());
+			pstmt.setString(2, planType.getPlancontent());
+			pstmt.setInt(3, planType.getTktplanno());
+			
+			System.out.println("修改成功222");
 
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	// 單筆查詢(該票券編號的商品內容)
 	@Override
@@ -333,13 +405,42 @@ public class TktDAOImpl implements TktDAO{
 				}
 			}
 						
-			System.out.println("查詢成功");
-			System.out.println("tkt="+tkt);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return tkt;
+	}
+	
+	// 單筆查詢(該方案編號的方案內容)
+	@Override
+	public PlanType findPlanByPK(Integer tktplanno) {
+
+		PlanType planType = null;
+		
+		try (	Connection con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				PreparedStatement pstmt = con.prepareStatement(findPlanByPK_STMT);){
+		
+//		try (	Connection con = ds.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(findPlanByPK_STMT);){
+			
+			pstmt.setInt(1, tktplanno);
+			
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+					planType = new PlanType();
+					planType.setTktplanno(rs.getInt("TKT_PLAN_NO"));
+					planType.setPlanname(rs.getString("PLAN_NAME"));
+					planType.setPlancontent(rs.getString("PLAN_CONTENT"));
+				}
+			}
+						
+			System.out.println("查詢成功");
+			System.out.println("planType="+planType);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return planType;
 	}
 	
 	// 多筆查詢(該票券編號的所有圖片)
@@ -439,11 +540,14 @@ public class TktDAOImpl implements TktDAO{
 						tktimg.setTktno(rs.getInt("TKT_NO"));
 						
 						byte[] img = rs.getBytes("TKT_IMG");
-						img = tktimg.shrink(img, 200);
-						String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
-						tktimg.setTktimgBase64(new ArrayList<>());
-						tktimg.getTktimgBase64().add(tktimgBase64);
-						System.out.println(tktimgBase64);
+//						img = tktimg.shrink(img, 200);
+						if (img == null) {
+							continue;
+						} else {
+							String tktimgBase64 = Base64.getEncoder().encodeToString(img);	
+							tktimg.setTktimgBase64(new ArrayList<>());
+							tktimg.getTktimgBase64().add(tktimgBase64);
+						}
 						
 						imgList.add(tktimg); 
 					}
@@ -540,7 +644,8 @@ public class TktDAOImpl implements TktDAO{
 			return list;
 		}
 
-		
+
+
 	
 	
 

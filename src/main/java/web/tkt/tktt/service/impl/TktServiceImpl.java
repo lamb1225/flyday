@@ -19,7 +19,6 @@ public class TktServiceImpl implements TktService{
 	// 新增商品
 	@Override
 	public Tkt addtkt(Tkt tkt) {
-		System.out.println("有來到addtkt()");
 		dao.insertTkt(tkt);
 		return tkt;		
 	}
@@ -27,7 +26,6 @@ public class TktServiceImpl implements TktService{
 	// 新增圖片
 	@Override
 	public TktImg addtktimg(TktImg tktimg) {
-		System.out.println("有來到addtktimg()");
 		dao.insertImg(tktimg);
 		return tktimg;
 	}
@@ -35,7 +33,6 @@ public class TktServiceImpl implements TktService{
 	// 新增方案
 	@Override
 	public TktPlan addtktplan(TktPlan tktplan) {
-		System.out.println("有來到addtktplan()");
 		dao.insertPlan(tktplan);
 		return tktplan;	
 	}
@@ -43,22 +40,41 @@ public class TktServiceImpl implements TktService{
 	// 新增票種
 	@Override
 	public TktType addtkttype(TktType tkttype) {
-		System.out.println("有來到addtkttype()");
 		dao.insertType(tkttype);
 		return tkttype;
+	}
+	
+	// 修改商品
+	@Override
+	public Tkt editTkt(Tkt tkt) {
+		dao.updateTkt(tkt);
+		return tkt;
+	}
+
+	// 修改方案
+	@Override
+	public PlanType editTktPlan(PlanType planType) {
+		System.out.println("有來到editTktPlan()");
+		dao.updateTktPlan(planType);;
+		return planType;
 	}
 	
 	// 查詢該票券編號的商品內容
 	@Override
 	public Tkt findTktDetial(Integer tktno) {
-		System.out.println("有來到findTktDetial()");		
 		return dao.findByPK(tktno);
+	}
+	
+	// 查詢該方案編號的方案內容
+	@Override
+	public PlanType findTktPlanDetial(Integer tktplanno) {
+		System.out.println("有來到findTktPlanDetial()");		
+		return dao.findPlanByPK(tktplanno);
 	}
 
 	// 查詢該票券編號的所有圖片
 	@Override
 	public List<TktImg> findTktImgDetial(Integer tktno) {
-		System.out.println("有來到findTktImg()");		
 		return dao.getTktImg(tktno);
 	}
 	
@@ -89,5 +105,10 @@ public class TktServiceImpl implements TktService{
 		System.out.println("有來到findAllTktLowPrice()");
 		return dao.getAllTktLowPrice();
 	}
+
+
+
+
+
 
 }
