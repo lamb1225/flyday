@@ -152,7 +152,7 @@ async function showjoin() {
     return showm.innerHTML = html;
 }
 $(document).on('click', `#Pay`, () => {
-    fetch('ECPay', {
+    fetch('JoinPay', {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify({
@@ -322,7 +322,7 @@ $(document).on('click', `#remove`, () => {
                                                         '若有想要一起出遊請建立揪團ㄅ',
                                                         'success'
                                                     )
-                                                    location.href = `${getContextPath()}/Act/hotel-grid.html`;
+                                                    location.href = `${getContextPath()}/Act/account-bookings.html`;
 
                                                 }
                                             });

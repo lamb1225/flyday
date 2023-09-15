@@ -35,6 +35,8 @@ public interface MemService {
 	List<Mem> listBySearch(String searchContent);
 	
 	int updateAllStatus(Integer memAccStatus, Integer memActStatus, Integer memNo);
+	
+	Mem checkMemInfoByMemAcc(String memAcc);
 	 
 	
 }

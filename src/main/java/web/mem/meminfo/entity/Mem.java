@@ -1,5 +1,6 @@
 package web.mem.meminfo.entity;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -219,10 +220,12 @@ public class Mem extends MemSuper {
 		this.memActStatus = memActStatus;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Mem [memNo=" + memNo + ", memLevelNo=" + memLevelNo + ", memAcc=" + memAcc + ", memName=" + memName
+				+ "]";
+	}
 
-	
-	
 	
 	
 }

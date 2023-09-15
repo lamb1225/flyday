@@ -282,27 +282,34 @@ saveChanges.addEventListener("click", function(){
 
 // 上傳照片
 const uploadImage = document.getElementById("upload-image");
+//--設置最大上傳容量
+const fileMaxSize = 1024*1024*1   //1M
 
 uploadImage.addEventListener("change", function(){
 
-  const formData = new FormData();
-  formData.append("image", uploadImage.files[0]);
-  formData.append("memNo", getOneInfoObj[0]);
+  if(uploadImage.files[0].size > fileMaxSize){
+    alert("上傳容量限制為1MB！");
+  }else{
+    console.log("YYY");
+    const formData = new FormData();
+    formData.append("image", uploadImage.files[0]);
+    formData.append("memNo", getOneInfoObj[0]);
 
-  fetch(`/${contextPath}/mem/updateImage`,{
-      method: "POST",
-      body: formData
-  }).then(function(response){
-    return response.json();
-  }).then(function(jsonObject){
-    const{successful, message, memPicBase64} = jsonObject;
-    if(successful){
-      for(let myMemPic of myMemPics){
-        const picBase64Url = memPicBase64;
-        myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+    fetch(`/${contextPath}/mem/updateImage`,{
+        method: "POST",
+        body: formData
+    }).then(function(response){
+      return response.json();
+    }).then(function(jsonObject){
+      const{successful, message, memPicBase64} = jsonObject;
+      if(successful){
+        for(let myMemPic of myMemPics){
+          const picBase64Url = memPicBase64;
+          myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 //更新Email
@@ -399,31 +406,31 @@ sendEmailBtn.addEventListener("click", function(){
 const pkgCart = document.getElementById("my_pkg_cart");
 const tktCart = document.getElementById("my_tkt_cart");
 const btnCart = document.getElementById("btn_cart");
-const checkAllContent = document.getElementById("check-all-content");
+// const checkAllContent = document.getElementById("check-all-content");
 
-const checkAll = document.getElementById("check-all");
-const pkgChecks = document.getElementsByName("pkg-check");
-const tktChecks = document.getElementsByName("tkt-check");
+// const checkAll = document.getElementById("check-all");
+// const pkgChecks = document.getElementsByName("pkg-check");
+// const tktChecks = document.getElementsByName("tkt-check");
 
 
 pkgCart.addEventListener("click", function(){
   btnCart.textContent = "行程結帳";
   btnCart.setAttribute("href", "#");
-  checkAllContent.textContent = "全選行程";
-  checkAll.checked = false;
-  for(let tktCheck of tktChecks){
-    tktCheck.checked = false;
-  }
+  // checkAllContent.textContent = "全選行程";
+  // checkAll.checked = false;
+  // for(let tktCheck of tktChecks){
+  //   tktCheck.checked = false;
+  // }
 });
 
 tktCart.addEventListener("click", function(){
   btnCart.textContent = "票券結帳";
   btnCart.setAttribute("href", "##");
-  checkAllContent.textContent = "全選票券";
-  checkAll.checked = false;
-  for(let pkgCheck of pkgChecks){
-    pkgCheck.checked = false;
-  }
+  // checkAllContent.textContent = "全選票券";
+  // checkAll.checked = false;
+  // for(let pkgCheck of pkgChecks){
+  //   pkgCheck.checked = false;
+  // }
 });
 
 //--切換購物車數量
@@ -443,56 +450,57 @@ for(let i = 0; i < plusBtns.length; i++){
 };
 
 //--設計全選
-checkAll.addEventListener("click",function(){
-  if(checkAllContent.textContent === "全選行程"){
-    for(let pkgCheck of pkgChecks){
-      pkgCheck.checked = checkAll.checked;
-    }
-  }else if(checkAllContent.textContent === "全選票券"){
-    for(let tktCheck of tktChecks){
-      tktCheck.checked = checkAll.checked;
-    }
-  }
-});
+// checkAll.addEventListener("click",function(){
+//   if(checkAllContent.textContent === "全選行程"){
+//     for(let pkgCheck of pkgChecks){
+//       pkgCheck.checked = checkAll.checked;
+//     }
+//   }else if(checkAllContent.textContent === "全選票券"){
+//     for(let tktCheck of tktChecks){
+//       tktCheck.checked = checkAll.checked;
+//     }
+//   }
+// });
 
-for(let pkgCheck of pkgChecks){
-  pkgCheck.addEventListener("click", function(){
-    if(!this.checked){
-      checkAll.checked = false;
-    }else{
-      let isAllChecked = true;
-      for(let pkgCheck of pkgChecks){
-        if(!pkgCheck.checked){
-          isAllChecked = false;
-          break;
-        }
-      }
-      checkAll.checked = isAllChecked;
-    }
-  });
-}
+// for(let pkgCheck of pkgChecks){
+//   pkgCheck.addEventListener("click", function(){
+//     if(!this.checked){
+//       checkAll.checked = false;
+//     }else{
+//       let isAllChecked = true;
+//       for(let pkgCheck of pkgChecks){
+//         if(!pkgCheck.checked){
+//           isAllChecked = false;
+//           break;
+//         }
+//       }
+//       checkAll.checked = isAllChecked;
+//     }
+//   });
+// }
 
-for(let tktCheck of tktChecks){
-  tktCheck.addEventListener("click", function(){
-    if(!this.checked){
-      checkAll.checked = false;
-    }else{
-      let isAllChecked = true;
-      for(let tktCheck of tktChecks){
-        if(!tktCheck.checked){
-          isAllChecked = false;
-          break;
-        }
-      }
-      checkAll.checked = isAllChecked;
-    }
-  });
-}
+// for(let tktCheck of tktChecks){
+//   tktCheck.addEventListener("click", function(){
+//     if(!this.checked){
+//       checkAll.checked = false;
+//     }else{
+//       let isAllChecked = true;
+//       for(let tktCheck of tktChecks){
+//         if(!tktCheck.checked){
+//           isAllChecked = false;
+//           break;
+//         }
+//       }
+//       checkAll.checked = isAllChecked;
+//     }
+//   });
+// }
 
 //登出按鈕
 const logoutSide = document.getElementById("logoutSide");
 
 logoutSide.addEventListener("click", function(){
+  sessionStorage.removeItem("memNo");
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });
@@ -500,6 +508,7 @@ logoutSide.addEventListener("click", function(){
 const logoutNav = document.getElementById("logoutNav");
 
 logoutNav.addEventListener("click", function(){
+  sessionStorage.removeItem("memNo");
   fetch(`/${contextPath}/mem/logout`);
   location = `/${contextPath}/front_end/index.html`;
 });

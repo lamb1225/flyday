@@ -15,7 +15,21 @@
 
     const errMsg = document.getElementById("errMsg");
 
-
+	fetch("/flyday/store/select",{
+		method: "POST",
+        headers:  { "Content-Type": "application/json" },
+        body: JSON.stringify({storeNo: sessionStorage.getItem("storeNo")})
+	}).then(resp => resp.json())
+	.then(data =>{
+		name.value = data.storeName;
+        email.value = data.storeEmail;
+        tel.value = data.storeTel;
+        storeadd.value = data.storeAdd;
+		if(data.storeReply != null){
+			reply.value = data.storeReply;
+		}
+        
+	})
 
     const pwdRegex = /^\w{6,12}$/
     const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;

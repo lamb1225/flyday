@@ -6,7 +6,7 @@
 <!--     <Resource name="jdbc/javaFramework" type="javax.sql.DataSource" -->
 <!--         url="jdbc:mysql://localhost:3306/flyday" -->
 <!--         username="root" -->
-<!--         password="821213" -->
+<!--         password="123456" -->
 <!--         driverClassName="com.mysql.cj.jdbc.Driver" -->
 <!--         maxActive="8" -->
 <!--       	maxIdle="4" -->

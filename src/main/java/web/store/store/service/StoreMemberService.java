@@ -20,4 +20,6 @@ public interface StoreMemberService {
 	Store editpic(byte[] storePic, Integer storeNo);
 	
 	Store editReview(Store store);
+	
+	Store selectstoreno(Integer storeNo);
 }

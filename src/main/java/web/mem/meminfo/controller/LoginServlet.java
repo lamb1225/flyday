@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
 				session = request.getSession();
 				session.setAttribute("mem", mem);
 			}
+			System.out.println(mem.getMemNo());
 			
 			response.setContentType("application/json");
 			try(PrintWriter pw = response.getWriter();){

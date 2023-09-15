@@ -145,16 +145,14 @@ $.ajax({
                             })
 
                         })
-                       
-
-                        return `<button type="button" class="btn btn-danger btn-sm dels${row.actno}">刪除揪團</button>` +
-                            `<button type="button" class="btn btn-danger btn-sm del${row.actno}">刪除無成員揪團</button>`
+                        return `<button type="button" class="btn btn-danger btn-sm dels${row.actno}">刪除揪團</button>`
                     }
 
                 }, {
                     //將全部欄位的字置中。
                     targets: '_all',
                     className: 'text-center'
+                    
                 }
             ],
             //語言區塊:將預設英文配置改成中文顯示。

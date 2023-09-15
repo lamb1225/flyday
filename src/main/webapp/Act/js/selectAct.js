@@ -79,7 +79,7 @@ async function showAct(act) {
                     </div>
                     <div class="mt-2 mt-sm-0 z-index-2">`
             if (mem !== acts.memno) {
-                html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
+                html += `<a id="memid${acts.memno}"onclick='JoinActClick(${acts.actno},${act.actmaxcount},${act.actcurrentcount})'  class="btn btn-sm btn-primary-soft mb-0 w-100"> 加入揪團 <i
             class="bi bi-arrow-right ms-2"></i></a>`
             }
 
@@ -150,7 +150,7 @@ let report = (id) => {
     })
 
     swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
+        title: '檢舉表單',
         html: `<div class="col-md-6">
         <label class="form-label">Nationality<span class="text-danger">*</span></label>
         <select class="form-select js-choice" id="select1">
@@ -218,8 +218,8 @@ let report = (id) => {
 //     sessionStorage.setItem("actno", id);
 //     location.href = `${getContextPath()}/Act/reviseAct.html`;
 // }
-function JoinActClick(id) {
-    let differ = act.actmaxcount - act.actcurrentcount;
+function JoinActClick(id, actmaxcount, actcurrentcount) {
+    let differ = actmaxcount - actcurrentcount;
     let memid = mem;
     if (differ === 0) {
         Swal.fire({
@@ -228,38 +228,63 @@ function JoinActClick(id) {
         })
         return;
     }
-    if (!confirm('確定加入?')) {
-        return;
-    }
-    fetch('Join', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            actno: id,
-            memno: memid
-        })
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
     })
-        .then(resp => resp.json())
-        .then(body => {
-            const { successful } = body;
-            if (successful) {
-                join1(id);
-                Swal.fire({
-                    title: '加入成功',
-                    icon: 'success'
-                }).then(function () {
-                    sessionStorage.setItem('actno', id);
-                    sessionStorage.setItem('memno', memid);
-                    location.href = `${getContextPath()}/Act/hotel-detail.html`;
-                })
-            } else {
 
-                Swal.fire({
-                    title: '已加入過',
-                    icon: 'error'
+    swalWithBootstrapButtons.fire({
+        title: '確定要加入嗎?',
+        showCancelButton: true,
+        confirmButtonText: '送出!',
+        cancelButtonText: '取消',
+        reverseButtons: true
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            fetch('Join', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    actno: id,
+                    memno: memid
                 })
-            }
-        });
+            })
+                .then(resp => resp.json())
+                .then(body => {
+                    const { successful } = body;
+                    if (successful) {
+                        join1(id);
+                        Swal.fire({
+                            title: '加入成功',
+                            icon: 'success'
+                        }).then(function () {
+                            sessionStorage.setItem('actno', id);
+                            sessionStorage.setItem('memno', memid);
+                            location.href = `${getContextPath()}/Act/hotel-detail.html`;
+                        })
+                    } else {
+        
+                        Swal.fire({
+                            title: '已加入過',
+                            icon: 'error'
+                        })
+                    }
+                });
+
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                '已取消',
+            )
+        }
+    })
+   
 }
 
 async function join1(id) {

@@ -2,6 +2,7 @@ package web.mem.meminfo.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
+//		resp.sendRedirect(req.getContextPath() + "/front_end/index.html");	//直接用網址對此servlet發送請求，可以直接跳轉首頁
 	}
-	
 	
 }
