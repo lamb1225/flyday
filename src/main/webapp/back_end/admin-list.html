@@ -505,14 +505,14 @@ buyroll.addEventListener("click", function () {
 });
 buy1.addEventListener("click", function () {
 	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
-       	location = "empList.html";
+       	location = "/flyday/tkt/Order?action=getBackAllOrd";
     } else {
         alert("無登入權限");
     }
 });
 buy3.addEventListener("click", function () {
 	if (sessionStorage.getItem("empStatus") == 1 || sessionStorage.getItem("empStatus") == 2) {
-       	location = "empList.html";
+       	location = "/flyday/back_end/package-coupon-manage5.html";
     } else {
         alert("無登入權限");
     }
