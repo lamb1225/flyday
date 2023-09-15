@@ -63,7 +63,7 @@ public class PkgCoupDaoImpl implements PkgCoupDao {
 	@Override
 	public PkgCoup selectById(Integer id) {
 		return session.get(PkgCoup.class, id); // id這個名稱可以隨意取 因為是傳入的值;會自動對應到PK
-												// PkgCoup.class 是實體類entity的類型
+											// PkgCoup.class 是實體類entity的類型
 	}
 
 	@Override

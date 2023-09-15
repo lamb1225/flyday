@@ -37,7 +37,7 @@ public class PkgCoupServiceImpl implements PkgCoupService {
 		}
 
 		// 設置優惠券狀態為0（0代表未上架）
-		pkgCoup.setPkgCoupState(0);
+//		pkgCoup.setPkgCoupState(0);
 
 		// 嘗試插入優惠券到資料庫，如果插入失敗，設定相關訊息
 		if (dao.insert(pkgCoup) < 1) { // 新增

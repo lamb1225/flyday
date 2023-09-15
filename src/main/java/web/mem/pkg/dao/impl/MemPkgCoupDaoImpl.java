@@ -7,10 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import web.mem.pkg.dao.MemPkgCoupDao;
 import web.mem.pkg.entity.MemPkgCoup;
-
+@Repository
 public class MemPkgCoupDaoImpl implements MemPkgCoupDao{
 	@PersistenceContext
 	private Session session;

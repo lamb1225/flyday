@@ -36,6 +36,7 @@ public class TktOrdDaoImpl implements TktOrdDao {
 	private static final String GET_ONE_STMT = "SELECT * FROM tkt_ord where tkt_ord_no = ?";
 	private static final String GET_ALL_BYMEM_STMT = "SELECT * FROM tkt_ord where mem_no = ? order by tkt_ord_no desc";
 	public static final String GET_ALL_STMT = "SELECT * FROM tkt_ord order by tkt_ord_no desc";
+	public static final String GET_ALL_ORDERBY_STMT = "SELECT * FROM tkt_ord order by tkt_ord_no";
 	
 	//產生同條連線用
 	public Connection getConnectionForTx() throws SQLException{
@@ -143,7 +144,7 @@ public class TktOrdDaoImpl implements TktOrdDao {
 	
 	
 	@Override
-	public void update(Integer tktOrdNo, Integer ordStat) {
+	public void update(Integer ordStat, Integer tktOrdNo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -152,8 +153,8 @@ public class TktOrdDaoImpl implements TktOrdDao {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, tktOrdNo);
-			pstmt.setInt(2, ordStat);
+			pstmt.setInt(1, ordStat);
+			pstmt.setInt(2, tktOrdNo);
 
 			pstmt.executeUpdate();
 
@@ -321,6 +322,69 @@ public class TktOrdDaoImpl implements TktOrdDao {
 //			con = DriverManager.getConnection(url, userid, passwd);
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				tktOrd = new TktOrd();
+				tktOrd.setTktOrdNo(rs.getInt("tkt_ord_no"));
+				tktOrd.setMemNo(rs.getInt("mem_no"));
+				tktOrd.setMemTktCoupNo(rs.getInt("mem_tkt_coup_no"));
+				tktOrd.setOrgPrice(rs.getInt("org_price"));
+				tktOrd.setDiscPrice(rs.getInt("disc_price"));
+				tktOrd.setPayPrice(rs.getInt("pay_price"));
+				tktOrd.setConTitle(rs.getString("con_title"));
+				tktOrd.setConName(rs.getString("con_name"));
+				tktOrd.setConPhone(rs.getString("con_phone"));
+				tktOrd.setConEmail(rs.getString("con_email"));
+				tktOrd.setOrdDate(rs.getTimestamp("ord_date"));
+				tktOrd.setOrdRefDate(rs.getTimestamp("ord_ref_date"));
+				tktOrd.setOrdStat(rs.getInt("ord_stat"));
+				list.add(tktOrd);
+			}
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<TktOrd> getAllOrderBy() {
+		List<TktOrd> list = new ArrayList<TktOrd>();
+		TktOrd tktOrd = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_ORDERBY_STMT);
 
 			rs = pstmt.executeQuery();
 			

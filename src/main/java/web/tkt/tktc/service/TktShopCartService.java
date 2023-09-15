@@ -1,11 +1,7 @@
 package web.tkt.tktc.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.oracle.wls.shaded.org.apache.bcel.generic.RETURN;
-
-import web.tkt.tktc.dao.TktShopCartDao;
 import web.tkt.tktc.dao.impl.TktShopCartDaoImpl;
 import web.tkt.tktc.entity.TktJoin;
 import web.tkt.tktc.entity.TktShopCart;
@@ -14,10 +10,6 @@ public class TktShopCartService {
 	
 	TktShopCartDaoImpl dao = new TktShopCartDaoImpl();
 	TktShopCart tktShopCart = null;
-
-	public TktShopCartService() {
-		TktShopCartDaoImpl dao = new TktShopCartDaoImpl();
-	}
 	
 	//新增票券
 	public TktShopCart addTktShopCart(Integer memNo, Integer tktTypeNo, Integer tktQty) {
@@ -38,7 +30,7 @@ public class TktShopCartService {
 		return tktShopCart;
 	}
 	
-	//刪除票券(還未測試)
+	//刪除票券
 	public void delete(Integer memNo, Integer tktTypeNo) {
 		dao.delete(memNo, tktTypeNo);
 	}
@@ -48,7 +40,7 @@ public class TktShopCartService {
 		dao.delete(memNo);
 	}
 	
-	//修改票券(還未測試)
+	//修改票券
 	public TktShopCart update(Integer memNo, Integer tktTypeNo, Integer tktQty) {
 		TktShopCart tktShopCart = new TktShopCart();
 		
@@ -76,21 +68,12 @@ public class TktShopCartService {
 		return dao.getAll(memNo);
 	}
 	
-	// 取得所有購物車裡票種流水號，可以拿去比對票種資訊(可以刪除，被join後的list取代)但join圖片也許可以參考
-//	public static List<Integer> getTktTypeNoList(List<TktShopCart> tktShopCartList){
-//		List<Integer> tktTypeNoList = new ArrayList<>();
-//		for (TktShopCart tktShopCart : tktShopCartList) {
-//			tktTypeNoList.add(tktShopCart.getTktTypeNo());
-//		}
-//		return tktTypeNoList;
-//	}
-	
 	//查詢會員購物車清單
 	public List<TktJoin> selectByMemNo(Integer memNo){
 		return dao.selectByMemNo(memNo);
 	}
 	
-	// 取得購物車總價(測試有成功，但還是有點問題 ，目前沒用到)
+	// 取得購物車總價(目前沒用到)
 	public int getTotalPrice(List<TktJoin> tktJoinList) {
 		int totalPrice = 0;
 		for(TktJoin cartItem : tktJoinList) {

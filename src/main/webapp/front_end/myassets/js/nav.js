@@ -23,7 +23,7 @@ pkgCart.addEventListener("click", function(){
 
 tktCart.addEventListener("click", function(){
   btnCart.textContent = "票券結帳";
-  btnCart.setAttribute("href", "##");
+  btnCart.setAttribute("href", "/flyday/tkt/shoppingCart?action=getAll");
   // checkAllContent.textContent = "全選票券";
   // checkAll.checked = false;
   // for(let pkgCheck of pkgChecks){
@@ -104,9 +104,6 @@ const loginBtnNav = document.getElementById("login-btn-nav");
 const actMenu = document.getElementById("accounntMenu");
 
 const contextPath = window.location.pathname.split('/')[1];
-
-//存入會員揪團狀態給阻擋被停權會員驗證使用，先宣告為正常值0
-let memActStatusRecord = 0 ;
 
 document.addEventListener("DOMContentLoaded",function(){
   fetch(`/${contextPath}/mem/getOneInfo`,{

@@ -10,8 +10,9 @@ import web.pkg.pkg.dao.PkgCommentDao;
 import web.pkg.pkg.entity.PkgComment;
 
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class PkgCommentDaoImpl implements PkgCommentDao {
 
 	@PersistenceContext

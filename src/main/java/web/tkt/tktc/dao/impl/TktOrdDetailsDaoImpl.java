@@ -38,20 +38,26 @@ public class TktOrdDetailsDaoImpl implements TktOrdDetailsDao {
 	private static final String UPDATE = "UPDATE tkt_ord_details set comment_stat = 1 where tkt_ord_no = ? AND tkt_type_no = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM tkt_ord_details where tkt_ord_no = ? AND tkt_type_no = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM tkt_ord_details where tkt_ord_no = ? order by tkt_type_no";
-	private static final String JOIN_STMT = "SELECT tkt_ord_no, tkt_name, plan_name, tkt_type, d.tkt_type_no, unit_price,"
+	private static final String JOIN_STMT = "SELECT tkt_ord_no, tkt_name, tkt_img, plan_name, tkt_type, d.tkt_type_no, unit_price,"
 			+ " tkt_ord_qty, location, ratetotal"
 			+ " FROM tkt_ord_details d"
 			+ " JOIN tkt_type t on d.tkt_type_no = t.tkt_type_no"
 			+ " JOIN tkt_plan p on t.tkt_plan_no = p.tkt_plan_no"
 			+ " JOIN tkt on p.tkt_no = tkt.tkt_no"
-			+ " where tkt_ord_no = ?;";
-	private static final String JOIN_ALL_STMT = "SELECT tkt_ord_no, tkt_name, plan_name, tkt_type, d.tkt_type_no, unit_price,"
-			+ " tkt_ord_qty, location, ratetotal"
-			+ " FROM tkt_ord_details d"
-			+ " JOIN tkt_type t on d.tkt_type_no = t.tkt_type_no"
-			+ " JOIN tkt_plan p on t.tkt_plan_no = p.tkt_plan_no"
-			+ " JOIN tkt on p.tkt_no = tkt.tkt_no"
-			+ " order by tkt_ord_no desc;";
+			+ " JOIN ("
+			+ "	SELECT tkt_no, MIN(tkt_img_no) AS each_first_img"
+			+ "	FROM tkt_img"
+			+ "	GROUP BY tkt_no"
+			+ ") AS first_img ON tkt.tkt_no = first_img.tkt_no "
+			+ "JOIN tkt_img i ON first_img.each_first_img = i.tkt_img_no "
+			+ " where tkt_ord_no = ?";
+	private static final String JOIN_ALL_STMT = "SELECT tkt_ord_no, tkt_name, plan_name, tkt_type, d.tkt_type_no, unit_price, "
+			+ "tkt_ord_qty, location, ratetotal "
+			+ "FROM tkt_ord_details d "
+			+ "JOIN tkt_type t on d.tkt_type_no = t.tkt_type_no "
+			+ "JOIN tkt_plan p on t.tkt_plan_no = p.tkt_plan_no "
+			+ "JOIN tkt on p.tkt_no = tkt.tkt_no "
+			+ "order by tkt_ord_no desc";
 	
 	@Override
 	public void insert(Integer tktOrdNo, List<TktJoin> tktJoinList, Integer commentStat) {
@@ -231,6 +237,7 @@ public class TktOrdDetailsDaoImpl implements TktOrdDetailsDao {
 				tktOrdDetailsJoin.setTktOrdQty(rs.getInt("tkt_ord_qty"));
 				tktOrdDetailsJoin.setLocation(rs.getString("location"));
 				tktOrdDetailsJoin.setRateTotal(rs.getInt("rateTotal"));
+				tktOrdDetailsJoin.setTktImg(rs.getBytes("tkt_img"));
 				list.add(tktOrdDetailsJoin);
 			}
 			

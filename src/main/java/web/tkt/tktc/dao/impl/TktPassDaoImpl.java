@@ -12,20 +12,20 @@ import web.tkt.tktc.entity.TktPass;
 
 public class TktPassDaoImpl implements TktPassDao {
 	
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/flyday?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "123456";
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://localhost:3306/flyday?serverTimezone=Asia/Taipei";
+//	String userid = "root";
+//	String passwd = "123456";
 	
-//	private static DataSource ds = null;
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/flyday");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/flyday");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = "INSERT INTO tkt_pass (tkt_type_no, mem_no, qrcode, exp_date)"
 			+ " values (?, ?, '?', '?')";

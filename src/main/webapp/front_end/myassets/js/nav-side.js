@@ -23,7 +23,7 @@ pkgCart.addEventListener("click", function(){
 
 tktCart.addEventListener("click", function(){
   btnCart.textContent = "票券結帳";
-  btnCart.setAttribute("href", "##");
+  btnCart.setAttribute("href", "/flyday/tkt/shoppingCart?action=getAll");
   // checkAllContent.textContent = "全選票券";
   // checkAll.checked = false;
   // for(let pkgCheck of pkgChecks){
@@ -151,9 +151,10 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     //填入側邊欄圖片
-    const picBase64Url = memPicBase64;
-    myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
-
+    if(typeof memPicBase64 !== "undefined"){  
+      const picBase64Url = memPicBase64;
+      myMemPic.setAttribute("src", "data:image/jpeg;base64," + picBase64Url); 
+    }
     //填入側邊欄帳號
     myAcc.textContent = memAcc;
 

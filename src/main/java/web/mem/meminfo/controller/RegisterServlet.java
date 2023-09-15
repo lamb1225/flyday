@@ -60,18 +60,30 @@ public class RegisterServlet extends HttpServlet{
 			resp.setContentType("application/json");
 			try(PrintWriter pw = resp.getWriter();){
 				pw.print(gson.toJson(mem));	
+				System.out.println("XXX");
 			}
-			
+			System.out.println("XXX");
 			//寄驗證信移到最後，因為完成寄驗證信需要時間，避免影響使用者體驗
 			String to = mem.getMemEmail();
 			String subject = "【Flyday】會員功能啟用信";
 			String messageText = "親愛的Flyday會員您好：" + "\n" 
-									+ "請點選以下連結完成會員功能啟用：\n\n" 
-									+ "http://localhost:8081/flyday/mem/activate?no=" + mem.getMemNo()
+									+ "請點選以下連結完成會員功能啟用：\n\n" 	
+									+ req.getScheme() + "://" + req.getServerName() + ":" 
+									+ req.getServerPort() + req.getContextPath() + "/mem/activate"
+									+ "?no=" + mem.getMemNo()
 									+ "&urlLink=" + randomString + "\n\n此連結將於3天內失效";
 			
 			emailSender.sendMail(to, subject, messageText);
-		}	
+		}else {
+			
+			//回送資料回前端
+			resp.setContentType("application/json");
+			try(PrintWriter pw = resp.getWriter();){
+				pw.print(gson.toJson(mem));	
+				System.out.println("XXX");
+			}
+		}
+		
 	}
 
 }
