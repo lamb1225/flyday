@@ -23,7 +23,7 @@ pkgCart.addEventListener("click", function(){
 
 tktCart.addEventListener("click", function(){
   btnCart.textContent = "票券結帳";
-  btnCart.setAttribute("href", "##");
+  btnCart.setAttribute("href", "/flyday/tkt/shoppingCart?action=getAll");
   // checkAllContent.textContent = "全選票券";
   // checkAll.checked = false;
   // for(let pkgCheck of pkgChecks){
