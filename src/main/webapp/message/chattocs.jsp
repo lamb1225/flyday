@@ -188,7 +188,7 @@
 
                 <!-- Dropdown submenu -->
                 <li class="dropdown-submenu dropend">
-                  <a class="dropdown-item" href="#">門票搜尋</a>
+                  <a class="dropdown-item" href="/flyday/tktt/tkt-list.html">門票搜尋</a>
                 </li>
 
                 <!-- Dropdown submenu -->
@@ -240,7 +240,7 @@
             </li>
 
             <!-- Nav item Contact -->
-            <li class="nav-item"> <a class="nav-link" href="contact.html">聯絡我們</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="/flyday/front_end/Frequent-QA.html">常見問題</a></li>
           </ul>
         </div>
         <!-- Main navbar END -->
@@ -780,7 +780,7 @@ Footer START -->
 		};
 
 		webSocket.onclose = function(event) {
-			updateStatus("WebSocket Disconnected");
+			updateStatus("客服已斷線");
 		};
 	}
 
