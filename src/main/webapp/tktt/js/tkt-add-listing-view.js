@@ -1,7 +1,22 @@
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
     // 所有 * 都變紅色
     document.querySelectorAll('label, h5').forEach(function(element) {
         element.innerHTML = element.innerHTML.replace(/\*/g, '<span style="color: red;">*</span>');
+    });
+
+    // 初始化開始日期設定
+    flatpickr("#tktstartdate", {
+        dateFormat: "Y-m-d", // 日期格式
+        minDate: "today",    // 最小日期是今天
+        onChange: function (selectedDates, dateStr) {
+            // 當開始日期改變時，更新結束日期選擇器的最小日期
+            endDatePicker.set("minDate", dateStr);
+        },
+    });  
+        // 初始化結束日期設定
+    endDatePicker = flatpickr("#tktenddate", {
+        dateFormat: "Y-m-d", // 日期格式
+        minDate: "today",    // 最小日期是今天
     });
 
     // 動態生成地區下拉式選單

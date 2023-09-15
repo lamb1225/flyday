@@ -4,8 +4,9 @@ let title;
 let tktPlanTypes;
 let html = "";
 
-$(function () {  
-    
+document.addEventListener("DOMContentLoaded", async function () {
+
+    // 拿到前一個HTML檔傳來的值
     const storedData = sessionStorage.getItem("myData");
     const dataObject = JSON.parse(storedData);
     if (dataObject) {
@@ -15,12 +16,33 @@ $(function () {
     } else {
         console.log("沒有存儲的數據可供檢索");
     }
+    // console.log(tktno);
+
+    // 所有 * 都變紅色
+    document.querySelectorAll('label, h5').forEach(function(element) {
+        element.innerHTML = element.innerHTML.replace(/\*/g, '<span style="color: red;">*</span>');
+    });
 
     // 商品Title
-    titleHTML (html);
+    titleHTML();
+
+    await fetchData();  // Fetch方案&票種   
+    showPlanTypeList(); // 方案和票種顯示到頁面中(初始顯示頁面)
     
+    // Modal關閉按鈕
+    const closeModals = document.getElementsByClassName("closeModal");
+    Array.from(closeModals).forEach( btn => btn.addEventListener("click", async function () {
+        titleHTML();
+        await fetchData();
+        showPlanTypeList();
+    }))
+
+})
+
+// Fetch該商品的方案&票種
+async function fetchData(){
     // 回傳Tktno，取得該商品的方案&票種
-    fetch('addtktplanList', {
+    await fetch('addtktplanList', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,20 +60,18 @@ $(function () {
         }
     })
     .then(function (data) {
-        console.log(data);
+        // console.log(data);
         tktPlanTypes = data;
-        showPlanTypeList(); //將其顯示到頁面中
     })
     .catch(function (error) {
         console.log(error);
     })
-    
-
-});
+}
 
 // 商品TitleHTML程式碼
-function titleHTML (html) {
-    html += `
+function titleHTML () {
+    let html = "";
+    html = `
     <!-- Card header -->
     <div class="card-header border-bottom d-sm-flex justify-content-between align-items-center">
         <!-- Image and Title -->
@@ -85,7 +105,7 @@ function showPlanTypeList (){
             planHTML(i);
             mark = tktPlanTypes[i].tktplanno;
         }
-        typeHTML(i);        
+        typeHTML(i);
     }    
 }
 
@@ -115,10 +135,13 @@ function planHTML (i) {
             </div>
 
             <!-- Data item -->
-            <div class="col-1 tkt-list-position tkt-list"><a href="#" class="btn btn-sm btn-primary-soft mb-0">修改</a></div>
+            <div class="col-1 tkt-list-position tkt-list">
+                <button class="btn btn-sm btn-primary-soft mb-0" type="button" data-bs-toggle="modal" data-bs-target="#myModal" onclick="planDetailsEdit(${tktPlanTypes[i].tktplanno})"
+                        name="planEdit${tktPlanTypes[i].tktplanno}" id="planEdit${tktPlanTypes[i].tktplanno}" data-value="${tktPlanTypes[i].tktplanno}">修改</button>
+            </div>
 
             <!-- Data item -->
-            <div class="col-1 tkt-list-position tkt-list-1"><a href="#" class="btn btn-sm btn-primary-soft mb-0">刪除方案</a></div>
+            <div class="col-1 tkt-list-position tkt-list-1"></div>
             <div class="col-1 tkt-list-position tkt-list-2"></div>					
         </div>
 
@@ -129,10 +152,53 @@ function planHTML (i) {
     $("#point").append(html);    
 }
 
+// Modal (回傳tktplann，取得該方案的詳細內容)
+function planDetailsEdit(tktplanno){
+
+    // console.log("function",tktplanno);
+
+    // 清空表單值
+    document.getElementById('planname').value = '';
+    document.getElementById('plancontent').value = '';
+
+    // 回傳Tktplanno，取得該方案的詳細內容
+    fetch('planDetail', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },    
+        body: JSON.stringify({
+            tktplanno: tktplanno,            
+        }),    
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            const { status, statusText } = response;
+            throw Error(`${status}: ${statusText}`);
+        }
+    })
+    .then(function (planDetial) {
+        // console.log(planDetial);
+        // 方案編號
+        document.getElementById('tktplanno').value = tktplanno;
+        // 方案名稱
+        document.getElementById('planname').value = planDetial.planname;
+        // 方案內容 (去掉<br>標籤並設置值)
+        let formattedText = planDetial.plancontent.replace(/<br>/g, '\n').replace(/\n{2}/g, '\n');
+        document.getElementById('plancontent').value = formattedText;        
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+}
+
 // 票種HTML程式碼
-function typeHTML (i){
+function typeHTML(i){
+    // console.log("票種編號",tktPlanTypes[i].tkttypeno);
     html = "";
-    html += `
+    html = `
     <!-- Table data -->
     <div class="row py-2 tkt-list-position">						
         <!-- Data item -->
@@ -158,6 +224,7 @@ function typeHTML (i){
     </div>    
     `;
 
-    $("#typePoint" + tktPlanTypes[i].tktplanno).after(html);
+    $("#point").append(html);
 }
+
 

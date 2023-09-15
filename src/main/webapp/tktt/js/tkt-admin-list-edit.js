@@ -1,9 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-    const btn1 = document.querySelector('#btn1');
+document.addEventListener("DOMContentLoaded", function () {  
+    
+    // Modal (修改按鈕)
+    const editModalBtn = document.getElementById("editModalBtn");
     const msg = document.querySelector('#msg');
     const small = document.querySelectorAll("small[class='tkt-error-color']");
 
+    const tktno = document.querySelector('#tktno');
     const tktsort = document.querySelector('#tktsort');
     const tktname = document.querySelector('#tktname');
     const tktstartdate = document.querySelector('#tktstartdate');
@@ -50,33 +52,30 @@ document.addEventListener("DOMContentLoaded", function () {
         '連江縣': 4
     };
 
-    const planname = document.querySelector('#planname');
-    
-    const inputs = document.querySelectorAll('input');
 
-    // 票券類型(驗證)
-    tktsort.addEventListener("change", function () {
-        if (tktsort.value == -1) {
-            small[0].textContent = '請選擇票券類型';
-        } else {
-            small[0].textContent = '';
-        }
-    });
     // 標題名稱(驗證)
     tktname.addEventListener("blur", function () {
         const tktnameTrim = tktname.value.trim();
         const tktnameLength = tktnameTrim.length;
         if (tktnameTrim === '') {
-            small[1].textContent = '請輸入標題名稱';
+            small[0].textContent = '請輸入標題名稱';
         } else if (tktnameLength < 2 || tktnameLength > 40){
-            small[1].textContent = '標題長度需介於2~40字元';
+            small[0].textContent = '標題長度需介於2~40字元';
+        } else {
+            small[0].textContent = '';
+        }
+    });
+    // 票券類型(驗證)
+    tktsort.addEventListener("change", function () {
+        if (tktsort.value == -1) {
+            small[1].textContent = '請選擇票券類型';
         } else {
             small[1].textContent = '';
         }
     });
     // 開始日期(驗證)
     tktstartdate.addEventListener("change", function () {
-        if (tktstartdate.value === '') {
+        if (tktstartdate.value === null) {
             small[2].textContent = '請選擇商品開始日期';
         } else {
             small[2].textContent = '';
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // 結束日期(驗證)
     tktenddate.addEventListener("change", function () {
-        if (tktenddate.value === '') {
+        if (tktenddate.value === null) {
             small[3].textContent = '請選擇商品結束日期';
         } else {
             small[3].textContent = '';
@@ -94,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tktinstruction.addEventListener("blur", function () {
         const tktinstructionTrim = tktinstruction.value.trim();        
         const tktinstructionLength = tktinstructionTrim.length;
+        // console.log(tktinstructionLength);
         if (tktinstructionTrim === '') {
             small[4].textContent = '請輸入商品簡介';
         } else if (tktinstructionLength < 2 || tktinstructionLength > 500){
@@ -142,12 +142,12 @@ document.addEventListener("DOMContentLoaded", function () {
             small[8].textContent = '';
         }
     });
-    // 景點介紹(驗證)
+    // 景點簡介(驗證)
     proddesc.addEventListener("blur", function () {
         const proddescText = proddesc.textContent.trim();
         const proddescLength = proddescText.length;
         if (proddescLength == 0) {
-            $("#proddescMsgs").text('景點介紹請勿空白');
+            $("#proddescMsgs").text('景點簡介請勿空白');
         } else if (proddescLength < 2 || proddescLength > 5000) {
             $("#proddescMsgs").text('內容需介於2~5000字元');
         } else {
@@ -180,34 +180,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // 監聽"完成"按鈕
-    btn1.addEventListener('click', async function() {
-        // 圖片庫(存入)
-        const tktimg = document.getElementById("tktimg");
-        const onepic = tktimg.querySelectorAll("img");
-        const picArray = Array.from(onepic);
-        const picArrryAll = [];
-        for(let pic of picArray){
-            const srcValue = pic.getAttribute("src");
-            picArrryAll.push(srcValue);
-        };
-        // console.log(picArrryAll);
-
-        // 票券類型(驗證)
-        if (tktsort.value == -1) {
-            small[0].textContent = '請選擇票券類型';
-        } else {
-            small[0].textContent = '';
-        }
-        // 取得商品狀態(上/下架)
-        const tktstat = document.querySelector('input[name="tktstat"]:checked');
+    // Modal (修改按鈕)
+    editModalBtn.addEventListener("click", function () {
         // 標題名稱(驗證)
         const tktnameTrim = tktname.value.trim();
         const tktnameLength = tktnameTrim.length;
         if (tktnameTrim === '') {
-            small[1].textContent = '請輸入標題名稱';
+            small[0].textContent = '請輸入標題名稱';
         } else if (tktnameLength < 2 || tktnameLength > 40){
-            small[1].textContent = '標題長度需介於2~40字元';
+            small[0].textContent = '標題長度需介於2~40字元';
+        } else {
+            small[0].textContent = '';
+        }
+        // 票券類型(驗證)
+        if (tktsort.value == -1) {
+            small[1].textContent = '請選擇票券類型';
         } else {
             small[1].textContent = '';
         }
@@ -241,7 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // 使用<br>標籤分隔段落並合併
         const tktinstructionHTML = tktinstructionParagraphs.map(tktinstructionParagraphs => `${tktinstructionParagraphs.trim()}<br>`).join('');        
         // console.log("tktinstructionHTML="+tktinstructionHTML);
-
         // 景點名稱(驗證)
         const locationTrim = location.value.trim();
         const locationLength = locationTrim.length;
@@ -328,230 +314,76 @@ document.addEventListener("DOMContentLoaded", function () {
             $("#howuseMsgs").text('');
         }
 
-        // 方案名稱(存入+驗證)
-        const plannameInputs = document.querySelectorAll('input[name="planname"]');
-        const plannameValues = [];
-        plannameInputs.forEach(function(input) {
-            plannameValues.push(input.value);
-        });        
-        // console.log(plannameValues);
-        $("small[id^='plannameMsg']").text('');
-        $("input[name^='planname']").each(function() {
-            const value = $(this).val();
-            const length = $(this).val().length; 
-            if (value === '') {
-                $(this).prev().text('方案名稱請勿空白');
-            } else if (length < 2 || length > 40) {
-                $(this).prev().text('方案名稱需介於2~40個字之間');
+        // 判斷驗證是否為空值
+        let allEmpty = true;
+        small.forEach(function(element) {
+            if (element.textContent !== '') {
+                allEmpty = false;
             }
         });
-        // 方案內容(存入+驗證)
-        const plancontentInputs = document.querySelectorAll('textarea[name="plancontent"]');
-        const plancontentValues = [];
-        let plancontentHTML;
-        plancontentInputs.forEach(function(input) {
-        const plancontentText = input.value;
-        if(plancontentText.trim() === ''){
-            plancontentHTML = '';
-        } else {
-            const plancontentParagraphs = plancontentText.split('\n'); // 將文本分割成多個段落
-                // 使用<br>標籤分隔段落並合併
-            plancontentHTML = plancontentParagraphs.map(plancontentParagraphs => `${plancontentParagraphs.trim()}<br>`).join('');
-        }
-            plancontentValues.push(plancontentHTML);
-        });     
-        //  console.log(plancontentValues);
-        $("small[id^='plancontentMsgs']").text('');
-        $("textarea[id^='plancontent']").each(function() {
-            const value = $(this).val();
-            const length = $(this).val().length; 
-            if (value === '') {
-                $(this).prev().text('方案內容請勿空白');
-            } else if (length < 2 || length > 500) {
-                $(this).prev().text('方案內容需介於2~500個字之間');
-            }
-        }); 
-        // 方案狀態(存入)
-        const planstatInputs = document.querySelectorAll('input[id="planstatRadio"]:checked');
-        const planstatValues = [];
-        planstatInputs.forEach(function(input) {
-            planstatValues.push(input.value);
-        });  
-        // console.log(planstatValues);
 
-        // 票種(存入+驗證)
-        const tkttypeAll = [];
-        $("div[name='planpoint']").each(function(){
-            const tkttypeValues = [];
-            $(this).find("input[name='tkttype']").each(function() {
-                tkttypeValues.push($(this).val());
-            });            
-            tkttypeAll.push(tkttypeValues.join('|'));
-        });
-        //  console.log(tkttypeAll);
-        $("small[id^='tkttypeMsgs']").text('');
-        $("div[name='planpoint']").each(function(){            
-            $(this).find("input[name='tkttype']").each(function() {
-            const value = $(this).val();
-            const length = $(this).val().length; 
-                if (value === '') {
-                    $(this).prev().text('票種請勿空白');
-                } else if (length < 2 || length > 10) {
-                    $(this).prev().text('票種需介於2~10個字之間');
-                }
-            });
-        });
-        // 票價(存入+驗證)
-        const priceAll = [];
-        $("div[name='planpoint']").each(function(){
-            const priceValues = [];
-            $(this).find("input[name='price']").each(function() {
-                priceValues.push($(this).val());
-            });            
-            priceAll.push(priceValues.join('|'));
-        });
-        //   console.log(priceAll);
-        $("small[id^='priceMsgs']").text('');
-        $("div[name='planpoint']").each(function(){            
-            $(this).find("input[name='price']").each(function() {
-                const value = $(this).val();
-                const length = $(this).val().length; 
-                if (value === '') {
-                    $(this).prev().text('票價請勿空白');
-                }
-            });
-        });
-        // 票券
-        await fetch('addtkt', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-			    tktname: tktname.value,
-                tktstartdate: tktstartdate.value,
-                tktenddate: tktenddate.value,
-                tktinstruction:  tktinstructionHTML,
-                proddesc: $("#proddesc div").html(),
-                notice: $("#notice div").html(),
-                howuse: $("#howuse div").html(),
-                location: location.value,
-                direction: direction,
-                city: city.value,
-                districts: districts.value,
-                address: address.value,
-
-                sclatitude: 123,
-                sclongitude: 123,
-                
-                schowarrival: schowarrivalHTML,
-                scservicehr: scservicehrHTML,
-
-                tktstat: tktstat.value,
-                tktsort: tktsort.value,
-
-                ratetotal: 0,
-                rateqty: 0,
-			}),
-		})
-            .then(response => {
-                if (response.ok) {
-                    return response.json();                    
-                } else {
-                    const { status, statusText } = response;
-                    throw Error(`${status}: ${statusText}`);
-                }
-            })                      
-			.then(data => {
-                // console.log(data)
-                errorMsgs = data;
-                showTkterrorMegs(); // 將Tkt錯誤訊息顯示在畫面上
-			})
-            // 圖片
-            const picResponse = await fetch('addtkt', {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
+        // Fetch票券回傳
+        if (allEmpty) {
+            fetch('editTkt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
-                    tktimgBase64: picArrryAll,
+                    tktno: tktno.value,
+                    tktname: tktname.value,
+                    tktstartdate: tktstartdate.value,
+                    tktenddate: tktenddate.value,
+                    tktinstruction:  tktinstructionHTML,
+                    proddesc: $("#proddesc div").html(),
+                    notice: $("#notice div").html(),
+                    howuse: $("#howuse div").html(),
+                    location: location.value,
+                    direction: direction,
+                    city: city.value,
+                    districts: districts.value,
+                    address: address.value,
+
+                    sclatitude: 123,
+                    sclongitude: 123,
+                    
+                    schowarrival: schowarrivalHTML,
+                    scservicehr: scservicehrHTML,
+
+                    tktsort: tktsort.value,
+
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("保存成功！"); 
+                        return response.json(); 
+                    } else {
+                        alert("保存失敗！");
+                        const { status, statusText } = response;
+                        throw Error(`${status}: ${statusText}`);
+                    }
+                })                      
+                .then(data => {
+                    console.log(data)
+                    errorMsgs = data;
+                    // showTkterrorMegs(); // 將Tkt錯誤訊息顯示在畫面上
                 })
-            })
-            if (!picResponse.ok) {
-                throw new Error("上傳圖片時發生錯誤");
-            }
-            // 方案
-            await fetch('addtkt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    planname: plannameValues,
-                    plancontent: plancontentValues,
-                    soldamount: 0,
-                    planstat: planstatValues,
-                    
-                }),
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    const { status, statusText } = response;
-                    throw Error(`${status}: ${statusText}`);
-                }
-            })
-            .then(data => {
-                // console.log(data)
-                errorMsgs = data;
-                showPlanerrorMegs(); // 將Tktplan錯誤訊息顯示在畫面上
-            })
-            // 票種
-            await fetch('addtkt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    tkttype: tkttypeAll,
-                    price: priceAll,           
-                    
-                }),
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    const { status, statusText } = response;
-                    throw Error(`${status}: ${statusText}`);
-                }
-            })
-            .then(data => {
-                // console.log(data)
-                errorMsgs = data;
-                showTypeerrorMegs(); // 將Tkttype錯誤訊息顯示在畫面上
-            })
+                .catch(function(error) {
+                    console.error('Fetch錯誤：', error);
+                    alert("保存失敗！");
+                  });
+        } else {
+            alert("尚有資料未完成，保存失敗！");
+        }
+
     });
 
-});
+})
 
-function showTkterrorMegs(){
-    $("#msg").html('');
-    if (errorMsgs.hasOwnProperty('msg')){
-        $("#msg").html(`${errorMsgs.msg}`);
-    }
-}
-
-function showPlanerrorMegs(){
-    if (errorMsgs.hasOwnProperty('msg')){
-        $("#msg").html(`${errorMsgs.msg}`);
-    }
-}
-
-function showTypeerrorMegs(){
-    if (errorMsgs.hasOwnProperty('msg')){
-        $("#msg").html(`${errorMsgs.msg}`);
-        if($("#msg").text() === "商品新增成功"){
-           window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
-        }
-    }
-}
+// function showTkterrorMegs(){
+//     $("#msg").html('');
+//     if (errorMsgs.hasOwnProperty('msg')){
+//         $("#msg").html(`${errorMsgs.msg}`);
+//     }
+// }

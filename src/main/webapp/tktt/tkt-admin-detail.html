@@ -114,6 +114,10 @@
 			float: right;						
 		}
 
+		.tkt-error-color{
+			color: red;
+		}
+
 	</style>
 
 </head>
@@ -578,20 +582,72 @@
 	<!-- Page content END -->
 	
 	</main>
+
+<!-- 修改 Modal Start-->
+<div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+
+			<!-- modal-header Start-->
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">方案內容修改</h5>
+				<button type="button" class="btn-close closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<!-- modal-header End-->
+
+			<!-- modal-body Start-->
+			<div class="modal-body">
+				<!-- 內容開始 -->
+				<!-- Card body START -->
+				<div class="card-body">
+					<div class="row g-4" id="tktplanno">
+
+						<!-- Plan name -->
+						<div class="col-12">
+							<label class="form-label">方案名稱 *</label>&ensp;<small class="tkt-error-color" name="plannameMsgs" id="plannameMsgs"></small>
+							<input type="text" class="form-control" name="planname" id="planname" placeholder="輸入名稱">
+						</div>																		
+
+						<!-- Plan Content -->												
+						<div class="col-12">
+							<label class="form-label">方案內容 *</label>&ensp;<small class="tkt-error-color" name="plancontentMsgs" id="plancontentMsgs"></small>
+							<textarea class="form-control" rows="2" name="plancontent" id="plancontent" placeholder="描述方案內容"></textarea>
+						</div>
+					
+					</div>
+				</div>
+				<!-- Card body END -->
+			</div>
+			<!-- modal-body END-->
+
+			<!-- modal-footer Start -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">關閉</button>
+				<button type="button" class="btn btn-primary" id="editModalBtn">保存修改</button>
+			</div>
+			<!-- modal-footer END -->
+
+   		</div>
+	</div>
+</div>
+<!-- 修改 Modal End-->
+
 <!-- **************** MAIN CONTENT END **************** -->
 
 <!-- Bootstrap JS -->
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- jquery -->
-<script src="jquery/jquery-3.7.0.min.js"></script>
-<script src="js/tkt-admin-detail.js"></script>
 
 <!-- Vendor -->
 <script src="../assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js"></script>
 
 <!-- ThemeFunctions -->
 <script src="../assets/js/functions.js"></script>
+
+<!-- jquery -->
+<script src="jquery/jquery-3.7.0.min.js"></script>
+<script src="js/tkt-admin-detail.js"></script>
+<script src="js/tkt-admin-detail-edit.js"></script>
 
 </body>
 </html>

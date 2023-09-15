@@ -476,11 +476,11 @@ Page content START -->
 				<!-- SVG decoration END -->
 				
 				<!-- Title -->
-				<h1 class="fs-3">您的資訊已成功提交🎉</h1>
+				<h1 class="fs-3">您的資料已成功提交🎉</h1>
 				
 				<!-- Buttons -->
-				<!-- <a href="add-listing.html" class="btn btn-primary mb-5 me-1">Preview</a> -->
-				<a href="tkt-admin-list.html" class="btn btn-light mb-5">返回管理票券頁面</a>
+				<p><span id="countdown">5</span> 秒後自動跳轉至票券管理頁面</p>
+				<a href="tkt-admin-list.html" class="btn btn-light mb-5">若無自動跳轉，請按此返回票券管理頁面</a>
 			</div>
 		</div>
 	</div>
@@ -532,6 +532,33 @@ Footer END -->
 
 <!-- ThemeFunctions -->
 <script src="../assets/js/functions.js"></script>
+
+<!-- JS 3秒後自動跳轉-->
+<script>
+	// 獲取倒計時顯示元素
+	var countdownElement = document.getElementById('countdown');
+	
+	// 設置初始倒計時值(5秒)
+	var countdownValue = 5;
+	countdownElement.textContent = countdownValue;
+
+	// 倒計時值
+	function countdown() {
+		countdownValue--;
+		countdownElement.textContent = countdownValue;
+		
+		// 如果倒計時為0，跳轉到指定頁面
+		if (countdownValue <= 0) {
+			window.location.href = 'tkt-admin-list.html';
+		} else {
+			// 繼續倒計時
+			setTimeout(countdown, 1000); // 1000毫秒 = 1秒
+		}
+	}
+
+	// 啟動倒計時
+	setTimeout(countdown, 1000); // 5秒後開始倒計時
+</script>
 
 </body>
 </html>
