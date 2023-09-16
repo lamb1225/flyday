@@ -12,6 +12,8 @@ public class TktOrdDetailsJoin implements java.io.Serializable {
 	private Integer tktOrdQty;
 	private String location;
 	private Integer rateTotal;
+	private byte[] tktImg;
+	private String showPic;
 	
 	public TktOrdDetailsJoin() {
 		super();
@@ -29,6 +31,21 @@ public class TktOrdDetailsJoin implements java.io.Serializable {
 		this.tktOrdQty = tktOrdQty;
 		this.location = location;
 		this.rateTotal = rateTotal;
+	}
+	
+	public TktOrdDetailsJoin(Integer tktOrdNo, String tktName, String planName, String tktType, Integer tktTypeNo,
+			Integer unitPrice, Integer tktOrdQty, String location, Integer rateTotal, byte[] tktImg) {
+		super();
+		this.tktOrdNo = tktOrdNo;
+		this.tktName = tktName;
+		this.planName = planName;
+		this.tktType = tktType;
+		this.tktTypeNo = tktTypeNo;
+		this.unitPrice = unitPrice;
+		this.tktOrdQty = tktOrdQty;
+		this.location = location;
+		this.rateTotal = rateTotal;
+		this.tktImg = tktImg;
 	}
 
 	public Integer getTktOrdNo() {
@@ -101,6 +118,22 @@ public class TktOrdDetailsJoin implements java.io.Serializable {
 
 	public void setRateTotal(Integer rateTotal) {
 		this.rateTotal = rateTotal;
+	}
+	
+	public byte[] getTktImg() {
+		return tktImg;
+	}
+
+	public void setTktImg(byte[] tktImg) {
+		this.tktImg = tktImg;
+	}
+
+	public String getShowPic() {
+		return showPic;
+	}
+
+	public void setShowPic(String showPic) {
+		this.showPic = showPic;
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import core.entity.Core;
@@ -33,6 +35,9 @@ public class PkgShopCart extends Core {
 	@Column(name="PKG_QTY")
 	private Integer pkgQty;
 
+//	@OneToMany
+//	@JoinColumn(name="PKG_PLAN", referencedColumnName = "PKG_PLAN_NO")
+	
 	@Override
 	public String toString() {
 		return "PkgShopCart [pkgShopCartid=" + pkgShopCartid + ", pkgQty=" + pkgQty + "]";

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<title>FlayDay - 後臺管理系統</title>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Webestica.com">
+	<meta name="description" content="Booking - Multipurpose Online Booking Theme">
+
+	<!-- Dark mode -->
+	<script>
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+
+			}
+		})
+		
+	</script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="/flyday/back_end/myassets/logo_noliteral.png">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+
+</head>
+
+<body class="dashboard">
+
+<!-- Header START -->
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+	
+<!-- =======================
+Page content START -->
+<section class="overflow-hidden pt-0 pt-lg-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 text-center mx-auto">
+				<!-- SVG decoration START -->
+				<img src="../assets/images/element/congratulations.svg" class="h-300px my-4" alt="">
+				<!-- SVG decoration END -->
+				
+				<!-- Title -->
+				<h1 class="fs-3">您的資料已成功提交🎉</h1>
+				
+				<!-- Buttons -->
+				<p><span id="countdown">5</span> 秒後自動跳轉至票券管理頁面</p>
+				<a href="tkt-admin-list.html" class="btn btn-light mb-5">若無自動跳轉，請按此返回票券管理頁面</a>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- =======================
+Page content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+
+
+<!-- Back to top -->
+<div class="back-top"></div>
+
+<!-- Bootstrap JS -->
+<script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="../assets/js/functions.js"></script>
+
+<!-- JS 3秒後自動跳轉-->
+<script>
+	// 獲取倒計時顯示元素
+	var countdownElement = document.getElementById('countdown');
+	
+	// 設置初始倒計時值(5秒)
+	var countdownValue = 5;
+	countdownElement.textContent = countdownValue;
+
+	// 倒計時值
+	function countdown() {
+		countdownValue--;
+		countdownElement.textContent = countdownValue;
+		
+		// 如果倒計時為0，跳轉到指定頁面
+		if (countdownValue <= 0) {
+			window.location.href = 'tkt-admin-list.html';
+		} else {
+			// 繼續倒計時
+			setTimeout(countdown, 1000); // 1000毫秒 = 1秒
+		}
+	}
+
+	// 啟動倒計時
+	setTimeout(countdown, 1000); // 5秒後開始倒計時
+</script>
+
+</body>
+</html>

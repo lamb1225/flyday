@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<title>FlayDay - 新增票券商品</title>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Webestica.com">
+	<meta name="description" content="Booking - Multipurpose Online Booking Theme">
+
+	<!-- Dark mode -->
+	<script>
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+
+			}
+		})
+		
+	</script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="/flyday/back_end/myassets/logo_noliteral.png">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/choices/css/choices.min.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/flatpickr/css/flatpickr.min.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/stepper/css/bs-stepper.min.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/quill/css/quill.snow.css">
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/dropzone/css/dropzone.css">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+
+	<style>
+		.tkt-add-plan{
+			display: flex;
+			align-items: center;						
+		}
+
+		.tkt-add-label-width{
+			width: 45.5% !important;					
+		}
+
+		.tkt-add-div-width{
+			width: 9%;
+			display: flex;
+    		align-items: flex-end;					
+		}
+		@media (max-width: 1196px){
+			div.col-md-5.tkt-add-label-width{
+				width: 50% !important;
+			}
+			div.tkt-add-div-width{
+    		width: 100%;
+  			}  
+		}
+
+		.tkt-add-btn-right{					
+			float: right;						
+		}
+
+		.tkt-ok-btn-right{					
+			float: right;
+			margin-right: 5px;					
+		}
+
+		.tkt-error-color{
+			color: red;
+		}
+
+		.tkt-frame-color{
+			border: 1px solid var(--bs-gray-300) !important; 
+		}
+
+		.tkt-position{
+			display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0; /* 可以去除默认的外边距 */
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+	
+<!-- =======================
+Page Banner START -->
+<section class="pb-0">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="fs-2 mb-2">新增票券</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- =======================
+Page Banner END -->
+
+<!-- =======================
+Steps START -->
+<section>
+	<div class="container">
+		<div id="stepper" class="bs-stepper stepper-outline">
+			<!-- Step Buttons START -->
+			<div class="bs-stepper-header" role="tablist">
+				<!-- Step 1 -->
+				<div class="step" data-target="#step-1">
+					<div class="text-center">
+						<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger1" aria-controls="step-1">
+							<span class="bs-stepper-circle">1</span>
+						</button>
+						<h6 class="bs-stepper-label d-none d-md-block">基本信息</h6>
+					</div>
+				</div>
+				<div class="line"></div>
+
+				<!-- Step 2 -->
+				<div class="step" data-target="#step-2">
+					<div class="text-center">
+						<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger2" aria-controls="step-2">
+							<span class="bs-stepper-circle">2</span>
+						</button>
+						<h6 class="bs-stepper-label d-none d-md-block">詳細資料</h6>
+					</div>
+				</div>
+				<div class="line"></div>
+
+				<!-- Step 3 -->
+				<div class="step" data-target="#step-3">
+					<div class="text-center">
+						<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger3" aria-controls="step-3">
+							<span class="bs-stepper-circle">3</span>
+						</button>
+						<h6 class="bs-stepper-label d-none d-md-block">購買規則</h6>
+					</div>
+				</div>
+			</div>
+			<!-- Step Buttons END -->
+
+			<!-- Step content START -->
+			<div class="bs-stepper-content p-0 pt-4 pt-md-5">
+				<div class="row g-4">
+
+					<!-- Main content START -->
+					<div class="col-12">
+						<form onsubmit="return false">
+
+							<!-- Step 1 content START -->
+							<div id="step-1" role="tabpanel" class="content fade" aria-labelledby="steppertrigger1">
+								<div class="vstack gap-4">
+									<!-- Title -->
+									<h4 class="mb-0">基本信息</h4>
+
+									<!-- Listing category START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<!-- Title -->
+											<h5 class="mb-0">商品資訊</h5>
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-4">
+												<!-- Choose type -->
+												<div class="col-md-6">
+													<label class="form-label">選擇票券類型 *</label>&ensp;<small class="tkt-error-color" name="tktsortMsgs" id="tktsortMsgs"></small>
+													<select class="form-select js-choice" name="tktsort" id="tktsort">
+														<option value="-1">選擇類型</option>
+														<option value="0">主題樂園</option>
+														<option value="1">景點門票</option>
+														<option value="2">水族館</option>
+														<option value="3">動物園</option>
+														<option value="4">博物館</option>
+														<option value="5">美術館</option>
+														<option value="6">展覽</option>
+														<option value="7">其他</option>
+													</select>
+												</div>
+
+												<!-- Tkt Status -->
+												<div class="col-md-6">
+													<label class="form-label">商品狀態 *</label>
+													<div class="d-flex">
+														<!-- Radio -->
+														<div class="form-check radio-bg-light me-4">
+															<input class="form-check-input" type="radio" name="tktstat" id="tktstatRadio" value="1" autocomplete="on" checked>
+															<label class="form-check-label" for="tktstatRadio0">
+																上架
+															</label>
+														</div>
+														<!-- Radio -->
+														<div class="form-check radio-bg-light me-4">
+															<input class="form-check-input" type="radio" name="tktstat" id="tktstatRadio" value="0" autocomplete="on">
+															<label class="form-check-label" for="tktstatRadio1">
+																保留但不上架
+															</label>
+														</div>												
+													</div>
+												</div>	
+
+												<!-- Listing Name -->
+												<div class="col-12">
+													<label class="form-label">標題名稱 *</label>&ensp;<small class="tkt-error-color" name="tktnameMsgs" id="tktnameMsgs"></small>
+													<input class="form-control" type="text" name="tktname" id="tktname" placeholder="輸入標題名稱">
+													<small>標題名稱通常包括：景點縣市 - 景點名稱 - 門票&ensp;&ensp;例：台北市立木柵動物園門票、台南｜奇美博物館門票</small>
+												</div>
+																																		
+												<!-- Base Price -->
+												<!-- <div class="col-md-6">
+													<label class="form-label">基本價格 ( 台幣 ) *</label>
+													<input class="form-control" type="text" placeholder="輸入價格">
+												</div> -->
+
+												<!-- Check in -->
+												<div class="col-md-6">
+													<label class="form-label">商品開始日期 *</label>&ensp;<small class="tkt-error-color" name="tktstartdateMsgs" id="tktstartdateMsgs"></small>
+													<div class="form-border-bottom form-control-transparent d-flex align-items-center">
+														<!-- Icon -->
+														<i class="bi bi-calendar text-secondary d-block me-2"></i>
+														<!-- Cities -->
+														<div class="form-fs-lg">
+															<input type="text" name="tktstartdate" id="tktstartdate" class="form-control flatpickr" data-date-format="Y-m-d" placeholder="選擇開始日期">
+														</div>
+													</div>
+												</div>
+												
+												<!-- Check Out -->
+												<div class="col-md-6">
+													<label class="form-label">商品結束日期 *</label>&ensp;<small class="tkt-error-color" name="tktenddateMsgs" id="tktenddateMsgs"></small>
+													<div class="form-border-bottom form-control-transparent d-flex align-items-center">
+														<!-- Icon -->
+														<i class="bi bi-calendar text-secondary d-block me-2"></i>
+														<!-- Cities -->
+														<div class="form-fs-lg">
+															<input type="text" name="tktenddate" id="tktenddate" class="form-control flatpickr" data-date-format="Y-m-d" placeholder="選擇結束日期">
+														</div>	
+													</div>
+												</div>
+
+												<!-- Short description -->
+												<div class="col-12">
+													<label class="form-label">商品簡介 *</label>&ensp;<small class="tkt-error-color" name="tktinstructionMsgs" id="tktinstructionMsgs"></small>
+													<textarea class="form-control" rows="2" name="tktinstruction" id="tktinstruction" placeholder="輸入簡介"></textarea>
+												</div>	
+																								
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>
+									<!-- Listing category END -->
+
+									<!-- Listing location START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<h5 class="mb-0">景點地點</h5>											
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-3">
+
+												<!-- Postal number -->
+												<div class="col-12">
+													<label class="form-label">景點名稱 *</label>&ensp;<small class="tkt-error-color" name="locationMsgs" id="locationMsgs"></small>
+													<input class="form-control" type="text" name="location" id="location" placeholder="輸入景點名稱">
+													<small>例：台北市立木柵動物園、奇美博物館</small>
+												</div>
+
+												<!-- County OR City -->
+												<div class="col-md-3">
+													<label class="form-label">縣市 *</label>&ensp;<small class="tkt-error-color" name="cityMsgs" id="cityMsgs"></small>
+													<select class="form-select text-secondary tkt-frame-color" name="city" id="city">
+													  <option value="0">選擇所在縣市</option>
+													  <option value="臺北市">臺北市</option>
+													  <option value="新北市">新北市</option>
+													  <option value="基隆市">基隆市</option>
+													  <option value="桃園市">桃園市</option>
+													  <option value="新竹縣">新竹縣</option>
+													  <option value="新竹市">新竹市</option>
+													  <option value="苗栗縣">苗栗縣</option>
+													  <option value="臺中市">臺中市</option>
+													  <option value="南投縣">南投縣</option>
+													  <option value="彰化縣">彰化縣</option>
+													  <option value="雲林縣">雲林縣</option>
+													  <option value="嘉義縣">嘉義縣</option>
+													  <option value="嘉義市">嘉義市</option>
+													  <option value="臺南市">臺南市</option>
+													  <option value="高雄市">高雄市</option>
+													  <option value="屏東縣">屏東縣</option>
+													  <option value="宜蘭縣">宜蘭縣</option>
+													  <option value="花蓮縣">花蓮縣</option>
+													  <option value="臺東縣">臺東縣</option>
+													  <option value="澎湖縣">澎湖縣</option>
+													  <option value="金門縣">金門縣</option>
+													  <option value="連江縣">連江縣</option>
+													</select>
+												</div>
+							  
+												<!-- Urban Area -->
+												<div class="col-md-3">
+													<label class="form-label">地區 *</label>&ensp;<small class="tkt-error-color" name="districtsMsgs" id="districtsMsgs"></small>
+													<select class="form-select text-secondary tkt-frame-color" name="districts" id="districts">
+														<option value="0">選擇所在地區</option>
+													</select>
+												</div>
+							
+												<!-- Address -->
+												<div class="col-md-6">
+													<label class="form-label">地址 *</label>&ensp;<small class="tkt-error-color" name="addressMsgs" id="addressMsgs"></small>
+													<input class="form-control" type="text" name="address" id="address" placeholder="例：忠孝路18巷2號7樓" >
+												</div>
+
+												<!-- Latitude -->
+												<!-- <div class="col-md-6">
+													<label class="form-label">緯度 *</label>
+													<input class="form-control" type="text" name="sclatitude" id="sclatitude" placeholder="輸入緯度">
+												</div> -->
+
+												<!-- Longitude -->
+												<!-- <div class="col-md-6">
+													<label class="form-label">經度 *</label>
+													<input class="form-control" type="text" name="sclongitude" id="sclongitude" placeholder="輸入經度">
+												</div> -->
+
+												<!-- Detailed address -->
+												<!-- <div class="col-12">
+													<iframe class="w-100 h-300px grayscale rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sin!4v1586000412513!5m2!1sen!2sin" height="500" style="border:0;" aria-hidden="false" tabindex="0"></iframe>	
+												</div> -->
+
+												<!-- Short description -->
+												<div class="col-12">
+													<label class="form-label">景點如何抵達</label>
+													<textarea class="form-control" rows="2" name="schowarrival" id="schowarrival" placeholder="輸入景點抵達方法"></textarea>
+												</div>
+
+												<!-- Short description -->
+												<div class="col-12">
+													<label class="form-label">景點開放時間</label>
+													<textarea class="form-control" rows="2" name="scservicehr" id="scservicehr" placeholder="輸入景點開放時間"></textarea>
+												</div>
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>
+									<!-- Listing location END -->
+
+									<!-- Upload image START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<!-- Title -->
+											<h5 class="mb-0">上傳圖片</h5>
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-3">
+												<!-- Image Gallery -->
+												<div class="col-12">
+													<label class="form-label">上傳圖片庫 ( 可多張 )：預設以第一張圖片當作封面縮圖</label>
+													<div class="dropzone dropzone-custom" data-dropzone='{"maxFiles": 5, "addRemoveLinks": false}'>
+														<div class="dz-message needsclick">
+															<i class="bi bi-upload display-3"></i>    
+															<p>將文件拖放到此處或單擊上傳。</p>
+														</div>
+														<div class="dz-preview row g-4" name="tktimg" id="tktimg">
+															<div class="col-xl-2 col-md-4 col-sm-6">
+																<div class="card p-2 mb-0 shadow-none border position-relative h-100">
+																	<!-- Image -->
+																	<img data-dz-thumbnail src="#" class="rounded bg-light" alt="">
+																	<!-- info -->
+																	<div class="mt-2">
+																		<a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
+																		<p class="mb-0 small" data-dz-size></p>
+																	</div>
+																	<!-- Close btn -->
+																	<div class="position-absolute top-0 start-100 translate-middle">
+																		<a href="#!" class="btn btn-danger rounded-circle icon-sm p-0" data-dz-remove>
+																			<i class="fas fa-times"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div> 
+													<p class="small mb-0 mt-2"><b>注意：</b>僅限 JPG、JPEG 和 PNG。我們建議的尺寸是 600 像素 * 450 像素。較大的圖像將被裁剪為 4:3 以適合我們的縮略圖/預覽。</p>
+												</div>
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>
+									<!-- Upload image END -->	
+
+									<!-- Step 1 button -->
+									<div class="text-end">
+										<a href="#" class="btn btn-primary next-btn mb-0">下一步</a>
+									</div>
+								</div>
+							</div>
+							<!-- Step 1 content END -->
+
+							<!-- Step 2 content START -->
+							<div id="step-2" role="tabpanel" class="content fade" aria-labelledby="steppertrigger2">
+								<div class="vstack gap-4" id="unite_point">
+									<!-- Title -->
+									<h4 class="mb-0">詳細資料</h4>
+
+									<!-- Overview START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<h5 class="mb-0">景點介紹 *&ensp;<small class="tkt-error-color" name="proddescMsgs" id="proddescMsgs"></small></h5>
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-4">												
+												<!-- Descriptions -->
+												<div class="col-12">
+													<!-- Editor toolbar -->
+													<div class="bg-light border border-bottom-0 rounded-top py-3 quilltoolbar">
+														<span class="ql-formats">
+															<select class="ql-size"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-bold"></button>
+															<button class="ql-italic"></button>
+															<button class="ql-underline"></button>
+															<button class="ql-strike"></button>
+														</span>
+														<span class="ql-formats">
+															<select class="ql-color"></select>
+															<select class="ql-background"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-code-block"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-list" value="ordered"></button>
+															<button class="ql-list" value="bullet"></button>
+															<button class="ql-indent" value="-1"></button>
+															<button class="ql-indent" value="+1"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-link"></button>
+															<button class="ql-image"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-clean"></button>
+														</span>
+													</div>
+			
+													<!-- Main toolbar -->				
+													<div class="bg-body border rounded-bottom h-400px overflow-hidden quilleditor" name="proddesc" id="proddesc"></div>
+													
+												</div>
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>	
+									<!-- Overview END -->
+									
+									<!-- Ticket Plans START -->
+									<div class="card shadow" name="planpoint" value="1">
+										<!-- Card header and Add Plan Button-->
+										<div class="d-flex justify-content-between card-header border-bottom">
+											<h5 class="mb-0 tkt-add-plan">票券方案</h5>											
+											<div class="d-grid"><button type="button" class="btn btn-primary-soft mb-0" id="btn_add_plan"><i class="bi bi-plus-circle me-2"></i>新增方案</button></div>										
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-4">
+
+												<!-- Plan Title and Remove-->
+												<div class="d-flex justify-content-between align-items-center mt-md-3">
+													<div class="d-flex align-items-center">
+														<h6 class="fw-bold mb-0 me-1">方案 1</h6>
+													</div>
+													<!-- <div class="mt-3 mt-sm-0">
+														<button type="button" class="btn btn-sm btn-primary-soft mb-0 w-100"><i class="bi bi-trash fa-fw"></i>清空</button>
+													</div> -->
+												</div>
+
+												<!-- Plan name -->
+												<div class="col-md-5 tkt-add-label-width">
+													<label class="form-label">方案名稱 *</label>&ensp;<small class="tkt-error-color" name="plannameMsgs" id="plannameMsgs"></small>
+													<input type="text" class="form-control" name="planname" id="planname" placeholder="輸入名稱">
+												</div>										
+
+												<!-- Plan Status -->
+												<div class="col-md-5 tkt-add-label-width">
+													<label class="form-label">方案狀態 *</label>
+													<div class="d-flex">
+														<!-- Radio -->
+														<div class="form-check radio-bg-light me-4">
+															<input class="form-check-input" type="radio" name="planstat1" id="planstatRadio" value="1" autocomplete="on" checked>
+															<label class="form-check-label" for="planstatRadio0">
+																上架
+															</label>
+														</div>
+														<!-- Radio -->
+														<div class="form-check radio-bg-light me-4">
+															<input class="form-check-input" type="radio" name="planstat1" id="planstatRadio" value="0" autocomplete="on">
+															<label class="form-check-label" for="planstatRadio1">
+																保留但不上架
+															</label>
+														</div>												
+													</div>
+												</div>										
+
+												<!-- Plan Content -->												
+												<div class="col-12">
+													<label class="form-label">方案內容 *</label>&ensp;<small class="tkt-error-color" name="plancontentMsgs" id="plancontentMsgs"></small>
+													<textarea class="form-control" rows="2" name="plancontent" id="plancontent" placeholder="描述方案內容"></textarea>
+												</div>
+												
+												<div class="border-bottom"></div>										
+												
+												<!-- Ticket Type Star -->
+												<div class="col-md-5 tkt-add-label-width">
+													<label class="form-label">票種 *</label>&ensp;<small class="tkt-error-color" name="tkttypeMsgs" id="tkttypeMsgs"></small>
+													<input type="text" class="form-control" name="tkttype" id="tkttype" placeholder="例：每人、成人票、學生票...">
+												</div>
+
+												<!-- Room Price -->
+												<div class="col-md-5 tkt-add-label-width" value="1">
+													<label class="form-label">票價 ( 台幣 ) *</label>&ensp;<small class="tkt-error-color" name="priceMsgs" id="priceMsgs"></small>																										
+													<input type="text" class="form-control" name="price" id="price" placeholder="輸入價格">													
+												</div>
+
+												<!-- Delete Button -->
+												<!-- <div class="tkt-add-div-width" value="1">
+													<button type="button" class="btn btn-sm btn-primary-soft mb-0 w-100 tkt-add-btn-right"><i class="bi bi-trash fa-fw"></i>刪除</button>
+												</div> -->
+																									
+												<!-- 會在此處新增票種列表 -->
+
+												
+												<!-- Ticket Type End -->																								
+												<!-- Add Type Button -->
+												<div class="col-12">
+													<button type="button" class="btn btn-sm btn-primary-soft mb-0" id="btn_add_type1" value="1"><i class="bi bi-plus-circle me-2"></i>新增票種</button>													
+												</div>
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>	
+									<!-- Ticket Plans END -->
+
+									<!-- 會在此處新增方案列表 -->
+
+									<!-- Step 2 button -->
+									<div class="hstack gap-2 flex-wrap justify-content-between" id="add_planlist_point">
+										<a href="#" class="btn btn-secondary prev-btn mb-0">上一步</a>
+										<a href="#" class="btn btn-primary next-btn mb-0">下一步</a>
+									</div>
+								</div>	
+							</div>
+							<!-- Step 2 content END -->
+
+							<!-- Step 3 content START -->
+							<div id="step-3" role="tabpanel" class="content fade" aria-labelledby="steppertrigger3">
+								<div class="vstack gap-4">
+									<!-- Title -->
+									<h4 class="mb-0">其他資訊</h4>
+
+									<!-- Listing policy START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<h5 class="mb-0">購買須知 *&ensp;<small class="tkt-error-color" name="noticeMsgs" id="noticeMsgs"></small></h5>
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-4">
+												<!-- Descriptions -->
+												<div class="col-12">
+													<!-- Editor toolbar -->
+													<div class="bg-light border border-bottom-0 rounded-top py-3 quilltoolbar">
+														<span class="ql-formats">
+															<select class="ql-size"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-bold"></button>
+															<button class="ql-italic"></button>
+															<button class="ql-underline"></button>
+															<button class="ql-strike"></button>
+														</span>
+														<span class="ql-formats">
+															<select class="ql-color"></select>
+															<select class="ql-background"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-code-block"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-list" value="ordered"></button>
+															<button class="ql-list" value="bullet"></button>
+															<button class="ql-indent" value="-1"></button>
+															<button class="ql-indent" value="+1"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-link"></button>
+															<button class="ql-image"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-clean"></button>
+														</span>
+													</div>
+			
+													<!-- Main toolbar -->
+													<div class="bg-body border rounded-bottom h-400px overflow-hidden quilleditor" name="notice" id="notice"></div>
+													
+												</div>												
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>
+									<!-- Listing policy END -->
+
+									<!-- Listing policy START -->
+									<div class="card shadow">
+										<!-- Card header -->
+										<div class="card-header border-bottom">
+											<h5 class="mb-0">如何使用 *&ensp;<small class="tkt-error-color" name="howuseMsgs" id="howuseMsgs"></small></h5>
+										</div>
+			
+										<!-- Card body START -->
+										<div class="card-body">
+											<div class="row g-4">
+												<!-- Descriptions -->
+												<div class="col-12">
+													<!-- Editor toolbar -->
+													<div class="bg-light border border-bottom-0 rounded-top py-3 quilltoolbar">
+														<span class="ql-formats">
+															<select class="ql-size"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-bold"></button>
+															<button class="ql-italic"></button>
+															<button class="ql-underline"></button>
+															<button class="ql-strike"></button>
+														</span>
+														<span class="ql-formats">
+															<select class="ql-color"></select>
+															<select class="ql-background"></select>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-code-block"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-list" value="ordered"></button>
+															<button class="ql-list" value="bullet"></button>
+															<button class="ql-indent" value="-1"></button>
+															<button class="ql-indent" value="+1"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-link"></button>
+															<button class="ql-image"></button>
+														</span>
+														<span class="ql-formats">
+															<button class="ql-clean"></button>
+														</span>
+													</div>
+			
+													<!-- Main toolbar -->
+													<div class="bg-body border rounded-bottom h-400px overflow-hidden quilleditor" name="howuse" id="howuse"></div>
+														
+												</div>												
+											</div>
+										</div>
+										<!-- Card body END -->
+									</div>
+									<!-- Listing policy END -->						
+
+									<!-- Step 3 button -->
+									<div>
+										<a href="#" class="btn btn-secondary prev-btn mb-0">上一步</a>
+										<a href="tkt-admin-list.html" class="btn btn-success mb-0 tkt-ok-btn-right">取消</a>
+										<button id="btn1" type="button" class="btn btn-success mb-0 tkt-ok-btn-right">完成</button>
+										<h5 id="msg" class="error tkt-error-color tkt-ok-btn-right"></h5>										
+									</div>
+								</div>
+							</div>
+
+							<!-- Step 3 content END -->
+
+						</form>
+					</div>
+					<!-- Main content END -->
+
+				</div>						
+			</div>
+			<!-- Step content END -->
+		</div>
+	</div>
+</section>
+<!-- =======================
+Steps END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- =======================
+Footer START -->
+<footer class="bg-dark p-3">
+	<div class="container">
+		<div class="row align-items-center">
+
+			<!-- Widget -->
+			<div class="col-md-4">
+				<div class="text-center text-md-start mb-3 mb-md-0">
+					<a href="../index.html"> <img class="h-30px" src="../assets/images/logo-light.svg" alt="logo"> </a>
+				</div> 
+			</div>
+			
+			<!-- Widget -->
+			<div class="col-md-4">
+				<div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
+			</div>
+
+			<!-- Widget -->
+			<div class="col-md-4">
+				<ul class="list-inline mb-0 text-center text-md-end">
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- =======================
+Footer END -->
+
+<!-- Back to top -->
+<div class="back-top"></div>
+
+<!-- Bootstrap JS -->
+<script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script src="../assets/vendor/choices/js/choices.min.js"></script>
+<script src="../assets/vendor/flatpickr/js/flatpickr.min.js"></script>
+<script src="../assets/vendor/stepper/js/bs-stepper.min.js"></script>
+<script src="../assets/vendor/quill/js/quill.min.js"></script>
+<script src="../assets/vendor/dropzone/js/dropzone.js"></script>
+
+<!-- ThemeFunctions -->
+<script src="../assets/js/functions.js"></script>
+
+<!-- 引入Flatpickr庫 (設定日期用)-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- jquery -->
+<script src="jquery/jquery-3.7.0.min.js"></script>
+<script src="js/tkt-add-listing.js"></script>
+<script src="js/tkt-add-listing-view.js"></script>
+
+</body>
+</html>

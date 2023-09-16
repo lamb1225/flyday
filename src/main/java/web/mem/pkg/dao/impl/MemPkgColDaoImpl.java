@@ -7,11 +7,12 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import web.mem.pkg.dao.MemPkgColDao;
 import web.mem.pkg.entity.MemPkgCol;
 import web.mem.pkg.entity.MemPkgColId;
-
+@Repository
 public class MemPkgColDaoImpl implements MemPkgColDao {
 	@PersistenceContext
 	private Session session;
