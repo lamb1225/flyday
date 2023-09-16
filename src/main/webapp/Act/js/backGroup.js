@@ -93,7 +93,7 @@ $.ajax({
                             })
 
                             swalWithBootstrapButtons.fire({
-                                title: 'Are you sure?',
+                                title: '處理狀況',
                                 html: `<label class="form-label act">員工編號</label>
                                 <input class="form-control" type="text"id="empno" placeholder="請填寫員工編號">
                                 <label class="form-label act">處理狀態</label>
