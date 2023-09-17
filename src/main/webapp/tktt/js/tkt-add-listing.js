@@ -392,8 +392,8 @@ document.addEventListener("DOMContentLoaded", function () {
         $("small[id^='tkttypeMsgs']").text('');
         $("div[name='planpoint']").each(function(){            
             $(this).find("input[name='tkttype']").each(function() {
-            const value = $(this).val();
-            const length = $(this).val().length; 
+                const value = $(this).val();
+                const length = $(this).val().length; 
                 if (value === '') {
                     $(this).prev().text('票種請勿空白');
                 } else if (length < 2 || length > 50) {
@@ -414,10 +414,12 @@ document.addEventListener("DOMContentLoaded", function () {
         $("small[id^='priceMsgs']").text('');
         $("div[name='planpoint']").each(function(){            
             $(this).find("input[name='price']").each(function() {
-                const value = $(this).val();
+                const value = $(this).val().trim();
                 const length = $(this).val().length; 
                 if (value === '') {
                     $(this).prev().text('票價請勿空白');
+                } else if (isNaN(value)) {
+                    $(this).prev().text('票價只能輸入數字');
                 }
             });
         });

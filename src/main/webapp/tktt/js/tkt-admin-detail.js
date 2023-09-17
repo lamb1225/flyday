@@ -319,6 +319,8 @@ async function typeDetailsEdit(tkttypeno){
             alert('票種需介於2~50個字之間');
         } else if (priceTrim === ''){
             alert('票價請勿空白');
+        } else if (isNaN(priceTrim)){
+            alert('票價只能輸入數字');
         } else {
 
             // 取得最新票種&票價
