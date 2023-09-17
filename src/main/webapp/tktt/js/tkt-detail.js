@@ -206,8 +206,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         }
     });
 
-   
-
+    
 });
 
 // 橫幅圖片HTML程式碼

@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async function(){
             const elements = document.querySelectorAll(".tktSort"); // 找到所有的checkbox
             // console.log(elements);    
             let tktSorts = [];
-            elements.forEach(ele=>tktSorts.push(ele.checked)); // 存true/false，確認checkbox是否有打勾
+            elements.forEach(ele=>tktSorts.push(ele.checked)); // 存true/false，確認所有checkbox的打勾狀態
             // console.log(tktSorts);
             // 算有打勾的checkbox個數
             let count = 0
