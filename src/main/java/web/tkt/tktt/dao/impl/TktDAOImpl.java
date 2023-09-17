@@ -112,7 +112,7 @@ public class TktDAOImpl implements TktDAO{
             "WHERE t.TKT_STAT = 1 " +
             "GROUP BY t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
             "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY " +
-            "ORDER BY t.TKT_NO";
+            "ORDER BY t.TKT_NO DESC";
 
 		
 	// 新增商品
