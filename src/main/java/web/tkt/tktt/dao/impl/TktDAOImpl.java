@@ -90,7 +90,7 @@ public class TktDAOImpl implements TktDAO{
 		
 	// 多筆查詢(Tkt)SQL
 	private static final String getAll_STMT = 
-			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_STAT,TKT_SORT FROM tkt ORDER BY TKT_NO";
+			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_STAT,TKT_SORT FROM tkt ORDER BY TKT_NO DESC";
 	// 多筆查詢(圖片)SQL
 	private static final String getAllImg_STMT = 
 			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img ORDER BY TKT_IMG_NO";
@@ -112,7 +112,7 @@ public class TktDAOImpl implements TktDAO{
             "WHERE t.TKT_STAT = 1 " +
             "GROUP BY t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
             "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY " +
-            "ORDER BY t.TKT_NO";
+            "ORDER BY t.TKT_NO DESC";
 
 		
 	// 新增商品

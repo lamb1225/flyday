@@ -301,7 +301,7 @@ function PlanHTML (i) {
                 <span>選擇數量</span>
                 <p></p>
                 <label class="form-control type-position" type="text">
-                    <span class="type-left-position">每人</span>
+                    <span class="type-left-position">張數</span>
                     <div class="count-input ms-1 d-flex justify-content-end type-position type-right-position">						
                         <button class="btn btn-icon btn-light fs-xl form-control-centered btn-type-quantity" type="button" id="redQty" value="">-</button>
                         <label class="form-control-centered btn-type-quantity" name="tktQty" id="tktQty" value="1" readonly>1</label>

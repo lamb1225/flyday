@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <!-- Plan Title and Remove-->
                         <div class="d-flex justify-content-between align-items-center mt-md-3">
                             <div class="d-flex align-items-center">
-                                <h6 class="fw-bold mb-0 me-1">方案 ${plan_number}</h6>
+                                <h6 class="fw-bold mb-0 me-1">方案</h6>
                             </div>
                             <div class="mt-3 mt-sm-0">
                                 <button type="button" class="btn btn-sm btn-primary-soft mb-0 w-100" id="btn_del_plan${plan_number}" value="${plan_number}"><i class="bi bi-trash fa-fw"></i>刪除方案</button>
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if($(this).attr("value") == $(this).attr("id").substr(12)){
             // console.log($(this).parents("div").find("div#plan"+$(this).attr("value")).attr("id"));
-            let r = confirm("確認刪除此 方案"+$(this).attr("value")+" ?");
+            let r = confirm("確認刪除此 方案 ?");
             if (r) {
                 $(this).parents("div").find("div#plan"+$(this).attr("value")).animate({
                     "opacity": 0
