@@ -113,6 +113,7 @@
             planname.textContent = `${data.pkgPlanTitle}`;
             eachprice.textContent=`${data.pkgGroupMoney}`;
             pkgorgprice.textContent =`${data.pkgGroupMoney}`;
+            pkgpayprice.textContent =`${data.pkgGroupMoney}`;
 
             singlePrice = data.pkgGroupMoney;
             // totalElement.textContent = '';
