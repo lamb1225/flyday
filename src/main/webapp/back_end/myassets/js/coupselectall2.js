@@ -266,7 +266,7 @@ function showCoup() {
                                 <label class="form-label">*發放起始日 (上架)</label>
                                 <input type="date"
                                     class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupStartDate}"
-                                    data-date-format="Y-m-d" id="nstartdate${coups[i].pkgCoupNo}" readonly="readonly">
+                                    data-date-format="Y-m-d" id="nstartdate${coups[i].pkgCoupNo}">
                                 
                             </div>
 
@@ -274,7 +274,7 @@ function showCoup() {
                                 <label class="form-label">*發放結束日 (下架)</label>
                                 <input type="date"
                                     class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupEndDate}"
-                                    data-date-format="Y-m-d" id="nenddate${coups[i].pkgCoupNo}" readonly="readonly">
+                                    data-date-format="Y-m-d" id="nenddate${coups[i].pkgCoupNo}">
                                 
                             </div>
 
@@ -282,7 +282,7 @@ function showCoup() {
                                 <label class="form-label">*使用起始日</label> <input type="date"
                                     class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseStartDate}"
                                     data-date-format="Y-m-d"
-                                    id="nusestartdate${coups[i].pkgCoupNo}" readonly="readonly">
+                                    id="nusestartdate${coups[i].pkgCoupNo}">
                                 
                             </div>
                   
@@ -291,7 +291,7 @@ function showCoup() {
                                 <label class="form-label">*使用結束日</label> <input type="date"
                                     class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseEndDate}"
                                     data-date-format="Y-m-d"
-                                    id="nuseenddate${coups[i].pkgCoupNo}" readonly="readonly">
+                                    id="nuseenddate${coups[i].pkgCoupNo}">
                              
                             </div>
 
@@ -443,7 +443,7 @@ show0coupbtn.addEventListener('click', function () {
     console.log("hi");
 
     show0Coup(); //將其顯示在頁面中
-    console.log("ahahahah");
+	flatpickr(".flatpickr", {});
 
 })
 
@@ -694,7 +694,7 @@ function show0Coup() {
                                         <div class="col-3">
                                             <label class="form-label">*發放起始日 (上架)</label>
                                             <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupStartDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupStartDate}"
                                                 data-date-format="Y-m-d" id="nstartdate${coups[i].pkgCoupNo}">
                                             </input>
                                         </div>
@@ -702,14 +702,14 @@ function show0Coup() {
                                         <div class="col-3">
                                             <label class="form-label">*發放結束日 (下架)</label>
                                             <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupEndDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupEndDate}"
                                                 data-date-format="Y-m-d" id="nenddate${coups[i].pkgCoupNo}">
                                             </input>
                                         </div>
             
                                         <div class="col-3">
                                             <label class="form-label">*使用起始日</label> <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupUseStartDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseStartDate}"
                                                 data-date-format="Y-m-d"
                                                 id="nusestartdate${coups[i].pkgCoupNo}">
                                             
@@ -718,14 +718,14 @@ function show0Coup() {
             
                                         <div class="col-3">
                                             <label class="form-label">*使用結束日</label> <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupUseEndDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseEndDate}"
                                                 data-date-format="Y-m-d"
                                                 id="nuseenddate${coups[i].pkgCoupNo}">
                                             </input>
                                         </div>
             
             
-            </div>
+            						</div>
                                         <div class="col-12-2">
                                             <button class="btn btn-dark mb-0 float-end" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#editcoup${coups[i].pkgCoupNo}" onclick="onEditClick(${coups[i].pkgCoupNo})">
@@ -773,7 +773,8 @@ const show1coupbtn = document.querySelector('#show1coupbtn');
 
 show1coupbtn.addEventListener('click', function () {
     show1Coup(); //將其顯示在頁面中
-
+	flatpickr(".flatpickr", {});
+	
 })
 
 // 顯示已上架全部及單筆優惠券
@@ -1020,7 +1021,7 @@ function show1Coup() {
                                         <div class="col-3">
                                             <label class="form-label">*發放起始日 (上架)</label>
                                             <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupStartDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupStartDate}"
                                                 data-date-format="Y-m-d" id="nstartdate${coups[i].pkgCoupNo}">
                                             </input>
                                         </div>
@@ -1028,14 +1029,14 @@ function show1Coup() {
                                         <div class="col-3">
                                             <label class="form-label">*發放結束日 (下架)</label>
                                             <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupEndDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupEndDate}"
                                                 data-date-format="Y-m-d" id="nenddate${coups[i].pkgCoupNo}">
                                             </input>
                                         </div>
             
                                         <div class="col-3">
                                             <label class="form-label">*使用起始日</label> <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupUseStartDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseStartDate}"
                                                 data-date-format="Y-m-d"
                                                 id="nusestartdate${coups[i].pkgCoupNo}">
                                             
@@ -1044,7 +1045,7 @@ function show1Coup() {
             
                                         <div class="col-3">
                                             <label class="form-label">*使用結束日</label> <input type="date"
-                                                class="form-control2 flatpickr" value="${coups[i].pkgCoupUseEndDate}"
+                                                class="form-control2 flatpickr flatpickr-input" value="${coups[i].pkgCoupUseEndDate}"
                                                 data-date-format="Y-m-d"
                                                 id="nuseenddate${coups[i].pkgCoupNo}">
                                             </input>

@@ -1,5 +1,7 @@
 package web.pkg.pkg.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import web.pkg.pkgmanage.entity.PkgPlan;
 
 @Entity
 @Setter
@@ -34,9 +37,11 @@ public class PkgShopCart extends Core {
 	
 	@Column(name="PKG_QTY")
 	private Integer pkgQty;
+	
 
 //	@OneToMany
-//	@JoinColumn(name="PKG_PLAN", referencedColumnName = "PKG_PLAN_NO")
+//	@JoinColumn(name="PKG_PLAN_NO", referencedColumnName = "PKG_PLAN_NO")
+//	private List<PkgPlan> pkgPlans; 
 	
 	@Override
 	public String toString() {

@@ -381,60 +381,126 @@ async function tktstatEdit(tktno){
     const button = document.getElementById("tktstatBtn" + tktno); // 找到按钮
     let tktstat = button.value;
 
-    let r = confirm("確認更改商品狀態 ?");
-    if(r){
-        if (tktstat == 1) {
-            tktstat = 0;
-        } else {
-            tktstat = 1;
-        }
-        // Fetch商品狀態回傳
-        await fetch('editTktStat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                tktno: tktno,
-                tktstat: tktstat,
-            }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json(); 
-                } else {
-                    alert("更改失敗！");
-                    const { status, statusText } = response;
-                    throw Error(`${status}: ${statusText}`);
-                }
-            })                      
-            .then(async function (data) {
-                // console.log(data)
-                // 重載資料庫內容&重載畫面
-                await fetchData();
-                switch (currentTabId) {
-                    case "#tab-1":
-                        showTktlist();
-                        break;
-                    case "#tab-2":
-                        onStatBtn.classList.remove('active');
-                        removeStatBtn.classList.add('active');
-                        currentTabId = '#tab-3';
-                        showRemoveTktList();
-                        break;
-                    case "#tab-3":
-                        removeStatBtn.classList.remove('active');
-                        onStatBtn.classList.add('active'); 
-                        currentTabId = '#tab-2';                             
-                        showOnTktList();
-                        break;
-                }
+    Swal.fire({
+        icon: 'question',
+        title: '確定要更改商品狀態?',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消',
+        showCancelButton: true,
+    }).then(async function (result) {
+        // console.log(result)
+        if(result.isConfirmed){
+            Swal.fire({
+                icon: 'success',
+                title: '商品狀態已更改',
             })
-            .catch(function(error) {
-                console.error('Fetch錯誤：', error);
-                alert("更改失敗！");
-            });
-    }
+            if (tktstat == 1) {
+                tktstat = 0;
+            } else {
+                tktstat = 1;
+            }
+            // Fetch商品狀態回傳
+            await fetch('editTktStat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tktno: tktno,
+                    tktstat: tktstat,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); 
+                    } else {
+                        Swal.fire('更改失敗！');
+                        const { status, statusText } = response;
+                        throw Error(`${status}: ${statusText}`);
+                    }
+                })                      
+                .then(async function (data) {
+                    // console.log(data)
+                    // 重載資料庫內容&重載畫面
+                    await fetchData();
+                    switch (currentTabId) {
+                        case "#tab-1":
+                            showTktlist();
+                            break;
+                        case "#tab-2":
+                            onStatBtn.classList.remove('active');
+                            removeStatBtn.classList.add('active');
+                            currentTabId = '#tab-3';
+                            showRemoveTktList();
+                            break;
+                        case "#tab-3":
+                            removeStatBtn.classList.remove('active');
+                            onStatBtn.classList.add('active'); 
+                            currentTabId = '#tab-2';                             
+                            showOnTktList();
+                            break;
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Fetch錯誤：', error);
+                    Swal.fire('更改失敗！');
+                });
+        }
+    })
+    // let r = confirm("確認更改商品狀態 ?");
+    // if(r){
+    //     if (tktstat == 1) {
+    //         tktstat = 0;
+    //     } else {
+    //         tktstat = 1;
+    //     }
+    //     // Fetch商品狀態回傳
+    //     await fetch('editTktStat', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             tktno: tktno,
+    //             tktstat: tktstat,
+    //         }),
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 return response.json(); 
+    //             } else {
+    //                 alert("更改失敗！");
+    //                 const { status, statusText } = response;
+    //                 throw Error(`${status}: ${statusText}`);
+    //             }
+    //         })                      
+    //         .then(async function (data) {
+    //             // console.log(data)
+    //             // 重載資料庫內容&重載畫面
+    //             await fetchData();
+    //             switch (currentTabId) {
+    //                 case "#tab-1":
+    //                     showTktlist();
+    //                     break;
+    //                 case "#tab-2":
+    //                     onStatBtn.classList.remove('active');
+    //                     removeStatBtn.classList.add('active');
+    //                     currentTabId = '#tab-3';
+    //                     showRemoveTktList();
+    //                     break;
+    //                 case "#tab-3":
+    //                     removeStatBtn.classList.remove('active');
+    //                     onStatBtn.classList.add('active'); 
+    //                     currentTabId = '#tab-2';                             
+    //                     showOnTktList();
+    //                     break;
+    //             }
+    //         })
+    //         .catch(function(error) {
+    //             console.error('Fetch錯誤：', error);
+    //             alert("更改失敗！");
+    //         });
+    // }
     
 }
 

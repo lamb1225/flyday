@@ -356,10 +356,10 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("保存成功！"); 
+                        Swal.fire('保存成功！');
                         return response.json(); 
                     } else {
-                        alert("保存失敗！");
+                        Swal.fire('保存失敗！');
                         const { status, statusText } = response;
                         throw Error(`${status}: ${statusText}`);
                     }
@@ -371,10 +371,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch(function(error) {
                     console.error('Fetch錯誤：', error);
-                    alert("保存失敗！");
+                    Swal.fire('保存失敗！');
                   });
         } else {
-            alert("尚有資料未完成，保存失敗！");
+            Swal.fire('尚有資料未完成，保存失敗！');
         }
 
     });
