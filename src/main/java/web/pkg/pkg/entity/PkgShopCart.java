@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,9 +40,9 @@ public class PkgShopCart extends Core {
 	private Integer pkgQty;
 	
 
-//	@OneToMany
-//	@JoinColumn(name="PKG_PLAN_NO", referencedColumnName = "PKG_PLAN_NO")
-//	private List<PkgPlan> pkgPlans; 
+	@ManyToOne
+	@JoinColumn(name="PKG_PLAN_NO" ,insertable = false, updatable = false)
+	private PkgPlan pkgPlan; 
 	
 	@Override
 	public String toString() {
