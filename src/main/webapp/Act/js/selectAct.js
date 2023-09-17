@@ -162,7 +162,7 @@ let report = (id) => {
     </div>
     <div class="col-12">
 		<label class="form-label">檢舉內容</label>
-		<textarea class="form-control" id="reportmsg" rows="3" spellcheck="false">2119 N Division Ave, New Hampshire, York, United States</textarea>
+		<textarea class="form-control" id="reportmsg" rows="3" spellcheck="false"></textarea>
 	</div>
     `,
         showCancelButton: true,
