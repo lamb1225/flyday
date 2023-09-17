@@ -69,11 +69,6 @@
                 if(successful){
                     const {storeName} = jsonObject;
                     sessionStorage.setItem("storeName", storeName);
-                    name.value = "";
-                    email.value = "";
-                    tel.value = "";
-                    storeadd.value = "";
-                    reply.value = "";
                     pwd.value = "";
                     pwdConfirm.value = "";
                 }
