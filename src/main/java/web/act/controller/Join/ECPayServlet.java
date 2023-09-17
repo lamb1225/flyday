@@ -13,11 +13,12 @@ import java.io.IOException;
 
 import static core.util.CommonUtil.json2Pojo;
 import static core.util.CommonUtil.writePojo2Json;
+import static core.util.Constants.SERVER_URL;
 
 
 @WebServlet("/Act/JoinPay")
 public class ECPayServlet extends HttpServlet {
-    public static final String SERVER_URL = "https://3998-111-249-8-109.ngrok.io";
+//    public static final String SERVER_URL = "https://55c3-36-226-8-232.ngrok.io";
     private static final long serialVersionUID = -3935509715372119008L;
     //    public static final ECPayCheckoutService SERVICE = new ECPayCheckoutService();
     public static final EcPayService SERVICE = new EcPayServiceImpl();
