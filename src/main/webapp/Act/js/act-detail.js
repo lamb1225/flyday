@@ -98,7 +98,7 @@ $(document).on("click", `#edit`, () => {
     })
 
     swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
+        title: '編輯揪團內容',
         html: `<label class="form-label act">揪團主題</label>
         <input class="form-control" type="text" value='${act.acttitle}' id="title1">
         <label class="form-label act">揪團內容</label>

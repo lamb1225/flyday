@@ -152,7 +152,7 @@ let report = (id) => {
     swalWithBootstrapButtons.fire({
         title: '檢舉表單',
         html: `<div class="col-md-6">
-        <label class="form-label">Nationality<span class="text-danger">*</span></label>
+        <label class="form-label">檢舉事由<span class="text-danger">*</span></label>
         <select class="form-select js-choice" id="select1">
             <option selected value="0">活動內容與標題不符</option>
             <option value="1">言論違反善良風俗</option>

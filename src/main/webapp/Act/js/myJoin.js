@@ -35,7 +35,7 @@ function showmem(data) {
     let html = '';
 
     if (data.length == 0) {
-        html = "<tr><td colspan='4' align='center'>尚無員工資料</td></tr>";
+        html = "<tr><td colspan='4' align='center'>尚無揪團資訊</td></tr>";
     } else {
         // for (let i = 0; i < acts.length; i++) {}
         data.forEach(acts => {
