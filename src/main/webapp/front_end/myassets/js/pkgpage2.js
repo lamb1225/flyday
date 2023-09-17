@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (data.pkgGroup === 1) {
                 grouphtml += `
                                 <div class="d-grid">
-                                <a href="#room-options" class="btn btn-lg btn-orange-soft mb-0">熱門揪團中</a>
+                                <a href="/flyday/Act/hotel-detail.html" class="btn btn-lg btn-orange-soft mb-0">熱門揪團中</a>
 								</div>
                                 `;
                 group.innerHTML = grouphtml;

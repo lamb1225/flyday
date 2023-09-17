@@ -13,7 +13,7 @@ const btnCart = document.getElementById("btn_cart");
 
 pkgCart.addEventListener("click", function(){
   btnCart.textContent = "行程結帳";
-  btnCart.setAttribute("href", "#");
+  btnCart.setAttribute("href", "/flyday/front_end/package-shopcart.html");
   // checkAllContent.textContent = "全選行程";
   // checkAll.checked = false;
   // for(let tktCheck of tktChecks){
