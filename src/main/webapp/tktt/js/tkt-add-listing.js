@@ -539,15 +539,13 @@ document.addEventListener("DOMContentLoaded", function () {
 function showTkterrorMegs(){
     $("#msg").html('');
     if (errorMsgs.hasOwnProperty('msg')){
-        // $("#msg").html(`${errorMsgs.msg}`);
-        $("#msg").html(``);
+        $("#msg").html(`${errorMsgs.msg}`);
     }
 }
 
 function showPlanerrorMegs(){
     if (errorMsgs.hasOwnProperty('msg')){
-        // $("#msg").html(`${errorMsgs.msg}`);
-        $("#msg").html(``);
+        $("#msg").html(`${errorMsgs.msg}`);
     }
 }
 
