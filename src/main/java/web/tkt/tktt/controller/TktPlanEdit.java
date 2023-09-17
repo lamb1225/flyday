@@ -31,7 +31,6 @@ public class TktPlanEdit extends HttpServlet{
 		
 		PlanType PlanType = json2Pojo(request, PlanType.class);
 
-		System.out.println("有進入修改plan");
 		
 		String planname = PlanType.getPlanname().trim();
 		String plannameReg = "^.{2,40}$";
@@ -60,7 +59,7 @@ public class TktPlanEdit extends HttpServlet{
 			writePojo2Json(response, PlanType);
 		}
 		
-		System.out.println("PlanType="+PlanType);
+//		System.out.println("PlanType="+PlanType);
 
 	}
 

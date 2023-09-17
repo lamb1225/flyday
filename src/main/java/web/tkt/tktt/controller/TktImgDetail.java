@@ -26,9 +26,7 @@ public class TktImgDetail  extends HttpServlet{
 		
 		TktImg tktImg = json2Pojo(request, TktImg.class);
 		
-		System.out.println(tktImg);
 		int tktno = tktImg.getTktno();
-		System.out.println(tktno);
 		
 		writePojo2Json(response, service.findTktImgDetial(tktno));
 	}
