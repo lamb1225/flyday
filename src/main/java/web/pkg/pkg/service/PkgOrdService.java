@@ -10,7 +10,7 @@ public interface PkgOrdService {
 	
 	PkgOrd updatePkgOrd(PkgOrd pkgOrd);
 	
-	List<PkgOrd> findPkgOrdById(Integer pkgOrdNo);
+	PkgOrd findPkgOrdById(Integer pkgOrdNo);
 
 	List<PkgOrd> findallPkgOrd();
 
