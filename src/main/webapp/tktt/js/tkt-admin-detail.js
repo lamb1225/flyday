@@ -162,45 +162,95 @@ async function planstatEdit(tktplanno){
     const button = document.getElementById("planstatBtn" + tktplanno); // 找到按钮
     let planstat = button.value;
 
-    let r = confirm("確認更改方案狀態 ?");
-    if(r){
-        if (planstat == 1) {
-            planstat = 0;
-        } else {
-            planstat = 1;
-        }
-        // Fetch方案狀態回傳
-        await fetch('editPlanStat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                tktplanno: tktplanno,
-                planstat: planstat,
-            }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json(); 
-                } else {
-                    alert("更改失敗！");
-                    const { status, statusText } = response;
-                    throw Error(`${status}: ${statusText}`);
-                }
-            })                      
-            .then(data => {
-                // console.log(data)
+    Swal.fire({
+        icon: 'question',
+        title: '確定要更改商品狀態?',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消',
+        showCancelButton: true,
+    }).then(async function (result) {
+        // console.log(result)
+        if(result.isConfirmed){
+            Swal.fire({
+                icon: 'success',
+                title: '商品狀態已更改',
             })
-            .catch(function(error) {
-                console.error('Fetch錯誤：', error);
-                alert("更改失敗！");
-            });
-    }
-    // 重載資料庫內容&重載畫面
-    titleHTML();
-    await fetchData();
-    showPlanTypeList();
+            if (planstat == 1) {
+                planstat = 0;
+            } else {
+                planstat = 1;
+            }
+            // Fetch方案狀態回傳
+            await fetch('editPlanStat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tktplanno: tktplanno,
+                    planstat: planstat,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); 
+                    } else {
+                        Swal.fire('更改失敗！');
+                        const { status, statusText } = response;
+                        throw Error(`${status}: ${statusText}`);
+                    }
+                })                      
+                .then(data => {
+                    // console.log(data)
+                })
+                .catch(function(error) {
+                    console.error('Fetch錯誤：', error);
+                    Swal.fire('更改失敗！');
+                });
+        }
+
+            // 重載資料庫內容&重載畫面
+            titleHTML();
+            await fetchData();
+            showPlanTypeList();
+    })
+
+    // let r = confirm("確認更改方案狀態 ?");
+    // if(r){
+    //     if (planstat == 1) {
+    //         planstat = 0;
+    //     } else {
+    //         planstat = 1;
+    //     }
+    //     // Fetch方案狀態回傳
+    //     await fetch('editPlanStat', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             tktplanno: tktplanno,
+    //             planstat: planstat,
+    //         }),
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 return response.json(); 
+    //             } else {
+    //                 alert("更改失敗！");
+    //                 const { status, statusText } = response;
+    //                 throw Error(`${status}: ${statusText}`);
+    //             }
+    //         })                      
+    //         .then(data => {
+    //             // console.log(data)
+    //         })
+    //         .catch(function(error) {
+    //             console.error('Fetch錯誤：', error);
+    //             alert("更改失敗！");
+    //         });
+    // }
+
 }
 
 // Modal (回傳tktplann，取得該方案的詳細內容)
@@ -314,13 +364,13 @@ async function typeDetailsEdit(tkttypeno){
         const tkttypeLength = tkttypeTrim.length;
         const priceTrim = price.value.trim();
         if (tkttypeTrim === '') {
-            alert('票種請勿空白');
+            Swal.fire('票種名稱請勿空白');
         } else if (tkttypeLength < 2 || tkttypeLength > 50){
-            alert('票種需介於2~50個字之間');
+            Swal.fire('票種名稱需介於2~50個字之間');
         } else if (priceTrim === ''){
-            alert('票價請勿空白');
+            Swal.fire('票價請勿空白');
         } else if (isNaN(priceTrim)){
-            alert('票價只能輸入數字');
+            Swal.fire('票價只能輸入數字');
         } else {
 
             // 取得最新票種&票價
@@ -344,10 +394,10 @@ async function typeDetailsEdit(tkttypeno){
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("保存成功！"); 
+                        Swal.fire('保存成功！'); 
                         return response.json(); 
                     } else {
-                        alert("保存失敗！");
+                        Swal.fire('保存失敗！');
                         const { status, statusText } = response;
                         throw Error(`${status}: ${statusText}`);
                     }
@@ -357,7 +407,7 @@ async function typeDetailsEdit(tkttypeno){
                 })
                 .catch(function(error) {
                     console.error('Fetch錯誤：', error);
-                    alert("保存失敗！");
+                    Swal.fire('保存失敗！');
                 });
 
             // 改按鈕文字
