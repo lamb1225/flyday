@@ -134,39 +134,7 @@
 
 		<!-- Nav item 行程 -->
 		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false">觀光行程</a>
-			<ul class="dropdown-menu" aria-labelledby="listingMenu">
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="/flyday/front_end/package-list4.html">行程搜尋</a>
-			</li>
-
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="#">遊船觀光</a>
-			</li>
-
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="#">單車旅遊</a>
-			</li>
-
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="#">文化體驗</a>
-			</li>
-
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="#">水上活動</a>
-			</li>
-
-			<!-- Dropdown submenu -->
-			<li class="dropdown-submenu dropend">
-				<a class="dropdown-item" href="#">露營登山</a>
-			</li>
-			</ul>
+			<a class="nav-link" href="/flyday/front_end/package-list4.html" aria-haspopup="true" aria-expanded="false">觀光行程</a>
 		</li>
 
 		<!-- Nav item 票券 -->
@@ -332,9 +300,8 @@
 				<hr class="dropdown-divider">
 				</li>
 				<li><a class="dropdown-item" href="/flyday/front_end/account-profile.html"><i class="bi bi-person fa-fw me-2"></i>基本資料設定</a></li>
-				<li><a class="dropdown-item" href="#"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
-				<li><a class="dropdown-item" href="#"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
-				<li><a class="dropdown-item" href="#"><i class="bi bi bi-heart fa-fw me-2"></i>我的收藏</a></li>
+				<li><a class="dropdown-item" href="/flyday/front_end/account-pkgorder.html"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
+				<li><a class="dropdown-item" href="/flyday/front_end/account-coupon.html"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
 				<li><a class="dropdown-item" href="/flyday/Act/account-bookings.html"><i class="fa-solid fa-people-group fa-fw me-2"></i>我的揪團</a></li>
 				<li><a class="dropdown-item" href="/flyday/chat.do"><i class="bi bi-chat-left-text fa-fw me-2"></i>聯繫客服</a></li>
 				<li><a class="dropdown-item bg-danger-soft-hover" id="logoutNav" href="#"><i class="bi bi-power fa-fw me-2"></i>登出</a></li>
@@ -556,7 +523,7 @@ Main Banner START -->
 				<div class="tiny-slider arrow-round arrow-blur arrow-hover rounded-3 overflow-hidden">
 					<div class="tiny-slider-inner" data-gutter="0" data-arrow="true" data-dots="false" data-items="1">
 						<!-- Card item START -->
-						<div class="card overflow-hidden h-400px h-sm-600px rounded-0" style="background-image:url(/flyday/front_end/assets/images/category/hotel/06.jpg); background-position: center left; background-size: cover;">
+						<div class="card overflow-hidden h-400px h-sm-600px rounded-0" style="background-image:url(/flyday/front_end/myassets/images/trips.jpg); background-position: center left; background-size: cover;">
 							<!-- Background dark overlay -->
 							<div class="bg-overlay bg-dark opacity-3"></div>
 							<!-- Card image overlay -->
@@ -564,10 +531,10 @@ Main Banner START -->
 								<div class="container">
 									<div class="row">
 										<div class="col-11 col-lg-7">
-											<h6 class="text-white fw-normal mb-0">💖 Fall in love with the City</h6>
+											<h6 class="text-white fw-normal mb-0">給你最獨特的旅遊體驗！</h6>
 											<!-- Title -->
-											<h1 class="text-white display-6">Modern Luxury In Manhattan</h1>
-											<a href="#" class="btn btn-primary mb-0">Reserve Today</a>
+											<h1 class="text-white display-6">說走就走，來場療癒身心的輕旅行！</h1>
+											<a href="/flyday/front_end/package-list4.html" class="btn btn-primary mb-0">查看行程</a>
 										</div>
 									</div>
 								</div>
@@ -576,7 +543,7 @@ Main Banner START -->
 						<!-- Card item END -->
 
 						<!-- Card item START -->
-						<div class="card overflow-hidden h-400px h-sm-600px bg-parallax text-center rounded-0"  data-jarallax-video="https://www.youtube.com/watch?v=71V3HawWXU4">
+						<div class="card overflow-hidden h-400px h-sm-600px bg-parallax text-center rounded-0" style="background-image:url(/flyday/front_end/myassets/images/tickets.jpg); background-position: center left; background-size: cover;">
 							<!-- Background dark overlay -->
 							<div class="bg-overlay bg-dark opacity-3"></div>
 							<!-- Card image overlay -->
@@ -585,8 +552,8 @@ Main Banner START -->
 									<div class="row justify-content-center">
 										<div class="col-11 col-lg-8">	
 											<!-- Title -->
-											<h1 class="text-white">Taking luxury hospitality to new heights</h1>
-											<a href="#" class="btn btn-dark mb-0">Take Me There</a>
+											<h1 class="text-white">造訪全台灣的必遊景點！</h1>
+											<a href="/flyday/tktt/tkt-list.html" class="btn btn-dark mb-0">查看所有票券</a>
 										</div>
 									</div>
 								</div>
@@ -614,7 +581,7 @@ Packages START -->
 		<!-- Title -->
 		<div class="row mb-4">
 			<div class="col-12 text-center">
-				<h2 class="mb-0">熱門行程分類</h2>
+				<h2 class="mb-0">熱門行程</h2>
 			</div>
 		</div>
 
@@ -781,7 +748,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/01.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/theme-park.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort0" class="stretched-link">主題樂園</a></h5>
@@ -795,7 +762,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/02.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/spot.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort1" class="stretched-link">景點門票</a></h5>
@@ -809,7 +776,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/03.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/aquarium.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort2" class="stretched-link">水族館</a></h5>
@@ -823,7 +790,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/04.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/zoo.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort3" class="stretched-link">動物園</a></h5>
@@ -837,7 +804,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/05.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/museum.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort4" class="stretched-link">博物館</a></h5>
@@ -851,7 +818,7 @@ Near by START -->
 			<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 				<div class="card bg-transparent text-center p-1 h-100">
 					<!-- Image -->
-					<img src="/flyday/front_end/assets/images/category/hotel/nearby/06.jpg" class="rounded-circle" alt="">
+					<img src="/flyday/front_end/myassets/images/gallery.jpg" class="rounded-circle" alt="">
 
 					<div class="card-body p-0 pt-3">
 						<h5 class="card-title"><a href="/flyday/tktt/tkt-list.html#tktSort5" class="stretched-link">美術館</a></h5>
