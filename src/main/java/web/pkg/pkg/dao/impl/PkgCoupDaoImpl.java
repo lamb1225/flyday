@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import web.pkg.pkg.dao.PkgCoupDao;
 import web.pkg.pkg.entity.PkgCoup;
+import web.pkg.pkg.entity.PkgShopCart;
 
 //請注意，使用 @Repository 註解不僅僅是將類別標記為數據訪問層，同時也利用了 Spring 的一些功能，例如自動裝配和異常轉譯。
 @Repository
@@ -65,6 +66,9 @@ public class PkgCoupDaoImpl implements PkgCoupDao {
 		return session.get(PkgCoup.class, id); // id這個名稱可以隨意取 因為是傳入的值;會自動對應到PK
 											// PkgCoup.class 是實體類entity的類型
 	}
+	
+	
+
 
 	@Override
 	public List<PkgCoup> selectAll() {

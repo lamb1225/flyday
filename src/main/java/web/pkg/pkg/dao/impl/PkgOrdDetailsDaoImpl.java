@@ -45,7 +45,7 @@ public class PkgOrdDetailsDaoImpl implements PkgOrdDetailsDao{
 
 //	使用 session 從資料庫中根據指定的 PkgOrdDetailsId 查詢 PkgOrdDetails 對象。PkgOrdDetails.class 是實體類的類型，pkgOrdDetailsId 是要查詢的對象的複合主鍵。
 	@Override
-	public PkgOrdDetails selectByPkgOrdDetailsId(PkgOrdDetailsId pkgOrdDetailsId) {
+	public PkgOrdDetails selectByPkgOrdDetailsId(Integer pkgOrdDetailsId) {
 		return session.get(PkgOrdDetails.class, pkgOrdDetailsId);
 
 	}

@@ -9,6 +9,7 @@ const pkgnotice = document.querySelector('#pkgnotice')
 const refpolicy = document.querySelector('#refpolicy')
 const pkgimgs = document.querySelector('#pkgimgs')
 const pkgplans = document.querySelector('#pkgplans')
+const pkgprice = document.querySelector('#pkgprice')
 
 document.addEventListener("DOMContentLoaded", async function () {
     //顯示單筆行程
@@ -186,7 +187,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </div>
 `;
 		sessionStorage.setItem("price",`${data[i].pkgGroupMoney}`);
-
+		pkgprice.textContent=`${data[i].pkgGroupMoney}`;
         }
         pkgplans.innerHTML = html;
 
