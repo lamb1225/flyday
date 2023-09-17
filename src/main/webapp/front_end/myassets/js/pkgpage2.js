@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 </div>
                                             </div>
 `;
+		sessionStorage.setItem("price",`${data[i].pkgGroupMoney}`);
 
         }
         pkgplans.innerHTML = html;

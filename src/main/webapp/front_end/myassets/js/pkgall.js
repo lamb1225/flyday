@@ -127,6 +127,7 @@ function showPkgall() {
 
 function view(pkgNo) {
     sessionStorage.setItem("pkgNo", pkgNo);
+    sessionStorage.setItem("pkgno", pkgNo);
     location = "package-detail-temp1.html";
 
 }
