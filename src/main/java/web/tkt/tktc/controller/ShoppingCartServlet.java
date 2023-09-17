@@ -57,7 +57,9 @@ public class ShoppingCartServlet extends HttpServlet {
 			tktJoinList = tktShopCartService.selectByMemNo(memNo);
 			
 			for(TktJoin tktJoin : tktJoinList) {
-				tktJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktJoin.getTktImg()));
+				if(tktJoin.getTktImg() != null) {
+					tktJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktJoin.getTktImg()));
+				}
 			}
 			
 			session.setAttribute("tktJoinList", tktJoinList);

@@ -645,7 +645,7 @@ Main content START -->
 
 									<!-- Button -->
 									<!-- <div class="mt-2 mt-md-0"> -->
-									<a href="#" class="btn btn-primary-soft mb-0 me-3"><i
+									<a href="/flyday/tktt/tkt-list.html" class="btn btn-primary-soft mb-0 me-3"><i
 										class="bi bi-arrow-right"></i>繼續選購</a>
 									<!-- </div> -->
 									<!-- Button -->

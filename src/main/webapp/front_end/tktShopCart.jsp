@@ -771,6 +771,8 @@ Steps START -->
 																		<div class="itemInfo">
 																			<input class="tktTypeNo" type="hidden"
 																				name="tktTypeNo<%=j%>" value="${tktJoin.tktTypeNo}">
+																				<input class="tktNo" type="hidden"
+																				name="tktNo<%=j%>" value="${tktJoin.tktNo}">
 																			<input class="memNo" type="hidden" name="memNo"
 																				value="${tktJoin.memNo}"> <input
 																				class="price" type="hidden" name="price<%=j%>"

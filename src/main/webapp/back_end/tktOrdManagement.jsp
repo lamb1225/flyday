@@ -349,14 +349,14 @@
 						<!-- Select option -->
 						<div class="col-md-3">
 							<!-- Short by filter -->
-							<FORM id="orderBy" METHOD="post" ACTION="<%=request.getContextPath()%>/tkt/Order">
-							<input type="hidden" name="action" value="getBackAllOrd">
-								<select class="form-select js-choice" aria-label=".form-select-sm" name="orderByAll" id="orderByAll">
+<%-- 							<FORM id="orderBy" METHOD="post" ACTION="<%=request.getContextPath()%>/tkt/Order"> --%>
+<!-- 							<input type="hidden" name="action" value="getBackAllOrd"> -->
+								<select class="form-select js-choice" aria-label=".form-select-sm" id="orderByAll">
 									<option value="">Sort by</option>
 									<option value="1">最新</option>
 									<option value="2">最舊</option>
 								</select>
-							</FORM>
+<!-- 							</FORM> -->
 						</div>
 					</div>
 					<!-- Search and select END -->
@@ -374,19 +374,20 @@
 						</div>
 					</div>
 					<div style="display: none;">
-					<%=i = 0%>
+					<%=j = 0%>
 					</div>
+					<form id="myForm">
 					<c:forEach var="tktOrd" items="${tktOrdList}">
-					<%!int i = 0; %>
+					<%!int j = 0; %>
 					<!-- Table data -->
-					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4 ordItem">
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4 ordItem" id="itemStart<%=j%>" value="<%=j%>">
 						<!-- Data item -->
 						<div class="col">
 							<small class="d-block d-lg-none">訂購會員</small>
 							<div class="d-flex align-items-center">
 								<!-- Avatar -->
 								<div class="avatar avatar-xs flex-shrink-0">
-									<img class="avatar-img rounded-circle" src="${tktOrd.showPic}" alt="">
+									<img class="avatar-img rounded-circle memPic" src="${tktOrd.showPic}" alt="">
 								</div>
 								<!-- Info -->
 								<div class="ms-2">
@@ -398,13 +399,14 @@
 						<!-- Data item -->
 						<div class="col">
 							<small class="d-block d-lg-none">會員編號</small>
-							<h6 class="mb-0 fw-normal ms-4" id="memNo<%=i%>">${tktOrd.memNo}</h6>
+							<h6 class="mb-0 fw-normal ms-4" name="memNo<%=j%>">${tktOrd.memNo}</h6>
 						</div>
 
 						<!-- Data item -->
 						<div class="col">
 							<small class="d-block d-lg-none">訂單編號</small>
-							<h6 class="mb-0 fw-normal ms-2 ordNo" id="ordNo<%=i++%>">BS-${tktOrd.tktOrdNo}</h6>
+							<h6 class="mb-0 fw-normal ms-2 ordNo" name="ordNo<%=j%>">BS-${tktOrd.tktOrdNo}</h6>
+							<input type="hidden" name="tktOrdNo<%=j%>" value="${tktOrd.tktOrdNo}">
 						</div>
 
 						<!-- Data item -->
@@ -439,6 +441,20 @@
 					            </div>
 					            </c:when>
 					        </c:choose>
+					        
+					        <div class="itemInfo">
+								<input class="ordStat" type="hidden" id="ordStat<%=j%>"
+									name="ordStat<%=j%>" value="${tktOrd.ordStat}">
+							</div>
+					        <input type="hidden" name="action" value="cancelOrd">
+					        <div class="col">
+							    <select class="badge bg-primary bg-opacity-10 text-secondary ms-1 editStat" aria-label=".form-select-sm" id="editStat<%=j++%>">
+							    	<option>更改狀態</option>
+							        <option value="0" class="bg-success bg-opacity-10 text-success">已付款</option>
+							        <option value="1" class="bg-warning bg-opacity-10 text-warning">處理中</option>
+							        <option value="2" class="bg-danger bg-opacity-10 text-danger">已退款</option>
+							    </select>
+							</div>
 						</div>
 
 						<!-- Data item -->
@@ -448,7 +464,8 @@
 						</div>
 					</div>
 					</c:forEach>
-					<input type="hidden" id="ordList" value="<%=i%>">
+					<input type="hidden" id="totalItem" name="itemAmount" value="<%=j%>">
+					</form>
 				</div>
 				<!-- Card body END -->
 
@@ -498,10 +515,14 @@
 <!-- ThemeFunctions -->
 <script src="<%=request.getContextPath()%>/front_end/assets/js/functions.js"></script>
 
+<!--Sweetalert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <script src="../back_end/myassets/js/empcheck.js"></script>
 
 <script>
 
+	//查詢
 	const searchOrdNo = document.getElementById("searchOrdNo");
 	const ordNoList = document.getElementsByClassName("ordNo");
 	const searchAll = document.getElementById("searchAll");
@@ -517,11 +538,130 @@
 		}
 	});
 	
+	//排序
 	const orderByAll = document.getElementById("orderByAll");
-	const orderBy = document.getElementById("orderBy");
+	const itemStart = document.getElementsByClassName("ordItem");
 	
-	orderByAll.addEventListener("change", function(){
-		orderBy.submit();
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    orderByAll.addEventListener("change", function () {
+	        const selectedOrder = this.value;
+	        const ordItems = Array.from(document.querySelectorAll(".ordItem"));
+
+		if (selectedOrder === "1") {
+            // 最新排序
+            Array.from(itemStart).sort(function (a, b) {
+                const ordNoA = a.querySelector(".ordNo").textContent.split("-")[1];
+                const ordNoB = b.querySelector(".ordNo").textContent.split("-")[1];
+                return ordNoB - ordNoA;
+            }).forEach(function (element) {
+                // 把一個一個排序放回去
+                element.parentNode.appendChild(element);
+            });
+        } else if (selectedOrder === "2") {
+            // 最舊排序
+            Array.from(itemStart).sort(function (a, b) {
+                const ordNoA = a.querySelector(".ordNo").textContent.split("-")[1];
+                const ordNoB = b.querySelector(".ordNo").textContent.split("-")[1];
+                return ordNoA - ordNoB;
+            }).forEach(function (element) {
+                element.parentNode.appendChild(element);
+            });
+            
+          //最就排序的更改狀態
+        	const editStat = document.getElementsByClassName("editStat");
+        	const ordStat = document.getElementsByClassName("ordStat");
+        	const form = document.getElementById("myForm");
+        	
+        	for (let i = 0; i < editStat.length; i++) {
+        		editStat[i].addEventListener("change", function(){
+        			
+        			if(editStat[i].value >= 0){
+        			Swal.fire({
+        	    		  title: '確定要更改嗎?',
+        	    		  icon: 'warning',
+        	    		  showCancelButton: true,
+        	    		  confirmButtonColor: '#3085d6',
+        	    		  cancelButtonColor: '#d33',
+        	    		  confirmButtonText: 'confirm'
+        	    		}).then((result) => {
+        	    		  if (result.isConfirmed) {
+        	    		    Swal.fire(
+        	    		      '修改成功!',
+        	    		      'success'
+        	    		    )
+        	    		    
+        	    		    const selectedValue = editStat[i].value;
+        	    		    ordStat[i].setAttribute("value", selectedValue);
+        	    		    
+        	    		    const formData = new FormData(form);
+        			        formData.append(ordStat[i], ordStat[i].value);
+        			        
+        			        fetch("<%=request.getContextPath()%>/tkt/Order",{
+        						method: "POST",
+        						body: formData
+        					}).then(() => {
+        			            location.reload();
+        			        });
+        	    		  }
+        				})
+        			}
+        		});
+        	}
+        }
+	    });
+	});
+
+	
+	//更改狀態
+	const editStat = document.getElementsByClassName("editStat");
+	const ordStat = document.getElementsByClassName("ordStat");
+	const form = document.getElementById("myForm");
+	
+	for (let i = 0; i < editStat.length; i++) {
+		editStat[i].addEventListener("change", function(){
+			
+			if(editStat[i].value >= 0){
+			Swal.fire({
+	    		  title: '確定要更改嗎?',
+	    		  icon: 'warning',
+	    		  showCancelButton: true,
+	    		  confirmButtonColor: '#3085d6',
+	    		  cancelButtonColor: '#d33',
+	    		  confirmButtonText: 'confirm'
+	    		}).then((result) => {
+	    		  if (result.isConfirmed) {
+	    		    Swal.fire(
+	    		      '修改成功!',
+	    		      'success'
+	    		    )
+	    		    
+	    		    const selectedValue = editStat[i].value;
+	    		    ordStat[i].setAttribute("value", selectedValue);
+	    		    
+	    		    const formData = new FormData(form);
+			        formData.append(ordStat[i], ordStat[i].value);
+			        
+			        fetch("<%=request.getContextPath()%>/tkt/Order",{
+						method: "POST",
+						body: formData
+					}).then(() => {
+			            location.reload();
+			        });
+	    		  }
+				})
+			}
+		});
+	}
+	
+	const memPics = document.querySelectorAll('.memPic');
+
+	memPics.forEach((memPic) => {
+		const srcValue = memPic.getAttribute('src');
+		//如果會員圖片是空的話，要顯示背景圖
+	    if (!srcValue || srcValue.trim() === '') {
+	        memPic.src = '/flyday/front_end/myassets/logo_noliteral.png';
+	    }
 	});
 	
 </script>
