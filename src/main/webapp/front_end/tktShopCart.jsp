@@ -203,52 +203,52 @@
 					<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">景點門票</a>
 					<ul class="dropdown-menu" aria-labelledby="pagesMenu">
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
 						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html">門票搜尋</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">主題樂園</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort0">主題樂園</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">景點門票</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort1">景點門票</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">水族館</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort2">水族館</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">動物園</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort3">動物園</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">博物館</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort4">博物館</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">美術館</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort5">美術館</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">展覽</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort6">展覽</a>
 					</li>
-		
+
 					<!-- Dropdown submenu -->
 					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">其他票券</a>
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort7">其他票券</a>
 					</li>
-		
+
 					</ul>
 				</li>
 		
