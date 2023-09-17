@@ -13,6 +13,7 @@ import web.pkg.pkg.dao.PkgShopCartDao;
 import web.pkg.pkg.entity.PkgShopCart;
 import web.pkg.pkg.entity.PkgShopCartId;
 import web.pkg.pkg.service.PkgShopCartService;
+import web.pkg.pkgmanage.entity.PkgShopCartToPlanDto;
 
 @Service
 @Transactional
@@ -71,8 +72,8 @@ public class PkgShopCartServiceImpl implements PkgShopCartService {
 	
 	// 查詢會員購物車清單
 	@Override
-	public List<PkgShopCart> findAllPkgCart(Integer memNo) {
-		return dao.selectAll(memNo);
+	public List<PkgShopCartToPlanDto> findAllPkgCart(Integer memNo) {
+		return dao.selectAllPkg(memNo);
 	}
 	
 	// 查詢所有會員購物車清單

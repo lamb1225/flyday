@@ -57,11 +57,10 @@
                 return resp.json()
             })
             .then(function (data) {
-                console.log("yolo");
                 carthtml = '';
                 for (i = 0; i < data.length; i++) {
                  
-                            amount.textContent= `${data[i].pkgQty}`;
+                            amount.textContent= `${data[i].pkgShopCart.pkgQty}`;
 
                 }
                 
@@ -216,54 +215,8 @@
     
 
     btn.addEventListener('click', () => {
-        // errmsg.textContent = '';
         errmsg.textContent = '';
-        // console.log(startdate.value);
-        
-        // const coupnameLength = coupname.value.length;
-        // if (coupnameLength < 2 || coupnameLength > 40) {
-        //     errmsg.textContent = '優惠券名稱長度須介於2~40字元';
-        //     addmsg.textContent = '新增失敗';
-        //     return;//停止後續的程式執行
-        // }
-
-        // if (! moneyRegex.test(discount.value)) {
-        //     errmsg.textContent = '只能輸入數字';
-        //     addmsg.textContent = '新增失敗';
-        //     return;
-        // }
-        
-        // if (discount.value.trim().length===0) {
-        //     errmsg.textContent = '折扣金額不可為空';
-        //     addmsg.textContent = '新增失敗';
-        //     return;
-        // }
-        
-        // if (! moneyRegex.test(minicharge.value)) {
-        //     errmsg.textContent = '只能輸入數字';
-        //     addmsg.textContent = '新增失敗';
-        //     return;
-        // }
-        
-        // if (minicharge.value.trim().length===0) {
-        //     errmsg.textContent = '最低消費金額不可為空';
-        //     addmsg.textContent = '新增失敗';
-        //     return;
-        // }
-                           
-        // const startdateValue = new Date(startdate.value);
-        // startdateValue.setHours(23);
-        // startdateValue.setMinutes(59);
-        // console.log(dtToday);
-        // console.log(startdateValue);
-        
-
-        // if (startdateValue<dtToday) {
-        //     errmsg.textContent = '日期不可小於今天';
-        //     addmsg.textContent = '新增失敗';
-        //     return;
-        // }
-        
+  
         
                             
         fetch('/flyday/pkg/PkgOrdAdd', {

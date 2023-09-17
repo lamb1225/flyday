@@ -129,10 +129,9 @@ function getcoupon(pkgCoupNo){
             }
         })
        
-}
 
 
-// 查詢所有會員優惠券
+		// 查詢所有會員優惠券
 fetch('/flyday/pkg/MemCoupFindAll', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -151,14 +150,24 @@ fetch('/flyday/pkg/MemCoupFindAll', {
 // 點擊我的優惠券
 memcoupbtn.addEventListener('click', function () {
     showmemcoup();
+
+	
+
 })
+
+
+
+
+
+
+
 
 function showmemcoup(){
     let memcouphtml = '';
 
     for (let i = 0; i < memcoup.length; i++) {
 
-        if (memcoup[i].memPkgCoupState === 0) {
+        if (memcoup[i].pkgCoupNo === pkgCoupNo) {
             memcouphtml += `
 										<div class="card border mb-4">
 											<div
@@ -169,10 +178,10 @@ function showmemcoup(){
 															class="fa-solid fa-tag"></i></div>
 
 													<div class="ms-2">
-														<h6 class="card-title mb-0">${memcoup[i].pkgCoupName}</h6>
+														<h6 class="card-title mb-0">coups[${memcoup[i].PkgCoupNo}].pkgCoupName</h6>
 														<ul class="nav nav-divider small">
 															<li class="nav-item">Coupon ID: </li>
-															<li class="nav-item">${memcoup[i].pkgCoupNo}</li>
+															<li class="nav-item">${memcoup[i].memPkgCoupNo}</li>
 														</ul>
 													</div>
 
@@ -226,3 +235,6 @@ function showmemcoup(){
         }
     }
 }
+}
+
+
