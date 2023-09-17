@@ -141,73 +141,105 @@
 			<!-- Main navbar START -->
 			<div class="navbar-collapse collapse" id="navbarCollapse">
 				<ul class="navbar-nav navbar-nav-scroll">
-	  
+		
 				<!-- Nav item 行程 -->
 				<li class="nav-item dropdown">
-				  <a class="nav-link" href="/flyday/front_end/package-list4.html" aria-haspopup="true" aria-expanded="false">觀光行程</a>
+					<a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">觀光行程</a>
+					<ul class="dropdown-menu" aria-labelledby="listingMenu">
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">行程搜尋</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">遊船觀光</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">單車旅遊</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">文化體驗</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">水上活動</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">露營登山</a>
+					</li>
+					</ul>
 				</li>
-	  
+		
 				<!-- Nav item 票券 -->
 				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
-				  aria-expanded="false">景點門票</a>
-				  <ul class="dropdown-menu" aria-labelledby="pagesMenu">
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html">門票搜尋</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort0">主題樂園</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort1">景點門票</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort2">水族館</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort3">動物園</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort4">博物館</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort5">美術館</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort6">展覽</a>
-				  </li>
-	  
-				  <!-- Dropdown submenu -->
-				  <li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort7">其他票券</a>
-				  </li>
-	  
-				  </ul>
+					<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">景點門票</a>
+					<ul class="dropdown-menu" aria-labelledby="pagesMenu">
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="/flyday/tktt/tkt-list.html">門票搜尋</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">主題樂園</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">景點門票</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">水族館</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">動物園</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">博物館</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">美術館</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">展覽</a>
+					</li>
+		
+					<!-- Dropdown submenu -->
+					<li class="dropdown-submenu dropend">
+						<a class="dropdown-item" href="#">其他票券</a>
+					</li>
+		
+					</ul>
 				</li>
-	  
+		
 				<!-- Nav item 揪團 -->
 				<li class="nav-item dropdown">
-				  <a class="nav-link" href="/flyday/Act/hotel-grid.html" id="accounntMenu" aria-haspopup="true" aria-expanded="false">揪團活動</a>
+					<a class="nav-link" href="/flyday/Act/hotel-grid.html" id="accounntMenu" aria-haspopup="true" aria-expanded="false">揪團活動</a>
 				</li>
-	  
+		
 				<!-- Nav item Contact -->
-				<li class="nav-item"> <a class="nav-link" href="/flyday/front_end/Frequent-QA.html">常見問題</a></li>
+				<li class="nav-item"> <a class="nav-link" href="/flyday/front_end/Frequent-QA.html">常見問題</a> </li>
 				</ul>
 			</div>
 			<!-- Main navbar END -->
@@ -307,16 +339,17 @@
 		
 						<!-- Links -->
 						<li>
-							<hr class="dropdown-divider">
+						<hr class="dropdown-divider">
 						</li>
 						<li><a class="dropdown-item" href="/flyday/front_end/account-profile.html"><i class="bi bi-person fa-fw me-2"></i>基本資料設定</a></li>
-						<li><a class="dropdown-item" href="/flyday/front_end/account-pkgorder.html"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
-						<li><a class="dropdown-item" href="/flyday/front_end/account-coupon.html"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
+						<li><a class="dropdown-item" href="#"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
+						<li><a class="dropdown-item" href="#"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
+						<li><a class="dropdown-item" href="#"><i class="bi bi bi-heart fa-fw me-2"></i>我的收藏</a></li>
 						<li><a class="dropdown-item" href="/flyday/Act/account-bookings.html"><i class="fa-solid fa-people-group fa-fw me-2"></i>我的揪團</a></li>
 						<li><a class="dropdown-item" href="/flyday/chat.do"><i class="bi bi-chat-left-text fa-fw me-2"></i>聯繫客服</a></li>
 						<li><a class="dropdown-item bg-danger-soft-hover" id="logoutNav" href="#"><i class="bi bi-power fa-fw me-2"></i>登出</a></li>
 						<li>
-							<hr class="dropdown-divider">
+						<hr class="dropdown-divider">
 						</li>
 		
 						<!-- Dark mode options START -->
@@ -564,7 +597,7 @@ Content START -->
 									<a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample1"><i
 										class="bi bi-card-list fa-fw me-2"></i>我的訂單</a>
 									<ul class="collapse mycollapse show" id="collapseExample1">
-									<a class="nav-link" href="/flyday/front_end/account-pkgorder.html">
+									<a class="nav-link" href="###">
 										<li class="text-dark-emphasis nav-item ps-2"><i
 											class="fa-solid fa-plane-departure fa-fw me-2"></i>行程訂單
 										</li>
@@ -576,8 +609,35 @@ Content START -->
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/flyday/front_end/account-coupon.html"><i
-									  class="bi bi-chat-left-text fa-fw me-2"></i>我的優惠券</a>
+									<a class="nav-link" data-bs-toggle="collapse" href="#collapseExample2"><i
+										class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a>
+									<ul class="collapse mycollapse" id="collapseExample2">
+									<a class="nav-link" href="###">
+										<li class="text-dark-emphasis nav-item ps-2"><i
+											class="fa-solid fa-plane-departure fa-fw me-2"></i>行程優惠券
+										</li>
+									</a>
+									<a class="nav-link" href="###">
+										<li class="text-dark-emphasis nav-item ps-2"><i
+											class="bi bi-ticket-perforated fa-fw me-2"></i>票券優惠券
+										</li>
+									</a>
+									</ul>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-bs-toggle="collapse" href="#collapseExample3"><i
+										class="bi bi-heart fa-fw me-2"></i>我的收藏</a>
+									<ul class="collapse mycollapse" id="collapseExample3">
+									<a class="nav-link" href="###">
+										<li class="text-dark-emphasis nav-item ps-2"><i
+											class="fa-solid fa-plane-departure fa-fw me-2"></i>行程收藏
+										</li>
+									</a>
+									<a class="nav-link" href="###">
+										<li class="text-dark-emphasis nav-item ps-2"><i
+											class="bi bi-ticket-perforated fa-fw me-2"></i>票券收藏</li>
+									</a>
+									</ul>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" data-bs-toggle="collapse" href="#collapseExample4"><i
@@ -722,7 +782,7 @@ Content START -->
 												</div>
 												</c:forEach>
 												<input type="hidden" id="totalItem" name="itemAmount" value="<%=j%>">
-												</form>
+											</form>
 										<!-- Card item END -->
 									</div>
 									<!-- Tabs content item END -->
@@ -942,20 +1002,18 @@ Footer START -->
 				        a++;
 				        
 		    		    ordStat[i].setAttribute("value", "1");
+		    		    itemStart[i].style.display = "none";
 				        const formData = new FormData(form);
 				        formData.append(ordStat[i], ordStat[i].value);
 				        
 				        fetch("<%=request.getContextPath()%>/tkt/Order",{
 							method: "POST",
 							body: formData
-						})
-						
-						const itemStartClone = itemStart[i].cloneNode(true);
-						console.log(itemStartClone);
-						console.log(itemCancelStart[0]);
-						itemCancelStart[0].parentNode.insertBefore(itemStartClone, itemCancelStart[0]);
-// 						itemCancelStart[i].appendChild(itemStartClone);
-						itemStart[i].style.display = "none";
+						}).then(() => {
+							setTimeout(function () {
+						        location.reload();
+						    }, 1000);
+    			        });
 		    		  }
 		    		})
 		    });

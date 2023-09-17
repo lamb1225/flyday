@@ -136,7 +136,9 @@ public class OrderServlet extends HttpServlet {
 			TktOrd tktOrd = tktOrdService.findByPrimaryKey(tktOrdNo);
 			
 			for(TktOrdDetailsJoin tktOrdDetailsJoin : tktOrdDetailsJoinList) {
-				tktOrdDetailsJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktOrdDetailsJoin.getTktImg()));
+				if(tktOrdDetailsJoin.getTktImg() != null) {
+					tktOrdDetailsJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktOrdDetailsJoin.getTktImg()));
+				}
 			}
 			
 			Date tktOrdDate = tktOrd.getOrdDate();
@@ -157,28 +159,14 @@ public class OrderServlet extends HttpServlet {
 			List<TktOrd> tktOrdList = tktOrdService.getAll();
 
 			for(TktOrd tktOrd : tktOrdList) {
-				String memName = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemName() ;
-				byte[] memPic = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemPic() ;
+				String memName = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemName();
+				byte[] memPic = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemPic();
 				tktOrd.setMemName(memName);
-				tktOrd.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(memPic));
+				if(memPic != null) {
+					tktOrd.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(memPic));
+				}
 			}
 			
-			session.setAttribute("tktOrdList", tktOrdList);
-			RequestDispatcher successView = req.getRequestDispatcher("/back_end/tktOrdManagement.jsp");
-			successView.forward(req, res);
-		}
-		
-		//後台查詢所有訂單(最舊排序)
-		if("getBackAllOrdAsc".equals(action)) {
-			List<TktOrd> tktOrdList = tktOrdService.getAllOrderBy();
-
-			for(TktOrd tktOrd : tktOrdList) {
-				String memName = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemName() ;
-				byte[] memPic = memService.checkMemInfoByMemNo(tktOrd.getMemNo()).getMemPic() ;
-				tktOrd.setMemName(memName);
-				tktOrd.setMemPic(memPic); // 還要再修改，要串流取出圖片
-			}
-					
 			session.setAttribute("tktOrdList", tktOrdList);
 			RequestDispatcher successView = req.getRequestDispatcher("/back_end/tktOrdManagement.jsp");
 			successView.forward(req, res);
@@ -191,7 +179,9 @@ public class OrderServlet extends HttpServlet {
 			TktOrd tktOrd = tktOrdService.findByPrimaryKey(tktOrdNo);
 			
 			for(TktOrdDetailsJoin tktOrdDetailsJoin : tktOrdDetailsJoinList) {
-				tktOrdDetailsJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktOrdDetailsJoin.getTktImg()));
+				if(tktOrdDetailsJoin.getTktImg() != null) {
+					tktOrdDetailsJoin.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(tktOrdDetailsJoin.getTktImg()));
+				}
 			}
 			
 			Date tktOrdDate = tktOrd.getOrdDate();
@@ -214,7 +204,7 @@ public class OrderServlet extends HttpServlet {
 			for(int i = 0; i < j; i++) {
 				Integer tktOrdNo = Integer.valueOf(req.getParameter("tktOrdNo" + i));
 				Integer ordStat = Integer.valueOf(req.getParameter("ordStat" + i));
-				if(ordStat == 1) {
+				if(ordStat != null) {
 					tktOrdService.update(ordStat, tktOrdNo);
 				}
 			}
