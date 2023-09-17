@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             pkgShopCartid: {
-                memNo: 1
+                memNo: sessionStorage.getItem("memno")
             }
         })
     })
