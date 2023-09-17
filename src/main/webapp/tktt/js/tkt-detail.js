@@ -366,7 +366,7 @@ function addShopCart(button, tktplanno){
     formdata.append("tktQty", tktQty);
     
     if(tktTypeNo === -1){
-        alert("請選擇票種");
+        Swal.fire('請選擇票種');
     } else {
         fetch(`/${contextPath}/tkt/shoppingCart`, {
             method: 'POST',    
@@ -385,12 +385,27 @@ function addShopCart(button, tktplanno){
             // 根據回應的內容來判斷是否要進行跳轉
             if (html.includes("Flyday - 登入")) {
                 // 如果回應包含"Flyday - 登入"，則進行跳轉
-                alert("請先登入！");
-                const returnUrl = window.location.href; // 獲取當前頁面 URL
-                sessionStorage.setItem('originalURL', returnUrl); // 存儲在sessionStorage
-                window.location.href = `/${contextPath}/front_end/sign-in.html`; // 跳轉到登入頁面
+
+                Swal.fire({
+                    title: '請先登入！',
+                    confirmButtonText: '確認',
+                    // cancelButtonText: '取消',
+                    // showCancelButton: true,
+                }).then(async function (result) {
+                    // console.log(result)
+                    if(result.isConfirmed){
+                        const returnUrl = window.location.href; // 獲取當前頁面 URL
+                        sessionStorage.setItem('originalURL', returnUrl); // 存儲在sessionStorage
+                        window.location.href = `/${contextPath}/front_end/sign-in.html`; // 跳轉到登入頁面
+                    }
+                })
+
+                // Swal.fire('請先登入！');
+                // const returnUrl = window.location.href; // 獲取當前頁面 URL
+                // sessionStorage.setItem('originalURL', returnUrl); // 存儲在sessionStorage
+                // window.location.href = `/${contextPath}/front_end/sign-in.html`; // 跳轉到登入頁面
             } else {
-                alert("成功加入購物車！"); 
+                Swal.fire('成功加入購物車！');
                 // console.log("不轉跳頁面");
             }
         })
