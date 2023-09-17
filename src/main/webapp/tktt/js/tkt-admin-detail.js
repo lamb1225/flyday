@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }))
 
 
-
-
 })
 
 // Fetch該商品的方案&票種
@@ -93,6 +91,7 @@ function titleHTML () {
         <!-- Previous Page Button -->
         <div class="d-grid tkt-list-title-right"><a href="tkt-admin-list.html" class="btn btn-primary-soft mb-0">返回前頁</a></div>	
     </div>
+
     <!-- Card body -->
     <div class="card-body" id="point">
     </div>
@@ -203,8 +202,6 @@ async function planstatEdit(tktplanno){
     await fetchData();
     showPlanTypeList();
 }
-
-
 
 // Modal (回傳tktplann，取得該方案的詳細內容)
 function planDetailsEdit(tktplanno){
