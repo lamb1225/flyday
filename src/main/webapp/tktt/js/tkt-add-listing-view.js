@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if($(this).attr("value") == $(this).attr("id").substr(12)){
             // console.log($(this).parents("div").find("div#plan"+$(this).attr("value")).attr("id"));
-            let r = confirm("確認刪除此 方案"+$(this).attr("value")+" ?");
+            let r = confirm("確認刪除此 方案 ?");
             if (r) {
                 $(this).parents("div").find("div#plan"+$(this).attr("value")).animate({
                     "opacity": 0
