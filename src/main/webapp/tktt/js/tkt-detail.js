@@ -388,7 +388,7 @@ function addShopCart(button, tktplanno){
                 // 如果回應包含"Flyday - 登入"，則進行跳轉
                 alert("請先登入！");
                 const returnUrl = window.location.href; // 獲取當前頁面 URL
-                sessionStorage.setItem('returnUrl', returnUrl); // 存儲在sessionStorage
+                sessionStorage.setItem('originalURL', returnUrl); // 存儲在sessionStorage
                 window.location.href = `/${contextPath}/front_end/sign-in.html`; // 跳轉到登入頁面
             } else {
                 alert("成功加入購物車！"); 

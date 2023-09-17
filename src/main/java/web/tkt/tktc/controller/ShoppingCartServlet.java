@@ -82,13 +82,13 @@ public class ShoppingCartServlet extends HttpServlet {
 			Integer memNo = mem.getMemNo();
 
 			//測試用
-			Integer testTktTypeNo = Integer.valueOf(req.getParameter("testTktTypeNo"));
-			Integer testTktQty = Integer.valueOf(req.getParameter("testTktQty"));
-			Integer tktTypeNo = testTktTypeNo;
-			Integer tktQty = testTktQty;
+//			Integer testTktTypeNo = Integer.valueOf(req.getParameter("testTktTypeNo"));
+//			Integer testTktQty = Integer.valueOf(req.getParameter("testTktQty"));
+//			Integer tktTypeNo = testTktTypeNo;
+//			Integer tktQty = testTktQty;
 
-//			Integer tktTypeNo = Integer.valueOf(req.getParameter("tktTypeNo"));
-//			Integer tktQty = Integer.valueOf(req.getParameter("tktQty"));
+			Integer tktTypeNo = Integer.valueOf(req.getParameter("tktTypeNo"));
+			Integer tktQty = Integer.valueOf(req.getParameter("tktQty"));
 //			
 			TktShopCart tktShopCart = tktShopCartService.addTktShopCart(memNo, tktTypeNo, tktQty);
 
