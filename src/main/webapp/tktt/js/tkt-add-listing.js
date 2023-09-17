@@ -396,8 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const length = $(this).val().length; 
                 if (value === '') {
                     $(this).prev().text('票種請勿空白');
-                } else if (length < 2 || length > 10) {
-                    $(this).prev().text('票種需介於2~10個字之間');
+                } else if (length < 2 || length > 50) {
+                    $(this).prev().text('票種需介於2~50個字之間');
                 }
             });
         });

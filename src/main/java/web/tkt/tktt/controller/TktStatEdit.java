@@ -12,22 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.tkt.tktt.entity.Tkt;
-import web.tkt.tktt.entity.TktImg;
 import web.tkt.tktt.service.TktService;
 import web.tkt.tktt.service.impl.TktServiceImpl;
 
-@WebServlet("/tktt/tktImgDetail")
-public class TktImgDetail  extends HttpServlet{
+@WebServlet("/tktt/editTktStat")
+public class TktStatEdit extends HttpServlet{
 
 	public static final TktService service = new TktServiceImpl();
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		TktImg tktImg = json2Pojo(request, TktImg.class);
+		Tkt tkt  = json2Pojo(request, Tkt.class);
 		
-		int tktno = tktImg.getTktno();
+		tkt = service.editTktStat(tkt);
 		
-		writePojo2Json(response, service.findTktImgDetial(tktno));
+		writePojo2Json(response, tkt);
 	}
 }

@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 })                      
                 .then(data => {
-                    console.log(data)
+                    // console.log(data)
                     errorMsgs = data;
                     // showTkterrorMegs(); // 將Tkt錯誤訊息顯示在畫面上
                 })

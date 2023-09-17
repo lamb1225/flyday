@@ -27,9 +27,7 @@ public class TktplanListAdd extends HttpServlet{
 		
 		PlanType planType = json2Pojo(request, PlanType.class);
 		
-		System.out.println(planType);
 		int tktno = planType.getTktno();
-		System.out.println(tktno);
 		
 		writePojo2Json(response, service.findAllPlayType(tktno));
 	}

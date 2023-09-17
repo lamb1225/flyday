@@ -98,6 +98,14 @@
 		  width: 100%;
 		  height: 100%;
 		}
+
+		.form-control-centered {
+			display: flex;
+			/* 水平置中 */
+			justify-content: center;    
+			/* 垂直置中 */
+			align-items: center;
+		}
 	</style>
 
 
@@ -182,42 +190,42 @@
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">主題樂園</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort0" onclick="setTimeout(()=>location.reload(), 100)">主題樂園</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">景點門票</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort1" onclick="setTimeout(()=>location.reload(), 100)">景點門票</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">水族館</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort2" onclick="setTimeout(()=>location.reload(), 100)">水族館</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">動物園</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort3" onclick="setTimeout(()=>location.reload(), 100)">動物園</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">博物館</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort4" onclick="setTimeout(()=>location.reload(), 100)">博物館</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">美術館</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort5" onclick="setTimeout(()=>location.reload(), 100)">美術館</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">展覽</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort6" onclick="setTimeout(()=>location.reload(), 100)">展覽</a>
 				</li>
 	
 				<!-- Dropdown submenu -->
 				<li class="dropdown-submenu dropend">
-					<a class="dropdown-item" href="#">其他票券</a>
+					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort7" onclick="setTimeout(()=>location.reload(), 100)">其他票券</a>
 				</li>
 	
 				</ul>
@@ -544,131 +552,6 @@
 <main>
 
 <!-- =======================
-Main Banner START -->
-<section class="pt-0">
-	<div class="container">
-		<!-- Background image -->
-		<div class="rounded-3 p-3 p-sm-5" style="background-image: url(../assets/images/bg/05.jpg); background-position: center center; background-repeat: no-repeat; background-size: cover;">
-			<!-- Banner title -->
-			<!-- <div class="row my-2 my-xl-5"> 
-				<div class="col-md-8 mx-auto"> 
-					<h1 class="text-center text-white">150 Hotels in New York</h1>
-				</div>
-			</div> -->
-
-			<!-- Booking from START -->
-			<form class="bg-mode shadow rounded-3 position-relative p-4 pe-md-5 pb-5 pb-md-4 mb-4">
-				<div class="row g-4 align-items-center">
-					<!-- Location -->
-					<div class="col-lg-4">
-						<div class="form-control-border form-control-transparent form-fs-md d-flex">
-							<!-- Icon -->
-							<i class="bi bi-geo-alt fs-3 me-2 mt-2"></i>
-							<!-- Select input -->
-							<div class="flex-grow-1">
-								<label class="form-label">Location</label>
-								<select class="form-select js-choice" data-search-enabled="true">
-									<option value="">Select location</option>
-									<option selected>San Jacinto, USA</option>
-									<option>North Dakota, Canada</option>
-									<option>West Virginia, Paris</option>
-								</select>
-							</div>
-						</div>
-					</div>
-
-					<!-- Check in -->
-					<div class="col-lg-4">
-						<div class="d-flex">
-							<!-- Icon -->
-							<i class="bi bi-calendar fs-3 me-2 mt-2"></i>
-							<!-- Date input -->
-							<div class="form-control-border form-control-transparent form-fs-md">
-								<label class="form-label">Check in - out</label>
-								<input type="text" class="form-control flatpickr" data-mode="range" placeholder="Select date" value="19 Sep to 28 Sep">
-							</div>
-						</div>
-					</div>
-
-					<!-- Guest -->
-					<div class="col-lg-4">
-						<div class="form-control-border form-control-transparent form-fs-md d-flex">
-							<!-- Icon -->
-							<i class="bi bi-person fs-3 me-2 mt-2"></i>
-							<!-- Dropdown input -->
-							<div class="w-100">
-								<label class="form-label">Guests & rooms</label>
-								<div class="dropdown guest-selector me-2">
-									<input type="text" class="form-guest-selector form-control selection-result" value="2 Guests 1 Room" id="dropdownGuest" data-bs-auto-close="outside" data-bs-toggle="dropdown">
-								
-									<!-- dropdown items -->
-									<ul class="dropdown-menu guest-selector-dropdown" aria-labelledby="dropdownGuest">
-										<!-- Adult -->
-										<li class="d-flex justify-content-between">
-											<div>
-												<h6 class="mb-0">Adults</h6>
-												<small>Ages 13 or above</small>
-											</div>
-
-											<div class="hstack gap-1 align-items-center">
-												<button type="button" class="btn btn-link adult-remove p-0 mb-0"><i class="bi bi-dash-circle fs-5 fa-fw"></i></button>
-												<h6 class="guest-selector-count mb-0 adults">2</h6>
-												<button type="button" class="btn btn-link adult-add p-0 mb-0"><i class="bi bi-plus-circle fs-5 fa-fw"></i></button>
-											</div>
-										</li>
-
-										<!-- Divider -->
-										<li class="dropdown-divider"></li>
-
-										<!-- Child -->
-										<li class="d-flex justify-content-between">
-											<div>
-												<h6 class="mb-0">Child</h6>
-												<small>Ages 13 below</small>
-											</div>
-
-											<div class="hstack gap-1 align-items-center">
-												<button type="button" class="btn btn-link child-remove p-0 mb-0" ><i class="bi bi-dash-circle fs-5 fa-fw"></i></button>
-												<h6 class="guest-selector-count mb-0 child">0</h6>
-												<button type="button" class="btn btn-link child-add p-0 mb-0" ><i class="bi bi-plus-circle fs-5 fa-fw"></i></button>
-											</div>
-										</li>
-
-										<!-- Divider -->
-										<li class="dropdown-divider"></li>
-
-										<!-- Rooms -->
-										<li class="d-flex justify-content-between">
-											<div>
-												<h6 class="mb-0">Rooms</h6>
-												<small>Max room 8</small>
-											</div>
-
-											<div class="hstack gap-1 align-items-center">
-												<button type="button" class="btn btn-link room-remove p-0 mb-0" ><i class="bi bi-dash-circle fs-5 fa-fw"></i></button>
-												<h6 class="guest-selector-count mb-0 rooms">1</h6>
-												<button type="button" class="btn btn-link room-add p-0 mb-0" ><i class="bi bi-plus-circle fs-5 fa-fw"></i></button>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Button -->
-				<div class="btn-position-md-middle">
-					<a  class="icon-lg btn btn-round btn-primary mb-0" href="#"><i class="bi bi-search fa-fw"></i></a>
-				</div>
-			</form>
-			<!-- Booking from END -->
-		</div>
-	</div>
-</section>
-<!-- =======================
-Main Banner END -->
-
-<!-- =======================
 Hotel list START -->
 <section class="pt-0">
 	<div class="container">
@@ -719,48 +602,6 @@ Hotel list START -->
 					<div class="offcanvas-body flex-column p-3 p-xl-0">
 						<form class="rounded-3 shadow">
 
-							<!-- Location START -->
-							<div class="card card-body rounded-0 p-4">
-								<!-- Title -->
-								<h6 class="mb-2">篩選目的地</h6>
-								<!-- Location group -->
-								<div class="col-12">
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location00">
-										<label class="form-check-label" for="location00">全部</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location0">
-										<label class="form-check-label" for="location0">北部</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location1">
-										<label class="form-check-label" for="location1">中部</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location2">
-										<label class="form-check-label" for="location2">南部</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location3">
-										<label class="form-check-label" for="location3">東部</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="location4">
-										<label class="form-check-label" for="location4">離島</label>
-									</div>
-								</div>
-							</div>
-							<!-- Location END -->
-
-							<hr class="my-0"> <!-- Divider -->
-
 							<!-- Ticket type START -->
 							<div class="card card-body rounded-0 rounded-top p-4">
 								<!-- Title -->
@@ -769,127 +610,59 @@ Hotel list START -->
 								<div class="col-12">
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktTypeAll" type="checkbox" value="-1" id="tktType-1">
+										<input class="form-check-input tktSortAll" type="checkbox" value="-1" id="tktSort-1">
 										<label class="form-check-label" for="ticketType00">全部</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="0" id="tktType0">
+										<input class="form-check-input tktSort" type="checkbox" value="0" id="tktSort0">
 										<label class="form-check-label" for="ticketType0">主題樂園</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="1" id="tktType1">
+										<input class="form-check-input tktSort" type="checkbox" value="1" id="tktSort1">
 										<label class="form-check-label" for="ticketType1">景點門票</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="2" id="tktType2">
+										<input class="form-check-input tktSort" type="checkbox" value="2" id="tktSort2">
 										<label class="form-check-label" for="ticketType2">水族館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="3" id="tktType3">
+										<input class="form-check-input tktSort" type="checkbox" value="3" id="tktSort3">
 										<label class="form-check-label" for="ticketType3">動物園</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="4" id="tktType4">
+										<input class="form-check-input tktSort" type="checkbox" value="4" id="tktSort4">
 										<label class="form-check-label" for="ticketType4">博物館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="5" id="tktType5">
+										<input class="form-check-input tktSort" type="checkbox" value="5" id="tktSort5">
 										<label class="form-check-label" for="ticketType5">美術館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="6" id="tktType6">
+										<input class="form-check-input tktSort" type="checkbox" value="6" id="tktSort6">
 										<label class="form-check-label" for="ticketType6">展覽</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktType" type="checkbox" value="7" id="tktType7">
+										<input class="form-check-input tktSort" type="checkbox" value="7" id="tktSort7">
 										<label class="form-check-label" for="ticketType7">其他</label>
 									</div>
 								</div>
 							</div>
 							<!-- Ticket type END -->
 
-							<hr class="my-0"> <!-- Divider -->
-
-							<!-- Price range START -->
-							<div class="card card-body rounded-0 p-4">
-								<!-- Title -->
-								<h6 class="mb-2">價格範圍</h6>
-								<!-- Price range group -->
-								<div class="col-12">
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="priceRange1">
-										<label class="form-check-label" for="priceRange1">$0 - $200</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="priceRange2">
-										<label class="form-check-label" for="priceRange2">$200 - $500</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="priceRange3">
-										<label class="form-check-label" for="priceRange3">$500 - $1,000</label>
-									</div>
-									<!-- Checkbox -->
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="priceRange4">
-										<label class="form-check-label" for="priceRange4">高於$1,000</label>
-									</div>
-								</div>
-							</div>
-							<!-- Price range END -->
-
-							<hr class="my-0"> <!-- Divider -->
-
-							<!-- Rating Star START -->
-							<div class="card card-body rounded-0 p-4">
-								<!-- Title -->
-								<h6 class="mb-2">評級星等</h6>
-								<!-- Rating Star group -->
-								<ul class="list-inline mb-0 g-3">
-									<!-- Item -->
-									<li class="list-inline-item mb-0">
-										<input type="checkbox" class="btn-check" id="btn-check-6">
-										<label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-6">1<i class="bi bi-star-fill"></i></label>
-									</li>
-									<!-- Item -->
-									<li class="list-inline-item mb-0">
-										<input type="checkbox" class="btn-check" id="btn-check-7">
-										<label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-7">2<i class="bi bi-star-fill"></i></label>
-									</li>
-									<!-- Item -->
-									<li class="list-inline-item mb-0">
-										<input type="checkbox" class="btn-check" id="btn-check-8">
-										<label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-8">3<i class="bi bi-star-fill"></i></label>
-									</li>
-									<!-- Item -->
-									<li class="list-inline-item mb-0">
-										<input type="checkbox" class="btn-check" id="btn-check-15">
-										<label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-15">4<i class="bi bi-star-fill"></i></label>
-									</li>
-									<!-- Item -->
-									<li class="list-inline-item mb-0">
-										<input type="checkbox" class="btn-check" id="btn-check-16">
-										<label class="btn btn-sm btn-light btn-primary-soft-check" for="btn-check-16">5<i class="bi bi-star-fill"></i></label>
-									</li>
-								</ul>
-							</div>
-							<!-- Rating Star END -->					
 						</form><!-- Form End -->
 					</div>
 					<!-- Buttons -->
 					<div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4">
-						<button class="btn btn-link p-0 mb-0">全部清除</button>
-						<button class="btn btn-primary mb-0">篩選結果</button>
+						<a class="btn btn-link p-0 mb-0" id="clearBtn" href="/flyday/tktt/tkt-list.html">全部清除</a>
+						<button class="btn btn-primary mb-0" id="filterBtn">篩選結果</button>
 					</div>
 				</div>
 				<!-- Responsive offcanvas body END -->
@@ -925,9 +698,9 @@ Hotel list START -->
 
 										<ul class="list-inline mb-0 z-index-2">
 											<!-- Heart icon -->
-											<li class="list-inline-item">
+											<!-- <li class="list-inline-item">
 												<a href="#" class="btn btn-sm btn-round btn-light"><i class="fa-solid fa-fw fa-heart"></i></a>
-											</li>
+											</li> -->
 										</ul>
 									</div>
 

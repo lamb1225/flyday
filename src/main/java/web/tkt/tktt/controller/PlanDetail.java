@@ -26,11 +26,7 @@ public class PlanDetail extends HttpServlet{
 		
 		TktPlan tktPlan = json2Pojo(request, TktPlan.class);
 		
-		System.out.println(tktPlan);
-		
 		int tktplanno = tktPlan.getTktplanno();
-		
-		System.out.println(tktplanno);
 		
 		writePojo2Json(response, service.findTktPlanDetial(tktplanno));
 	}

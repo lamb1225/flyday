@@ -62,9 +62,18 @@ public class TktDAOImpl implements TktDAO{
 			"PROD_DESC = ?, NOTICE = ?, HOWUSE = ?, LOCATION = ?, DIRECTION = ?, CITY = ?, DISTRICTS = ?, " +
 			"ADDRESS = ?, SC_LATITUDE = ?, SC_LONGITUDE = ?, SC_HOWARRIVAL = ?, SC_SERVICEHR = ?, TKT_SORT = ? " +
 			"WHERE TKT_NO = ?";
-	// 修改商案SQL
+	// 修改商品狀態SQL
+	private static final String UPDATETKTSTAT_STMT = 
+			"UPDATE tkt SET TKT_STAT = ? WHERE TKT_NO = ?";
+	// 修改方案SQL
 	private static final String UPDATEPLAN_STMT = 
 			"UPDATE tkt_plan SET PLAN_NAME = ?, PLAN_CONTENT = ? WHERE TKT_PLAN_NO = ?";
+	// 修改方案狀態SQL
+	private static final String UPDATEPLANSTAT_STMT = 
+			"UPDATE tkt_plan SET PLAN_STAT = ? WHERE TKT_PLAN_NO = ?";
+	// 修改票種&票價SQL
+	private static final String UPDATETYPE_STMT = 
+			"UPDATE tkt_type SET TKT_TYPE = ?, PRICE = ? WHERE TKT_TYPE_NO = ?";
 	// 單筆查詢(TktDetail)SQL
 	private static final String findByPK_STMT = 
 			"SELECT TKT_NO,TKT_NAME,TKT_STARTDATE,TKT_ENDDATE,TKT_INSTRUCTION,PROD_DESC,NOTICE,HOWUSE, " +
@@ -85,7 +94,7 @@ public class TktDAOImpl implements TktDAO{
 	// 多筆查詢(圖片)SQL
 	private static final String getAllImg_STMT = 
 			"SELECT TKT_IMG_NO,TKT_NO,TKT_IMG FROM tkt_img ORDER BY TKT_IMG_NO";
-	// 多筆查詢(方案&票種)SQL
+	// 多筆查詢(該商品的所有方案&票種)SQL
 	private static final String getAllPlanType_STMT =
 	        "SELECT tp.TKT_NO, tp.TKT_PLAN_NO, tp.PLAN_NAME, tp.PLAN_CONTENT, tp.SOLD_AMOUNT, tp.PLAN_STAT, " +
 	        "tt.TKT_TYPE_NO, tt.TKT_TYPE, tt.PRICE " +
@@ -96,10 +105,11 @@ public class TktDAOImpl implements TktDAO{
 	// 多筆查詢(Tkt和LowestPrice)SQL
 	private static final String getAllTktLowPrice_STMT = 
             "SELECT t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
-            "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY, MIN(tt.PRICE) AS PRICE " +
+            "t.DIRECTION, t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY, MIN(tt.PRICE) AS PRICE " +
             "FROM tkt t " +
             "INNER JOIN tkt_plan tp ON t.TKT_NO = tp.TKT_NO " +
             "INNER JOIN tkt_type tt ON tp.TKT_PLAN_NO = tt.TKT_PLAN_NO " +
+            "WHERE t.TKT_STAT = 1 " +
             "GROUP BY t.TKT_NO, t.TKT_NAME, t.TKT_STARTDATE, t.TKT_ENDDATE, t.TKT_INSTRUCTION, " +
             "t.CITY, t.TKT_STAT, t.TKT_SORT, t.RATETOTAL, t.RATEQTY " +
             "ORDER BY t.TKT_NO";
@@ -167,7 +177,7 @@ public class TktDAOImpl implements TktDAO{
 				}
 				for (int i = 0; i < tktimgList.size(); i++) {
 	                byte[] img = tktimgList.get(i);                
-	                System.out.println("img="+img);
+//	                System.out.println("img="+img);
 	                pstmt.setBytes(2, img);
 	                pstmt.addBatch(); // 如果需要批量插入多个值，可以使用addBatch
 				}				
@@ -304,6 +314,22 @@ public class TktDAOImpl implements TktDAO{
 		
 	}
 	
+	// 修改票券狀態(該票券編號的上/下架)
+	@Override
+	public void updateTktStat(Tkt tkt) {
+		
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATETKTSTAT_STMT);){
+			
+			pstmt.setInt(1, tkt.getTktstat());
+			pstmt.setInt(2, tkt.getTktno());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
 	// 修改方案(該方案編號的方案內容)
 	@Override
 	public void updateTktPlan(PlanType planType) {
@@ -320,6 +346,40 @@ public class TktDAOImpl implements TktDAO{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	// 修改方案狀態(該方案編號的上/下架)
+	@Override
+	public void updateTktPlanStat(PlanType planType) {
+		
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATEPLANSTAT_STMT);){
+			
+			pstmt.setInt(1, planType.getPlanstat());
+			pstmt.setInt(2, planType.getTktplanno());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	// 修改票種(該票種編號的票種&票價)
+	@Override
+	public void updateTktType(PlanType planType) {
+		
+		try (	Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATETYPE_STMT);){
+			
+			pstmt.setString(1, planType.getTkttype());
+			pstmt.setInt(2, planType.getPrice());
+			pstmt.setInt(3, planType.getTkttypeno());
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 	// 單筆查詢(該票券編號的商品內容)
@@ -524,9 +584,6 @@ public class TktDAOImpl implements TktDAO{
 					list.add(planType); 
 				}
 			}
-			
-			System.out.println("查詢成功");
-			System.out.println("list="+list);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -553,6 +610,7 @@ public class TktDAOImpl implements TktDAO{
 					tktJoinPrice.setTktstartdate(rs.getString("TKT_STARTDATE"));
 					tktJoinPrice.setTktenddate(rs.getString("TKT_ENDDATE"));
 					tktJoinPrice.setTktinstruction(rs.getString("TKT_INSTRUCTION"));
+					tktJoinPrice.setDirection(rs.getInt("DIRECTION"));
 					tktJoinPrice.setCity(rs.getString("CITY"));
 					tktJoinPrice.setTktstat(rs.getInt("TKT_STAT"));
 					tktJoinPrice.setTktsort(rs.getInt("TKT_SORT"));
@@ -564,7 +622,6 @@ public class TktDAOImpl implements TktDAO{
 				}
 			}
 			
-			System.out.println("查詢成功");
 
 		} catch (Exception e) {
 			e.printStackTrace();

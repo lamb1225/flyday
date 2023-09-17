@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-	<title>Flyday - 票券瀏覽</title>
+	<title>Flyday - 票券詳情</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
@@ -10,6 +10,14 @@
 	<meta name="description" content="Flyday - 票券瀏覽">
 
 	<!-- Dark mode -->
+	<script>
+		(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+		  key: "AIzaSyAyAsM9neLCA-0D8XYlzh5_nAGOUPb5WQA",
+		  // Add other bootstrap parameters as needed, using camel case.
+		  // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
+		});
+	</script>
+
 	<script>
 		const storedTheme = localStorage.getItem('theme')
  
@@ -144,6 +152,11 @@
 		.my-card-image{
 		  width: 100%;
 		  height: 100%;
+		}
+
+		#map{
+			width: 100%;
+			height: 200px;
 		}
 
 	</style>
@@ -500,7 +513,7 @@
 				<div class="col-md-7">
 					<div class="card-body">
 					<h5 class="card-title">行程標題2</h5>
-					<p class="card-text">行程方案行程方案行程方案行程方案行程方案行程方案行程方案</p>
+					<p class="card-text">行程方案</p>
 					<div class="d-flex justify-content-end">
 						<p class="m-0 align-self-center me-auto text-primary">$22</p>
 					</div>
@@ -600,56 +613,56 @@ Main banner START -->
 			<div class="tiny-slider-inner" data-autoplay="true" data-arrow="true" data-gutter="0" data-edge="0" data-dots="false" data-items="3" data-items-md="2" data-items-xs="1" id="bannerImgList">
 				<!-- Slider item -->
 				<div>
-					<a class="w-100 h-100" data-glightbox data-gallery="gallery">
+					<a class="w-100 h-100">
 						<div class="card card-element-hover card-overlay-hover rounded-0 overflow-hidden">
 							<!-- Image -->
 							<img src="../assets/images/category/hotel/4by3/03.jpg" class="" alt="" id="img0">
 							<!-- Full screen button -->
-							<div class="hover-element w-100 h-100">
+							<!-- <div class="hover-element w-100 h-100">
 								<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
-							</div>
+							</div> -->
 						</div>
 					</a>
 				</div>
 
 				<!-- Slider item -->
 				<div>
-					<a class="w-100 h-100" data-glightbox data-gallery="gallery">
+					<a class="w-100 h-100">
 						<div class="card card-element-hover card-overlay-hover rounded-0 overflow-hidden">
 							<!-- Image -->
 							<img src="../assets/images/category/hotel/4by3/06.jpg" class="" alt="" id="img1">
 							<!-- Full screen button -->
-							<div class="hover-element w-100 h-100">
+							<!-- <div class="hover-element w-100 h-100">
 								<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
-							</div>
+							</div> -->
 						</div>
 					</a>
 				</div>
 
 				<!-- Slider item -->
 				<div>
-					<a class="w-100 h-100" data-glightbox data-gallery="gallery">
+					<a class="w-100 h-100">
 						<div class="card card-element-hover card-overlay-hover rounded-0 overflow-hidden">
 							<!-- Image -->
 							<img src="../assets/images/category/hotel/4by3/05.jpg" class="" alt="" id="img2">
 							<!-- Full screen button -->
-							<div class="hover-element w-100 h-100">
+							<!-- <div class="hover-element w-100 h-100">
 								<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
-							</div>
+							</div> -->
 						</div>
 					</a>
 				</div>
 
 				<!-- Slider item -->
 				<div>
-					<a class="w-100 h-100" data-glightbox data-gallery="gallery">
+					<a class="w-100 h-100">
 						<div class="card card-element-hover card-overlay-hover rounded-0 overflow-hidden">
 							<!-- Image -->
 							<img src="../assets/images/category/hotel/4by3/04.jpg" class="" alt="" id="img3">
 							<!-- Full screen button -->
-							<div class="hover-element w-100 h-100">
+							<!-- <div class="hover-element w-100 h-100">
 								<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
-							</div>
+							</div> -->
 						</div>
 					</a>
 				</div>
@@ -682,9 +695,9 @@ Title and tabs START -->
 						<!-- Buttons -->
 						<ul class="list-inline mb-0">
 							<!-- wishlist -->
-							<li class="list-inline-item">
+							<!-- <li class="list-inline-item">
 								<a href="#" class="btn btn-sm btn-white px-2"><i class="fa-solid fa-fw fa-heart"></i></a>
-							</li>							
+							</li> -->
 						</ul>
 					</div>
 					<!-- Card footer -->
@@ -692,7 +705,7 @@ Title and tabs START -->
 						<ul class="nav nav-tabs nav-bottom-line nav-responsive border-0" role="tablist">
 							<li class="nav-item"> <a class="nav-link mb-0 active" data-bs-toggle="tab" href="#tab-1">關於</a> </li>
 							<li class="nav-item"> <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-2">方案</a> </li>
-							<li class="nav-item"> <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-3">地點資訊</a> </li>
+							<li class="nav-item" id="tab3"> <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-3">地點資訊</a> </li>
 							<li class="nav-item"> <a class="nav-link mb-0" data-bs-toggle="tab" href="#tab-4">其他資訊</a> </li>
 						</ul>
 					</div>
@@ -849,14 +862,20 @@ Content START -->
 							<!-- Card body -->
 							<div class="card-body">
 								<!-- Map START -->
-								<iframe class="w-100 grayscale rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sin!4v1586000412513!5m2!1sen!2sin" height="200" style="border:0;" aria-hidden="false" tabindex="0"></iframe>
-								
+								<!-- <iframe class="w-100 grayscale rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076684379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sin!4v1586000412513!5m2!1sen!2sin" height="200" style="border:0;" aria-hidden="false" tabindex="0"></iframe> -->
+								<div class="grayscale rounded" height="200" style="border:0;" id="map"></div>
+
 								<!-- Info -->
 								<ul class="list-group list-group-borderless my-3">
 									<!-- Address -->
 									<li class="list-group-item">
-										<a href="#" class="h6 fw-normal mb-0">
-											<i class="bi fa-fw bi-geo-alt me-2"></i>台灣 屏東....
+										<a class="h6 fw-normal mb-0" id="location">
+											<i class="bi bi-house-fill fa-fw text-success me-2"></i>景點名稱：
+										</a>
+									</li>
+									<li class="list-group-item">
+										<a class="h6 fw-normal mb-0" id="address">
+											<i class="bi bi-geo-alt fa-fw text-success me-2"></i>地址：
 										</a>
 									</li>									
 								</ul>
@@ -871,67 +890,6 @@ Content START -->
 							</div>
 						</div>
 						<!-- Direction END -->
-
-						<!-- Time table START -->
-						<div class="card shadow">
-							<!-- Card header -->
-							<div class="card-header border-bottom">
-								<h5 class="mb-0">Working Hours</h5>
-							</div>
-
-							<!-- Card body -->
-							<div class="card-body">
-								<ul class="list-group list-group-borderless mb-0">
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Monday</span>
-										<span>Day off</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li>
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Tuesday</span>
-										<span>9:00 AM to 8:00 PM</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li>
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Wednesday</span>
-										<span>9:00 AM to 8:00 PM</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li>
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Thursday</span>
-										<span>9:00 AM to 8:00 PM</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li> 
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Friday</span>
-										<span>9:00 AM to 8:00 PM</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li> 
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Saturday</span>
-										<span>Open all day</span>
-									</li>
-
-									<li class="list-group-item py-0"><hr class="my-1"></li> 
-
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Sunday</span>
-										<span>Open all day</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<!-- Time table END -->
 					</div>
 					<!-- Right side END -->
 				</div>
@@ -955,7 +913,7 @@ Content START -->
 			<!-- Content item START -->
 			<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="tab-3">
 				<!-- SC_Howarrival services -->
-				<h5 class="mb-3"><i class="fa-solid fa-spa fa-fw text-warning"></i> 如何抵達</h5>
+				<h5 class="mb-3"><i class="bi bi-car-front-fill fa-fw text-success"></i> 如何抵達</h5>
 				<div class="row">
 					<!-- Card body -->
 					<div class="col-sm-6 col-lg-4 col-xl" id="schowarrival">
@@ -966,7 +924,7 @@ Content START -->
 				</div>
 
 				<!-- SC_Servicehr services -->
-				<h5 class="mb-3"><i class="fa-solid fa-spa fa-fw text-warning"></i> 開放時間</h5>
+				<h5 class="mb-3"><i class="bi bi-clock-fill fa-fw text-success"></i> 開放時間</h5>
 				<div class="row">
 					<!-- Card body -->
 					<div class="col-sm-6 col-lg-4 col-xl" id="scservicehr">
@@ -978,7 +936,7 @@ Content START -->
 			<!-- Content item START -->
 			<div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="tab-4">
 				<!-- Notice services -->
-				<h5 class="mb-3"><i class="fa-solid fa-spa fa-fw text-warning"></i> 購買須知</h5>
+				<h5 class="mb-3"><i class="bi bi-cart-fill fa-fw text-success"></i> 購買須知</h5>
 				<div class="row">
 					<!-- Card body -->
 					<div class="col-sm-6 col-lg-4 col-xl" id="notice">
@@ -989,7 +947,7 @@ Content START -->
 				</div>
 
 				<!-- Howuse services -->
-				<h5 class="mb-3"><i class="fa-solid fa-spa fa-fw text-warning"></i> 如何使用</h5>
+				<h5 class="mb-3"><i class="bi bi-question-circle-fill fa-fw text-success"></i> 如何使用</h5>
 				<div class="row">
 					<!-- Card body -->
 					<div class="col-sm-6 col-lg-4 col-xl" id="howuse">
@@ -998,7 +956,7 @@ Content START -->
 				</div>
 
 				<!-- Refund policy services -->
-				<h5 class="mb-3"><i class="fa-solid fa-spa fa-fw text-warning"></i> 取消政策 & 日期更換</h5>
+				<h5 class="mb-3"><i class="bi bi-exclamation-circle-fill fa-fw text-success"></i> 取消政策 & 日期更換</h5>
 				<div class="row">
 					<!-- Card body -->
 					<div class="col-sm-6 col-lg-4 col-xl">
@@ -1123,6 +1081,8 @@ Footer END -->
 
 <!-- Bootstrap JS -->
 <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 <!-- jquery -->
 <script src="jquery/jquery-3.7.0.min.js"></script>

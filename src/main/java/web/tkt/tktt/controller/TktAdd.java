@@ -235,8 +235,8 @@ public class TktAdd extends HttpServlet{
                     int length = tkttypeName.length();           
 					if(length == 0) {
 						errorMsgs.put("tkttypeMsgs", "票種請勿空白");						
-					} else if (length < 2 || length > 10) {
-						errorMsgs.put("tkttypeMsgs", "票種長度需介於2~10個字之間");
+					} else if (length < 2 || length > 50) {
+						errorMsgs.put("tkttypeMsgs", "票種長度需介於2~50個字之間");
 					}
                 }
 			}

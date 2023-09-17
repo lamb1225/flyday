@@ -5,6 +5,11 @@ let firstImages = {};
 let startDatePicker;
 let endDatePicker;
 let distList;
+let currentTabId;
+const allStatBtn = document.getElementById("alltktList");
+const onStatBtn = document.getElementById("ontktList");
+const removeStatBtn = document.getElementById("removetktList");
+const tktsortList = document.getElementById("tktsortList");
 
 document.addEventListener("DOMContentLoaded", async function () {   
 
@@ -92,15 +97,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     showTktlist();     // 票券資料顯示到頁面中(初始顯示頁面)
     
     // 找當前分頁ID
-    let currentTabId = '#tab-1'; // 初始值為第一個Tab的ID
-    const tabs = document.getElementsByClassName("tab");
+    currentTabId = '#tab-1'; // 初始值為第一個Tab的ID
+    const tabs = document.querySelectorAll(".tab");
     tabs.forEach(tab => tab.addEventListener("click", function () { 
         currentTabId = this.getAttribute('href'); // 更新當前Tab的ID
-    })) 
+    }))
   
     // Modal關閉按鈕
     const closeModals = document.getElementsByClassName("closeModal");
     closeModals.forEach(btn=>btn.addEventListener("click", async function () {
+        // 重載資料庫內容&重載畫面
         await fetchData();
         switch (currentTabId) {
             case "#tab-1":
@@ -113,7 +119,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 showRemoveTktList();
                 break;
         }
-    }))
+        // if(tktsortList.value != -1){
+        //     showTktSortList(tktsortList.value);
+        // }
+
+    }))    
 
 
 });
@@ -168,13 +178,22 @@ async function fetchData(){
 
 // 依票券類型篩選(下拉式選單)
 $("#tktsortList").on("change", function () {
+    currentTabId = '#tab-1';
+    onStatBtn.classList.remove('active');
+    removeStatBtn.classList.remove('active');
+    allStatBtn.classList.add('active');
+    showTktSortList(tktsortList.value);
+    
+});
+// 顯示所有已上架Function
+function showTktSortList(tktsortListValue){
     let html = "";
     let count = 0;
     for (let i = 0; i < tkts.length; i++) {
-        if(parseInt($(this).val()) === tkts[i].tktsort){
+        if(tktsortListValue == tkts[i].tktsort){
             html += htmlList(i);
             count++;
-        } else if (parseInt($(this).val()) < 0){
+        } else if (tktsortListValue < 0){
             html += htmlList(i);
             count++;
         }                
@@ -182,11 +201,9 @@ $("#tktsortList").on("change", function () {
     if(count === 0){
         html = `<p class="tkt-list-position">查無此資料</p>`;
     }  
-    $("#addtktlist").next().html(html);    
-});
-// function showTktsortList(){
+    $("#addtktlist").next().html(html); 
+}
 
-// }
 
 
 // 篩選出每個商品的第一個圖片
@@ -273,7 +290,7 @@ function htmlList(i){
         if (firstImages[mark] !== undefined) {
             html += `<img class="rounded" src="data:image/jpeg;base64,${firstImages[mark]}" alt="avatar" name="tktimg${tkts[i].tktno}" id="tktimg${tkts[i].tktno}">`;
         } else {
-            html += `<img class="rounded" src="../assets/images/NoPictures.jpg" alt="avatar" name="tktimg${tkts[i].tktno}" id="tktimg${tkts[i].tktno}">`;
+            html += `<img class="rounded" src="../assets/images/DefaultPicture.jpg" alt="avatar" name="tktimg${tkts[i].tktno}" id="tktimg${tkts[i].tktno}">`;
         }
         html += `
                         </div>
@@ -334,10 +351,12 @@ function htmlList(i){
 
         switch(tkts[i].tktstat){
             case 0:
-                html += `<div class="badge bg-danger bg-opacity-10 text-danger">未上架</div>`;
+                html += `<button type="button" class="btn badge bg-danger bg-opacity-10 text-danger" id="tktstatBtn${tkts[i].tktno}"
+                                     onclick="tktstatEdit(${tkts[i].tktno})" value="0">未上架</button>`;
             break;
             case 1:
-                html += `<div class="badge bg-success bg-opacity-10 text-success">已上架</div>`;
+                html += `<button type="button" class="btn badge bg-success bg-opacity-10 text-success" id="tktstatBtn${tkts[i].tktno}"
+                                     onclick="tktstatEdit(${tkts[i].tktno})" value="1">已上架</button>`;
             break;
         }
 
@@ -355,6 +374,68 @@ function htmlList(i){
         `;
         
     return html;
+}
+
+// 商品狀態按鈕(上/下架)
+async function tktstatEdit(tktno){
+    const button = document.getElementById("tktstatBtn" + tktno); // 找到按钮
+    let tktstat = button.value;
+
+    let r = confirm("確認更改商品狀態 ?");
+    if(r){
+        if (tktstat == 1) {
+            tktstat = 0;
+        } else {
+            tktstat = 1;
+        }
+        // Fetch商品狀態回傳
+        await fetch('editTktStat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tktno: tktno,
+                tktstat: tktstat,
+            }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); 
+                } else {
+                    alert("更改失敗！");
+                    const { status, statusText } = response;
+                    throw Error(`${status}: ${statusText}`);
+                }
+            })                      
+            .then(async function (data) {
+                // console.log(data)
+                // 重載資料庫內容&重載畫面
+                await fetchData();
+                switch (currentTabId) {
+                    case "#tab-1":
+                        showTktlist();
+                        break;
+                    case "#tab-2":
+                        onStatBtn.classList.remove('active');
+                        removeStatBtn.classList.add('active');
+                        currentTabId = '#tab-3';
+                        showRemoveTktList();
+                        break;
+                    case "#tab-3":
+                        removeStatBtn.classList.remove('active');
+                        onStatBtn.classList.add('active'); 
+                        currentTabId = '#tab-2';                             
+                        showOnTktList();
+                        break;
+                }
+            })
+            .catch(function(error) {
+                console.error('Fetch錯誤：', error);
+                alert("更改失敗！");
+            });
+    }
+    
 }
 
 // Modal (回傳Tktno，取得該商品的詳細內容)

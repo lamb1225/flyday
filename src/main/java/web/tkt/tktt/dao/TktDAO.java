@@ -21,7 +21,13 @@ public interface TktDAO {
 	
 	public void updateTkt(Tkt tkt);
 	
+	public void updateTktStat(Tkt tkt);
+	
 	public void updateTktPlan(PlanType planType);
+	
+	public void updateTktPlanStat(PlanType planType);
+	
+	public void updateTktType(PlanType planType);
 	
 	public Tkt findByPK(Integer tktno);
 	

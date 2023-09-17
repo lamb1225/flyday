@@ -4,6 +4,7 @@ let title;
 let tktPlanTypes;
 let html = "";
 
+
 document.addEventListener("DOMContentLoaded", async function () {
 
     // 拿到前一個HTML檔傳來的值
@@ -36,6 +37,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         await fetchData();
         showPlanTypeList();
     }))
+
+
+
 
 })
 
@@ -125,23 +129,25 @@ function planHTML (i) {
     `;
             switch(tktPlanTypes[i].planstat){
                 case 0:
-                    html += `<div class="badge bg-danger bg-opacity-10 text-danger">未上架</div>`;
+                    html += `<button type="button" class="btn badge bg-danger bg-opacity-10 text-danger" id="planstatBtn${tktPlanTypes[i].tktplanno}"
+                                     onclick="planstatEdit(${tktPlanTypes[i].tktplanno})" value="0">未上架</button>`;
                 break;
                 case 1:
-                    html += `<div class="badge bg-success bg-opacity-10 text-success">已上架</div>`;
+                    html += `<button type="button" class="btn badge bg-success bg-opacity-10 text-success" id="planstatBtn${tktPlanTypes[i].tktplanno}"
+                                     onclick="planstatEdit(${tktPlanTypes[i].tktplanno})" value="1">已上架</button>`;
                 break;
             }
     html += `
             </div>
 
             <!-- Data item -->
-            <div class="col-1 tkt-list-position tkt-list">
+            <div class="col-1 tkt-list-position tkt-list-1">
                 <button class="btn btn-sm btn-primary-soft mb-0" type="button" data-bs-toggle="modal" data-bs-target="#myModal" onclick="planDetailsEdit(${tktPlanTypes[i].tktplanno})"
                         name="planEdit${tktPlanTypes[i].tktplanno}" id="planEdit${tktPlanTypes[i].tktplanno}" data-value="${tktPlanTypes[i].tktplanno}">修改</button>
             </div>
 
             <!-- Data item -->
-            <div class="col-1 tkt-list-position tkt-list-1"></div>
+            <div class="col-1 tkt-list-position tkt-list-2"></div>
             <div class="col-1 tkt-list-position tkt-list-2"></div>					
         </div>
 
@@ -151,6 +157,54 @@ function planHTML (i) {
 
     $("#point").append(html);    
 }
+
+// 方案狀態按鈕(上/下架)
+async function planstatEdit(tktplanno){
+    const button = document.getElementById("planstatBtn" + tktplanno); // 找到按钮
+    let planstat = button.value;
+
+    let r = confirm("確認更改方案狀態 ?");
+    if(r){
+        if (planstat == 1) {
+            planstat = 0;
+        } else {
+            planstat = 1;
+        }
+        // Fetch方案狀態回傳
+        await fetch('editPlanStat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tktplanno: tktplanno,
+                planstat: planstat,
+            }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); 
+                } else {
+                    alert("更改失敗！");
+                    const { status, statusText } = response;
+                    throw Error(`${status}: ${statusText}`);
+                }
+            })                      
+            .then(data => {
+                // console.log(data)
+            })
+            .catch(function(error) {
+                console.error('Fetch錯誤：', error);
+                alert("更改失敗！");
+            });
+    }
+    // 重載資料庫內容&重載畫面
+    titleHTML();
+    await fetchData();
+    showPlanTypeList();
+}
+
+
 
 // Modal (回傳tktplann，取得該方案的詳細內容)
 function planDetailsEdit(tktplanno){
@@ -200,31 +254,130 @@ function typeHTML(i){
     html = "";
     html = `
     <!-- Table data -->
-    <div class="row py-2 tkt-list-position">						
-        <!-- Data item -->
+    <div class="row py-2 tkt-list-position" id="type${tktPlanTypes[i].tkttypeno}">						
+        <!-- Type item -->
         <div class="col tkt-list-position">
             <!-- <small class="d-block d-lg-none">票種</small> -->
             <h6 class="mb-0 fw-normal">${tktPlanTypes[i].tkttype}</h6>
+            <input type="text" class="form-control tkttype -none" id="tkttype" placeholder="例：每人、成人票、學生票..." value="${tktPlanTypes[i].tkttype}">
         </div>
 
-        <!-- Data item -->
+        <!-- Price item -->
         <div class="col tkt-list-position">
             <!-- <small class="d-block d-lg-none">價格</small> -->
             <h6 class="mb-0 fw-normal">TWD ${tktPlanTypes[i].price}</h6>
+            <input type="text" class="form-control price -none" id="price" placeholder="請輸入價格" value="${tktPlanTypes[i].price}">
         </div>
 
         <div class="col-1 tkt-list-position tkt-list"></div>
         
         <!-- Data item -->
-        <div class="col-1 tkt-list-position tkt-list"><a href="#" class="btn btn-sm btn-light mb-0">修改</a></div>
+        <div class="col-1 tkt-list-position tkt-list-1">
+            <button type="button" class="btn btn-sm btn-light mb-0" onclick="typeDetailsEdit(${tktPlanTypes[i].tkttypeno})"
+                    id="typeEdit${tktPlanTypes[i].tkttypeno}">修改
+            </button>
+        </div>
 
         <!-- Data item -->
-        <div class="col-1 tkt-list-position tkt-list-1"><a href="#" class="btn btn-sm btn-light mb-0">刪除</a></div>
+        <div class="col-1 tkt-list-position tkt-list-2">
+            <!-- <button type="button" class="btn btn-sm btn-light mb-0">刪除</button> -->
+        </div>
         <div class="col-1 tkt-list-position tkt-list-2"></div>
     </div>    
     `;
 
     $("#point").append(html);
 }
+
+// 票種&票價修改按鈕
+async function typeDetailsEdit(tkttypeno){
+    const button = document.getElementById("typeEdit" + tkttypeno); // 找到按钮
+    const parentDiv = button.closest("#type" + tkttypeno); // 找到按钮的父元素
+    const h6List = parentDiv.querySelectorAll('h6'); // 找到父元素下所有的 <h6> 元素
+    const inputList = parentDiv.querySelectorAll('input'); // 找到父元素下所有的 <h6> 元素
+
+    const tkttype = parentDiv.querySelector('.tkttype');
+    const price = parentDiv.querySelector('.price');
+    let updateValue = [];
+
+    if (!button.getAttribute("data-edit")) {
+        // 改按鈕文字
+        button.setAttribute("data-edit", "true");
+        button.textContent = "保存修改";
+
+        h6List.forEach(function (h6) {
+            h6.classList.add("-none"); // 给每个<h6>添加-none屬性
+        });    
+        inputList.forEach(function (input) {
+            input.classList.remove("-none"); // 移除每个<input>的-none屬性
+        });
+    } else {
+        // 票種&票價(驗證)
+        const tkttypeTrim = tkttype.value.trim();
+        const tkttypeLength = tkttypeTrim.length;
+        const priceTrim = price.value.trim();
+        if (tkttypeTrim === '') {
+            alert('票種請勿空白');
+        } else if (tkttypeLength < 2 || tkttypeLength > 50){
+            alert('票種需介於2~50個字之間');
+        } else if (priceTrim === ''){
+            alert('票價請勿空白');
+        } else {
+
+            // 取得最新票種&票價
+            for (let i = 0; i < inputList.length; i++) {
+                updateValue[i] = inputList[i].value.trim();
+            }
+            tkttype.value = updateValue[0];
+            price.value = updateValue[1];
+
+            // Fetch票種&票價回傳
+            await fetch('editTktType', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tkttypeno: tkttypeno,
+                    tkttype: tkttype.value,
+                    price: price.value,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("保存成功！"); 
+                        return response.json(); 
+                    } else {
+                        alert("保存失敗！");
+                        const { status, statusText } = response;
+                        throw Error(`${status}: ${statusText}`);
+                    }
+                })                      
+                .then(data => {
+                    // console.log(data)
+                })
+                .catch(function(error) {
+                    console.error('Fetch錯誤：', error);
+                    alert("保存失敗！");
+                });
+
+            // 改按鈕文字
+            button.removeAttribute("data-edit");
+            button.textContent = "修改";
+
+            inputList.forEach(function (input) {
+                input.classList.add("-none"); // 移除每个<input>的-none屬性
+            });
+            h6List.forEach(function (h6) {
+                h6.classList.remove("-none"); // 给每个<h6>添加-none屬性
+            });  
+
+            titleHTML();
+            await fetchData();
+            showPlanTypeList();
+        }
+    }
+}
+
 
 

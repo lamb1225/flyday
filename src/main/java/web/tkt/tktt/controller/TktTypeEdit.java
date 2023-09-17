@@ -14,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import web.tkt.tktt.entity.PlanType;
-import web.tkt.tktt.entity.Tkt;
 import web.tkt.tktt.service.TktService;
 import web.tkt.tktt.service.impl.TktServiceImpl;
 
-@WebServlet("/tktt/editTktPlan")
-public class TktPlanEdit extends HttpServlet{
+@WebServlet("/tktt/editTktType")
+public class TktTypeEdit extends HttpServlet{
 	
 	public static final TktService service = new TktServiceImpl();
 	
@@ -32,20 +31,17 @@ public class TktPlanEdit extends HttpServlet{
 		PlanType PlanType = json2Pojo(request, PlanType.class);
 
 		
-		String planname = PlanType.getPlanname().trim();
-		String plannameReg = "^.{2,40}$";
-		if(planname == null || planname.trim().length() == 0) {
-			errorMsgs.put("plannameMsgs", "方案名稱請勿空白");
-		} else if (!planname.trim().matches(plannameReg)) {
-			errorMsgs.put("plannameMsgs", "方案名稱需介於2~40個字之間");
+		String tkttype = PlanType.getTkttype().trim();
+		String tkttypeReg = "^.{2,50}$";
+		if(tkttype == null || tkttype.trim().length() == 0) {
+			errorMsgs.put("tkttypeMsgs", "票種請勿空白");
+		} else if (!tkttype.trim().matches(tkttypeReg)) {
+			errorMsgs.put("tkttypeMsgs", "票種需介於2~50個字之間");
 		}
 		
-		String plancontent = PlanType.getPlancontent().trim();
-		String plancontentReg = "^.{2,500}$";
-		if(plancontent == null || plancontent.trim().length() == 0) {
-			errorMsgs.put("plancontentMsgs", "方案內容請勿空白");
-		} else if (!plancontent.trim().matches(plancontentReg)) {
-			errorMsgs.put("plancontentMsgs", "方案內容需介於2~500個字之間");
+		Integer price = PlanType.getPrice();
+		if(price == null || price.toString().isEmpty()) {
+			errorMsgs.put("priceMsgs", "票價請勿空白");
 		}
 		
 //		System.out.println("errorMsgs="+errorMsgs);
@@ -54,13 +50,16 @@ public class TktPlanEdit extends HttpServlet{
 			errorMsgs.put("msg", "尚有資料未完成");
 			writePojo2Json(response, errorMsgs);
 		} else {
-			PlanType = service.editTktPlan(PlanType);
-			okMsgs.put("msg", "方案更新成功");
+			PlanType = service.editTktType(PlanType);
+			okMsgs.put("msg", "票價更新成功");
 			writePojo2Json(response, PlanType);
 		}
 		
 //		System.out.println("PlanType="+PlanType);
-
+		
+		
+		
+		
 	}
 
 }

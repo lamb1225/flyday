@@ -7,6 +7,7 @@ public class TktJoinPrice extends TktCore{
 	private String tktstartdate;
 	private String tktenddate;
 	private String tktinstruction;
+	private Integer direction;
 	private String city;	
 	private Integer tktstat;
 	private Integer tktsort;	
@@ -18,13 +19,15 @@ public class TktJoinPrice extends TktCore{
 		
 	
 	public TktJoinPrice(Integer tktno, String tktname, String tktstartdate, String tktenddate, String tktinstruction,
-			String city, Integer tktstat, Integer tktsort, Integer ratetotal, Integer rateqty, Integer price) {
+			Integer direction, String city, Integer tktstat, Integer tktsort, Integer ratetotal, Integer rateqty,
+			Integer price) {
 		super();
 		this.tktno = tktno;
 		this.tktname = tktname;
 		this.tktstartdate = tktstartdate;
 		this.tktenddate = tktenddate;
 		this.tktinstruction = tktinstruction;
+		this.direction = direction;
 		this.city = city;
 		this.tktstat = tktstat;
 		this.tktsort = tktsort;
@@ -36,11 +39,11 @@ public class TktJoinPrice extends TktCore{
 	@Override
 	public String toString() {
 		return "TktJoinPrice [tktno=" + tktno + ", tktname=" + tktname + ", tktstartdate=" + tktstartdate
-				+ ", tktenddate=" + tktenddate + ", tktinstruction=" + tktinstruction + ", city=" + city + ", tktstat="
-				+ tktstat + ", tktsort=" + tktsort + ", ratetotal=" + ratetotal + ", rateqty=" + rateqty + ", price="
-				+ price + "]";
+				+ ", tktenddate=" + tktenddate + ", tktinstruction=" + tktinstruction + ", direction=" + direction
+				+ ", city=" + city + ", tktstat=" + tktstat + ", tktsort=" + tktsort + ", ratetotal=" + ratetotal
+				+ ", rateqty=" + rateqty + ", price=" + price + "]";
 	}
-	
+
 	public TktJoinPrice() {
 		super();
 	}
@@ -83,6 +86,14 @@ public class TktJoinPrice extends TktCore{
 
 	public void setTktinstruction(String tktinstruction) {
 		this.tktinstruction = tktinstruction;
+	}
+
+	public Integer getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Integer direction) {
+		this.direction = direction;
 	}
 
 	public String getCity() {
