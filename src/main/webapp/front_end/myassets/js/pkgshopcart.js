@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <div class="row">行程方案 : ${data[i].pkgPlan.pkgPlanTitle}</div>
 
             <div class="row main align-items-center">
-                <img style="width:190px;height: 110px;" src="assets/images/gallery/14.jpg">
+                <img style="width:190px;height: 110px;" src="/flyday/front_end/assets/images/gallery/14.jpg">
 
                 
                 <div class="col">
@@ -67,74 +67,5 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 })
 
-// let amountValue;
 
-// //拿數量
-//     function calculateTotal(element, pkgPlanNo) {
-//        	console.log(element.value);
-//         amountValue = parseInt(element.value);
-//         totalAmount(singlePrice);
-//     }
-  
-
-//  //拿金額
-//     function totalAmount(pkgGroupMoney) {
-
-//     	console.log(pkgGroupMoney);
-//         const totalAmount = amountValue * pkgGroupMoney;
-//         	console.log(totalAmount);
-    
-//         // 在这里你可以执行任何你需要的操作，比如更新显示总金额的元素等等
-//         // 例如，假设你有一个显示总金额的<span>元素：
-//         totalElement.textContent = totalAmount;
-
-        
-    
-//     }
-
-
-
-
-// let singlePrice;
-
-// //顯示單筆行程
-// fetch('/flyday/pkgplan/selectpkgplanno', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ pkgPlanNo: 1 })
-// })
-//     .then(function (resp) {
-//         return resp.json()
-//     })
-//     .then(function (data) {
-//         carthtml = '';
-
-//         carthtml += `
-
-   
- 
-//   <tr>
-//   	<td>行程名稱 : </td>
-//     <th>${data.pkgPlanContent}</th>
-//     </tr>
-//    <br>
-//   <tr>
-//     <th>方案內容 : </th>
-//     <td>${data.pkgPlanTitle}</td>
-//   </tr>
-
-            
-//                         `;
-
-//         carthtml += `
-//                         <div class="col" style="margin-top: 30%; margin-left: 65%">&#36; ${data.pkgGroupMoney}</div>
-//                         `;
-//         cartname.innerHTML = carthtml;
-//         singlePrice = data.pkgGroupMoney;
-
-//         totalElement.textContent = '';
-//         console.log(amountValue);
-//         console.log(singlePrice);
-		
-//     })
 

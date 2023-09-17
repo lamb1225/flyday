@@ -307,7 +307,6 @@
 					</li>
 					<li><a class="dropdown-item" href="/flyday/front_end/account-profile.html"><i class="bi bi-person fa-fw me-2"></i>基本資料設定</a></li>
 					<li><a class="dropdown-item" href="/flyday/front_end/account-pkgorder.html"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
-					<li><a class="dropdown-item" href="/flyday/front_end/account-coupon.html"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
 					<li><a class="dropdown-item" href="/flyday/Act/account-bookings.html"><i class="fa-solid fa-people-group fa-fw me-2"></i>我的揪團</a></li>
 					<li><a class="dropdown-item" href="/flyday/chat.do"><i class="bi bi-chat-left-text fa-fw me-2"></i>聯繫客服</a></li>
 					<li><a class="dropdown-item bg-danger-soft-hover" id="logoutNav" href="#"><i class="bi bi-power fa-fw me-2"></i>登出</a></li>
@@ -672,7 +671,7 @@ Content START -->
 										<!-- Price -->
 										<div class="hstack gap-2 mt-3 mt-sm-0">
 											<a href="#" class="btn btn-sm btn-primary-soft mb-0"><i class="bi bi-ticket-perforated fa-fw me-1"></i>QRcode</a>    
-											<a href="#" class="btn btn-sm btn-primary-soft mb-0"><i class="bi bi-chat-square-dots me-1"></i>聯繫客服</a>    
+											<a href="/flyday/chat.do" class="btn btn-sm btn-primary-soft mb-0"><i class="bi bi-chat-square-dots me-1"></i>聯繫客服</a>    
 										</div>                  
 									</div>	
 								</div>
