@@ -87,10 +87,10 @@
 
 function insert() {
     let memid = sessionStorage.getItem("memno");
-    // let pkgid = sessionStorage.getItem("pkgno");
-    let pkgid = 3;
-    // let price = sessionStorage.getItem("price");
-    let price = 5000;
+    let pkgid = sessionStorage.getItem("pkgno");
+    // let pkgid = 3;
+    let price = sessionStorage.getItem("price");
+    // let price = 5000;
     fetch('create', {
         method: 'POST',
         headers: {
