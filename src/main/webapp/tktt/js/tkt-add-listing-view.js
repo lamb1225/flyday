@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 新增方案
     $("button#btn_add_plan").on("click", function () {
-        // console.log("aaa");
         // console.log(parseInt($("#add_planlist_point").prev().attr("value")));
         let plan_number = parseInt($("#add_planlist_point").prev().attr("value")) + 1;
         // console.log(plan_number);
@@ -217,12 +216,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 刪除方案
     $("div#unite_point").on("click", "button[class='btn btn-sm btn-primary-soft mb-0 w-100']", function () {
-        // console.log("aaa");
         // console.log($(this).attr("value"));
         // console.log($(this).attr("id").substr(12));
 
         if($(this).attr("value") == $(this).attr("id").substr(12)){
-            // console.log("bbb");
             // console.log($(this).parents("div").find("div#plan"+$(this).attr("value")).attr("id"));
             let r = confirm("確認刪除此 方案"+$(this).attr("value")+" ?");
             if (r) {
@@ -239,12 +236,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
      // 刪除票種
      $("div#unite_point").on("click", "button[class='btn btn-sm btn-primary-soft mb-0 w-100 tkt-add-btn-right']", function () {
-        // console.log("aaa");
         // console.log($(this).attr("value"));
         // console.log($(this).attr("id").substr(12));
 
         if($(this).attr("value") == $(this).attr("id").substr(12)){
-            // console.log("kkk");
             // console.log($(this).closest("div").prev().attr("class"));
             let r = confirm("確認刪除此行 票種 和 價格 ?");
             if (r) {
