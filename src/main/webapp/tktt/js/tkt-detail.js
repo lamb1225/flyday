@@ -4,8 +4,48 @@ let tktDetial;
 let tktPlanTypes;
 let html = "";
 
+// Initialize and add the map
+let map;
+let marker;
+let geocoder;
+let tktAddress;
+
+async function initMap(address) {
+  // The location of Uluru
+  // Request needed libraries.
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
+
+  // The map, centered at Uluru
+  map = new Map(document.getElementById("map"), {
+    zoom: 15,
+    // center: position,
+    mapId: "DEMO_MAP_ID",
+  });
+
+  marker = new google.maps.Marker({
+    map,
+  });
+
+geocoder = new google.maps.Geocoder();
+geocoder
+.geocode({address: address})
+.then((result) => {
+  const { results } = result;
+
+  map.setCenter(results[0].geometry.location);
+  marker.setPosition(results[0].geometry.location);
+  marker.setMap(map);
+  return results;
+})
+.catch((e) => {
+  alert("Geocode was not successful for the following reason: " + e);
+});
+}
+
 document.addEventListener("DOMContentLoaded", async function(){  
 
+    // 拿到前一個HTML檔傳來的值
     const storedData = sessionStorage.getItem("myData");
     const dataObject = JSON.parse(storedData);
     if (dataObject) {
@@ -13,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     } else {
         console.log("沒有存儲的數據可供檢索");
     }
-    console.log(tktno);
+    // console.log(tktno);
     
     // 回傳Tktno，取得該商品的詳細內容
     await fetch('tktDetail', {
@@ -34,8 +74,10 @@ document.addEventListener("DOMContentLoaded", async function(){
         }
     })
     .then(function (data) {
-        console.log(data);
+        // console.log(data);
         tktDetial = data;
+        tktAddress = tktDetial.city + tktDetial.districts + tktDetial.address;
+        initMap(tktAddress);
     })
     .catch(function (error) {
         console.log(error);
@@ -59,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         }
     })
     .then(function (data) {
-        console.log(data);
+        // console.log(data);
         tktPlanTypes = data;
     })
     .catch(function (error) {
@@ -84,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         }
     })
     .then(function (data) {
-        console.log(data);
+        // console.log(data);
         tktImgs = data;
     })
     .catch(function (error) {
@@ -102,6 +144,10 @@ document.addEventListener("DOMContentLoaded", async function(){
     proddescHTML();
     // 相關圖片
     imgListHTML(); 
+    // 景點名稱
+    $("#location").html('<i class="bi bi-house-fill fa-fw text-success me-2"></i>' + tktDetial.location);
+    // 地址
+    $("#address").html('<i class="bi bi-geo-alt fa-fw text-success me-2"></i>' + tktDetial.city + tktDetial.districts + tktDetial.address);
 
     // 方案&票種
     showPlanTypeList();
@@ -131,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     $("button#type").on("click", function () {
         // 數量回到初始值1
         let buttonValue = $(this).attr("value");
-        let planNO = $(this).closest("li").attr("value");
+        let planNO = $(this).closest("ul").attr("value");
         let typeParentDiv = $(this).closest('div#PlanType' + planNO);
         typeParentDiv.find('label#tktQty').attr("value", 1);
         typeParentDiv.find('label#tktQty').text(1);
@@ -186,14 +232,14 @@ function imgListHTML () {
     for (let i = 0; i < tktImgs.length; i++) {
         html += `
         <div class="col-md-4">
-            <a class="w-100 h-100" data-glightbox data-gallery="gallery" href="data:image/jpeg;base64,${tktImgs[i].imgBase64}">
+            <a class="w-100 h-100" href="data:image/jpeg;base64,${tktImgs[i].imgBase64}">
                 <div class="card card-element-hover card-overlay-hover overflow-hidden">
                     <!-- Image -->
                     <img src="data:image/jpeg;base64,${tktImgs[i].imgBase64}" class="card-img" alt="">
                     <!-- Full screen button -->
-                    <div class="hover-element w-100 h-100">
+                    <!-- <div class="hover-element w-100 h-100">
                         <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
-                    </div>
+                    </div> -->
                 </div>
             </a>
         </div>       
@@ -206,7 +252,7 @@ function imgListHTML () {
 function showPlanTypeList () {
     let mark = -1;
     for (let i = 0; i < tktPlanTypes.length; i++) { 
-        if(mark !== tktPlanTypes[i].tktplanno){
+        if(mark !== tktPlanTypes[i].tktplanno && tktPlanTypes[i].planstat === 1){
             PlanHTML(i);
             mark = tktPlanTypes[i].tktplanno;
         }
@@ -244,7 +290,7 @@ function PlanHTML (i) {
             <div class="col-12">
                 <span>選擇票種</span>
                 <p></p>
-                <ul class="nav nav-pills-shadow fw-normal mb-0" id="typeList${tktPlanTypes[i].tktplanno}">
+                <ul class="nav nav-pills-shadow fw-normal mb-0" id="typeList${tktPlanTypes[i].tktplanno}" value="${tktPlanTypes[i].tktplanno}">
                     <!-- Add 票種 List -->
                 </ul>									
             </div>
@@ -288,7 +334,7 @@ function PlanHTML (i) {
 function typeHTML (i){
     html = "";
     html += `
-    <li class="nav-item" value="${tktPlanTypes[i].tktplanno}"> 
+    <li class="nav-item" value="${tktPlanTypes[i].price}"> 
         <button class="btn btn-sm btn-outline-success mb-0 btn-type" data-bs-toggle="tab" name="type" id="type" value="${tktPlanTypes[i].tkttypeno}">${tktPlanTypes[i].tkttype}</button> 
     </li>    
     `;
@@ -314,10 +360,7 @@ function addShopCart(button, tktplanno){
     if (!tktTypeNo) {
         tktTypeNo = -1;
     }
-    console.log("Button Value:", tktTypeNo);
     let tktQty = parentDiv.querySelector("#tktQty").getAttribute("value");
-    console.log("tktQty",tktQty);
-
     const formdata = new FormData();
     formdata.append("action", "addItem");
     formdata.append("tktTypeNo", tktTypeNo);
@@ -326,31 +369,36 @@ function addShopCart(button, tktplanno){
     if(tktTypeNo === -1){
         alert("請選擇票種");
     } else {
-        fetch('', {
+        fetch(`/${contextPath}/tkt/shoppingCart`, {
             method: 'POST',    
-            body: formdata,
+            body: formdata
         })
         .then(response => {
-            if (response.ok) {
-                alert("加入購物車！"); 
-                return response.json(); 
+            if (response.ok) {                
+                return response.text();
             } else {
-                alert("加入失敗！");
                 const { status, statusText } = response;
                 throw Error(`${status}: ${statusText}`);
             }
         })
-        .then(function (data) {
-            console.log(data)
+        .then(function (html) {
+            // console.log(html)
+            // 根據回應的內容來判斷是否要進行跳轉
+            if (html.includes("Flyday - 登入")) {
+                // 如果回應包含"Flyday - 登入"，則進行跳轉
+                alert("請先登入！");
+                const returnUrl = window.location.href; // 獲取當前頁面 URL
+                sessionStorage.setItem('returnUrl', returnUrl); // 存儲在sessionStorage
+                window.location.href = `/${contextPath}/front_end/sign-in.html`; // 跳轉到登入頁面
+            } else {
+                alert("成功加入購物車！"); 
+                // console.log("不轉跳頁面");
+            }
         })
         .catch(function(error) {
             console.error('Fetch錯誤：', error);
-            alert("加入失敗！");
-          });
+        });
     }
-
-
-
 }
 
 // 如何抵達HTML程式碼
