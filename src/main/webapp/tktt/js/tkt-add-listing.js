@@ -539,13 +539,15 @@ document.addEventListener("DOMContentLoaded", function () {
 function showTkterrorMegs(){
     $("#msg").html('');
     if (errorMsgs.hasOwnProperty('msg')){
-        $("#msg").html(`${errorMsgs.msg}`);
+        // $("#msg").html(`${errorMsgs.msg}`);
+        $("#msg").html(``);
     }
 }
 
 function showPlanerrorMegs(){
     if (errorMsgs.hasOwnProperty('msg')){
-        $("#msg").html(`${errorMsgs.msg}`);
+        // $("#msg").html(`${errorMsgs.msg}`);
+        $("#msg").html(``);
     }
 }
 
@@ -553,7 +555,7 @@ function showTypeerrorMegs(){
     if (errorMsgs.hasOwnProperty('msg')){
         $("#msg").html(`${errorMsgs.msg}`);
         if($("#msg").text() === "商品新增成功"){
-           window.location.href='http://localhost:8081/flyday/tktt/tkt-listing-added.html';
+           window.location.href='/flyday/tktt/tkt-listing-added.html';
         }
     }
 }
