@@ -28,6 +28,7 @@ window.addEventListener("load", function () {
 function showPkgall() {
     let html = '';
     for (let i = 0; i < pkgall.length; i++) {
+        if(`${pkgall[i].pkgReview}`==3){
         html += `
         <div class="card shadow p-2 pkgs" data-options="type${pkgall[i].pkgSort}">
         <div class="row g-0">
@@ -109,7 +110,7 @@ function showPkgall() {
                         </div>
 
                         <div class="mt-3 mt-sm-0">
-                            <a onclick=view(${pkgall[i].pkgNo}) class="btn btn-sm btn-dark mb-0 w-100">Select Room</a>
+                            <a onclick=view(${pkgall[i].pkgNo}) class="btn btn-sm btn-dark mb-0 w-100">Select</a>
                         </div>
                     </div>
                 </div>
@@ -118,7 +119,7 @@ function showPkgall() {
     </div>
         <br>
         `;
-
+        }
     }
 
     showpkgall.innerHTML = html;
