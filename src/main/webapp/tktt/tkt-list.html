@@ -105,6 +105,7 @@
 			justify-content: center;    
 			/* 垂直置中 */
 			align-items: center;
+			height: 50vh;
 		}
 	</style>
 
@@ -610,48 +611,48 @@ Hotel list START -->
 								<div class="col-12">
 									<!-- Checkbox -->
 									<div class="form-check">
-										<input class="form-check-input tktSortAll" type="checkbox" value="-1" id="tktSort-1">
-										<label class="form-check-label" for="ticketType00">全部</label>
+										<input class="form-check-input tktSortAll" type="checkbox" value="-1" id="tktSort-1" checked>
+										<label class="form-check-label" for="tktSort-1">全部</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="0" id="tktSort0">
-										<label class="form-check-label" for="ticketType0">主題樂園</label>
+										<label class="form-check-label" for="tktSort0">主題樂園</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="1" id="tktSort1">
-										<label class="form-check-label" for="ticketType1">景點門票</label>
+										<label class="form-check-label" for="tktSort1">景點門票</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="2" id="tktSort2">
-										<label class="form-check-label" for="ticketType2">水族館</label>
+										<label class="form-check-label" for="tktSort2">水族館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="3" id="tktSort3">
-										<label class="form-check-label" for="ticketType3">動物園</label>
+										<label class="form-check-label" for="tktSort3">動物園</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="4" id="tktSort4">
-										<label class="form-check-label" for="ticketType4">博物館</label>
+										<label class="form-check-label" for="tktSort4">博物館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="5" id="tktSort5">
-										<label class="form-check-label" for="ticketType5">美術館</label>
+										<label class="form-check-label" for="tktSort5">美術館</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="6" id="tktSort6">
-										<label class="form-check-label" for="ticketType6">展覽</label>
+										<label class="form-check-label" for="tktSort6">展覽</label>
 									</div>
 									<!-- Checkbox -->
 									<div class="form-check">
 										<input class="form-check-input tktSort" type="checkbox" value="7" id="tktSort7">
-										<label class="form-check-label" for="ticketType7">其他</label>
+										<label class="form-check-label" for="tktSort7">其他</label>
 									</div>
 								</div>
 							</div>
@@ -661,7 +662,7 @@ Hotel list START -->
 					</div>
 					<!-- Buttons -->
 					<div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4">
-						<a class="btn btn-link p-0 mb-0" id="clearBtn" href="/flyday/tktt/tkt-list.html">全部清除</a>
+						<a class="btn btn-light mb-0" id="clearBtn" href="/flyday/tktt/tkt-list.html">全部清除</a>
 						<button class="btn btn-primary mb-0" id="filterBtn">篩選結果</button>
 					</div>
 				</div>
@@ -672,178 +673,11 @@ Hotel list START -->
 			<!-- Main content START -->
 			<div class="col-xl-8 col-xxl-9">
 				<div class="vstack gap-4" id="addTktPriceList">
-
-					<!-- Card item START -->
-					<div class="card shadow p-2">
-						<div class="row g-0">
-
-							<!-- Card img -->
-							<div class="col-md-5 position-relative">
-								<img src="../assets/images/category/hotel/4by3/01.jpg" class="card-img rounded-2" alt="Card image">
-							</div>
-
-							<!-- Card body -->
-							<div class="col-md-7">
-								<div class="card-body py-md-2 d-flex flex-column h-100 position-relative">
-
-									<!-- Rating and buttons -->
-									<div class="d-flex justify-content-between align-items-center">
-										<ul class="list-inline mb-0">
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
-										</ul>
-
-										<ul class="list-inline mb-0 z-index-2">
-											<!-- Heart icon -->
-											<!-- <li class="list-inline-item">
-												<a href="#" class="btn btn-sm btn-round btn-light"><i class="fa-solid fa-fw fa-heart"></i></a>
-											</li> -->
-										</ul>
-									</div>
-
-									<!-- Title -->
-									<h5 class="card-title mb-1">屏東海生館門票</h5>
-									<small><i class="bi bi-geo-alt me-2"></i>台灣 屏東</small>
-									<!-- Amenities -->
-									<ul class="nav nav-divider mt-3">
-										<li class="nav-item">擁有全亞洲最大的海底隧道<br>虛擬實境運動體驗、VR 設施，邀請大家身歷其境</li>
-										<!-- <li class="nav-item"><a href="#" class="mb-0 text-primary">More+</a></li> -->
-									</ul>
-									
-									<!-- Price and Button -->
-									<div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
-										<!-- Price -->
-										<div class="d-flex align-items-center">
-											<h5 class="fw-bold mb-0 me-1">TWD 750</h5>
-										</div>
-										<!-- Button -->
-										<div class="mt-3 mt-sm-0">
-											<a href="tkt-detail.html" class="btn btn-sm btn-dark mb-0 w-100">查看詳情</a>    
-										</div>                  
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Card item END -->
-
-					<!-- Card item START -->
-					<div class="card shadow p-2">
-						<div class="row g-0">
-							<!-- Card img -->
-							<div class="col-md-5">
-								<img src="../assets/images/category/hotel/4by3/10.jpg" class="card-img rounded-2" alt="Card image">
-							</div>
-
-							<!-- Card body -->
-							<div class="col-md-7">
-								<div class="card-body py-md-2 d-flex flex-column h-100">
-
-									<!-- Rating and buttons -->
-									<div class="d-flex justify-content-between align-items-center">
-										<ul class="list-inline mb-0">
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star"></i></li>
-										</ul>
-
-										<ul class="list-inline mb-0 z-index-2">
-											<!-- Heart icon -->
-											<li class="list-inline-item">
-												<a href="#" class="btn btn-sm btn-round btn-light"><i class="fa-solid fa-fw fa-heart"></i></a>
-											</li>
-										</ul>
-									</div>
-
-									<!-- Title -->
-									<h5 class="card-title mb-1">雲林劍湖山世界主題樂園門票</h5>
-									<small><i class="bi bi-geo-alt me-2"></i>台灣 雲林</small>
-									<!-- Amenities -->
-									<ul class="nav nav-divider mt-3">
-										<li class="nav-item">全亞洲第一個以維京海盜為主題的樂園</li>
-										<li class="nav-item">設置適合各種年齡層的設施</li>
-									</ul>
-									
-									<!-- Price and Button -->
-									<div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
-										<!-- Price -->
-										<div class="d-flex align-items-center">
-											<h5 class="fw-bold mb-0 me-1">TWD 980</h5>
-										</div>
-										<!-- Button -->
-										<div class="mt-3 mt-sm-0">
-											<a href="tkt-detail.html" class="btn btn-sm btn-dark mb-0 w-100">查看詳情</a>    
-										</div>                  
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Card item END -->
-
-					<!-- Card item START -->
-					<div class="card shadow p-2">
-						<div class="row g-0">
-							<!-- Card img -->
-							<div class="col-md-5">
-								<img src="../assets/images/category/hotel/4by3/04.jpg" class="card-img rounded-2" alt="Card image">
-							</div>
-
-							<!-- Card body -->
-							<div class="col-md-7">
-								<div class="card-body py-md-2 d-flex flex-column h-100">
-
-									<!-- Rating and buttons -->
-									<div class="d-flex justify-content-between align-items-center">
-										<ul class="list-inline mb-0">
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star-half-alt text-warning"></i></li>
-											<li class="list-inline-item me-0 small"><i class="fa-solid fa-star"></i></li>
-										</ul>
-
-										<ul class="list-inline mb-0 z-index-2">
-											<!-- Heart icon -->
-											<li class="list-inline-item">
-												<a href="#" class="btn btn-sm btn-round btn-light"><i class="fa-solid fa-fw fa-heart"></i></a>
-											</li>
-										</ul>
-									</div>
-
-									<!-- Title -->
-									<h5 class="card-title mb-1">測試三</h5>
-									<small><i class="bi bi-geo-alt me-2"></i>台灣 某某</small>
-									<!-- Amenities -->
-									<ul class="nav nav-divider mt-3">
-										<li class="nav-item">測試三</li>
-										<li class="nav-item">測試三</li>
-									</ul>
-									
-									<!-- Price and Button -->
-									<div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
-										<!-- Price -->
-										<div class="d-flex align-items-center">
-											<h5 class="fw-bold mb-0 me-1">TWD 100</h5>
-										</div>
-										<!-- Button -->
-										<div class="mt-3 mt-sm-0">
-											<a href="tkt-detail.html" class="btn btn-sm btn-dark mb-0 w-100">查看詳情</a>    
-										</div>                  
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Card item END -->
-
+					
+					<!-- 新增票券瀏覽List -->
+					
 					<!-- Pagination -->
-					<nav class="d-flex justify-content-center" aria-label="navigation">
+					<!-- <nav class="d-flex justify-content-center" aria-label="navigation">
 						<ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
 							<li class="page-item mb-0"><a class="page-link" href="#" tabindex="-1"><i class="fa-solid fa-angle-left"></i></a></li>
 							<li class="page-item mb-0 active"><a class="page-link" href="#">1</a></li>
@@ -852,7 +686,7 @@ Hotel list START -->
 							<li class="page-item mb-0"><a class="page-link" href="#">6</a></li>
 							<li class="page-item mb-0"><a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
 						</ul>
-					</nav>
+					</nav> -->
 
 				</div>
 			</div>
