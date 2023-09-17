@@ -4,6 +4,7 @@ let tktimgs;
 let firstImages = {};
 let tktsSelectedSorts; // 放篩選後的資料(票券種類)
 
+
 document.addEventListener("DOMContentLoaded", async function(){
     // 圖片
     await fetch('addtktimglist', {
@@ -52,16 +53,6 @@ document.addEventListener("DOMContentLoaded", async function(){
         console.log(error);
     })
 
-    // 點擊查看詳情，回傳值到另一個HTML檔
-    $("button[id='tktDetial']").on("click", function () {
-        const buttonValue = $(this).val();
-        const dataToStore = {
-            buttonValue: buttonValue,         
-        };        
-        sessionStorage.setItem("myData", JSON.stringify(dataToStore));
-        window.open('tkt-detail.html', '_blank');
-    });
-
     // 篩選按鈕
     const filterBtn = document.getElementById("filterBtn");
     filterBtn.addEventListener("click", function () {
@@ -73,20 +64,26 @@ document.addEventListener("DOMContentLoaded", async function(){
             // console.log(elements);    
             let tktSorts = [];
             elements.forEach(ele=>tktSorts.push(ele.checked)); // 存true/false，確認checkbox是否有打勾
-            // console.log(tktSorts);            
+            // console.log(tktSorts);
+            // 算有打勾的checkbox個數
+            let count = 0
+            for(let i = 0; i < tktSorts.length; i++){
+                if(tktSorts[i] == true){
+                    count++;
+                }
+            }  
             // 篩選資料(票券種類)
             tktsSelectedSorts = tkts.filter(item => {
                 if(tktSorts[item.tktsort]){
                     return true
                 }
             })
-            // console.log(tktsSelectedSorts);
-            // if (tktsSelectedSorts == '') {
-            //     showTktList(); // 顯示所有票券
-            // } else {
-            //     showFilterTktList(); // 顯示篩選後的票券
-            // }
-            showFilterTktList(); // 顯示篩選後的票券
+            if (count == 0) {
+                document.getElementById("tktSort-1").checked = true;
+                showTktList();
+            } else {
+                showFilterTktList(); // 顯示篩選後的票券
+            }
         }
     })
 
@@ -104,9 +101,12 @@ document.addEventListener("DOMContentLoaded", async function(){
     if(url.hash){
         // console.log('hash',url.hash);
         const [,hash] = url.hash.split('#');
+        document.getElementById("tktSort-1").checked = false;
         document.getElementById(hash).checked = true; // 該checkbox打勾
         filterBtn.click(); // 點擊"篩選結果"按鈕
     }
+
+
 
 });
 
@@ -140,7 +140,7 @@ function showFilterTktList(){
         count++;
     }    
     if(count === 0){
-        html = `<p class="form-control-centered">查無此資料</p>`;
+        html = `<h4 class="form-control-centered text-secondary">沒有此類型的商品</h4>`;
     }  
     $("#addTktPriceList").html(html);
 }
@@ -205,7 +205,7 @@ function htmlList(i){
                         </div>
                         <!-- Button -->
                         <div class="mt-3 mt-sm-0">
-                            <button class="btn btn-sm btn-dark mb-0 w-100" name="tktDetial" id="tktDetial" value="${tkts[i].tktno}">查看詳情</button>    
+                            <button class="btn btn-sm btn-dark mb-0 w-100 tktDetial" onclick="tktDetialBtn(${tkts[i].tktno})" name="tktDetial" id="tktDetial${tkts[i].tktno}" value="${tkts[i].tktno}">查看詳情</button>    
                         </div>                  
                     </div>
                 </div>
@@ -278,7 +278,7 @@ function htmlListFilter(i){
                         </div>
                         <!-- Button -->
                         <div class="mt-3 mt-sm-0">
-                            <button class="btn btn-sm btn-dark mb-0 w-100" name="tktDetial" id="tktDetial" value="${tktsSelectedSorts[i].tktno}">查看詳情</button>    
+                            <button class="btn btn-sm btn-dark mb-0 w-100 tktDetial" onclick="tktDetialBtn(${tktsSelectedSorts[i].tktno})" name="tktDetial" id="tktDetial${tktsSelectedSorts[i].tktno}" value="${tktsSelectedSorts[i].tktno}">查看詳情</button>    
                         </div>                  
                     </div>
                 </div>
@@ -289,4 +289,13 @@ function htmlListFilter(i){
     `;
 
     return html;
+}
+
+// Function，點擊查看詳情，回傳值到另一個HTML檔
+function tktDetialBtn (tktno) {
+    const dataToStore = {
+        buttonValue: tktno,         
+    };        
+    sessionStorage.setItem("myData", JSON.stringify(dataToStore));
+    window.open('tkt-detail.html', '_blank');
 }
