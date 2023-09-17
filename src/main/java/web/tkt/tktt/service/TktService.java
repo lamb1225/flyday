@@ -21,7 +21,13 @@ public interface TktService {
 	
 	Tkt editTkt(Tkt tkt);
 	
+	Tkt editTktStat(Tkt tkt);
+	
 	PlanType editTktPlan(PlanType planType);
+	
+	PlanType editTktPlanStat(PlanType planType);
+	
+	PlanType editTktType(PlanType planType);
 	
 	Tkt findTktDetial(Integer tktno);
 	

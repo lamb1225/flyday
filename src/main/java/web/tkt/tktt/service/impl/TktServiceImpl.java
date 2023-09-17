@@ -50,12 +50,32 @@ public class TktServiceImpl implements TktService{
 		dao.updateTkt(tkt);
 		return tkt;
 	}
+	
+	// 修改商品狀態(上/下架)
+	@Override
+	public Tkt editTktStat(Tkt tkt) {
+		dao.updateTktStat(tkt);
+		return tkt;
+	}
 
 	// 修改方案
 	@Override
 	public PlanType editTktPlan(PlanType planType) {
-		System.out.println("有來到editTktPlan()");
-		dao.updateTktPlan(planType);;
+		dao.updateTktPlan(planType);
+		return planType;
+	}
+	
+	// 修改方案狀態(上/下架)
+	@Override
+	public PlanType editTktPlanStat(PlanType planType) {
+		dao.updateTktPlanStat(planType);
+		return planType;
+	}
+	
+	// 修改票種&票價
+	@Override
+	public PlanType editTktType(PlanType planType) {
+		dao.updateTktType(planType);
 		return planType;
 	}
 	
@@ -68,7 +88,6 @@ public class TktServiceImpl implements TktService{
 	// 查詢該方案編號的方案內容
 	@Override
 	public PlanType findTktPlanDetial(Integer tktplanno) {
-		System.out.println("有來到findTktPlanDetial()");		
 		return dao.findPlanByPK(tktplanno);
 	}
 
@@ -81,34 +100,25 @@ public class TktServiceImpl implements TktService{
 	// 查詢全部Tkt
 	@Override
 	public List<Tkt> findAll() {
-		System.out.println("有來到findAll()");
 		return dao.getAll();
 	}
 
 	// 查詢全部TktImg
 	@Override
 	public List<TktImg> findAllImg() {
-		System.out.println("有來到findAllImg()");
 		return dao.getAllImg();
 	}
 
 	// 查詢該票券編號的方案&票種
 	@Override
 	public List<PlanType> findAllPlayType(Integer tktno) {
-		System.out.println("有來到findAllPlayType()");
 		return dao.getAllPlanType(tktno);
 	}
 
 	// 查詢全部Tkt和最低票價
 	@Override
 	public List<TktJoinPrice> findAllTktLowPrice() {
-		System.out.println("有來到findAllTktLowPrice()");
 		return dao.getAllTktLowPrice();
 	}
-
-
-
-
-
 
 }
