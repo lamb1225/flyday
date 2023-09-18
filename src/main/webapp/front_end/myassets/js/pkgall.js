@@ -105,8 +105,8 @@ function showPkgall() {
                         class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
 
                         <div class="d-flex align-items-center">
-                            <h5 class="fw-bold mb-0 me-1">$750</h5>
-                            <span class="mb-0 me-2">/day</span>
+                        <h5 class="fw-bold mb-0 me-1">$<span>${pkgall[i].pkgRatetotal}</span></h5>
+                           <span class="mb-0 me-2">/day</span>
                         </div>
 
                         <div class="mt-3 mt-sm-0">

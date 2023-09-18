@@ -7,6 +7,8 @@ const errMsg = document.getElementById("errMsg");
 
 const contextPath = window.location.pathname.split('/')[1];
 
+document.write('<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script>'); //載入sweetalert
+
 submitBtn.addEventListener("click", function(){
 	if(pwd.value === null || pwd.value.trim().length === 0
 		|| pwdConfirm.value === null || pwdConfirm.value.trim().length === 0){
@@ -26,7 +28,13 @@ const successMsg = document.getElementById("successMsg");
 
 window.addEventListener("load", function(){
 	if(successMsg.textContent.trim().length !== 0){
-		alert(successMsg.textContent);
-		location = `/${contextPath}/front_end/account-profile.html`
+
+		Swal.fire(
+			successMsg.textContent,
+			'',
+			'warning'
+		).then(function(){
+			location = `/${contextPath}/front_end/account-profile.html`
+		})
 	}
 })

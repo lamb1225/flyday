@@ -18,6 +18,9 @@ verificationInput.addEventListener("change", function(){
 });
 
 const contextPath = window.location.pathname.split('/')[1];
+
+document.write('<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script>'); //載入sweetalert
+
 let countdown = 60;
 //--設定發送驗證信
 sendEmailBtn.addEventListener("click", function(){
@@ -89,8 +92,14 @@ if(verificationInput.value === null || verificationInput.value.trim().length ===
         }).then(function(jsonObject){
         const{successful , message} = jsonObject;
         if(successful){
-            alert(message);
-            location =  `/${contextPath}/front_end/new-password-unsigned.html`;
+            Swal.fire(
+                message,
+                '',
+                'warning'
+            ).then(function(){
+                location =  `/${contextPath}/front_end/new-password-unsigned.html`;
+            })
+
         }else{
             errMsg.textContent = message;
         }
