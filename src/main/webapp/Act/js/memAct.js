@@ -7,8 +7,8 @@ window.addEventListener("load", () => {
     getAct(id);
 
 })
-function getAct(id) {
-    fetch('memAct', {
+function getAct(id) { // 取得揪團團主建立的揪團資訊
+    fetch('memAct', {// 此API在java controller的memActselect @WebServlet("/Act/memAct") 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ memno: id })
@@ -79,7 +79,7 @@ function pagination(jsonData, nowPage) {
     pageBtn(page);
 }
 
-function showmem(data) {
+function showmem(data) { // 顯示揪團資訊
     let html = '';
 
     if (data.length == 0) {
@@ -151,8 +151,8 @@ function showmem(data) {
     }
     return tab.innerHTML = html;
 }
-function PayAct(actno, price, title) {
-    fetch('ActECPay', {
+function PayAct(actno, price, title) { // 前往付款
+    fetch('ActECPay', { // 此API在java controller的ActECPayServlet @WebServlet("/Act/ActECPay") 
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify({

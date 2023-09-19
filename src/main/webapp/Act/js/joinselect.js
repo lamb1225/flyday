@@ -47,7 +47,7 @@ async function showmem() {
     console.log("act" + acts.memno);
     return showjoin1.innerHTML = html;
 }
-async function showjoin() {
+async function showjoin() { // 顯示成員
 
     let html = '';
     if (join.length == 0) {
@@ -151,7 +151,7 @@ async function showjoin() {
     }
     return showm.innerHTML = html;
 }
-$(document).on('click', `#Pay`, () => {
+$(document).on('click', `#Pay`, () => { //點擊後前往付款頁面
     fetch('JoinPay', {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -170,9 +170,9 @@ $(document).on('click', `#Pay`, () => {
             newWindow.document.close();
         })
 })
-function onRemoveClick(actid, memid) {
-
-    fetch('removejoin', {
+function onRemoveClick(actid, memid) { // 刪除揪團及揪團成員
+ 
+    fetch('removejoin', { // 此API在java controller的JoinRemoveServlet @WebServlet("/Act/removejoin")
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -183,7 +183,7 @@ function onRemoveClick(actid, memid) {
         .then(resp => resp.json())
         .then(body => {
             if (body.successful) {
-                fetch('revise', {
+                fetch('revise', {// 此API在java controller的reviseAct @WebServlet("/Act/revise")
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -202,15 +202,13 @@ function onRemoveClick(actid, memid) {
                         }
                     });
                 location.reload();
-            } else {
-                alert("裡面沒有人");
             }
         });
 }
-function onnotpass(actid, memid) {
+function onnotpass(actid, memid) { //審核未通過
     let pass1 = document.querySelector(`#pass${memid}`);
     let notpass1 = document.querySelector(`#notpass${memid}`);
-    fetch('removejoin', {
+    fetch('removejoin', { // 此API在java controller的JoinRemoveServlet @WebServlet("/Act/removejoin")
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -220,8 +218,8 @@ function onnotpass(actid, memid) {
     })
         .then(resp => resp.json())
         .then(body => {
-            if (body.successful) {
-                fetch('revise', {
+            if (body.successful) { 
+                fetch('revise', {  // 此API在java controller的reviseAct @WebServlet("/Act/revise")
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -245,9 +243,9 @@ function onnotpass(actid, memid) {
         });
 }
 
-function pass(actid, memid) {
+function pass(actid, memid) { // 通過後更新狀態
     let status = 1;
-    fetch('pass', {
+    fetch('pass', {  // 此API在java controller的joinstatus @WebServlet("/Act/pass")
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -269,7 +267,7 @@ function pass(actid, memid) {
         })
 
 }
-$(document).on('click', `#remove`, () => {
+$(document).on('click', `#remove`, () => { // 移除全部
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
