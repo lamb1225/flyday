@@ -11,7 +11,7 @@ public interface PkgOrdDetailsDao{
 	int insert(PkgOrdDetails pkgOrdDetails);	
 	int update(PkgOrdDetails pkgOrdDetails);
 	
-	PkgOrdDetails selectByPkgOrdDetailsId(PkgOrdDetailsId pkgOrdDetailsId);
+	PkgOrdDetails selectByPkgOrdDetailsId(Integer pkgOrdDetailsNo);
 	
 	List<PkgOrdDetails> selectAll();
 	
