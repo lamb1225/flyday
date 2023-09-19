@@ -9,7 +9,7 @@ var img = document.querySelector(`imgpic`);
 var date1 = new Date();
 window.addEventListener("load", function () {
 
-    fetch(`select`)
+    fetch(`select`) // 此API在java controller的SelectActServlet @WebServlet("/Act/select")
         .then(resp => resp.json())
         .then(data => {
             act1 = data;
@@ -23,9 +23,9 @@ window.addEventListener("load", function () {
 })
 //pkgPicBase64
 // html += `<img src="data:image/jpeg;base64,${data.pkgPicBase64}" class="rounded-2" alt="Card image">`;
-async function pic1(pic) {
+async function pic1(pic) { // 取得圖片
     html = '';
-    let resp = await fetch('/flyday/pkg/selectpkgno', {
+    let resp = await fetch('/flyday/pkg/selectpkgno', {// 此API在java controller的SelectPkgNoServlet @WebServlet("/pkg/selectpkgno")
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pkgNo: pic })
@@ -38,7 +38,7 @@ async function pic1(pic) {
     return data.pkgPicBase64;
 }
 {/* <img src="assets/images/category/hotel/4by3/10.jpg" class="rounded-2" alt="Card image" id="imgpic"></img> */ }
-async function showAct(act) {
+async function showAct(act) { //展示揪團
 
     let html = '';
     if (act.length == 0) {
@@ -90,8 +90,8 @@ async function showAct(act) {
         </div>
                 `;
             var date2 = new Date(acts.actjoinend);
-            if (date2 < date1) {
-                fetch('revise', {
+            if (date2 < date1) { // 更新揪團狀態
+                fetch('revise', { // 此API在java controller的reviseAct @WebServlet("/Act/revise")
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -133,14 +133,14 @@ async function showAct(act) {
 //             }
 //         });
 // }
-function onlook(actno) {
+function onlook(actno) { // 查看揪團詳細內容
     sessionStorage.setItem('actno', actno);
     location.href = `${getContextPath()}/Act/hotel-detail.html`;
 }
-function getContextPath() {
+function getContextPath() { // 動態路徑
     return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
 }
-let report = (id) => {
+let report = (id) => { //檢舉揪團(使用sweetalert2燈箱效果)
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
@@ -175,7 +175,7 @@ let report = (id) => {
         const reportmsg = document.querySelector(`#reportmsg`).value;
 
         if (result.isConfirmed) {
-            fetch('report', {
+            fetch('report', { // 此API在java controller的addGroupServlet @WebServlet("/Act/report")
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -218,7 +218,7 @@ let report = (id) => {
 //     sessionStorage.setItem("actno", id);
 //     location.href = `${getContextPath()}/Act/reviseAct.html`;
 // }
-function JoinActClick(id, actmaxcount, actcurrentcount) {
+function JoinActClick(id, actmaxcount, actcurrentcount) { //團員加入揪團
     let differ = actmaxcount - actcurrentcount;
     let memid = mem;
     if (differ === 0) {
@@ -245,7 +245,7 @@ function JoinActClick(id, actmaxcount, actcurrentcount) {
     }).then((result) => {
 
         if (result.isConfirmed) {
-            fetch('Join', {
+            fetch('Join', {  // 此API在java controller的JoinAct @WebServlet("/Act/Join")
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -288,7 +288,7 @@ function JoinActClick(id, actmaxcount, actcurrentcount) {
 }
 
 async function join1(id) {
-    fetch('joinid', {
+    fetch('joinid', { // 此API在java controller的JoinSelect @WebServlet("/Act/joinid")
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actno: id })
@@ -368,7 +368,7 @@ function pagination(jsonData, nowPage) {
     showAct(data);
     pageBtn(page);
 }
-function pageBtn(page) {
+function pageBtn(page) { // 分頁按鈕產生
     let str = '';
     const total = page.pageTotal;
 
@@ -397,10 +397,10 @@ function pageBtn(page) {
 }
 
 
-function switchPage(e) {
+function switchPage(e) { // 分頁按鈕判定
     e.preventDefault();
     if (e.target.nodeName !== 'A') return;
     const page = e.target.dataset.page;
     pagination(act1, page);
 }
-pageid.addEventListener('click', switchPage);
+pageid.addEventListener('click', switchPage); //分頁按鈕點擊
