@@ -118,7 +118,7 @@ Content START -->
 						<!-- Breadcrumb -->
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb breadcrumb-dots mb-0">
-								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front_end/index.html"><i class="bi bi-house me-1"></i> Home</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/tkt/Order?action=getBackAllOrd"><i class="bi bi-arrow-left-short"></i> go back</a></li>
 							</ol>
 						</nav>
 						<!-- Title -->
@@ -129,7 +129,7 @@ Content START -->
 
 				<!-- Image -->
 				<div class="col-sm-3 text-end d-none d-sm-block">
-					<img src="<%=request.getContextPath()%>/front_end/assets/images/element/desert.svg" class="mb-n4" alt="">
+					<img src="<%=request.getContextPath()%>/front_end/assets/images/element/beach.svg" class="mb-n4" alt="">
 				</div>
 			</div>
 		</div>
@@ -239,7 +239,7 @@ Content START -->
 										<a class="btn btn-sm w-100 bg-warning-subtle mb-0 mt-3 me-2" style="cursor: auto;">未出發</a>    
 									</div>
 									<div class="d-flex justify-content-between mt-4 ms-3">
-										<h5 class="card-title mb-1"><a href="#">${tktOrdDetailsJoin.tktName}</a></h5>
+										<h5 class="card-title mb-1">${tktOrdDetailsJoin.tktName}</h5>
 									</div>
 
 									<div class="d-sm-flex flex-wrap ms-3 mt-2">

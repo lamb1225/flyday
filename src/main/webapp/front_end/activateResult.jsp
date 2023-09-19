@@ -2,21 +2,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
-<body>
-	<div id="msg" style="display: none;">${mem.message}</div>
-<script>
-	const msg = document.getElementById("msg");
-	window.addEventListener("load", function(){
-		const timer = setInterval(function(){
-			alert(msg.textContent);
-			clearInterval(timer);
-			location = "<%=request.getContextPath()%>/front_end/sign-in.html";
-		},500);
-	})
+	<body>
+		<div id="msg" style="display: none;">${mem.message}</div>
 
-</script>
-</body>
+		<!-- 載入sweetalert-->
+		<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script> 
+		
+		<script>
+			const msg = document.getElementById("msg");
+
+			window.addEventListener("load", function(){
+				const timer = setTimeout(function(){
+					Swal.fire(
+						msg.textContent,
+						'',
+						'warning'
+					).then(function(){
+						clearTimeout(timer);
+						location = "<%=request.getContextPath()%>/front_end/sign-in.html";
+					})
+				},500);
+			})
+
+		</script>
+	</body>
 </html>

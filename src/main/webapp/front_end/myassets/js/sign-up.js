@@ -13,6 +13,8 @@ const emailRegex =/^\w+((-\w+)|(\.\w+))*\@\w+((\.|-)\w+)*\.[A-Za-z]+$/;
 
 const contextPath = window.location.pathname.split('/')[1];
 
+document.write('<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script>'); //載入sweetalert
+
 register.addEventListener("click", function(){
     errMsg.textContent = ""
     if(acc.value === null || acc.value.trim().length === 0 
@@ -47,8 +49,18 @@ register.addEventListener("click", function(){
         }).then(function(jsonObject){
             const{successful, message} = jsonObject;
             if(successful){
-                alert(message);
-                location = "index.html";
+
+                Swal.fire(
+                    message,
+                    '',
+                    'warning'
+                ).then(function(){
+                    location = "index.html";
+                })
+
+
+                // alert(message);
+                // location = "index.html";
             }else{
                 errMsg.textContent = message;
             }

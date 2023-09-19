@@ -5,6 +5,7 @@ import java.util.List;
 import web.mem.pkg.entity.MemPkgCoup;
 import web.pkg.pkg.entity.PkgShopCart;
 import web.pkg.pkg.entity.PkgShopCartId;
+import web.pkg.pkgmanage.entity.PkgShopCartToPlanDto;
 
 public interface PkgShopCartService {
 	PkgShopCart addPkgCart(PkgShopCartId pkgShopCartid, Integer pkgQty);
@@ -15,7 +16,7 @@ public interface PkgShopCartService {
 
 	int deleteAll(Integer memNo);
 	
-    List<PkgShopCart> findAllPkgCart(Integer memNo);
+    List<PkgShopCartToPlanDto> findAllPkgCart(Integer memNo);
     
     //查單一行程方案明細
     PkgShopCart findByPkgPlanNo(Integer memNo, Integer pkgPlanNo);
