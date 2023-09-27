@@ -177,12 +177,12 @@ public class CRUDServlet extends HttpServlet {
 				}
 				Emp emp = empService.update(update);
 				//偵錯檢查碼
-//				if(emp.getEmpNo() == null) {
-//				    System.out.println("EmpNo is null after update operation.");
-//				} else {
-//				    System.out.println("Updating emp with empNo: " + emp.getEmpNo());
-//				    out.print("{\"success\":true, \"message\":\"修改成功\"}");
-//				}
+				if(emp.getEmpNo() == null) {
+				    System.out.println("EmpNo is null after update operation.");
+				} else {
+				    System.out.println("Updating emp with empNo: " + emp.getEmpNo());
+				    out.print("{\"success\":true, \"message\":\"修改成功\"}");
+				}
 				//偵錯檢查碼end
 			}
 

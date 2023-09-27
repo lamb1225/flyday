@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
 	<title>Flyday - 會員中心</title>
 
@@ -8,11 +8,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="cha102group1">
-	<meta name="description" content="Flyday - 旅遊行程購票及揪團服務平台">
-
-	<!-- Favicon -->
-	<link rel="shortcut icon" href="/flyday/front_end/myassets/logo_noliteral.png">
-	<link rel="stylesheet" href="/flyday/message/css/styles.css" type="text/css" />
+	<meta name="description" content="Flyday - 會員中心">
 
 	<!-- Dark mode -->
 	<script>
@@ -36,61 +32,66 @@
 		setTheme(getPreferredTheme())
 
 		window.addEventListener('DOMContentLoaded', () => {
-				var el = document.querySelector('.theme-icon-active');
-			if(el != 'undefined' && el != null) {
+			var el = document.querySelector('.theme-icon-active');
+			if (el != 'undefined' && el != null) {
 				const showActiveTheme = theme => {
-				const activeThemeIcon = document.querySelector('.theme-icon-active use')
-				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+					const activeThemeIcon = document.querySelector('.theme-icon-active use')
+					const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+					const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
 
-				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-					element.classList.remove('active')
-				})
-
-				btnToActive.classList.add('active')
-				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-			}
-
-			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-				if (storedTheme !== 'light' || storedTheme !== 'dark') {
-					setTheme(getPreferredTheme())
-				}
-			})
-
-			showActiveTheme(getPreferredTheme())
-
-			document.querySelectorAll('[data-bs-theme-value]')
-				.forEach(toggle => {
-					toggle.addEventListener('click', () => {
-						const theme = toggle.getAttribute('data-bs-theme-value')
-						localStorage.setItem('theme', theme)
-						setTheme(theme)
-						showActiveTheme(theme)
+					document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+						element.classList.remove('active')
 					})
+
+					btnToActive.classList.add('active')
+					activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+				}
+
+				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+					if (storedTheme !== 'light' || storedTheme !== 'dark') {
+						setTheme(getPreferredTheme())
+					}
 				})
+
+				showActiveTheme(getPreferredTheme())
+
+				document.querySelectorAll('[data-bs-theme-value]')
+					.forEach(toggle => {
+						toggle.addEventListener('click', () => {
+							const theme = toggle.getAttribute('data-bs-theme-value')
+							localStorage.setItem('theme', theme)
+							setTheme(theme)
+							showActiveTheme(theme)
+						})
+					})
 
 			}
 		})
-		
+
 	</script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="/flyday/front_end/myassets/logo_noliteral.png">
 
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
 
 	<!-- Plugins CSS -->
-	<link rel="stylesheet" type="text/css" href="/flyday/front_end/assets/vendor/font-awesome/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="/flyday/front_end/assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
 
 	<!-- Theme CSS -->
-	<link rel="stylesheet" type="text/css" href="/flyday/front_end/assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+	<!-- navbar 自訂CSS-->
 	<style>
 	.mycollapse {
 		list-style: none;
 	}
-
+	
 	.my-cart-number{
 		padding: .0625rem .185rem;
 	}
@@ -99,23 +100,12 @@
 		width: 100%;
 		height: 100%;
 	}
-
-	.change-img-div{
-		position: relative;
-	}
-
-	.change-img-btn{
-		position: absolute; 
-		right: 20px;
-		top: 25px;
-	}
-
 	</style>
 
 </head>
 
-<body class="dashboard" onload="connect();" onunload="disconnect();">
-	
+<body class="dashboard">
+
 	<!-- Header START -->
 	<header class="navbar-light header-sticky">
 		<!-- Logo Nav START -->
@@ -142,71 +132,71 @@
 			<!-- Main navbar START -->
 			<div class="navbar-collapse collapse" id="navbarCollapse">
 				<ul class="navbar-nav navbar-nav-scroll">
-	
+	  
 				<!-- Nav item 行程 -->
 				<li class="nav-item dropdown">
-				<a class="nav-link" href="/flyday/front_end/package-list4.html" aria-haspopup="true" aria-expanded="false">觀光行程</a>
+				  <a class="nav-link" href="/flyday/front_end/package-list4.html" aria-haspopup="true" aria-expanded="false">觀光行程</a>
 				</li>
-	
+	  
 				<!-- Nav item 票券 -->
 				<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false">景點門票</a>
-				<ul class="dropdown-menu" aria-labelledby="pagesMenu">
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  <a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
+				  aria-expanded="false">景點門票</a>
+				  <ul class="dropdown-menu" aria-labelledby="pagesMenu">
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html">門票搜尋</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort0">主題樂園</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort1">景點門票</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort2">水族館</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort3">動物園</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort4">博物館</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort5">美術館</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort6">展覽</a>
-				</li>
-	
-				<!-- Dropdown submenu -->
-				<li class="dropdown-submenu dropend">
+				  </li>
+	  
+				  <!-- Dropdown submenu -->
+				  <li class="dropdown-submenu dropend">
 					<a class="dropdown-item" href="/flyday/tktt/tkt-list.html#tktSort7">其他票券</a>
+				  </li>
+	  
+				  </ul>
 				</li>
-	
-				</ul>
-				</li>
-	
+	  
 				<!-- Nav item 揪團 -->
 				<li class="nav-item dropdown">
-				<a class="nav-link" href="/flyday/Act/hotel-grid.html" id="accounntMenu" aria-haspopup="true" aria-expanded="false">揪團活動</a>
+				  <a class="nav-link" href="/flyday/Act/hotel-grid.html" id="accounntMenu" aria-haspopup="true" aria-expanded="false">揪團活動</a>
 				</li>
-	
+	  
 				<!-- Nav item Contact -->
 				<li class="nav-item"> <a class="nav-link" href="/flyday/front_end/Frequent-QA.html">常見問題</a></li>
 				</ul>
@@ -510,23 +500,23 @@
 				<div class="h4 mb-0 text-primary">$850.00</div>
 			  </div>
 			  <div class="col-3 pb-3 mt-3 d-flex flex-row-reverse">
-				<a class="btn btn-lg btn-primary" href="#" id="btn_cart">行程結帳<i class="ai-chevron-right ms-2 me-n1"></i></a>
+				<a class="btn btn-lg btn-primary" href="/flyday/front_end/package-shopcart.html" id="btn_cart">行程結帳<i class="ai-chevron-right ms-2 me-n1"></i></a>
 			  </div>
 			  </div>
 			</div>     
 		</header>
 		<!-- Header END -->
 
-<!-- **************** MAIN CONTENT START **************** -->
-<main>
-	
-<!-- =======================
-Content START -->
-<section class="pt-3">
-	<div class="container">
-		<div class="row g-2 g-lg-4">
+	<!-- **************** MAIN CONTENT START **************** -->
+	<main>
 
-			<!-- Sidebar START -->
+		<!-- =======================
+Content START -->
+		<section class="pt-3">
+			<div class="container">
+				<div class="row g-2 g-lg-4">
+
+					<!-- Sidebar START -->
 					<div class="col-lg-4 col-xl-3">
 						<!-- Responsive offcanvas body START -->
 						<div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasSidebar">
@@ -561,10 +551,10 @@ Content START -->
 										class="bi bi-person fa-fw me-2"></i>基本資料設定</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" data-bs-toggle="collapse" href="#collapseExample1"><i
+									<a class="nav-link active" data-bs-toggle="collapse" href="#collapseExample1"><i
 										class="bi bi-card-list fa-fw me-2"></i>我的訂單</a>
-									<ul class="collapse mycollapse" id="collapseExample1">
-									<a class="nav-link" href="/flyday/front_end/account-pkgorder.html">
+									<ul class="collapse mycollapse show" id="collapseExample1">
+									<a class="nav-link active" href="/flyday/front_end/account-pkgorder.html">
 										<li class="text-dark-emphasis nav-item ps-2"><i
 											class="fa-solid fa-plane-departure fa-fw me-2"></i>行程訂單
 										</li>
@@ -591,7 +581,7 @@ Content START -->
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active" href="/flyday/chat.do"><i
+									<a class="nav-link" href="/flyday/chat.do"><i
 										class="bi bi-chat-left-text fa-fw me-2"></i>聯繫客服</a>
 								</li>
 								<li class="nav-item">
@@ -609,150 +599,173 @@ Content START -->
 					</div>
 					<!-- Sidebar END -->
 
-			<!-- Main content START -->
-			<div class="col-lg-8 col-xl-9 ps-xl-5" id="chatbox-area">
+					<!-- Main content START -->
+					<div class="col-lg-8 col-xl-9 ps-xl-5">
 
-				<!-- Offcanvas menu button -->
-				<div class="d-grid mb-0 d-lg-none w-100">
-					<button class="btn btn-primary mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
-						<i class="fas fa-sliders-h"></i> 目錄
-					</button>
-				</div>
+						<!-- Offcanvas menu button -->
+						<div class="d-grid mb-0 d-lg-none w-100">
+							<button class="btn btn-primary mb-4" type="button" data-bs-toggle="offcanvas"
+								data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+								<i class="fas fa-sliders-h"></i> Menu
+							</button>
+						</div>
 
-				<h6 id="statusOutput" class="statusOutput"></h6>
-				<textarea id="messagesArea" class="panel message-area" readonly></textarea>
-				<div class="panel input-area">
-					<input id="message" class="text-field form-control" type="text" placeholder="輸入訊息..." onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-					<input type="submit" id="sendMessage" class="button btn btn-sm btn-light" value="傳送" onclick="sendMessage();" /> 
-					<input type="button" id="connect" class="button btn btn-sm btn-light" value="連線" onclick="connect();" /> 
-					<input type="button" id="disconnect" class="button btn btn-sm btn-light" value="斷線" onclick="disconnect();" />
+						<div class="card border bg-transparent">
+							<!-- Card header -->
+							<div class="card-header bg-transparent border-bottom">
+								<h4 class="card-header-title">我的訂單</h4>
+							</div>
+
+							<!-- Card body START -->
+							<div class="card-body p-0">
+
+								<!-- Tabs -->
+								<ul class="nav nav-tabs nav-bottom-line nav-responsive nav-justified">
+									<li class="nav-item">
+										<a class="nav-link mb-0 active" data-bs-toggle="tab" href="#tab-1" id="memcoupbtn"><i
+												class="bi bi-briefcase-fill fa-fw me-1"></i>訂單</a>
+									</li>
+									
+
+								</ul>
+
+								<!-- Tabs content START -->
+								<div class="tab-content p-2 p-sm-4" id="nav-tabContent">
+
+									<!-- Tab content item START -->
+									<div class="tab-pane fade show active" id="tab-1">
+										<!-- Card item START -->
+										<div class="card border mb-4">
+											<!-- Card header -->
+											<div
+												class="card-header border-bottom d-md-flex justify-content-md-between align-items-center">
+												<!-- Icon and Title -->
+												<div class="d-flex align-items-center">
+													<div class="icon-lg bg-light rounded-circle flex-shrink-0"><i
+															class="fa-solid fa-tag"></i></div>
+													<!-- Title -->
+													<div class="ms-2">
+														<h6 class="card-title mb-0">【宜蘭露營】免收搭帳懶人露營．露營車</h6>
+														<ul class="nav nav-divider small">
+															<li class="nav-item">訂單編號: </li>
+															<li class="nav-item">1</li>
+														</ul>
+													</div>
+
+													<div class="ms-4">
+														<h6 class="card-title mb-0">方案內容</h6>
+														<span>全新海灣客廳室露營拖車四人房型｜一張雙人床、一張單人上下舖</span>
+													</div>
+												</div>
+
+
+											</div>
+
+											<!-- Card body -->
+											<div id="orderinfo"></div>
+										<!-- Card item END -->
+										<div id="memcoup"></div>
+
+
+									</div>
+									<!-- Tabs content item END -->
+
+									<!-- Tab content item START -->
+									<div class="tab-pane fade" id="tab-2">
+										<div id="coupmsg"></div>
+										<div id="getcoup"></div>
+
+									</div>
+									<!-- Tabs content item END -->
+
+									<!-- Tab content item START -->
+									<div class="tab-pane fade" id="tab-3">
+										<div class="bg-mode shadow p-4 rounded overflow-hidden">
+											<div class="row g-4 align-items-center">
+												<!-- Content -->
+												<div class="col-md-9">
+													<h6>Looks like you have never booked with BOOKING</h6>
+													<h4 class="mb-2">When you book your trip will be shown here.</h4>
+													<a href="hotel-list.html" class="btn btn-primary-soft mb-0">Start
+														booking now</a>
+												</div>
+												<!-- Image -->
+												<div class="col-md-3 text-end">
+													<img src="assets/images/element/17.svg" class="mb-n5" alt="">
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<!-- Tabs content item END -->
+								</div>
+
+							</div>
+							<!-- Card body END -->
+						</div>
+
+					</div>
+					<!-- Main content END -->
 				</div>
-				
 			</div>
-			<!-- Main content END -->
-		</div>
-	</div>
-</section>
-<!-- =======================
+		</section>
+		<!-- =======================
 Content END -->
 
-</main>
-<!-- **************** MAIN CONTENT END **************** -->
+	</main>
+	<!-- **************** MAIN CONTENT END **************** -->
 
- <!-- =======================
+	<!-- =======================
 Footer START -->
-<footer class="bg-dark p-3">
-    <div class="container">
-      <div class="row align-items-center">
+	<footer class="bg-dark p-3">
+		<div class="container">
+			<div class="row align-items-center">
 
-        <!-- Widget -->
-        <div class="col-md-4">
-          <div class="text-center text-md-start mb-3 mb-md-0">
-            <a href="/flyday/front_end/index.html"> <img class="h-30px" src="/flyday/front_end/myassets/logo.svg" alt="logo"> </a>
-          </div>
-        </div>
+				<!-- Widget -->
+				<div class="col-md-4">
+					<div class="text-center text-md-start mb-3 mb-md-0">
+						<a href="index.html"> <img class="h-30px" src="assets/images/logo-light.svg" alt="logo"> </a>
+					</div>
+				</div>
 
-        <!-- Widget -->
-        <div class="col-md-4">
-          <div class="text-muted text-primary-hover text-center">Graduation Project for Tibame.CHA102.Group1</div>
-        </div>
+				<!-- Widget -->
+				<div class="col-md-4">
+					<div class="text-muted text-primary-hover"> Copyrights ©2023 Booking. Build by <a
+							href="https://www.webestica.com/" class="text-muted">Webestica</a>. </div>
+				</div>
 
-        <!-- Widget -->
-        <div class="col-md-4">
-          <ul class="list-inline mb-0 text-center text-md-end">
-            <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a>
-            </li>
-            <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a>
-            </li>
-            <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
-            </li>
-            <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-</footer>
-<!-- =======================Footer END -->
+				<!-- Widget -->
+				<div class="col-md-4">
+					<ul class="list-inline mb-0 text-center text-md-end">
+						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a>
+						</li>
+						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a>
+						</li>
+						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
+						</li>
+						<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- =======================
+Footer END -->
 
-<!-- Back to top -->
-<div class="back-top"></div>
+	<!-- Back to top -->
+	<div class="back-top"></div>
 
-<!-- Bootstrap JS -->
-<script src="/flyday/front_end/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- ThemeFunctions -->
-<script src="/flyday/front_end/assets/js/functions.js"></script>
+	<!-- ThemeFunctions -->
+	<script src="assets/js/functions.js"></script>
+	<script src="myassets/js/accountpkgorder.js"></script>
 
-<!--導覽列+側邊欄js-->
-<script src="/flyday/front_end/myassets/js/nav-side.js"></script>
-			
-<!-- 聊天室JS -->
-<script>
-	var MyPoint = "/FriendWS/${userName}";
-	var host = window.location.host;
-	var path = window.location.pathname;
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "wss://" + window.location.host + webCtx + MyPoint;
+	<!--導覽列+側邊欄js-->
+	<script src="/flyday/front_end/myassets/js/nav-side.js"></script>
 
-	var statusOutput = document.getElementById("statusOutput");
-	var self = '${userName}';
-	var webSocket;
-
-	function connect() {
-		// create a websocket
-		webSocket = new WebSocket(endPointURL);
-
-		webSocket.onopen = function(event) {
-			updateStatus("客服已連線");
-			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
-		};
-
-		webSocket.onmessage = function(event) {
-			var messagesArea = document.getElementById("messagesArea");
-			var jsonObj = JSON.parse(event.data);
-			var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
-			messagesArea.value = messagesArea.value + message;
-			messagesArea.scrollTop = messagesArea.scrollHeight;
-		};
-
-		webSocket.onclose = function(event) {
-			updateStatus("客服已斷線");
-		};
-	}
-
-	function sendMessage() {
-		var inputMessage = document.getElementById("message");
-		var message = inputMessage.value.trim();
-
-		if (message === "") {
-			alert("Input a message");
-			inputMessage.focus();
-		} else {
-			var jsonObj = {
-					"type" : "chat",
-					"sender" : self,
-					"receiver" : "cs",
-					"message" : message
-			};
-			webSocket.send(JSON.stringify(jsonObj));
-			inputMessage.value = "";
-			inputMessage.focus();
-		}
-	}
-
-	function disconnect() {
-		webSocket.close();
-		document.getElementById('sendMessage').disabled = true;
-		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
-	}
-
-	function updateStatus(newStatus) {
-		statusOutput.innerHTML = newStatus;
-	}
-</script>
 
 </body>
+
 </html>

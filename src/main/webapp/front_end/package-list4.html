@@ -181,41 +181,9 @@
 		
 				<!-- Nav item 行程 -->
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="listingMenu" data-bs-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">觀光行程</a>
-					<ul class="dropdown-menu" aria-labelledby="listingMenu">
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="/flyday/front_end/package-list4.html">行程搜尋</a>
-					</li>
-		
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">遊船觀光</a>
-					</li>
-		
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">單車旅遊</a>
-					</li>
-		
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">文化體驗</a>
-					</li>
-		
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">水上活動</a>
-					</li>
-		
-					<!-- Dropdown submenu -->
-					<li class="dropdown-submenu dropend">
-						<a class="dropdown-item" href="#">露營登山</a>
-					</li>
-					</ul>
+					<a class="nav-link" href="/flyday/front_end/package-list4.html" aria-haspopup="true" aria-expanded="false">觀光行程</a>
 				</li>
-		
+
 				<!-- Nav item 票券 -->
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -290,7 +258,7 @@
 				<a class="nav-link p-0" href="#cartOffcanvas" data-bs-toggle="offcanvas" role="button" aria-expanded="false"
 					data-bs-auto-close="outside">
 					<!-- 購物車數量 -->
-					<span class="badge bg-primary fs-xs position-absolute end-0 top-0 me-n1 my-cart-number">3</span>
+					<span class="badge bg-primary fs-xs position-absolute end-0 top-0 me-n1 my-cart-number">4</span>
 					<i class="bi bi-cart fa-fw fs-5"></i>
 				</a>
 				</li>
@@ -379,9 +347,7 @@
 						<hr class="dropdown-divider">
 						</li>
 						<li><a class="dropdown-item" href="/flyday/front_end/account-profile.html"><i class="bi bi-person fa-fw me-2"></i>基本資料設定</a></li>
-						<li><a class="dropdown-item" href="#"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
-						<li><a class="dropdown-item" href="#"><i class="bi bi-envelope-paper fa-fw me-2"></i>我的優惠券</a></li>
-						<li><a class="dropdown-item" href="#"><i class="bi bi bi-heart fa-fw me-2"></i>我的收藏</a></li>
+						<li><a class="dropdown-item" href="/flyday/front_end/account-pkgorder.html"><i class="bi bi-card-list fa-fw me-2"></i>我的訂單</a></li>
 						<li><a class="dropdown-item" href="/flyday/Act/account-bookings.html"><i class="fa-solid fa-people-group fa-fw me-2"></i>我的揪團</a></li>
 						<li><a class="dropdown-item" href="/flyday/chat.do"><i class="bi bi-chat-left-text fa-fw me-2"></i>聯繫客服</a></li>
 						<li><a class="dropdown-item bg-danger-soft-hover" id="logoutNav" href="#"><i class="bi bi-power fa-fw me-2"></i>登出</a></li>
@@ -460,130 +426,130 @@
 			<li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-tkt" id="my_tkt_cart">票券購物車 </a> </li>
 			</ul>
 			<!--購物車清單範圍-->
-			<div class="offcanvas-body">
+		<div class="offcanvas-body">
 			<div class="tab-content">
-				<div class="tab-pane show active" id="tab-pkg">
-				<!-- items -->
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-					<!-- <div class="col-md-1 d-flex">
-						<div class="form-check align-self-center">
-						<input class="form-check-input pkg-cart-check" type="checkbox" value="" name="pkg-check" id="pkg-check1">
-						</div>
-					</div> -->
-					<div class="col-md-5">
-						<img src="https://picsum.photos/500/400?random=4" class="img-fluid rounded-start my-card-image">
-					</div>
-					<div class="col-md-7">
-						<div class="card-body">
-						<h5 class="card-title">行程標題1</h5>
-						<p class="card-text">行程方案行程方案行程方案行程方案行程方案行程方案行程方案</p>
-						<div class="d-flex justify-content-end">
-							<p class="m-0 align-self-center me-auto text-primary">$22</p>
-						</div>
-						</div>
-					</div>
-					</div>
+			  <div class="tab-pane show active" id="tab-pkg">
+			  <!-- items -->
+			  <div class="card mb-3" style="max-width: 540px;">
+				<div class="row g-0">
+				<!-- <div class="col-md-1 d-flex">
+				  <div class="form-check align-self-center">
+				  <input class="form-check-input pkg-cart-check" type="checkbox" value="" name="pkg-check" id="pkg-check1">
+				  </div>
+				</div> -->
+				<div class="col-md-5">
+				  <img src="/flyday/front_end/myassets/Jiufen.jpg" class="img-fluid rounded-start my-card-image">
 				</div>
-				<!-- items -->
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-					<!-- <div class="col-md-1 d-flex">
-						<div class="form-check align-self-center">
-						<input class="form-check-input pkg-cart-check" type="checkbox" value="" name="pkg-check" id="pkg-check2">
-						</div>
-					</div> -->
-					<div class="col-md-5">
-						<img src="https://picsum.photos/500/400?random=5" class="img-fluid rounded-start my-card-image">
-					</div>
-					<div class="col-md-7">
-						<div class="card-body">
-						<h5 class="card-title">行程標題2</h5>
-						<p class="card-text">行程方案行程方案行程方案行程方案行程方案行程方案行程方案</p>
-						<div class="d-flex justify-content-end">
-							<p class="m-0 align-self-center me-auto text-primary">$22</p>
-						</div>
-						</div>
-					</div>
-					</div>
+				<div class="col-md-7">
+				  <div class="card-body">
+				  <h5 class="card-title">野柳、九份一日遊</h5>
+				  <p class="card-text">北台灣經典行程</p>
+				  <div class="d-flex justify-content-end">
+					<p class="m-0 align-self-center me-auto text-primary">$850</p>
+				  </div>
+				  </div>
 				</div>
-				
-				<!-- items end-->
 				</div>
-				<div class="tab-pane" id="tab-tkt">
-				<!-- items -->
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-					<!-- <div class="col-md-1 d-flex">
-						<div class="form-check align-self-center">
-						<input class="form-check-input tkt-cart-check" type="checkbox" value="" name="tkt-check" id="tkt-check1">
-						</div>
-					</div> -->
-					<div class="col-md-5">
-						<img src="https://picsum.photos/500/400?random=3" class="img-fluid rounded-start my-card-image">
-					</div>
-					<div class="col-md-7">
-						<div class="card-body">
-						<h5 class="card-title">票券標題1</h5>
-						<p class="card-text">方案名稱1</p>
-						<div class="d-flex justify-content-end">
-							<p class="m-0 align-self-center me-auto text-primary">$22</p>
-							<button class="btn btn-icon fs-xl my-minus-btn" type="button" data-decrement>-</button>
-							<input class="form-control w-25 my-cart-quantity"type="number" value="1" readonly>
-							<button class="btn btn-icon fs-xl my-plus-btn" type="button" data-increment>+</button>
-						</div>
-						</div>
-					</div>
-					</div>
+			  </div>
+			  <!-- items -->
+			  <div class="card mb-3" style="max-width: 540px;">
+				<div class="row g-0">
+				<!-- <div class="col-md-1 d-flex">
+				  <div class="form-check align-self-center">
+				  <input class="form-check-input pkg-cart-check" type="checkbox" value="" name="pkg-check" id="pkg-check2">
+				  </div>
+				</div> -->
+				<div class="col-md-5">
+				  <img src="/flyday/front_end/myassets/blue.jpg" class="img-fluid rounded-start my-card-image">
 				</div>
-				<!-- items -->
-				<div class="card mb-3" style="max-width: 540px;">
-					<div class="row g-0">
-					<!-- <div class="col-md-1 d-flex">
-						<div class="form-check align-self-center">
-						<input class="form-check-input tkt-cart-check" type="checkbox" value="" name="tkt-check" id="tkt-check2">
-						</div>
-					</div> -->
-					<div class="col-md-5">
-						<img src="https://picsum.photos/500/400?random=1" class="img-fluid rounded-start my-card-image">
-					</div>
-					<div class="col-md-7">
-						<div class="card-body">
-						<h5 class="card-title">票券標題2</h5>
-						<p class="card-text">方案名稱2</p>
-						<div class="d-flex justify-content-end">
-							<p class="m-0 align-self-center me-auto text-primary">$22</p>
-							<button class="btn btn-icon fs-xl my-minus-btn" type="button" data-decrement>-</button>
-							<input class="form-control w-25 my-cart-quantity"type="number" value="1" readonly>
-							<button class="btn btn-icon fs-xl my-plus-btn" type="button" data-increment>+</button>
-						</div>
-						</div>
-					</div>
-					</div>
+				<div class="col-md-7">
+				  <div class="card-body">
+				  <h5 class="card-title">澎湖藍洞</h5>
+				  <p class="card-text">南方四島國家公園跳島一日遊</p>
+				  <div class="d-flex justify-content-end">
+					<p class="m-0 align-self-center me-auto text-primary">$1,200</p>
+				  </div>
+				  </div>
 				</div>
-				
-				<!-- items end-->
 				</div>
+			  </div>
+			  
+			  <!-- items end-->
+			  </div>
+			  <div class="tab-pane" id="tab-tkt">
+			  <!-- items -->
+			  <div class="card mb-3" style="max-width: 540px;">
+				<div class="row g-0">
+				<!-- <div class="col-md-1 d-flex">
+				  <div class="form-check align-self-center">
+				  <input class="form-check-input tkt-cart-check" type="checkbox" value="" name="tkt-check" id="tkt-check1">
+				  </div>
+				</div> -->
+				<div class="col-md-5">
+				  <img src="/flyday/front_end/myassets/oceanPark.jpg" class="img-fluid rounded-start my-card-image">
+				</div>
+				<div class="col-md-7">
+				  <div class="card-body">
+				  <h5 class="card-title">屏東海生館門票</h5>
+				  <p class="card-text">單人門票+虛擬海世界VR體驗</p>
+				  <div class="d-flex justify-content-end">
+					<p class="m-0 align-self-center me-auto text-primary">$550</p>
+					<button class="btn btn-icon fs-xl my-minus-btn" type="button" data-decrement>-</button>
+					<input class="form-control w-25 my-cart-quantity"type="number" value="1" readonly>
+					<button class="btn btn-icon fs-xl my-plus-btn" type="button" data-increment>+</button>
+				  </div>
+				  </div>
+				</div>
+				</div>
+			  </div>
+			  <!-- items -->
+			  <div class="card mb-3" style="max-width: 540px;">
+				<div class="row g-0">
+				<!-- <div class="col-md-1 d-flex">
+				  <div class="form-check align-self-center">
+				  <input class="form-check-input tkt-cart-check" type="checkbox" value="" name="tkt-check" id="tkt-check2">
+				  </div>
+				</div> -->
+				<div class="col-md-5">
+				  <img src="/flyday/front_end/myassets/animal.jpg" class="img-fluid rounded-start my-card-image">
+				</div>
+				<div class="col-md-7">
+				  <div class="card-body">
+				  <h5 class="card-title">宜蘭張美阿嬤農場</h5>
+				  <p class="card-text">DIY體驗+入園門票</p>
+				  <div class="d-flex justify-content-end">
+					<p class="m-0 align-self-center me-auto text-primary">$300</p>
+					<button class="btn btn-icon fs-xl my-minus-btn" type="button" data-decrement>-</button>
+					<input class="form-control w-25 my-cart-quantity"type="number" value="1" readonly>
+					<button class="btn btn-icon fs-xl my-plus-btn" type="button" data-increment>+</button>
+				  </div>
+				  </div>
+				</div>
+				</div>
+			  </div>
+			  
+			  <!-- items end-->
+			  </div>
 			</div>
 			</div>
 			<!-- Action buttons-->
 			<div class="container px-4">
 			<div class="row g-0 mt-3 justify-content-between">
-				<!-- <div class="col-3 d-flex ps-1"> -->
-					<!-- <div class="form-check align-self-center ps-4"> -->
-						<!-- <input class="form-check-input pkg-cart-check" type="checkbox" id="check-all"> -->
-						<!-- <label class="form-check-label" for="check-all" id="check-all-content">全選行程</label> -->
-					<!-- </div> -->
+			  <!-- <div class="col-3 d-flex ps-1"> -->
+				<!-- <div class="form-check align-self-center ps-4"> -->
+				  <!-- <input class="form-check-input pkg-cart-check" type="checkbox" id="check-all"> -->
+				  <!-- <label class="form-check-label" for="check-all" id="check-all-content">全選行程</label> -->
 				<!-- </div> -->
-				<div class="col-3 align-self-center ps-3 pb-3">
-					<div class="fs-xl me-3">總金額:</div>
-					<div class="h4 mb-0 text-primary">$92.00</div>
-				</div>
-				<div class="col-3 pb-3 mt-3 d-flex flex-row-reverse">
-					<a class="btn btn-lg btn-primary" href="#" id="btn_cart">行程結帳<i class="ai-chevron-right ms-2 me-n1"></i></a>
-				</div>
-				</div>
-			</div>        
+			  <!-- </div> -->
+			  <div class="col-3 align-self-center ps-3 pb-3">
+				<div class="fs-xl me-3">總金額:</div>
+				<div class="h4 mb-0 text-primary">$850.00</div>
+			  </div>
+			  <div class="col-3 pb-3 mt-3 d-flex flex-row-reverse">
+				<a class="btn btn-lg btn-primary" href="/flyday/front_end/package-shopcart.html" id="btn_cart">行程結帳<i class="ai-chevron-right ms-2 me-n1"></i></a>
+			  </div>
+			  </div>
+			</div>     
 		</header>
 		<!-- Header END -->
 

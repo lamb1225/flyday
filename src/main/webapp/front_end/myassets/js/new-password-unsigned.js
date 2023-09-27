@@ -2,6 +2,8 @@
 const myMemAcc = document.getElementById("myMemAcc");
 const contextPath = window.location.pathname.split('/')[1];
 
+document.write('<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script>'); //載入sweetalert
+
 window.addEventListener("DOMContentLoaded", function(){
 const formData = new FormData();
 console.log("xxx");
@@ -14,8 +16,15 @@ fetch(`/${contextPath}/mem/forgetPassword`,{
     return response.text();
 }).then(function(text){
     if(text === "null"){
-        alert("請先做電子郵件驗證！");
-        location = "forgot-password.html";
+
+        Swal.fire(
+            '請先做電子郵件驗證！',
+            '',
+            'warning'
+        ).then(function(){
+            location = "forgot-password.html";
+        })
+
     }else{
         myMemAcc.value = text;
     }
@@ -52,8 +61,15 @@ if(pwd.value === null || pwd.value.trim().length === 0
     }).then(function(jsonObject){
         const{successful, message} = jsonObject;
         if(successful){
-            alert(message);
-            location = "sign-in.html";
+
+            Swal.fire(
+                message,
+                '',
+                'warning'
+            ).then(function(){
+                location = "sign-in.html";
+            })
+
         }else{
             errMsg.textContent = message;
         }

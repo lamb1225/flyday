@@ -29,7 +29,7 @@
 
     const check1 = /^[0-9.]+$/;
     const check2 = /^.{1,40}$/;
-    const check3 = /^.{1,800}$/;
+    const check3 = /^.{1,4000}$/;
     const check4 = /^.{1,500}$/;
 
     const errMsg = document.getElementById("errMsg");

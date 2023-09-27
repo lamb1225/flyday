@@ -1,4 +1,4 @@
-package web.act.controller;
+package web.act.controller.Act;
 
 import core.util.CommonUtil;
 import web.act.entity.Act;

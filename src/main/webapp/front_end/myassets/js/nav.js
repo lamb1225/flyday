@@ -105,6 +105,8 @@ const actMenu = document.getElementById("accounntMenu");
 
 const contextPath = window.location.pathname.split('/')[1];
 
+document.write('<script src="/flyday/front_end/myassets/js/sweetalert2.all.min.js"></script>'); //載入sweetalert
+
 document.addEventListener("DOMContentLoaded",function(){
   fetch(`/${contextPath}/mem/getOneInfo`,{
     method: "POST"
@@ -124,9 +126,16 @@ document.addEventListener("DOMContentLoaded",function(){
       //未登入時點選揪團活動會導向登入畫面
       actMenu.addEventListener("click", function(e){
         e.preventDefault();
-        alert("請先登入！");
-        sessionStorage.setItem("originalURL", "/flyday/Act/hotel-grid.html");
-        location = "/flyday/front_end/sign-in.html";
+
+        Swal.fire(
+          '請先登入！',
+          '',
+          'warning'
+        ).then(function(){
+          sessionStorage.setItem("originalURL", "/flyday/Act/hotel-grid.html");
+          location = "/flyday/front_end/sign-in.html";
+        })
+
       })
       
     }
